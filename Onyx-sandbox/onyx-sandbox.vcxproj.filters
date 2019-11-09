@@ -21,7 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\FlatColor.glsl" />
-    <None Include="res\shaders\basic.frag" />
-    <None Include="res\shaders\basic.vert" />
+    <None Include="res\shaders\Texture.glsl" />
   </ItemGroup>
 </Project>

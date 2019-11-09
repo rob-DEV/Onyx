@@ -7,5 +7,6 @@
 #define ONYX_API __declspec(dllimport)
 #endif
 
+#include <stdint.h>
 
 #endif // !_ONYX_CORE_H_
