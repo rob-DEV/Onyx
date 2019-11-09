@@ -1,6 +1,4 @@
 [submodule "Onyx/vendor/glm"]
 	path = Onyx/vendor/glm
 	url = https://github.com/g-truc/glm.git
-[submodule "Onyx/vendor/imgui"]
-	path = Onyx/vendor/imgui
-	url = https://github.com/ocornut/imgui
+	
