@@ -28,6 +28,7 @@
     <ClCompile Include="src\Onyx\graphics\Shader.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
+    <ClCompile Include="src\Onyx\ImGUI\ImGuiBuild.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLGraphicsContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />

@@ -5,9 +5,8 @@
 
 namespace Onyx {
 
-	OrthographicCameraController::OrthographicCameraController() : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+	OrthographicCameraController::OrthographicCameraController() : m_Camera(-1.6f, 1.6f, -m_ZoomLevel, m_ZoomLevel)
 	{
-
 	}
 
 	void OrthographicCameraController::onUpdate()
@@ -46,6 +45,27 @@ namespace Onyx {
 
 		}
 
+		if (Input::isKeyPressed(ONYX_KEY_Q)) {
+
+			m_ZoomLevel -= testSpeed;
+			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
+			m_Camera.setProjection(-1.6f * m_ZoomLevel, 1.6f * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+
+		}
+
+		if (Input::isKeyPressed(ONYX_KEY_E)) {
+
+			
+			m_ZoomLevel += testSpeed;
+			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
+			m_Camera.setProjection(-1.6f * m_ZoomLevel, 1.6f * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+
+
+		}
+
+		printf("ZOOM LEVEL: %.4f\n", m_ZoomLevel);
+
+		
 	}
 
 }

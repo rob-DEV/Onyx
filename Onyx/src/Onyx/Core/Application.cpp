@@ -69,20 +69,15 @@ namespace Onyx {
 			//renderer test 
 			Renderer2D::beginScene(cameraController->getCamera());
 			
-			Renderer2D::drawQuad(glm::vec3(-0.6f, 0, 0), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
-			
-			Renderer2D::drawQuad(glm::vec3(-0.8f, 0, 0), glm::vec2(.1 * scale, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
+			Renderer2D::drawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
+		
+			Renderer2D::drawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.8f, 1.5f), testMarioTexture);
+		
+			Renderer2D::drawQuad(glm::vec3(0.0f, -.9, 0.0f), glm::vec2(4.0f, .3f), glm::vec4(0.0f, 0.8f, 0.2f, 1.0f));
 
-			//texture draw test
-			//Renderer2D::drawQuad(glm::vec3(0.0f, 0, 0), glm::vec2(0.8f, 1.5f), glm::vec4(0.5f, 0.2f, 0.36f, 1.0f));
-			Renderer2D::drawQuad(glm::vec3(0.0f, 0, 0), glm::vec2(0.8f, 1.5f), testMarioTexture);
-
-			Renderer2D::drawQuad(glm::vec3(0.6f, 0, 0), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
+			Renderer2D::drawQuad(glm::vec3(0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
 
 			Renderer2D::endScene();
-
-			if (Input::isKeyPressed(ONYX_KEY_G))
-				printf("G Key Pressed!\n");
 
 			if (Input::isKeyPressed(ONYX_KEY_ESCAPE))
 				break;

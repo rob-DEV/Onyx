@@ -15,7 +15,7 @@ public:
 
 	Sandbox()
 	{	
-		this->run();
+
 	}
 
 	~Sandbox()
