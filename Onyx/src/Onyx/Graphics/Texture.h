@@ -23,7 +23,9 @@ namespace Onyx {
 
 	class ONYX_API Texture2D : public Texture {
 	public:
+		static Texture2D* create(uint32_t width, uint32_t height);
 		static Texture2D* create(const std::string& path);
+
 	};
 
 
