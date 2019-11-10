@@ -62,9 +62,6 @@ namespace Onyx {
 
 
 		}
-
-		printf("ZOOM LEVEL: %.4f\n", m_ZoomLevel);
-
 		
 	}
 

@@ -2,8 +2,12 @@
 #include "WindowsWindow.h"
 
 
+#include <Onyx/Graphics/RendererAPI.h>
+#include <Onyx/Graphics/GraphicsContext.h>
+
 #include <GLFW/glfw3.h>
 #include <Platform/OpenGL/OpenGLGraphicsContext.h>
+#include <Platform/Vulkan/VulkanGraphicsContext.h>
 
 namespace Onyx {
 
@@ -34,12 +38,16 @@ namespace Onyx {
 			if (!glfwInit())
 				printf("Failed to initialize GLFW!");
 
+		//for vulkan specifically
+		if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+
 		m_Window = glfwCreateWindow(m_WindowProperties.Width, 
 									m_WindowProperties.Height, 
 									m_WindowProperties.Title.c_str(), nullptr, nullptr);
 		
 		glfwSetWindowUserPointer(m_Window, &m_WindowProperties);
-
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 			{
 				WindowProperties& data = *(WindowProperties*)glfwGetWindowUserPointer(window);
@@ -47,7 +55,13 @@ namespace Onyx {
 				data.Height = height;
 			});
 
-		m_Context = new Onyx::OpenGLGraphicsContext(m_Window);
+
+
+		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+			m_Context = new Onyx::OpenGLGraphicsContext(m_Window);
+
+		if(RendererAPI::getAPI() == RendererAPI::API::Vulkan)
+			m_Context = new Onyx::VulkanGraphicsContext(m_Window);
 
 		m_Context->init();
 		

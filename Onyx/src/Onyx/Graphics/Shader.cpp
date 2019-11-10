@@ -1,15 +1,14 @@
 #include "onyxpch.h"
 #include "Shader.h"
 
+#include "RendererAPI.h"
 #include <Platform/OpenGL/OpenGLShader.h>
 
 namespace Onyx {
 
 	Shader* Shader::create(const std::string& filepath)
 	{
-		std::string API = "OpenGL";
-
-		if (API == "OpenGL")
+		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLShader(filepath);
 
 		printf("Shader is nullptr!\n");
@@ -19,9 +18,7 @@ namespace Onyx {
 
 	Shader* Shader::create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
-		std::string API = "OpenGL";
-
-		if(API == "OpenGL")
+		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLShader(name, vertexSrc, fragmentSrc);
 		
 		return nullptr;

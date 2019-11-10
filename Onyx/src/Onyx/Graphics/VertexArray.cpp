@@ -1,15 +1,14 @@
 #include "onyxpch.h"
 #include "VertexArray.h"
 
+#include "RendererAPI.h"
 #include <Platform/OpenGL/OpenGLVertexArray.h>
 
 namespace Onyx {
 
 	Onyx::VertexArray* VertexArray::create()
 	{
-		std::string API = "OpenGL";
-
-		if (API == "OpenGL")
+		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLVertexArray();
 
 		return nullptr;

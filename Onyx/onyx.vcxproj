@@ -25,6 +25,7 @@
     <ClCompile Include="src\Onyx\Graphics\OrthographicCamera.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Onyx\graphics\Renderer2D.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\RendererAPI.cpp" />
     <ClCompile Include="src\Onyx\graphics\Shader.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
@@ -35,6 +36,9 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanInstance.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanGraphicsContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsFileIO.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -70,6 +74,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLGraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanInstance.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanGraphicsContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsFileIO.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -169,16 +176,16 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_DEBUG_;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>
@@ -208,7 +215,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -218,8 +225,8 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>
