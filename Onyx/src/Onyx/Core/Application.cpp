@@ -99,6 +99,7 @@ namespace Onyx {
 
 			scale += 0.01;
 		}
+
 	}
 
 }

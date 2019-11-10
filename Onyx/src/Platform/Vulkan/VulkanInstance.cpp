@@ -90,18 +90,6 @@ namespace Onyx {
 			createInfo.enabledExtensionCount = static_cast<uint32_t>(creation_extensions.size());
 			createInfo.ppEnabledExtensionNames = creation_extensions.data();
 
-
-			//create and point the VkDebugUtilsMessengerEXT to the call back function
-			VkDebugUtilsMessengerCreateInfoEXT createDebugUtilsMessangerInfo = {};
-			createDebugUtilsMessangerInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-			createDebugUtilsMessangerInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-			createDebugUtilsMessangerInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-			createDebugUtilsMessangerInfo.pfnUserCallback = debugCallback;
-			createDebugUtilsMessangerInfo.pUserData = nullptr;
-
-
-
-
 		}
 
 
@@ -109,6 +97,29 @@ namespace Onyx {
 			printf("Failed to create Vulkan Instance : VulkanInstance.cpp 39\n");
 		else
 			printf("Vulkan Instance - Successfully Created : VulkanInstance.cpp 41\n");
+
+
+		//create and point the VkDebugUtilsMessengerEXT to the call back function
+		VkDebugUtilsMessengerCreateInfoEXT createDebugUtilsMessangerInfo = {};
+		createDebugUtilsMessangerInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+		createDebugUtilsMessangerInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+		createDebugUtilsMessangerInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+		createDebugUtilsMessangerInfo.pfnUserCallback = debugCallback;
+		createDebugUtilsMessangerInfo.pUserData = nullptr;
+
+		//create the messenger
+		auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(m_VkInstance, "vkCreateDebugUtilsMessengerEXT");
+		VkResult createDebugUtilsMessangerInfoResult = VK_SUCCESS;
+
+		if (func != nullptr) {
+			createDebugUtilsMessangerInfoResult = func(m_VkInstance, &createDebugUtilsMessangerInfo, nullptr, &m_DebugMessenger);
+		}
+		else {
+			printf("Failed to create vkDebugUtilsMessenger : VK_ERROR_EXTENSION_NOT_PRESENT\n");
+		}
+
+		if (createDebugUtilsMessangerInfoResult)
+			printf("Failed to setup vkDebugUtilsMessenger\n");
 
 		uint32_t extensionCount = 0;
 		vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -120,9 +131,6 @@ namespace Onyx {
 
 		for (const auto& extension : extensions)
 			std::cout << "\t" << extension.extensionName << std::endl;
-
-		
-
 
 	}
 

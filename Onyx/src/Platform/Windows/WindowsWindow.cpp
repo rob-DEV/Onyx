@@ -26,7 +26,7 @@ namespace Onyx {
 
 	WindowsWindow::~WindowsWindow()
 	{
-		
+		delete m_Context;
 	}
 
 	void WindowsWindow::init()

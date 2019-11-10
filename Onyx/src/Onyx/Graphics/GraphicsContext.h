@@ -9,6 +9,7 @@ namespace Onyx {
 		public:
 			virtual void init() = 0;
 			virtual void swapBuffers() = 0;
+			virtual ~GraphicsContext() = default;
 	};
 
 

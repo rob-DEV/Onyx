@@ -13,6 +13,7 @@ namespace Onyx {
 	public:
 		
 		VulkanGraphicsContext(GLFWwindow* window);
+		virtual ~VulkanGraphicsContext();
 		void init();
 		void swapBuffers();
 

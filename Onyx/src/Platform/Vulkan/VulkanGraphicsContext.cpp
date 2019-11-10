@@ -15,6 +15,11 @@ namespace Onyx {
 		m_VulkanInstance = NULL;
 	}
 
+	VulkanGraphicsContext::~VulkanGraphicsContext()
+	{
+		delete m_VulkanInstance;
+	}
+
 	void VulkanGraphicsContext::init()
 	{
 		std::cout << "Vulkan Init\n";
