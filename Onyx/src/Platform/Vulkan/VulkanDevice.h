@@ -9,24 +9,24 @@ namespace Onyx {
 
 	class VulkanDevice {
 	public:
-		VulkanDevice(const VkInstance& vkInstance, bool useValidationLayers);
+		VulkanDevice(VulkanInstance* vulkanInstance, bool useValidationLayers);
 		~VulkanDevice();
 	
 	private:
 		struct QueueFamilyIndices {
 			std::optional<uint32_t> graphicsFamily;
+			std::optional<uint32_t> presentFamily;
 
 			bool isComplete() {
-				return graphicsFamily.has_value();
+				return graphicsFamily.has_value() && presentFamily.has_value();
 			}
-
 		};
 
 		bool isDeviceSuitable(VkPhysicalDevice device);
 		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-		const std::vector<const char*> validationLayers = {
-			"VK_LAYER_KHRONOS_validation"
-		};
+		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surfaceKHR);
+		const std::vector<const char*> validationLayers = {	"VK_LAYER_KHRONOS_validation" };
+
 	private:
 
 		friend class VulkanInstance;

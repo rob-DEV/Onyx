@@ -9,14 +9,14 @@ static std::unordered_map<int, std::string> s_gpuVendors;
 namespace Onyx {
 
 	bool VulkanDevice::isDeviceSuitable(VkPhysicalDevice device) {
-		
+
 		QueueFamilyIndices indices = findQueueFamilies(device);
 
 		return indices.isComplete();
 	}
-	
+
 	VulkanDevice::QueueFamilyIndices VulkanDevice::findQueueFamilies(VkPhysicalDevice device) {
-		
+
 		VulkanDevice::QueueFamilyIndices indices = { 0 };
 
 		uint32_t queueFamilyCount = 0;
@@ -37,21 +37,43 @@ namespace Onyx {
 		return indices;
 	}
 
-	VulkanDevice::VulkanDevice(const VkInstance& vkInstance, bool useValidationLayers)
+	Onyx::VulkanDevice::QueueFamilyIndices VulkanDevice::findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surfaceKHR)
+	{
+		VulkanDevice::QueueFamilyIndices indices = { 0 };
+
+		uint32_t queueFamilyCount = 0;
+		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+
+		int i = 0;
+		for (const auto& queueFamily : queueFamilies) {
+			if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+				indices.graphicsFamily = i;
+			}
+
+			i++;
+		}
+
+		return indices;
+	}
+
+	VulkanDevice::VulkanDevice(VulkanInstance* vulkanInstance, bool useValidationLayers)
 	{
 
 		//CREATE PHYSICAL DEVICE 
 		uint32_t deviceCount = 0;
-		vkEnumeratePhysicalDevices(vkInstance, &deviceCount, nullptr);
-		
+		vkEnumeratePhysicalDevices(vulkanInstance->m_VkInstance, &deviceCount, nullptr);
+
 		if (deviceCount == 0) {
 			printf("Failed to find a GPU with Vulkan Support : VulkanDevice.cpp : 48\n");
 			assert(false);
 		}
 
 		std::vector<VkPhysicalDevice> devices(deviceCount);
-		vkEnumeratePhysicalDevices(vkInstance, &deviceCount, devices.data());
-		
+		vkEnumeratePhysicalDevices(vulkanInstance->m_VkInstance, &deviceCount, devices.data());
+
 		for (const auto& device : devices) {
 			if (isDeviceSuitable(device)) {
 				m_PhysicalDevice = device;
@@ -73,8 +95,8 @@ namespace Onyx {
 		vkGetPhysicalDeviceProperties(m_PhysicalDevice, &deviceProperties);
 		std::cout << "Vulkan GPU Info:\n";
 
-		std::cout << "\tDevice Name:" <<  deviceProperties.deviceName << "\n";
-		std::cout << "\tVendor:" << s_gpuVendors[deviceProperties.vendorID] <<"\n";
+		std::cout << "\tDevice Name:" << deviceProperties.deviceName << "\n";
+		std::cout << "\tVendor:" << s_gpuVendors[deviceProperties.vendorID] << "\n";
 
 		//CREATE LOGICAL DEVICE 
 		QueueFamilyIndices indices = findQueueFamilies(m_PhysicalDevice);
@@ -98,9 +120,9 @@ namespace Onyx {
 		createInfo.pEnabledFeatures = &deviceFeatures;
 
 		createInfo.enabledExtensionCount = 0;
-		
+
 		if (useValidationLayers) {
-			
+
 			createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
 			createInfo.ppEnabledLayerNames = validationLayers.data();
 		}

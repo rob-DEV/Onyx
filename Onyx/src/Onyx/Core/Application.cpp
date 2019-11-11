@@ -105,6 +105,8 @@ namespace Onyx {
 			scale += 0.01;
 		}
 
+		delete m_RendererAPI;
+
 	}
 
 }

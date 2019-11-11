@@ -3,7 +3,16 @@
 #include "VulkanInstance.h"
 #include "VulkanDevice.h"
 
+#define GLFW_INCLUDE_VULKAN
+#define GLFW_EXPOSE_NATIVE_WIN32
+
+
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
+
+#include <vulkan/vulkan_win32.h>
+
+#include <Onyx/Core/Application.h>
 
 namespace Onyx {
 
@@ -28,8 +37,9 @@ namespace Onyx {
 		return VK_FALSE;
 	}
 
-	VulkanInstance::VulkanInstance()
+	VulkanInstance::VulkanInstance(GLFWwindow* windowHandle)
 	{
+		m_WindowHandle = windowHandle;
 		init();
 	}
 
@@ -101,13 +111,12 @@ namespace Onyx {
 			//add all in extensions to be used, including validation layers and debug to VK instance creation info
 			createInfo.enabledExtensionCount = static_cast<uint32_t>(creation_extensions.size());
 			createInfo.ppEnabledExtensionNames = creation_extensions.data();
-
 		}
 
 		if (vkCreateInstance(&createInfo, nullptr, &m_VkInstance) != VK_SUCCESS)
-			printf("Failed to create Vulkan Instance : VulkanInstance.cpp 39\n");
+			printf("Failed to create Vulkan Instance : VulkanInstance.cpp : 39\n");
 		else
-			printf("Vulkan Instance - Successfully Created : VulkanInstance.cpp 41\n");
+			printf("Vulkan Instance created successfully : VulkanInstance.cpp : 41\n");
 
 
 		//create and point the VkDebugUtilsMessengerEXT to the call back function
@@ -126,12 +135,14 @@ namespace Onyx {
 			createDebugUtilsMessangerInfoResult = func(m_VkInstance, &createDebugUtilsMessangerInfo, nullptr, &m_DebugMessenger);
 		}
 		else {
-			printf("Failed to create vkDebugUtilsMessenger : VK_ERROR_EXTENSION_NOT_PRESENT\n");
+			printf("Failed to create vkDebugUtilsMessenger : VK_ERROR_EXTENSION_NOT_PRESENT : Vulkan Instance.cpp : 138\n");
+			assert(0);
 		}
 
-		if (createDebugUtilsMessangerInfoResult)
-			printf("Failed to setup vkDebugUtilsMessenger\n");
-
+		if (createDebugUtilsMessangerInfoResult) {
+			printf("Failed to setup vkDebugUtilsMessenger : Vulkan Instance.cpp : 143\n");
+			assert(0);
+		}
 		uint32_t extensionCount = 0;
 		vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
@@ -145,11 +156,32 @@ namespace Onyx {
 
 
 		//create physical and logical devices
-		m_VulkanDevice = new VulkanDevice(m_VkInstance, m_EnableValidationLayers);
+		m_VulkanDevice = new VulkanDevice(this, m_EnableValidationLayers);
 
+		//VkSurfaceKHR test creation
+		VkWin32SurfaceCreateInfoKHR surfaceCreateInfo = {};
+		surfaceCreateInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+		surfaceCreateInfo.hwnd = glfwGetWin32Window(m_WindowHandle);
+		surfaceCreateInfo.hinstance = GetModuleHandle(nullptr);
+
+		if (vkCreateWin32SurfaceKHR(m_VkInstance, &surfaceCreateInfo, nullptr, &m_VkSurfaceKHR) != VK_SUCCESS) {
+			printf("Failed to create VkSurfaceKHR : Vulkan Instance.cpp : 168\n");
+			assert(0);
+		}
+
+		//push created surface to GLFW
+		if (glfwCreateWindowSurface(m_VkInstance, m_WindowHandle, nullptr, &m_VkSurfaceKHR) != VK_SUCCESS) {
+			printf("Failed to add Vulkan Surface to GLFW window : Vulkan Instance.cpp : 174\n");
+			assert(0);
+
+		}
+		printf("Vulkan Surface (GLFW) created successfully!\n");
+	
 	}
 	VulkanInstance::~VulkanInstance()
 	{
+		vkDestroySurfaceKHR(m_VkInstance, m_VkSurfaceKHR, nullptr);
+		delete m_VulkanDevice;
 		vkDestroyInstance(m_VkInstance, nullptr);
 
 	}
