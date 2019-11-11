@@ -29,11 +29,16 @@ namespace Onyx {
 		s_Instance = this;
 
 		m_Window = new WindowsWindow(WindowProperties());
+		
 
-		m_RendererAPI = new VulkanRendererAPI();
+		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+			m_RendererAPI = new OpenGLRendererAPI();
+		else if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
+			m_RendererAPI = new VulkanRendererAPI();
+
+
 		m_RendererAPI->init();
 		m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
-
 		m_RendererAPI->setClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
 
 	}
@@ -48,7 +53,7 @@ namespace Onyx {
 	}
 	void Application::run()
 	{
-		//Renderer2D::init();
+		Renderer2D::init();
 
 		OrthographicCameraController* cameraController = new OrthographicCameraController();
 		Texture2D* testMarioTexture = Texture2D::create("res/textures/mario.png");
@@ -80,7 +85,7 @@ namespace Onyx {
 
 			//renderer test 
 			
-			/* Renderer turned off for Vulkan testing 
+			//Renderer turned off for Vulkan testing 
 			Renderer2D::beginScene(cameraController->getCamera());
 			
 			Renderer2D::drawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
@@ -92,7 +97,7 @@ namespace Onyx {
 			Renderer2D::drawQuad(glm::vec3(0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
 
 			Renderer2D::endScene();
-			*/
+		
 
 			if (Input::isKeyPressed(ONYX_KEY_ESCAPE))
 				break;

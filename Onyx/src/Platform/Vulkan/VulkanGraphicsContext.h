@@ -2,7 +2,7 @@
 #define _ONYX_PLATFORM_VULKAN_GRAPHICS_CONTEXT_H_
 
 #include <Onyx/graphics/GraphicsContext.h>
-#include "VulkanInstance.h"
+#include <Platform/Vulkan/VulkanInstance.h>
 
 struct GLFWwindow;
 
@@ -18,7 +18,7 @@ namespace Onyx {
 		void swapBuffers();
 
 	private:
-		VulkanInstance* m_VulkanInstance;
+		VulkanInstance* m_VulkanInstance = NULL;
 		GLFWwindow* m_WindowHandle;
 
 	};
@@ -27,4 +27,4 @@ namespace Onyx {
 }
 
 
-#endif // _ONYX_GRAPHICS_CONTEXT_H_
+#endif // _ONYX_PLATFORM_VULKAN_GRAPHICS_CONTEXT_H_

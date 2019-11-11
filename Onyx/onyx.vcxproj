@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -36,9 +36,11 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanInstance.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanGraphicsContext.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanSurface.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsFileIO.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -74,9 +76,11 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLGraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanDevice.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanInstance.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanGraphicsContext.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanSurface.h" />
     <ClInclude Include="src\Platform\Windows\WindowsFileIO.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />

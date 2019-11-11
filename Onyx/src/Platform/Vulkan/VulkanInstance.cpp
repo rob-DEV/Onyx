@@ -1,5 +1,7 @@
 #include "onyxpch.h"
+
 #include "VulkanInstance.h"
+#include "VulkanDevice.h"
 
 #include <GLFW/glfw3.h>
 
@@ -49,7 +51,7 @@ namespace Onyx {
 		};
 
 		std::vector<const char*> creation_extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-		
+
 		if (m_EnableValidationLayers) {
 
 			uint32_t layerCount;
@@ -132,11 +134,14 @@ namespace Onyx {
 		for (const auto& extension : extensions)
 			std::cout << "\t" << extension.extensionName << std::endl;
 
+		//create physical and logical devices
+		m_VulkanDevice = new VulkanDevice(m_VkInstance);
+
 	}
 
 	VulkanInstance::~VulkanInstance()
 	{
 		vkDestroyInstance(m_VkInstance, nullptr);
-		
+
 	}
 }

@@ -15,7 +15,4 @@ namespace Onyx {
 	};
 }
 
-
-
-
-#endif // !_ONYX_PLATFORM_OPENGL_RENDERER_API_H_
+#endif // !_ONYX_PLATFORM_VULKAN_RENDERER_API_H_

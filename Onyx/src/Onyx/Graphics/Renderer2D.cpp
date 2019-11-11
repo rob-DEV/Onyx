@@ -1,6 +1,7 @@
 #include "onyxpch.h"
-#include "Renderer2D.h"
 
+#include "Renderer2D.h"
+#include "RendererAPI.h"
 #include "VertexArray.h"
 #include "OrthographicCamera.h"
 
@@ -25,6 +26,9 @@ namespace Onyx {
 
 	void Renderer2D::init()
 	{
+		if (RendererAPI::getAPI() != RendererAPI::API::OpenGL)
+			return;
+
 		s_Data = new Data();
 		VertexArray* quadVA = VertexArray::create();
 
@@ -69,6 +73,8 @@ namespace Onyx {
 
 	void Renderer2D::beginScene(const OrthographicCamera& camera)
 	{
+		if (RendererAPI::getAPI() != RendererAPI::API::OpenGL)
+			return;
 		(s_Data->SH)->bind();
 		(s_Data->SH)->uploadUniformMat4("u_ViewProjection", camera.getViewProjectionMatrix());
 	}
@@ -85,6 +91,8 @@ namespace Onyx {
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
+		if (RendererAPI::getAPI() != RendererAPI::API::OpenGL)
+			return;
 		(s_Data->SH)->uploadUniformFloat3("u_VertexColor", color);
 		//bind white texture to only allow color to come through
 		s_Data->WhiteTexture->bind();
@@ -98,6 +106,9 @@ namespace Onyx {
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
 	{
+		if (RendererAPI::getAPI() != RendererAPI::API::OpenGL)
+			return;
+
 		s_Data->SH->uploadUniformFloat3("u_VertexColor", glm::vec4(1));
 		texture->bind();
 
