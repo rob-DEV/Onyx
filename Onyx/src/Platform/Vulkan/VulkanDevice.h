@@ -9,7 +9,7 @@ namespace Onyx {
 
 	class VulkanDevice {
 	public:
-		VulkanDevice(const VkInstance& vkInstance);
+		VulkanDevice(const VkInstance& vkInstance, bool useValidationLayers);
 		~VulkanDevice();
 	
 	private:
@@ -24,7 +24,9 @@ namespace Onyx {
 
 		bool isDeviceSuitable(VkPhysicalDevice device);
 		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-
+		const std::vector<const char*> validationLayers = {
+			"VK_LAYER_KHRONOS_validation"
+		};
 	private:
 
 		friend class VulkanInstance;
@@ -32,6 +34,7 @@ namespace Onyx {
 		//VK MEMBERS
 		VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
 		VkDevice m_LogicalDevice = VK_NULL_HANDLE;
+		VkQueue m_GraphicsQueue = VK_NULL_HANDLE; 
 
 
 	};

@@ -4,6 +4,7 @@
 #include <Onyx/graphics/RendererAPI.h>
 #include <vulkan/vulkan.h>
 
+#include <vector>
 
 namespace Onyx {
 
@@ -14,6 +15,7 @@ namespace Onyx {
 		VulkanInstance();
 		~VulkanInstance();
 		void init();
+		std::vector<const char*> getRequiredExtensions();
 
 	private:
 
@@ -30,7 +32,7 @@ namespace Onyx {
 		//VK MEMBERS
 		VkInstance m_VkInstance;
 		VkDebugUtilsMessengerEXT m_DebugMessenger;
-
+		const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };
 	};
 }
 

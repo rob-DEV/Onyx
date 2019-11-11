@@ -7,6 +7,20 @@
 
 namespace Onyx {
 
+	std::vector<const char*> VulkanInstance::getRequiredExtensions() {
+		uint32_t glfwExtensionCount = 0;
+		const char** glfwExtensions;
+		glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+		std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+		if (m_EnableValidationLayers) {
+			extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+		}
+
+		return extensions;
+	}
+
 	VKAPI_ATTR VkBool32 VKAPI_CALL VulkanInstance::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
 	{
 		//VULKAN DEBUG MESSENGER CALLBACK FUNCTION	
@@ -35,16 +49,12 @@ namespace Onyx {
 
 		uint32_t glfwExtensionCount = 0;
 		const char** glfwExtensions;
-
 		glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
 		createInfo.enabledExtensionCount = glfwExtensionCount;
 		createInfo.ppEnabledExtensionNames = glfwExtensions;
 
-		//TODO: implement validation layers
 		createInfo.enabledLayerCount = 0;
-
-		//enable validation layers only if in _ONYX_DEBUG_
 
 		const std::vector<const char*> validationLayers = {
 			"VK_LAYER_KHRONOS_validation"
@@ -94,7 +104,6 @@ namespace Onyx {
 
 		}
 
-
 		if (vkCreateInstance(&createInfo, nullptr, &m_VkInstance) != VK_SUCCESS)
 			printf("Failed to create Vulkan Instance : VulkanInstance.cpp 39\n");
 		else
@@ -134,11 +143,11 @@ namespace Onyx {
 		for (const auto& extension : extensions)
 			std::cout << "\t" << extension.extensionName << std::endl;
 
+
 		//create physical and logical devices
-		m_VulkanDevice = new VulkanDevice(m_VkInstance);
+		m_VulkanDevice = new VulkanDevice(m_VkInstance, m_EnableValidationLayers);
 
 	}
-
 	VulkanInstance::~VulkanInstance()
 	{
 		vkDestroyInstance(m_VkInstance, nullptr);
