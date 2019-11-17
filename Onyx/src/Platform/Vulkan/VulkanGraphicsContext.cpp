@@ -30,10 +30,7 @@ namespace Onyx {
 
 		//initialize Vulkan instance
 		m_VulkanInstance = new VulkanInstance(m_WindowHandle);
-		//m_VulkanInstance->init();
-
-		
-		
+		m_VulkanInstance->run();
 
 		std::cout << "Vulkan Initialization End!\n";
 	}

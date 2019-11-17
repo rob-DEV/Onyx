@@ -6,7 +6,6 @@
 
 //-- Entry point is in header file for now --//
 #include "core/Entrypoint.h"
-
 #endif // !_ONYX_H_
 
 
