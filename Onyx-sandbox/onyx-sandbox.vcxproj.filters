@@ -22,5 +22,9 @@
   <ItemGroup>
     <None Include="res\shaders\FlatColor.glsl" />
     <None Include="res\shaders\Texture.glsl" />
+    <None Include="res\shaders\vulkantest\vkfrag.glsl" />
+    <None Include="res\shaders\vulkantest\vkvert.glsl" />
+    <None Include="res\shaders\vulkantest\vkfrag.spv" />
+    <None Include="res\shaders\vulkantest\vkvert.spv" />
   </ItemGroup>
 </Project>

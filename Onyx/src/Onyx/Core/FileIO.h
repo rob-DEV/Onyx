@@ -3,17 +3,18 @@
 
 #include "Core.h"
 #include <string>
+#include <vector> 
 
 namespace Onyx {
 
 	class ONYX_API FileIO {
 
 	public:
-		inline static std::string readFile(const std::string& filepath) { return s_Instance->readFileImplementation(filepath); };
-
+		inline static std::string readFileString(const std::string& filepath) { return s_Instance->readFileStringImplementation(filepath); };
+		inline static std::vector<char> readFileByte(const std::string& filepath) { return s_Instance->readFileByteImplementation(filepath); };
 	protected:
-		virtual const std::string readFileImplementation(const std::string& filepath) = 0;
-
+		virtual const std::string readFileStringImplementation(const std::string& filepath) = 0;
+		virtual const std::vector<char> readFileByteImplementation(const std::string& filepath) = 0;
 	private:
 		static FileIO* s_Instance;
 	};

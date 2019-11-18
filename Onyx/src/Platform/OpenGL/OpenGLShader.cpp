@@ -22,7 +22,7 @@ namespace Onyx {
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
-		std::string source = FileIO::readFile(filepath);
+		std::string source = FileIO::readFileString(filepath);
 		auto shaderSources = preProcess(source);
 		compile(shaderSources);
 

@@ -70,7 +70,16 @@ namespace Onyx {
 		VkExtent2D swapChainExtent;
 		std::vector<VkImageView> swapChainImageViews;
 
-		
+		VkPipelineLayout pipelineLayout;
+		VkRenderPass renderPass;
+		VkPipeline graphicsPipeline;
+		VkCommandPool commandPool;
+		std::vector<VkCommandBuffer> commandBuffers;
+
+		std::vector<VkFramebuffer> swapChainFramebuffers;
+		VkSemaphore imageAvailableSemaphore;
+		VkSemaphore renderFinishedSemaphore;
+
 
 		void initVulkan();
 
@@ -93,6 +102,22 @@ namespace Onyx {
 		void createSwapChain();
 
 		void createImageViews();
+
+		void createRenderPass();
+
+		void createGraphicsPipeline();
+
+		void createFramebuffers();
+
+		void createCommandPool();
+
+		void createCommandBuffers();
+
+		void createSemaphores();
+
+		void drawFrame();
+
+		VkShaderModule createShaderModule(const std::vector<char>& code);
 
 		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 

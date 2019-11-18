@@ -49,7 +49,7 @@ namespace Onyx {
 
 		glEnableVertexAttribArray(0);
 
-		//index, size of each vertex, type, normailsed?, byte size of each vertex packet, offset into packet for data
+		//index, size of each vertex, type, normalized?, byte size of each vertex packet, offset into packet for data
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, (void*)0);
 
 		glEnableVertexAttribArray(1);
