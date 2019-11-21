@@ -19,6 +19,7 @@ namespace Onyx {
 			pos.x += testSpeed;
 			m_Camera.setPosition(pos);
 
+
 		}
 
 		if (Input::isKeyPressed(ONYX_KEY_A)) {

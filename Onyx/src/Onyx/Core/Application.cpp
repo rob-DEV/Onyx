@@ -23,14 +23,23 @@ namespace Onyx {
 
 	Application::Application()
 	{
-		printf("Creating Onyx Application and Window!\n");
-	
-
 		s_Instance = this;
+		printf("Creating Onyx Application and Window!\n");
+
 
 		m_Window = new WindowsWindow(WindowProperties());
-		
+	
 
+	}
+
+	Application::~Application()
+	{
+		delete m_Window;
+	}
+
+
+	void Application::run()
+	{
 		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			m_RendererAPI = new OpenGLRendererAPI();
 		else if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
@@ -41,18 +50,7 @@ namespace Onyx {
 		m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
 		m_RendererAPI->setClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
 
-	}
 
-	Application::~Application()
-	{
-		delete m_Window;
-	}
-
-	void MySaveFunction() {
-
-	}
-	void Application::run()
-	{
 		Renderer2D::init();
 
 		OrthographicCameraController* cameraController = new OrthographicCameraController();
@@ -61,8 +59,6 @@ namespace Onyx {
 		double previousTime = glfwGetTime();
 		int frameCount = 0;
 
-
-		// Setup Dear ImGui style
 		while (!m_Window->isClosed()) {
 			
 

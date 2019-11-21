@@ -3,6 +3,16 @@
 
 namespace Onyx {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	//ABSOLUTE GRAPHICS API SETTING
+	//USE THIS TO SET ONYX RENDERING API
 
+	//CURRENTLY SUPPORTING
+	//OPEN GL
+	//VULKAN
+	
+	//////////////////////////////////////////////////////////////////////////
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	//////////////////////////////////////////////////////////////////////////
+	
+	//
 }

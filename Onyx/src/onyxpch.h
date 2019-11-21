@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <cassert>
+
 #ifdef _ONYX_BUILD_TARGET_WINDOWS_
 
 #include <windows.h>

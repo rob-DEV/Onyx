@@ -93,8 +93,8 @@ namespace Onyx {
 	{
 		if (RendererAPI::getAPI() != RendererAPI::API::OpenGL)
 			return;
+
 		(s_Data->SH)->uploadUniformFloat3("u_VertexColor", color);
-		//bind white texture to only allow color to come through
 		s_Data->WhiteTexture->bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, position.z });
