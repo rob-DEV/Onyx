@@ -23,8 +23,10 @@ namespace Onyx {
 
 
 		//creates and assigns the initial vkInstance 
-		m_VulkanInstance = VulkanInstance::create();
-		m_VulkanSurface = VulkanSurface::create(m_WindowHandle);
+		m_VulkanInstance = VulkanInstance::get();
+		m_VulkanInstance->setGLFWwindow(m_WindowHandle);
+		m_VulkanSurface = VulkanSurface::get();
+		VulkanDevice* h = VulkanDevice::get();
 
 
 		std::cout << "Vulkan Initialization End!\n";

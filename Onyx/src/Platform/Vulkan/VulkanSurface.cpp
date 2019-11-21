@@ -1,5 +1,6 @@
 #include "onyxpch.h"
 #include "VulkanSurface.h"
+#include "VulkanInstance.h"
 
 #define GLFW_INCLUDE_VULKAN
 #define GLFW_EXPOSE_NATIVE_WIN32
@@ -13,12 +14,12 @@
 
 namespace Onyx {
 
-	VulkanSurface* VulkanSurface::s_Instance = NULL;
+	VulkanSurface* VulkanSurface::s_Instance = NULL; 
 
-	VulkanSurface::VulkanSurface(GLFWwindow* windowHandle)
+	VulkanSurface::VulkanSurface()
 	{
 
-		if (glfwCreateWindowSurface(VulkanInstance::create()->getVkInstance(), windowHandle, nullptr, &m_VkSurface) != VK_SUCCESS) {
+		if (glfwCreateWindowSurface(VulkanInstance::get()->getVkInstance(), VulkanInstance::get()->getGLFWwindow(), nullptr, &m_VkSurface) != VK_SUCCESS) {
 			printf("VulkanSurface.cpp 22 : Failed to create GLFW VkSurface\n");
 			assert(false);
 		}
@@ -29,13 +30,13 @@ namespace Onyx {
 
 	VulkanSurface::~VulkanSurface()
 	{
-		vkDestroySurfaceKHR(VulkanInstance::create()->getVkInstance(), m_VkSurface, nullptr);
+		vkDestroySurfaceKHR(VulkanInstance::get()->getVkInstance(), m_VkSurface, nullptr);
 	}
 	
-	VulkanSurface* VulkanSurface::create(GLFWwindow* windowHandle)
+	VulkanSurface* VulkanSurface::get()
 	{
 		if(s_Instance == NULL)
-			s_Instance = new VulkanSurface(windowHandle);
+			s_Instance = new VulkanSurface();
 		
 		return s_Instance;
 	}

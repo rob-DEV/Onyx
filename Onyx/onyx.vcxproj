@@ -36,6 +36,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\Vulkan\VulkanDevice.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanInstance.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanRendererAPI.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanGraphicsContext.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLGraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanDevice.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanGraphicsContext.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanInstance.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />

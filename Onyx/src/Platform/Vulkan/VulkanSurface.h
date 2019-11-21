@@ -1,21 +1,18 @@
 #ifndef _ONYX_PLATFORM_VULKAN_SURFACE_H_
 #define _ONYX_PLATFORM_VULKAN_SURFACE_H_
 
-#include "VulkanInstance.h"
-#include <vulkan/vulkan.h>
-#include <vector>
 
-struct GLFWwindow;
+#include <vulkan/vulkan.h>
 
 namespace Onyx {
 
 	class VulkanSurface {
 	private:
-		VulkanSurface(GLFWwindow* windowHandle);
+		VulkanSurface();
 		static VulkanSurface* s_Instance;
 	public:
 		~VulkanSurface();
-		static VulkanSurface* create(GLFWwindow* windowHandle);
+		static VulkanSurface* get();
 		const VkSurfaceKHR& getVkSurface() const { return m_VkSurface; };
 
 	private:

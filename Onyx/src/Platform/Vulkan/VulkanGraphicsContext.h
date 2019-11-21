@@ -5,20 +5,19 @@
 
 #include <Platform/Vulkan/VulkanInstance.h>
 #include <Platform/Vulkan/VulkanSurface.h>
+#include <Platform/Vulkan/VulkanDevice.h>
 
-struct GLFWwindow;
+
 
 namespace Onyx {
 
 	class VulkanGraphicsContext : public GraphicsContext {
-
 	public:
 
 		VulkanGraphicsContext(GLFWwindow* window);
 		virtual ~VulkanGraphicsContext();
 		void init();
 		void swapBuffers();
-
 
 	private:
 		VulkanInstance* m_VulkanInstance;

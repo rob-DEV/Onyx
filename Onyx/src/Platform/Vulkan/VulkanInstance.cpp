@@ -3,9 +3,11 @@
 
 #include <GLFW/glfw3.h>
 
+
 namespace Onyx {
 
 	VulkanInstance* VulkanInstance::s_Instance = NULL;
+	GLFWwindow* VulkanInstance::m_WindowHandle = NULL;
 
 	VulkanInstance::VulkanInstance()
 	{
@@ -84,7 +86,7 @@ namespace Onyx {
 		vkDestroyInstance(m_VkInstance, nullptr);
 	}
 
-	VulkanInstance* VulkanInstance::create()
+	VulkanInstance* VulkanInstance::get()
 	{
 		if (s_Instance == NULL)
 			return new VulkanInstance();
