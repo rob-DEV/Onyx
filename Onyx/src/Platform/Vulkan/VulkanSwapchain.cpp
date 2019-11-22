@@ -427,7 +427,7 @@ namespace Onyx {
 
 			vkCmdBindPipeline(m_CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
 
-			vkCmdDraw(m_CommandBuffers[i], 3, 1, 0, 0);
+			vkCmdDraw(m_CommandBuffers[i], 6, 1, 0, 0);
 
 			vkCmdEndRenderPass(m_CommandBuffers[i]);
 
