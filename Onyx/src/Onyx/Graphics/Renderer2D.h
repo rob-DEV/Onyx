@@ -10,6 +10,12 @@
 
 namespace Onyx {
 
+	struct Vertex2D {
+		glm::vec3 position;
+		glm::vec4 color;
+		glm::vec2 texCoord;
+	};
+
 	class ONYX_API Renderer2D {
 	public:
 	
@@ -25,6 +31,8 @@ namespace Onyx {
 
 
 	private:
+		Vertex2D* m_Vertex2dBufferMap = nullptr;
+
 
 	};
 

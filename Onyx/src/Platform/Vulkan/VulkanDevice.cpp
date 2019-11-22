@@ -18,7 +18,7 @@ namespace Onyx {
 
 	VulkanDevice::~VulkanDevice()
 	{
-
+		vkDestroyDevice(m_Device, nullptr);
 	}
 
 	VulkanDevice* VulkanDevice::get()
@@ -94,7 +94,8 @@ namespace Onyx {
 		}
 
 		if (vkCreateDevice(m_PhysicalDevice, &createInfo, nullptr, &m_Device) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create logical device!");
+			printf("VulkanDevice.cpp 97 : Failed to create logical device\n");
+			assert(false);
 		}
 
 		vkGetDeviceQueue(m_Device, indices.graphicsFamily.value(), 0, &m_GraphicsQueue);

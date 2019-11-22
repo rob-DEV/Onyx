@@ -17,6 +17,7 @@ namespace Onyx {
 		virtual const std::vector<char> readFileByteImplementation(const std::string& filepath) = 0;
 	private:
 		static FileIO* s_Instance;
+
 	};
 }
 

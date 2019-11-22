@@ -38,6 +38,8 @@ namespace Onyx {
 		static VulkanDevice* get();
 		const VkPhysicalDevice& getPhysicalDevice() const { return m_PhysicalDevice; };
 		const VkDevice& getLogicalDevice() const { return m_Device; };
+		const VkQueue& getGraphicsQueue() const { return m_GraphicsQueue; };
+		const VkQueue& getPresentQueue() const { return m_PresentQueue; };
 
 	private:
 		void pickPhysicalDevice();
@@ -49,6 +51,7 @@ namespace Onyx {
 		VkQueue m_GraphicsQueue;
 		VkQueue m_PresentQueue;
 
+	public:
 		//HELPER METHODS
 		bool isDeviceSuitable(VkPhysicalDevice device);
 		bool checkDeviceExtensionSupport(VkPhysicalDevice device);

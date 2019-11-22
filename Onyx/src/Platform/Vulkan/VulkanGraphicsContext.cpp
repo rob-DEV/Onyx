@@ -13,6 +13,8 @@ namespace Onyx {
 
 	VulkanGraphicsContext::~VulkanGraphicsContext()
 	{
+		delete m_VulkanSwapchain;
+		delete m_VulkanDevice;
 		delete m_VulkanSurface;
 		delete m_VulkanInstance;
 	}
@@ -26,8 +28,13 @@ namespace Onyx {
 		m_VulkanInstance = VulkanInstance::get();
 		m_VulkanInstance->setGLFWwindow(m_WindowHandle);
 		m_VulkanSurface = VulkanSurface::get();
-		VulkanDevice* h = VulkanDevice::get();
-
+		m_VulkanDevice = VulkanDevice::get();
+		m_VulkanSwapchain = VulkanSwapchain::get();
+		
+		while (!glfwWindowShouldClose(m_WindowHandle)) {
+			m_VulkanSwapchain->get()->drawFrame();
+			glfwPollEvents();
+		}
 
 		std::cout << "Vulkan Initialization End!\n";
 	}

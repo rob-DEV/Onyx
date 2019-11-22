@@ -81,6 +81,7 @@
     <ClInclude Include="src\Platform\Vulkan\VulkanGraphicsContext.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanInstance.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />
+    <ClInclude Include="src\Platform\Vulkan\VulkanShader.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanSurface.h" />
     <ClInclude Include="src\Platform\Windows\WindowsFileIO.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />

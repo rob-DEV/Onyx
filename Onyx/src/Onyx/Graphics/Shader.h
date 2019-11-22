@@ -21,10 +21,6 @@ namespace Onyx {
 		static Shader* create(const std::string& filepath);
 		static Shader* create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 
-	public:
-
-	private:
-
 	};
 
 	class ONYX_API ShaderLibrary {

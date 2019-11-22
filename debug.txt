@@ -1,0 +1,5 @@
+Validation layer: vkDestroySurfaceKHR() called before its associated VkSwapchainKHR was destroyed. The Vulkan spec states: All
+Validation layer: OBJ ERROR : VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT object VkDevice 0x201166f72b0[] has not been destroyed.
+Validation layer: OBJ ERROR : VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT object VkDevice 0x201166f72b0[] has not been destroyed.
+Validation layer: OBJ ERROR : For VkInstance 0x20111eeb5c0[], VkDebugUtilsMessengerEXT 0x2aefa40000000001[] has not been destroyed. 
+Validation layer: OBJ ERROR : For VkInstance 0x20111eeb5c0[], VkDebugUtilsMessengerEXT 0x2aefa40000000001[] has not been destroyed. 

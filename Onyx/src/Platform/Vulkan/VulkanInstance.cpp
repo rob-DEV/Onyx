@@ -83,6 +83,10 @@ namespace Onyx {
 
 	VulkanInstance::~VulkanInstance()
 	{
+
+		if (this->validationLayersEnabled()) {
+			DestroyDebugUtilsMessengerEXT(this->getVkInstance(), m_VkDebugMessenger, nullptr);
+		}
 		vkDestroyInstance(m_VkInstance, nullptr);
 	}
 

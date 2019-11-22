@@ -6,6 +6,7 @@
 #include <Platform/Vulkan/VulkanInstance.h>
 #include <Platform/Vulkan/VulkanSurface.h>
 #include <Platform/Vulkan/VulkanDevice.h>
+#include <Platform/Vulkan/VulkanSwapchain.h>
 
 
 
@@ -22,6 +23,8 @@ namespace Onyx {
 	private:
 		VulkanInstance* m_VulkanInstance;
 		VulkanSurface* m_VulkanSurface;
+		VulkanDevice* m_VulkanDevice;
+		VulkanSwapchain* m_VulkanSwapchain;
 		GLFWwindow* m_WindowHandle;
 
 	};
