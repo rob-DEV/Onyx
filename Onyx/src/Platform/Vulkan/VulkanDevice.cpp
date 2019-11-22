@@ -3,13 +3,22 @@
 #include "VulkanSurface.h"
 
 #include <set>
+#include <unordered_map>
+
+static std::unordered_map<int, std::string> s_GpuVendors;
 
 namespace Onyx {
 
-	VulkanDevice* VulkanDevice::s_Instance = NULL;
+	VulkanDevice* VulkanDevice::s_Instance = nullptr;
 	
 	VulkanDevice::VulkanDevice()
 	{
+		//ASSIGN GPU VENDORS
+		s_GpuVendors[0x1002] = "AMD";
+		s_GpuVendors[0x10DE] = "Nvidia Corporation";
+		s_GpuVendors[0x8086] = "Intel (R) Graphics";
+		s_GpuVendors[0x13B5] = "ARM";
+
 		pickPhysicalDevice();
 		createLogicalDevice();
 		
@@ -23,7 +32,7 @@ namespace Onyx {
 
 	VulkanDevice* VulkanDevice::get()
 	{
-		if (s_Instance == NULL)
+		if (s_Instance == nullptr)
 			return new VulkanDevice();
 		else
 			return s_Instance;
@@ -53,6 +62,16 @@ namespace Onyx {
 			printf("VulkanDevice.cpp 50 : Failed to find a suitable GPU\n");
 			assert(false);
 		}
+
+		VkPhysicalDeviceProperties physicalDeviceProperties = { 0 };
+
+		vkGetPhysicalDeviceProperties(m_PhysicalDevice, &physicalDeviceProperties);
+		
+		printf("\n");
+		printf("Physical Device Details:\n");
+		printf("\tDevice Name: %s\n", physicalDeviceProperties.deviceName);
+		printf("\tVendor: %s\n\n", s_GpuVendors[physicalDeviceProperties.vendorID].c_str());
+
 	}
 
 	void VulkanDevice::createLogicalDevice()
@@ -134,7 +153,7 @@ namespace Onyx {
 		return requiredExtensions.empty();
 	}
 
-	QueueFamilyIndices VulkanDevice::findQueueFamilies(VkPhysicalDevice device)
+	VulkanDevice::QueueFamilyIndices VulkanDevice::findQueueFamilies(VkPhysicalDevice device)
 	{
 		QueueFamilyIndices indices;
 
@@ -167,7 +186,7 @@ namespace Onyx {
 		return indices;
 	}
 
-	SwapChainSupportDetails VulkanDevice::querySwapChainSupport(VkPhysicalDevice device)
+	VulkanDevice::SwapChainSupportDetails VulkanDevice::querySwapChainSupport(VkPhysicalDevice device)
 	{
 		SwapChainSupportDetails details;
 

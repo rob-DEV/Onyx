@@ -6,8 +6,8 @@
 
 namespace Onyx {
 
-	VulkanInstance* VulkanInstance::s_Instance = NULL;
-	GLFWwindow* VulkanInstance::m_WindowHandle = NULL;
+	VulkanInstance* VulkanInstance::s_Instance = nullptr;
+	GLFWwindow* VulkanInstance::m_WindowHandle = nullptr;
 
 	VulkanInstance::VulkanInstance()
 	{
@@ -92,7 +92,7 @@ namespace Onyx {
 
 	VulkanInstance* VulkanInstance::get()
 	{
-		if (s_Instance == NULL)
+		if (s_Instance == nullptr)
 			return new VulkanInstance();
 		else
 			return s_Instance;
@@ -162,7 +162,7 @@ namespace Onyx {
 	//VULKAN VALIDATION LAYERS DEBUG CALLBACK
 	VKAPI_ATTR VkBool32 VKAPI_CALL VulkanInstance::VulkanInstanceDebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
 	{
-		std::cerr << "Validation layer: " << pCallbackData->pMessage << std::endl;
+		printf("Validation Layer : %s\n", pCallbackData->pMessage);
 		return VK_FALSE;
 	}
 

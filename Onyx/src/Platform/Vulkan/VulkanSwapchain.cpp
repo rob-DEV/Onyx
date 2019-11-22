@@ -7,7 +7,7 @@
 
 namespace Onyx {
 
-	VulkanSwapchain* VulkanSwapchain::s_Instance = NULL;
+	VulkanSwapchain* VulkanSwapchain::s_Instance = nullptr;
 
 	VulkanSwapchain::VulkanSwapchain()
 	{
@@ -49,7 +49,7 @@ namespace Onyx {
 
 	VulkanSwapchain* VulkanSwapchain::get()
 	{
-		if (s_Instance == NULL)
+		if (s_Instance == nullptr)
 			return new VulkanSwapchain();
 		else
 			return s_Instance;
@@ -57,7 +57,7 @@ namespace Onyx {
 
 	void VulkanSwapchain::createSwapchain()
 	{
-		SwapChainSupportDetails swapChainSupport = VulkanDevice::get()->querySwapChainSupport(VulkanDevice::get()->getPhysicalDevice());
+		VulkanDevice::SwapChainSupportDetails swapChainSupport = VulkanDevice::get()->querySwapChainSupport(VulkanDevice::get()->getPhysicalDevice());
 
 		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
@@ -79,7 +79,7 @@ namespace Onyx {
 		createInfo.imageArrayLayers = 1;
 		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-		QueueFamilyIndices indices = VulkanDevice::get()->findQueueFamilies(VulkanDevice::get()->getPhysicalDevice());
+		VulkanDevice::QueueFamilyIndices indices = VulkanDevice::get()->findQueueFamilies(VulkanDevice::get()->getPhysicalDevice());
 		uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
 
 		if (indices.graphicsFamily != indices.presentFamily) {
@@ -139,10 +139,10 @@ namespace Onyx {
 			return capabilities.currentExtent;
 		}
 		else {
-			VkExtent2D actualExtent = { 800, 600 };
 
-			actualExtent.width = 800;
-			actualExtent.height = 600;
+			VkExtent2D actualExtent = { 1280, 720 };
+			actualExtent.width = 1280;
+			actualExtent.height = 720;
 
 			return actualExtent;
 		}
@@ -326,7 +326,8 @@ namespace Onyx {
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
 		if (vkCreatePipelineLayout(VulkanDevice::get()->getLogicalDevice(), &pipelineLayoutInfo, nullptr, &m_PipelineLayout) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create pipeline layout!");
+			printf("VulkanSwapchain.cpp 329 : Failed to create Pipeline Layout\n");
+			assert(false);
 		}
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
@@ -345,7 +346,8 @@ namespace Onyx {
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
 		if (vkCreateGraphicsPipelines(VulkanDevice::get()->getLogicalDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipeline) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create graphics pipeline!");
+			printf("VulkanSwapchain.cpp 349 : Failed to create Graphics Pipeline\n");
+			assert(false);
 		}
 
 
@@ -371,14 +373,15 @@ namespace Onyx {
 			framebufferInfo.layers = 1;
 
 			if (vkCreateFramebuffer(VulkanDevice::get()->getLogicalDevice(), &framebufferInfo, nullptr, &m_SwapChainFramebuffers[i]) != VK_SUCCESS) {
-				throw std::runtime_error("failed to create framebuffer!");
+				printf("VulkanSwapchain.cpp 376 : Failed to create Frame Buffer\n");
+				assert(false);
 			}
 		}
 	}
 
 	void VulkanSwapchain::createCommandPool()
 	{
-		QueueFamilyIndices queueFamilyIndices = VulkanDevice::get()->findQueueFamilies(VulkanDevice::get()->getPhysicalDevice());
+		VulkanDevice::QueueFamilyIndices queueFamilyIndices = VulkanDevice::get()->findQueueFamilies(VulkanDevice::get()->getPhysicalDevice());
 
 		VkCommandPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
@@ -386,7 +389,8 @@ namespace Onyx {
 		poolInfo.flags = 0; // Optional
 
 		if (vkCreateCommandPool(VulkanDevice::get()->getLogicalDevice(), &poolInfo, nullptr, &m_CommandPool) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create command pool!");
+			printf("VulkanSwapchain.cpp 329 : Failed to create Command Pool\n");
+			assert(false);
 		}
 	}
 
@@ -401,7 +405,8 @@ namespace Onyx {
 		allocInfo.commandBufferCount = (uint32_t)m_CommandBuffers.size();
 
 		if (vkAllocateCommandBuffers(VulkanDevice::get()->getLogicalDevice(), &allocInfo, m_CommandBuffers.data()) != VK_SUCCESS) {
-			throw std::runtime_error("failed to allocate command buffers!");
+			printf("VulkanSwapchain.cpp 329 : Failed to allocate Command Buffer\n");
+			assert(false);
 		}
 
 		for (size_t i = 0; i < m_CommandBuffers.size(); i++) {
@@ -409,7 +414,8 @@ namespace Onyx {
 			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 
 			if (vkBeginCommandBuffer(m_CommandBuffers[i], &beginInfo) != VK_SUCCESS) {
-				throw std::runtime_error("failed to begin recording command buffer!");
+				printf("VulkanSwapchain.cpp 417 : Failed to begin recording Command Buffer\n");
+				assert(false);
 			}
 
 			VkRenderPassBeginInfo renderPassInfo = {};
@@ -432,7 +438,8 @@ namespace Onyx {
 			vkCmdEndRenderPass(m_CommandBuffers[i]);
 
 			if (vkEndCommandBuffer(m_CommandBuffers[i]) != VK_SUCCESS) {
-				throw std::runtime_error("failed to record command buffer!");
+				printf("VulkanSwapchain.cpp 441 : Failed to record Command Buffer\n");
+				assert(false);
 			}
 		}
 	}
@@ -445,7 +452,8 @@ namespace Onyx {
 		if (vkCreateSemaphore(VulkanDevice::get()->getLogicalDevice(), &semaphoreInfo, nullptr, &m_ImageAvailableSemaphore) != VK_SUCCESS ||
 			vkCreateSemaphore(VulkanDevice::get()->getLogicalDevice(), &semaphoreInfo, nullptr, &m_RenderFinishedSemaphore) != VK_SUCCESS) {
 
-			throw std::runtime_error("failed to create semaphores!");
+			printf("VulkanSwapchain.cpp 417 : Failed to create Semaphores\n");
+			assert(false);
 		}
 	}
 
@@ -471,7 +479,8 @@ namespace Onyx {
 		submitInfo.pSignalSemaphores = signalSemaphores;
 
 		if (vkQueueSubmit(VulkanDevice::get()->getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS) {
-			throw std::runtime_error("failed to submit draw command buffer!");
+			printf("VulkanSwapchain.cpp 417 : Failed to submit draw to the Command Buffer\n");
+			assert(false);
 		}
 
 		VkPresentInfoKHR presentInfo = {};

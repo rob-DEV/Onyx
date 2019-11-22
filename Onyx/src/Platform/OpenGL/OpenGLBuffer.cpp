@@ -5,9 +5,6 @@
 
 namespace Onyx {
 
-
-
-
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
 		glCreateBuffers(1, &m_RendererID);

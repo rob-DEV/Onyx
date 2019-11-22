@@ -6,6 +6,9 @@
 
 #include <Platform/OpenGL/OpenGLRendererAPI.h>
 #include <Platform/Vulkan/VulkanRendererAPI.h>
+#include <Platform/Vulkan/VulkanSwapchain.h>
+
+#include <Platform/OpenAL/OpenALDevice.h>
 
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/OrthographicCameraController.h>
@@ -59,8 +62,11 @@ namespace Onyx {
 		double previousTime = glfwGetTime();
 		int frameCount = 0;
 
+		OpenALDevice* deviceTest = OpenALDevice::get();
+
 		while (!m_Window->isClosed()) {
 			
+			VulkanSwapchain::get()->drawFrame();
 
 			double currentTime = glfwGetTime();
 			frameCount++;

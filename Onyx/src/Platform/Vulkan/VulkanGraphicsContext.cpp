@@ -23,18 +23,12 @@ namespace Onyx {
 	{
 		std::cout << "Vulkan Context Initialization\n";
 
-
 		//creates and assigns the initial vkInstance 
 		m_VulkanInstance = VulkanInstance::get();
 		m_VulkanInstance->setGLFWwindow(m_WindowHandle);
 		m_VulkanSurface = VulkanSurface::get();
 		m_VulkanDevice = VulkanDevice::get();
 		m_VulkanSwapchain = VulkanSwapchain::get();
-		
-		while (!glfwWindowShouldClose(m_WindowHandle)) {
-			m_VulkanSwapchain->get()->drawFrame();
-			glfwPollEvents();
-		}
 
 		std::cout << "Vulkan Initialization End!\n";
 	}

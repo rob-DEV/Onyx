@@ -22,9 +22,13 @@
   <ItemGroup>
     <None Include="res\shaders\FlatColor.glsl" />
     <None Include="res\shaders\Texture.glsl" />
-    <None Include="res\shaders\vulkantest\vkfrag.glsl" />
-    <None Include="res\shaders\vulkantest\vkvert.glsl" />
     <None Include="res\shaders\vulkantest\vkfrag.spv" />
     <None Include="res\shaders\vulkantest\vkvert.spv" />
+    <None Include="res\shaders\vulkantest\compile.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="res\shaders\vulkantest\glslc.exe" />
+    <None Include="res\shaders\vulkantest\vkfrag.frag" />
+    <None Include="res\shaders\vulkantest\vkvert.vert" />
   </ItemGroup>
 </Project>

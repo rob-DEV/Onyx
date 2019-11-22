@@ -14,7 +14,7 @@
 
 namespace Onyx {
 
-	VulkanSurface* VulkanSurface::s_Instance = NULL; 
+	VulkanSurface* VulkanSurface::s_Instance = nullptr;
 
 	VulkanSurface::VulkanSurface()
 	{
@@ -35,7 +35,7 @@ namespace Onyx {
 	
 	VulkanSurface* VulkanSurface::get()
 	{
-		if(s_Instance == NULL)
+		if(s_Instance == nullptr)
 			s_Instance = new VulkanSurface();
 		
 		return s_Instance;
