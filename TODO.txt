@@ -1,6 +1,24 @@
 ------ Onyx TODO ------
 
-vulkan 2D renderer
+event system
+vulkan quad renderer
+
+general batch renderer with render commands
+vulkan buffer abstraction
+vulkan textures
+
+API specific Renderer2D
+vulkan code cleanup
+
+
+22-11-19
+---------------------
 OpenAL
 
-OpenGL cubemap
+23-11-19
+---------------------
+cleanup vulkan code
+
+
+
+

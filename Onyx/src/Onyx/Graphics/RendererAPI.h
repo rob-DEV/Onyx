@@ -10,11 +10,8 @@ namespace Onyx {
 	class ONYX_API RendererAPI
 	{
 	public:
-		enum class API
-		{
-			None = 0, OpenGL = 1, Vulkan = 2,
-		};
-	public:
+		enum class API	{	None = 0, OpenGL = 1, Vulkan = 2	};
+
 		virtual ~RendererAPI() = default;
 		virtual void init() = 0;
 		virtual void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;

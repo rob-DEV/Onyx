@@ -4,17 +4,18 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
+#include <Onyx/Audio/Sound.h>
+
 namespace Onyx {
 	
-	class OpenALDevice {
+	class OpenALDevice : public SoundDevice {
 
-	private:
-		OpenALDevice();
-		static OpenALDevice* s_Instance;
 	public:
+		OpenALDevice();
 		~OpenALDevice();
-		static OpenALDevice* get();
-		ALCdevice* getALCDevice() { return m_Device; };
+		virtual void initImplementation();
+		virtual void destroyImplementation();
+		ALCdevice* getNativeDevice() { return m_Device; };
 
 	private:
 		ALCdevice* m_Device = nullptr;

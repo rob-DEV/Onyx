@@ -17,7 +17,7 @@ namespace Onyx {
 
 	void VulkanRendererAPI::setClearColor(const glm::vec4& color)
 	{
-		
+
 	}
 
 	void VulkanRendererAPI::clear()

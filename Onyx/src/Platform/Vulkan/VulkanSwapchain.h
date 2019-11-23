@@ -55,6 +55,7 @@ namespace Onyx {
 		std::vector<VkSemaphore> m_ImageAvailableSemaphores;
 		std::vector<VkSemaphore> m_RenderFinishedSemaphores;
 
+		VkClearValue m_ClearColor = { 0.2f, 0.2f, 0.2f, 0.2f };
 
 		//HELPER METHODS
 		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -62,9 +63,6 @@ namespace Onyx {
 		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 		VkShaderModule createShaderModule(const std::vector<char>& code);
 	};
-
-
 }
-
 
 #endif // _ONYX_PLATFORM_VULKAN_SWAPCHAIN_H_

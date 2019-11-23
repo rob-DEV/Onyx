@@ -4,9 +4,20 @@
 
 namespace Onyx {
 	
-	OpenALDevice* OpenALDevice::s_Instance = nullptr;
+	SoundDevice* SoundDevice::s_Instance = new OpenALDevice();
 	
 	OpenALDevice::OpenALDevice()
+	{
+
+	}
+
+	OpenALDevice::~OpenALDevice()
+	{
+
+	}
+
+
+	void OpenALDevice::initImplementation()
 	{
 		m_Device = alcOpenDevice(NULL);
 		if (!m_Device) {
@@ -21,22 +32,12 @@ namespace Onyx {
 		}
 		alcMakeContextCurrent(m_Context);
 
-		s_Instance = this;
 	}
 
-	OpenALDevice::~OpenALDevice()
+	void OpenALDevice::destroyImplementation()
 	{
 		alcCloseDevice(m_Device);
 		alcDestroyContext(m_Context);
 	}
-
-	OpenALDevice* OpenALDevice::get()
-	{
-		if (s_Instance == nullptr)
-			return new OpenALDevice();
-		else
-			return s_Instance;
-	}
-
 
 }

@@ -28,15 +28,12 @@ namespace Onyx {
 	{
 		s_Instance = this;
 		printf("Creating Onyx Application and Window!\n");
-
-
 		m_Window = new WindowsWindow(WindowProperties());
-	
-
 	}
 
 	Application::~Application()
 	{
+		delete m_RendererAPI;
 		delete m_Window;
 	}
 
@@ -48,11 +45,9 @@ namespace Onyx {
 		else if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
 			m_RendererAPI = new VulkanRendererAPI();
 
-
 		m_RendererAPI->init();
 		m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
 		m_RendererAPI->setClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
-
 
 		Renderer2D::init();
 
@@ -63,17 +58,8 @@ namespace Onyx {
 		double previousTime = glfwGetTime();
 		int frameCount = 0;
 
-		Sound* sound = new OpenALSound("res/audio/borhap.wav");
-		sound->play();
-
-		Sound* sound2 = new OpenALSound("res/audio/theringer.wav");
-		//sound2->setGain(3);
-		//sound2->play();
-
-		
-		ALfloat listenerPos[] = { 0.0f,0.0f,0.0f };
-
-		int height, width;
+		SoundDevice::init();
+		Sound* sound = nullptr;
 
 		while (!m_Window->isClosed()) {
 
@@ -86,23 +72,9 @@ namespace Onyx {
 			if (currentTime - previousTime >= 1.0)
 			{
 				printf("FPS: %d\n", frameCount);
-
 				frameCount = 0;
 				previousTime = currentTime;
 			}
-
-			glfwGetWindowSize((GLFWwindow*)m_Window->getNativeWindow(), &width, &height);
-
-			printf("Window size : %d, %d\n", width, height);
-
-
-			listenerPos[0] += 1.0f;
-
-			listenerPos[1] += 1.0f;
-
-			listenerPos[2] += 1.0f;
-
-			alListenerfv(AL_POSITION, listenerPos);
 
 			m_Window->onUpdate();
 			cameraController->onUpdate();
@@ -110,9 +82,9 @@ namespace Onyx {
 			m_RendererAPI->clear();
 			m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
 
-			//renderer test 
-			
-			Renderer2D::beginScene(cameraController->getCamera());
+			OrthographicCamera f = cameraController->getCamera();
+
+			Renderer2D::beginScene(f);
 			
 			Renderer2D::drawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
 		
@@ -124,15 +96,21 @@ namespace Onyx {
 
 			Renderer2D::endScene();
 		
+			if (Input::isKeyPressed(ONYX_KEY_F)) {
+				if (sound == nullptr) {
+					sound = new OpenALSound("res/audio/theringer.wav");
+					sound->play();
+				}
+			}
+
+			if (Input::isKeyPressed(ONYX_KEY_G))
+				if (sound != nullptr) { delete sound; sound = nullptr; }
 
 			if (Input::isKeyPressed(ONYX_KEY_ESCAPE))
 				break;
 
 			scale += 0.01f;
 		}
-		 
-		delete m_RendererAPI;
-
 	}
 
 }

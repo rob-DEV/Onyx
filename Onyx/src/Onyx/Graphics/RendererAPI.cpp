@@ -1,6 +1,7 @@
 #include "onyxpch.h"
 #include "RendererAPI.h"
 
+
 namespace Onyx {
 
 	//ABSOLUTE GRAPHICS API SETTING
@@ -11,7 +12,7 @@ namespace Onyx {
 	//VULKAN
 	
 	///////////////////////////////////////////////////////////////
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
 	///////////////////////////////////////////////////////////////
 
 

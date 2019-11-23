@@ -8,10 +8,6 @@ namespace Onyx {
 	OpenALSound::OpenALSound(const std::string& filePath)
 	{
 
-		//initialize device
-		//TODO: move to single initialization class
-		OpenALDevice::get();
-
 		m_FilePath = filePath;
 		m_Name = filePath;
 
@@ -126,7 +122,7 @@ namespace Onyx {
 
 	OpenALSound::~OpenALSound()
 	{
-
+		stop();
 	}
 
 	void OpenALSound::play()
@@ -161,11 +157,14 @@ namespace Onyx {
 	{
 		alSourceStop(m_Source);
 		m_IsPlaying = false;
+		alDeleteSources(1, &m_Source);
+		alDeleteBuffers(1, &m_Buffer); 
 	}
 
 	void OpenALSound::setGain(float gain)
 	{
 		m_Gain = std::clamp(gain, 0.0f, 5.0f);
+		alSourcef(m_Source, AL_GAIN, m_Gain);
 	}
 
 	void OpenALSound::loadWavFile()

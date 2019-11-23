@@ -458,9 +458,8 @@ namespace Onyx {
 			renderPassInfo.renderArea.offset = { 0, 0 };
 			renderPassInfo.renderArea.extent = m_SwapChainExtent;
 
-			VkClearValue clearColor = { 0.2f, 0.2f, 0.2f, 1.0f };
 			renderPassInfo.clearValueCount = 1;
-			renderPassInfo.pClearValues = &clearColor;
+			renderPassInfo.pClearValues = &m_ClearColor;
 
 			vkCmdBeginRenderPass(m_CommandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 

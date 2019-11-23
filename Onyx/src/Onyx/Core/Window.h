@@ -23,7 +23,6 @@ namespace Onyx {
 	class ONYX_API Window {
 
 	public:
-
 		virtual ~Window() = default;
 
 		virtual void init() = 0;

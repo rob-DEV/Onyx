@@ -19,8 +19,8 @@ namespace Onyx {
 		virtual float getMouseYImplementation() = 0;
 	
 	private:
-
 		static Input* s_Instance;
+
 	};
 }
 

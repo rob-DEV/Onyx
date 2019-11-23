@@ -1,5 +1,5 @@
-#ifndef _ONYX_GRAPHICS_RENDERER2D_H_
-#define _ONYX_GRAPHICS_RENDERER2D_H_
+#ifndef _ONYX_PLATFORM_OPENGL_RENDERER2D_H_
+#define _ONYX_PLATFORM_OPENGL_RENDERER2D_H_
 
 #include <Onyx/core/Core.h>
 #include <Onyx/Graphics/Renderer2D.h>
@@ -9,30 +9,16 @@
 
 namespace Onyx {
 
-	struct Vertex2D {
-		glm::vec3 position;
-		glm::vec4 color;
-		glm::vec2 texCoord;
-	};
+	class OpenGLRenderer2D : public Renderer2D {
+		virtual void initImplementation();
+		virtual void destroyImplementation();
 
-	class ONYX_API Renderer2D {
-	public:
+		virtual void beginSceneImplementation(const OrthographicCamera& camera);
+		virtual void endSceneImplementation();
 
-		static void init();
-		static void destroy();
-
-		static void beginScene(const OrthographicCamera& camera);
-		static void endScene();
-
-		static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
-		static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
-		static void drawQuad(const glm::vec3& position, const glm::vec2& size, Texture2D* texture);
-
-
-	private:
-		Vertex2D* m_Vertex2dBufferMap = nullptr;
-
-
+		virtual void drawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture);
 	};
 
 }

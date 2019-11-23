@@ -10,8 +10,6 @@ extern Onyx::Application* CreateApplication();
 
 int main(int argc, char** argv) {
 
-	//create application and run
-
 	printf("--------------------------------------------------- Onyx Game Engine ---------------------------------------------------\n");
 
 	Onyx::Application* onyxApplication = CreateApplication();

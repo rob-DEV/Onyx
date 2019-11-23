@@ -13,17 +13,13 @@ namespace Onyx {
 
 		Application();
 		virtual ~Application();
-		inline static Application* get() { return s_Instance; };
-		
+		inline static Application* get() { return s_Instance; };		
 		Window& getOnyxWindow() const { return *m_Window; };
 		void run();
 
-	protected:
 	private:
 		Window* m_Window = nullptr;
-		
 		RendererAPI* m_RendererAPI = nullptr;
-		
 		static Application* s_Instance;
 	};
 

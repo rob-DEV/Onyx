@@ -23,7 +23,6 @@ namespace Onyx {
 		const glm::mat4& getViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
 	private:
 		void recalculateViewMatrix();
-	private:
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
