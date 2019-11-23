@@ -25,7 +25,7 @@ namespace Onyx {
 		};
 
 		struct SwapChainSupportDetails {
-			VkSurfaceCapabilitiesKHR capabilities;
+			VkSurfaceCapabilitiesKHR capabilities = {0};
 			std::vector<VkSurfaceFormatKHR> formats;
 			std::vector<VkPresentModeKHR> presentModes;
 		};

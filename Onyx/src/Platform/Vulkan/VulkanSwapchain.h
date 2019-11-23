@@ -21,15 +21,23 @@ namespace Onyx {
 
 	private:
 		void createSwapchain();
+		void cleanupSwapchain();
+		void recreateSwapchain();
 		void createImageViews();
 		void createRenderPass();
 		void createGraphicsPipeline();
 		void createFramebuffers();
 		void createCommandPool();
 		void createCommandBuffers();
-		void createSemaphores();
+		void createSyncObjects();
+
+		const int MAX_FRAMES_IN_FLIGHT = 2;
+		size_t m_CurrentFrame = 0;
+		std::vector<VkFence> m_InFlightFences;
+		std::vector<VkFence> m_ImagesInFlight;
 
 		//VULKAN OBJECTS
+		const VkDevice& m_LogicalDeviceReference;
 		VkSwapchainKHR m_SwapChain;
 		std::vector<VkImage> m_SwapChainImages;
 		VkFormat m_SwapChainImageFormat;
@@ -44,8 +52,8 @@ namespace Onyx {
 		VkCommandPool m_CommandPool;
 		std::vector<VkCommandBuffer> m_CommandBuffers;
 
-		VkSemaphore m_ImageAvailableSemaphore;
-		VkSemaphore m_RenderFinishedSemaphore;
+		std::vector<VkSemaphore> m_ImageAvailableSemaphores;
+		std::vector<VkSemaphore> m_RenderFinishedSemaphores;
 
 
 		//HELPER METHODS

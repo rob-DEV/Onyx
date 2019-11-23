@@ -13,7 +13,7 @@
 #include <Onyx/Core/Input.h>
 
 
-static struct Data{
+struct Data{
 	Onyx::VertexArray* VA;
 	Onyx::OpenGLShader* SH;
 	Onyx::Texture* WhiteTexture;

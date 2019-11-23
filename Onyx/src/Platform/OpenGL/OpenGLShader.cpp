@@ -39,6 +39,13 @@ namespace Onyx {
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
 
+		std::unordered_map<GLenum, std::string> shaderSources;
+		shaderSources[GL_VERTEX_SHADER] = vertexSrc;
+		shaderSources[GL_FRAGMENT_SHADER] = fragmentSrc;
+
+		compile(shaderSources);
+
+		m_Name = name;
 	}
 
 	OpenGLShader::~OpenGLShader()

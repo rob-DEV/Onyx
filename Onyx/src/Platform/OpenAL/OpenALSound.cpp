@@ -1,26 +1,24 @@
-Validation layer: vkDestroySurfaceKHR() called before its associated VkSwapchainKHR was destroyed. The Vulkan spec states: All
-Validation layer: OBJ ERROR : VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT object VkDevice 0x201166f72b0[] has not been destroyed.
-Validation layer: OBJ ERROR : VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT object VkDevice 0x201166f72b0[] has not been destroyed.
-Validation layer: OBJ ERROR : For VkInstance 0x20111eeb5c0[], VkDebugUtilsMessengerEXT 0x2aefa40000000001[] has not been destroyed. 
-Validation layer: OBJ ERROR : For VkInstance 0x20111eeb5c0[], VkDebugUtilsMessengerEXT 0x2aefa40000000001[] has not been destroyed. 
+#include "onyxpch.h"
+#include "OpenALSound.h"
 
+#include <Platform/Windows/WindowsFileIO.h>
 
-ALCdevice* device = alcOpenDevice(NULL);
-		if (!device) {
-			printf("OpenALDevice.cpp 39 : OpenAL could not find a sound device\n");
-			assert(false);
-		}
+namespace Onyx {
 
-		ALCcontext* context = alcCreateContext(device, NULL);
-		if (!context) {
-			printf("OpenALDevice.cpp 45 : OpenAL could not create a sound context\n");
-			assert(false);
-		}
+	OpenALSound::OpenALSound(const std::string& filePath)
+	{
 
-		alcMakeContextCurrent(context);
+		//initialize device
+		//TODO: move to single initialization class
+		OpenALDevice::get();
+
+		m_FilePath = filePath;
+		m_Name = filePath;
+
+		FileIO::getFileNameWithoutExtension(m_Name);
 
 		FILE* fp = NULL;
-		fopen_s(&fp, "res/audio/borhap.wav", "rb");
+		fopen_s(&fp, filePath.c_str(), "rb");
 
 		if (fp == NULL) {
 			printf("OpenALDevice.cpp 55 : fp is NULL\n");
@@ -82,14 +80,11 @@ ALCdevice* device = alcOpenDevice(NULL);
 
 		fread(wavBuff, sizeof(char), dataSize, fp);
 
-		//source 
-		ALuint source;
-		ALuint buffer;
 		ALuint frequency = sampleRate;
 		ALenum format = 0;
 
-		alGenBuffers(1, &buffer);
-		alGenSources(1, &source);
+		alGenBuffers(1, &m_Buffer);
+		alGenSources(1, &m_Source);
 
 		if (bitsPerSample == 8) {
 			if (channels == 1)
@@ -105,8 +100,9 @@ ALCdevice* device = alcOpenDevice(NULL);
 		}
 
 		//submit to buffer
-		alBufferData(buffer, format, wavBuff, dataSize, frequency);
-		
+		alBufferData(m_Buffer, format, wavBuff, dataSize, frequency);
+		delete[] wavBuff;
+
 		ALfloat sourcePos[] = { 0.0f,0.0f,0.0f };
 		ALfloat sourceVel[] = { 0.0f,0.0f,0.0f };
 		ALfloat listenerPos[] = { 0.0f,0.0f,0.0f };
@@ -116,16 +112,65 @@ ALCdevice* device = alcOpenDevice(NULL);
 		ALfloat listenerOri[] = { 0.0f,0.0f,-1.0f, 0.0f, 1.0f, 0.0f };
 
 		alListenerfv(AL_POSITION, listenerPos);
-		alListenerfv(AL_VELOCITY, listenerVel);
+		
 		alListenerfv(AL_ORIENTATION, listenerOri);
 
-		alSourcei(source, AL_BUFFER, buffer);
-		alSourcef(source, AL_PITCH, 1.0f);
-		alSourcef(source, AL_GAIN, 1.0f);
-		alSourcefv(source, AL_POSITION, sourcePos);
-		alSourcefv(source, AL_VELOCITY, sourceVel);
-		alSourcei(source, AL_LOOPING, false);
+		alSourcei(m_Source, AL_BUFFER, m_Buffer);
+		alSourcef(m_Source, AL_PITCH, 1.0f);
+		alSourcef(m_Source, AL_GAIN, .05f);
+		alSourcefv(m_Source, AL_POSITION, sourcePos);
+		alSourcefv(m_Source, AL_VELOCITY, sourceVel);
+		alSourcei(m_Source, AL_SOURCE_RELATIVE, AL_FALSE);
 
-		alSourcePlay(source);
-		//alSourcePause(source);
-		//alSourceStop(source);
+	}
+
+	OpenALSound::~OpenALSound()
+	{
+
+	}
+
+	void OpenALSound::play()
+	{
+		alSourcei(m_Source, AL_LOOPING, false);
+		alSourcePlay(m_Source);
+		m_IsPlaying = true;
+	}
+
+	void OpenALSound::loop()
+	{
+		alSourcei(m_Source, AL_LOOPING, true);
+		alSourcePlay(m_Source);
+		m_IsPlaying = true;
+	}
+
+	void OpenALSound::pause()
+	{
+		alSourcePause(m_Source);
+		m_IsPlaying = false;
+	}
+
+	void OpenALSound::resume()
+	{
+		if (!m_IsPlaying) {
+			alSourcePlay(m_Source);
+			m_IsPlaying = true;
+		}
+	}
+
+	void OpenALSound::stop()
+	{
+		alSourceStop(m_Source);
+		m_IsPlaying = false;
+	}
+
+	void OpenALSound::setGain(float gain)
+	{
+		m_Gain = std::clamp(gain, 0.0f, 5.0f);
+	}
+
+	void OpenALSound::loadWavFile()
+	{
+
+	}
+
+}

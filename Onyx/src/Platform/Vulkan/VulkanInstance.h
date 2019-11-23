@@ -11,7 +11,12 @@ struct GLFWwindow;
 namespace Onyx {
 
 	//TODO: add debug release toggle
+#ifdef _ONYX_DEBUG_
+	inline bool KHR_EnableValidationLayers = true;
+#else
 	inline bool KHR_EnableValidationLayers = false;
+#endif
+
 	inline const std::vector<const char*> KHR_ValidationLayers = { "VK_LAYER_KHRONOS_validation" };
 
 	class VulkanInstance {

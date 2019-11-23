@@ -21,7 +21,7 @@ namespace Onyx {
 		auto window = (GLFWwindow*)Application::get()->getOnyxWindow().getNativeWindow();
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		return xpos;
+		return (float)xpos;
 	}
 
 	float WindowsInput::getMouseYImplementation()
@@ -29,7 +29,7 @@ namespace Onyx {
 		auto window = (GLFWwindow*)Application::get()->getOnyxWindow().getNativeWindow();
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		return ypos;
+		return (float)ypos;
 	}
 
 

@@ -20,9 +20,9 @@ namespace Onyx {
 
 	protected:
 	private:
-		Window* m_Window;
+		Window* m_Window = nullptr;
 		
-		RendererAPI* m_RendererAPI;
+		RendererAPI* m_RendererAPI = nullptr;
 		
 		static Application* s_Instance;
 	};

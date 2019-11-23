@@ -3,13 +3,15 @@
 #include "VulkanDevice.h"
 #include "VulkanSurface.h"
 
-#include <Platform/Windows/WindowsFileIO.h>
+
+#include <Onyx/Core/Window.h>
+#include <Onyx/Core/FileIO.h>
 
 namespace Onyx {
 
 	VulkanSwapchain* VulkanSwapchain::s_Instance = nullptr;
 
-	VulkanSwapchain::VulkanSwapchain()
+	VulkanSwapchain::VulkanSwapchain() : m_LogicalDeviceReference(VulkanDevice::get()->getLogicalDevice())
 	{
 		createSwapchain();
 		createImageViews();
@@ -18,7 +20,7 @@ namespace Onyx {
 		createFramebuffers();
 		createCommandPool();
 		createCommandBuffers();
-		createSemaphores();
+		createSyncObjects();
 
 
 		s_Instance = this;
@@ -27,24 +29,16 @@ namespace Onyx {
 
 	VulkanSwapchain::~VulkanSwapchain()
 	{
-		vkDestroySemaphore(VulkanDevice::get()->getLogicalDevice(), m_ImageAvailableSemaphore, nullptr);
-		vkDestroySemaphore(VulkanDevice::get()->getLogicalDevice(), m_RenderFinishedSemaphore, nullptr);
+		cleanupSwapchain();
 
-		vkDestroyCommandPool(VulkanDevice::get()->getLogicalDevice(), m_CommandPool, nullptr);
-
-		for (auto framebuffer : m_SwapChainFramebuffers) {
-			vkDestroyFramebuffer(VulkanDevice::get()->getLogicalDevice(), framebuffer, nullptr);
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+			vkDestroySemaphore(m_LogicalDeviceReference, m_RenderFinishedSemaphores[i], nullptr);
+			vkDestroySemaphore(m_LogicalDeviceReference, m_ImageAvailableSemaphores[i], nullptr);
+			vkDestroyFence(m_LogicalDeviceReference, m_InFlightFences[i], nullptr);
 		}
+	
+		vkDestroyCommandPool(m_LogicalDeviceReference, m_CommandPool, nullptr);
 
-		vkDestroyPipeline(VulkanDevice::get()->getLogicalDevice(), m_GraphicsPipeline, nullptr);
-		vkDestroyPipelineLayout(VulkanDevice::get()->getLogicalDevice(), m_PipelineLayout, nullptr);
-		vkDestroyRenderPass(VulkanDevice::get()->getLogicalDevice(), m_RenderPass, nullptr);
-
-		for (auto imageView : m_SwapChainImageViews) {
-			vkDestroyImageView(VulkanDevice::get()->getLogicalDevice(), imageView, nullptr);
-		}
-
-		vkDestroySwapchainKHR(VulkanDevice::get()->getLogicalDevice(), m_SwapChain, nullptr);
 	}
 
 	VulkanSwapchain* VulkanSwapchain::get()
@@ -98,17 +92,52 @@ namespace Onyx {
 
 		createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (vkCreateSwapchainKHR(VulkanDevice::get()->getLogicalDevice(), &createInfo, nullptr, &m_SwapChain) != VK_SUCCESS) {
+		if (vkCreateSwapchainKHR(m_LogicalDeviceReference, &createInfo, nullptr, &m_SwapChain) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 85 : Failed to create swapchain\n");
 			assert(false);
 		}
 
-		vkGetSwapchainImagesKHR(VulkanDevice::get()->getLogicalDevice(), m_SwapChain, &imageCount, nullptr);
+		vkGetSwapchainImagesKHR(m_LogicalDeviceReference, m_SwapChain, &imageCount, nullptr);
 		m_SwapChainImages.resize(imageCount);
-		vkGetSwapchainImagesKHR(VulkanDevice::get()->getLogicalDevice(), m_SwapChain, &imageCount, m_SwapChainImages.data());
+		vkGetSwapchainImagesKHR(m_LogicalDeviceReference, m_SwapChain, &imageCount, m_SwapChainImages.data());
 
 		m_SwapChainImageFormat = surfaceFormat.format;
 		m_SwapChainExtent = extent;
+	}
+
+	void VulkanSwapchain::cleanupSwapchain()
+	{
+		for (size_t i = 0; i < m_SwapChainFramebuffers.size(); i++)
+			vkDestroyFramebuffer(m_LogicalDeviceReference, m_SwapChainFramebuffers[i], nullptr);
+
+		vkFreeCommandBuffers(m_LogicalDeviceReference, m_CommandPool, static_cast<uint32_t>(m_CommandBuffers.size()), m_CommandBuffers.data());
+
+		vkDestroyPipeline(m_LogicalDeviceReference, m_GraphicsPipeline, nullptr);
+		vkDestroyPipelineLayout(m_LogicalDeviceReference, m_PipelineLayout, nullptr);
+		vkDestroyRenderPass(m_LogicalDeviceReference, m_RenderPass, nullptr);
+
+		for (size_t i = 0; i < m_SwapChainImageViews.size(); i++)
+			vkDestroyImageView(m_LogicalDeviceReference, m_SwapChainImageViews[i], nullptr);
+
+		vkDestroySwapchainKHR(m_LogicalDeviceReference, m_SwapChain, nullptr);
+
+
+	}
+
+	void VulkanSwapchain::recreateSwapchain()
+	{
+		vkDeviceWaitIdle(m_LogicalDeviceReference);
+
+		cleanupSwapchain();
+
+		createSwapchain();
+		createImageViews();
+		createRenderPass();
+		createGraphicsPipeline();
+		createFramebuffers();
+		createCommandBuffers();
+
+
 	}
 
 	VkSurfaceFormatKHR VulkanSwapchain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats)
@@ -140,9 +169,13 @@ namespace Onyx {
 		}
 		else {
 
-			VkExtent2D actualExtent = { 1280, 720 };
-			actualExtent.width = 1280;
-			actualExtent.height = 720;
+			int width, height;
+			glfwGetFramebufferSize(VulkanInstance::get()->getGLFWwindow(), &width, &height);
+
+			VkExtent2D actualExtent = {
+				static_cast<uint32_t>(width),
+				static_cast<uint32_t>(height)
+			};
 
 			return actualExtent;
 		}
@@ -156,7 +189,7 @@ namespace Onyx {
 		createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
 		VkShaderModule shaderModule;
-		if (vkCreateShaderModule(VulkanDevice::get()->getLogicalDevice(), &createInfo, nullptr, &shaderModule) != VK_SUCCESS) {
+		if (vkCreateShaderModule(m_LogicalDeviceReference, &createInfo, nullptr, &shaderModule) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 136 : Failed to create shader module\n");
 			assert(false);
 		}
@@ -184,7 +217,7 @@ namespace Onyx {
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			if (vkCreateImageView(VulkanDevice::get()->getLogicalDevice(), &createInfo, nullptr, &m_SwapChainImageViews[i]) != VK_SUCCESS) {
+			if (vkCreateImageView(m_LogicalDeviceReference, &createInfo, nullptr, &m_SwapChainImageViews[i]) != VK_SUCCESS) {
 				printf("VulkanSwapchain.cpp 155 : Failed to create image views\n");
 				assert(false);
 			}
@@ -229,7 +262,7 @@ namespace Onyx {
 		renderPassInfo.dependencyCount = 1;
 		renderPassInfo.pDependencies = &dependency;
 
-		if (vkCreateRenderPass(VulkanDevice::get()->getLogicalDevice(), &renderPassInfo, nullptr, &m_RenderPass) != VK_SUCCESS) {
+		if (vkCreateRenderPass(m_LogicalDeviceReference, &renderPassInfo, nullptr, &m_RenderPass) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 155 : Failed to create render pass\n");
 			assert(false);
 		}
@@ -238,8 +271,8 @@ namespace Onyx {
 	void VulkanSwapchain::createGraphicsPipeline()
 	{
 		//read in shaders push to shader modules
-		auto vertSprivSource = WindowsFileIO::readFileByte("res/shaders/vulkantest/vkvert.spv");
-		auto fragSprivSource = WindowsFileIO::readFileByte("res/shaders/vulkantest/vkfrag.spv");
+		auto vertSprivSource = FileIO::readFileByte("res/shaders/vulkantest/vkvert.spv");
+		auto fragSprivSource = FileIO::readFileByte("res/shaders/vulkantest/vkfrag.spv");
 
 
 		VkShaderModule vertShaderModule = createShaderModule(vertSprivSource);
@@ -325,7 +358,7 @@ namespace Onyx {
 		pipelineLayoutInfo.setLayoutCount = 0;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
-		if (vkCreatePipelineLayout(VulkanDevice::get()->getLogicalDevice(), &pipelineLayoutInfo, nullptr, &m_PipelineLayout) != VK_SUCCESS) {
+		if (vkCreatePipelineLayout(m_LogicalDeviceReference, &pipelineLayoutInfo, nullptr, &m_PipelineLayout) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 329 : Failed to create Pipeline Layout\n");
 			assert(false);
 		}
@@ -345,14 +378,14 @@ namespace Onyx {
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
-		if (vkCreateGraphicsPipelines(VulkanDevice::get()->getLogicalDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipeline) != VK_SUCCESS) {
+		if (vkCreateGraphicsPipelines(m_LogicalDeviceReference, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipeline) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 349 : Failed to create Graphics Pipeline\n");
 			assert(false);
 		}
 
 
-		vkDestroyShaderModule(VulkanDevice::get()->getLogicalDevice(), fragShaderModule, nullptr);
-		vkDestroyShaderModule(VulkanDevice::get()->getLogicalDevice(), vertShaderModule, nullptr);
+		vkDestroyShaderModule(m_LogicalDeviceReference, fragShaderModule, nullptr);
+		vkDestroyShaderModule(m_LogicalDeviceReference, vertShaderModule, nullptr);
 	}
 
 	void VulkanSwapchain::createFramebuffers()
@@ -372,7 +405,7 @@ namespace Onyx {
 			framebufferInfo.height = m_SwapChainExtent.height;
 			framebufferInfo.layers = 1;
 
-			if (vkCreateFramebuffer(VulkanDevice::get()->getLogicalDevice(), &framebufferInfo, nullptr, &m_SwapChainFramebuffers[i]) != VK_SUCCESS) {
+			if (vkCreateFramebuffer(m_LogicalDeviceReference, &framebufferInfo, nullptr, &m_SwapChainFramebuffers[i]) != VK_SUCCESS) {
 				printf("VulkanSwapchain.cpp 376 : Failed to create Frame Buffer\n");
 				assert(false);
 			}
@@ -388,7 +421,7 @@ namespace Onyx {
 		poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
 		poolInfo.flags = 0; // Optional
 
-		if (vkCreateCommandPool(VulkanDevice::get()->getLogicalDevice(), &poolInfo, nullptr, &m_CommandPool) != VK_SUCCESS) {
+		if (vkCreateCommandPool(m_LogicalDeviceReference, &poolInfo, nullptr, &m_CommandPool) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 329 : Failed to create Command Pool\n");
 			assert(false);
 		}
@@ -404,7 +437,7 @@ namespace Onyx {
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 		allocInfo.commandBufferCount = (uint32_t)m_CommandBuffers.size();
 
-		if (vkAllocateCommandBuffers(VulkanDevice::get()->getLogicalDevice(), &allocInfo, m_CommandBuffers.data()) != VK_SUCCESS) {
+		if (vkAllocateCommandBuffers(m_LogicalDeviceReference, &allocInfo, m_CommandBuffers.data()) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 329 : Failed to allocate Command Buffer\n");
 			assert(false);
 		}
@@ -425,7 +458,7 @@ namespace Onyx {
 			renderPassInfo.renderArea.offset = { 0, 0 };
 			renderPassInfo.renderArea.extent = m_SwapChainExtent;
 
-			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+			VkClearValue clearColor = { 0.2f, 0.2f, 0.2f, 1.0f };
 			renderPassInfo.clearValueCount = 1;
 			renderPassInfo.pClearValues = &clearColor;
 
@@ -444,28 +477,57 @@ namespace Onyx {
 		}
 	}
 
-	void VulkanSwapchain::createSemaphores()
+	void VulkanSwapchain::createSyncObjects()
 	{
+		m_ImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+		m_RenderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+		m_InFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
+		m_ImagesInFlight.resize(m_SwapChainImages.size(), VK_NULL_HANDLE);
+
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		if (vkCreateSemaphore(VulkanDevice::get()->getLogicalDevice(), &semaphoreInfo, nullptr, &m_ImageAvailableSemaphore) != VK_SUCCESS ||
-			vkCreateSemaphore(VulkanDevice::get()->getLogicalDevice(), &semaphoreInfo, nullptr, &m_RenderFinishedSemaphore) != VK_SUCCESS) {
+		VkFenceCreateInfo fenceInfo = {};
+		fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-			printf("VulkanSwapchain.cpp 417 : Failed to create Semaphores\n");
-			assert(false);
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+			if (vkCreateSemaphore(m_LogicalDeviceReference, &semaphoreInfo, nullptr, &m_ImageAvailableSemaphores[i]) != VK_SUCCESS ||
+				vkCreateSemaphore(m_LogicalDeviceReference, &semaphoreInfo, nullptr, &m_RenderFinishedSemaphores[i]) != VK_SUCCESS ||
+				vkCreateFence(m_LogicalDeviceReference, &fenceInfo, nullptr, &m_InFlightFences[i]) != VK_SUCCESS) {
+
+				printf("VulkanSwapchain.cpp 441 : Failed to sync objects for a frame\n");
+				assert(false);
+			}
 		}
 	}
 
 	void VulkanSwapchain::drawFrame()
 	{
+		vkWaitForFences(m_LogicalDeviceReference, 1, &m_InFlightFences[m_CurrentFrame], VK_TRUE, UINT64_MAX);
+
 		uint32_t imageIndex;
-		vkAcquireNextImageKHR(VulkanDevice::get()->getLogicalDevice(), m_SwapChain, UINT64_MAX, m_ImageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+		VkResult result = vkAcquireNextImageKHR(m_LogicalDeviceReference, m_SwapChain, UINT64_MAX, m_ImageAvailableSemaphores[m_CurrentFrame], VK_NULL_HANDLE, &imageIndex);
+
+		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+			recreateSwapchain();
+			return;
+		}
+		else if(result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
+			printf("VulkanSwapchain.cpp 518 : Failed to acquire swapchain image\n");
+			assert(false);
+		}
+
+		if (m_ImagesInFlight[imageIndex] != VK_NULL_HANDLE) {
+			vkWaitForFences(m_LogicalDeviceReference, 1, &m_ImagesInFlight[imageIndex], VK_TRUE, UINT64_MAX);
+		}
+		m_ImagesInFlight[imageIndex] = m_InFlightFences[m_CurrentFrame];
+
 
 		VkSubmitInfo submitInfo = {};
 		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-		VkSemaphore waitSemaphores[] = { m_ImageAvailableSemaphore };
+		VkSemaphore waitSemaphores[] = { m_ImageAvailableSemaphores[m_CurrentFrame] };
 		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 		submitInfo.waitSemaphoreCount = 1;
 		submitInfo.pWaitSemaphores = waitSemaphores;
@@ -474,12 +536,14 @@ namespace Onyx {
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &m_CommandBuffers[imageIndex];
 
-		VkSemaphore signalSemaphores[] = { m_RenderFinishedSemaphore };
+		VkSemaphore signalSemaphores[] = { m_RenderFinishedSemaphores[m_CurrentFrame] };
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = signalSemaphores;
+		
+		vkResetFences(m_LogicalDeviceReference, 1, &m_InFlightFences[m_CurrentFrame]);
 
-		if (vkQueueSubmit(VulkanDevice::get()->getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS) {
-			printf("VulkanSwapchain.cpp 417 : Failed to submit draw to the Command Buffer\n");
+		if (vkQueueSubmit(VulkanDevice::get()->getGraphicsQueue(), 1, &submitInfo, m_InFlightFences[m_CurrentFrame]) != VK_SUCCESS) {
+			printf("VulkanSwapchain.cpp 500 : Failed to submit draw to the Command Buffer\n");
 			assert(false);
 		}
 
@@ -495,10 +559,16 @@ namespace Onyx {
 
 		presentInfo.pImageIndices = &imageIndex;
 
-		vkQueuePresentKHR(VulkanDevice::get()->getGraphicsQueue(), &presentInfo);
+		VkResult presentResult = vkQueuePresentKHR(VulkanDevice::get()->getGraphicsQueue(), &presentInfo);
+		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
+			recreateSwapchain();
+		}
+		else if (result != VK_SUCCESS) {
+			printf("VulkanSwapchain.cpp 568 : Failed to present swapchain image\n");
+			assert(false);
+		}
 
-		vkQueueWaitIdle(VulkanDevice::get()->getPresentQueue());
-
+		m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 	}
 
 }

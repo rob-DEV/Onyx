@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
+    <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\core\Application.cpp" />
     <ClCompile Include="src\onyxpch.cpp" />
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
@@ -32,6 +32,7 @@
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
     <ClCompile Include="src\Onyx\ImGUI\ImGuiBuild.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALDevice.cpp" />
+    <ClCompile Include="src\Platform\OpenAL\OpenALSound.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLGraphicsContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
@@ -57,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
+    <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
     <ClInclude Include="src\Onyx\core\Application.h" />
     <ClInclude Include="src\Onyx\core\Core.h" />
     <ClInclude Include="src\Onyx\core\Entrypoint.h" />
@@ -67,6 +69,7 @@
     <ClInclude Include="src\Onyx\core\Keycodes.h" />
     <ClInclude Include="src\Onyx\Graphics\OrthographicCamera.h" />
     <ClInclude Include="src\Onyx\Graphics\OrthographicCameraController.h" />
+    <ClInclude Include="src\Onyx\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Onyx\graphics\Renderer2D.h" />
     <ClInclude Include="src\Onyx\graphics\RendererAPI.h" />
     <ClInclude Include="src\Onyx\graphics\Shader.h" />
@@ -76,6 +79,7 @@
     <ClInclude Include="src\Onyx\core\Window.h" />
     <ClInclude Include="src\onyxpch.h" />
     <ClInclude Include="src\Platform\OpenAL\OpenALDevice.h" />
+    <ClInclude Include="src\Platform\OpenAL\OpenALSound.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />

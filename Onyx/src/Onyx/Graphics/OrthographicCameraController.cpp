@@ -11,7 +11,7 @@ namespace Onyx {
 
 	void OrthographicCameraController::onUpdate()
 	{
-		float testSpeed = 0.02;
+		float testSpeed = 0.02f;
 
 		if (Input::isKeyPressed(ONYX_KEY_D)) {
 

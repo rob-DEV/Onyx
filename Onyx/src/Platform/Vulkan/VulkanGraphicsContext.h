@@ -21,11 +21,11 @@ namespace Onyx {
 		void swapBuffers();
 
 	private:
-		VulkanInstance* m_VulkanInstance;
-		VulkanSurface* m_VulkanSurface;
-		VulkanDevice* m_VulkanDevice;
-		VulkanSwapchain* m_VulkanSwapchain;
-		GLFWwindow* m_WindowHandle;
+		VulkanInstance* m_VulkanInstance = nullptr;
+		VulkanSurface* m_VulkanSurface = nullptr;
+		VulkanDevice* m_VulkanDevice = nullptr;
+		VulkanSwapchain* m_VulkanSwapchain = nullptr;
+		GLFWwindow* m_WindowHandle = nullptr;
 
 	};
 

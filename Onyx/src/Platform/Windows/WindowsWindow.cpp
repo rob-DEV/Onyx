@@ -33,19 +33,12 @@ namespace Onyx {
 	{
 		printf("Title : %s\n", m_WindowProperties.Title.c_str());
 		
-		
-		if (s_WindowCount == 0)
-			if (!glfwInit())
-				printf("Failed to initialize GLFW!");
+		if (s_WindowCount == 0 && !glfwInit())	printf("Failed to initialize GLFW!");
 
-		//for vulkan specifically
 		if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-
-		m_Window = glfwCreateWindow(m_WindowProperties.Width, 
-									m_WindowProperties.Height, 
-									m_WindowProperties.Title.c_str(), nullptr, nullptr);
+		m_Window = glfwCreateWindow(m_WindowProperties.Width, m_WindowProperties.Height, m_WindowProperties.Title.c_str(), nullptr, nullptr);
 		
 		glfwSetWindowUserPointer(m_Window, &m_WindowProperties);
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
@@ -55,8 +48,6 @@ namespace Onyx {
 				data.Height = height;
 			});
 
-
-
 		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			m_Context = new Onyx::OpenGLGraphicsContext(m_Window);
 
@@ -65,10 +56,8 @@ namespace Onyx {
 
 		m_Context->init();
 		
-
 		glfwSwapInterval(1);
 		glfwShowWindow(m_Window);
-
 	}
 
 	void WindowsWindow::onUpdate()

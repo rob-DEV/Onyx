@@ -3,6 +3,8 @@
 
 #include <fstream>
 
+
+
 namespace Onyx {
 
 	FileIO* FileIO::s_Instance = new WindowsFileIO();
@@ -22,7 +24,7 @@ namespace Onyx {
 
 
 		fseek(file, 0, SEEK_END);
-		unsigned int length = (unsigned int)ftell(file);
+		unsigned long length = (unsigned long)ftell(file);
 		
 		char* data = new char[length + 1];
 		memset(data, 0, length + 1);
@@ -54,6 +56,18 @@ namespace Onyx {
 
 		return buffer;
 
+	}
+
+	void WindowsFileIO::getFileNameWithoutExtensionImplementation(std::string& filepath)
+	{
+
+		const size_t last_slash_idx = filepath.find_last_of("\\/");
+		if (std::string::npos != last_slash_idx)
+			filepath.erase(0, last_slash_idx + 1);
+
+		const size_t period_idx = filepath.rfind('.');
+		if (std::string::npos != period_idx)
+			filepath.erase(period_idx);
 	}
 
 }

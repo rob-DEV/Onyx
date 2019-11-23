@@ -8,7 +8,7 @@
 #include <Platform/Vulkan/VulkanRendererAPI.h>
 #include <Platform/Vulkan/VulkanSwapchain.h>
 
-#include <Platform/OpenAL/OpenALDevice.h>
+#include <Platform/OpenAL/OpenALSound.h>
 
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/OrthographicCameraController.h>
@@ -58,26 +58,51 @@ namespace Onyx {
 
 		OrthographicCameraController* cameraController = new OrthographicCameraController();
 		Texture2D* testMarioTexture = Texture2D::create("res/textures/mario.png");
+
 		float scale = 0.01f;
 		double previousTime = glfwGetTime();
 		int frameCount = 0;
 
-		OpenALDevice* deviceTest = OpenALDevice::get();
+		Sound* sound = new OpenALSound("res/audio/borhap.wav");
+		sound->play();
+
+		Sound* sound2 = new OpenALSound("res/audio/theringer.wav");
+		//sound2->setGain(3);
+		//sound2->play();
+
+		
+		ALfloat listenerPos[] = { 0.0f,0.0f,0.0f };
+
+		int height, width;
 
 		while (!m_Window->isClosed()) {
-			
-			VulkanSwapchain::get()->drawFrame();
+
+			if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
+				VulkanSwapchain::get()->drawFrame();
 
 			double currentTime = glfwGetTime();
 			frameCount++;
 
 			if (currentTime - previousTime >= 1.0)
 			{
-				printf("FPS: %d\n" ,frameCount);
+				printf("FPS: %d\n", frameCount);
 
 				frameCount = 0;
 				previousTime = currentTime;
 			}
+
+			glfwGetWindowSize((GLFWwindow*)m_Window->getNativeWindow(), &width, &height);
+
+			printf("Window size : %d, %d\n", width, height);
+
+
+			listenerPos[0] += 1.0f;
+
+			listenerPos[1] += 1.0f;
+
+			listenerPos[2] += 1.0f;
+
+			alListenerfv(AL_POSITION, listenerPos);
 
 			m_Window->onUpdate();
 			cameraController->onUpdate();
@@ -87,7 +112,6 @@ namespace Onyx {
 
 			//renderer test 
 			
-			//Renderer turned off for Vulkan testing 
 			Renderer2D::beginScene(cameraController->getCamera());
 			
 			Renderer2D::drawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
@@ -104,7 +128,7 @@ namespace Onyx {
 			if (Input::isKeyPressed(ONYX_KEY_ESCAPE))
 				break;
 
-			scale += 0.01;
+			scale += 0.01f;
 		}
 		 
 		delete m_RendererAPI;

@@ -8,26 +8,28 @@ namespace Onyx {
 
 	class ONYX_API Sound {
 	public:
-		Sound(std::string& filePath);
-		~Sound();
+		virtual ~Sound() = default;
 	
-		void play();
-		void loop();
-		void pause();
-		void resume();
-		void stop();
+		virtual void play() = 0;
+		virtual void loop() = 0;
+		virtual void pause() = 0;
+		virtual void resume() = 0;
+		virtual void stop() = 0;
 
-		void setGain(float gain);
+		virtual void setGain(float gain) = 0;
 		inline float getGain() const { return m_Gain; };
 		inline bool isPlaying() const { return m_IsPlaying; };
+		inline const std::string& getName() const { return m_Name; };
 
-	private:
+	protected:
 		std::string m_Name;
 		std::string m_FilePath;
-		float m_Gain;
+		float m_Gain = 1.0;
 		bool m_IsPlaying = false;
 
 	};
+
+	
 
 }
 
