@@ -7,12 +7,16 @@
 #include <Onyx/Core/Window.h>
 #include <Onyx/Core/FileIO.h>
 
+#include "VulkanBuffer.h"
+
+
 namespace Onyx {
 
+	VulkanVertexBuffer* vertexBufferTest = nullptr;
 	VulkanSwapchain* VulkanSwapchain::s_Instance = nullptr;
 
-	VkBuffer vertexBuffer;
-	VkDeviceMemory vertexBufferMemory;
+	//VkBuffer vertexBuffer;
+	//VkDeviceMemory vertexBufferMemory;
 
 	VulkanSwapchain::VulkanSwapchain() : m_LogicalDeviceReference(VulkanDevice::get()->getLogicalDevice())
 	{
@@ -35,8 +39,7 @@ namespace Onyx {
 	{
 		cleanupSwapchain();
 
-		vkDestroyBuffer(m_LogicalDeviceReference, vertexBuffer, nullptr);
-		vkFreeMemory(m_LogicalDeviceReference, vertexBufferMemory, nullptr);
+		delete vertexBufferTest;
 
 		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 			vkDestroySemaphore(m_LogicalDeviceReference, m_RenderFinishedSemaphores[i], nullptr);
@@ -461,37 +464,8 @@ namespace Onyx {
 
 	void VulkanSwapchain::createVertexBuffer()
 	{
-		VkBufferCreateInfo bufferInfo = {};
-		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		bufferInfo.size = sizeof(vertices[0]) * vertices.size();
-		bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-		bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-
-		if (vkCreateBuffer(m_LogicalDeviceReference, &bufferInfo, nullptr, &vertexBuffer) != VK_SUCCESS) {
-			printf("VulkanSwapchain.cpp 329 : Failed to create vertex buffer\n");
-			assert(false);
-		}
-
-		VkMemoryRequirements memRequirements;
-		vkGetBufferMemoryRequirements(m_LogicalDeviceReference, vertexBuffer, &memRequirements);
-
-		//allocate vertex buffer memory
-		VkMemoryAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		if (vkAllocateMemory(m_LogicalDeviceReference, &allocInfo, nullptr, &vertexBufferMemory) != VK_SUCCESS) {
-			throw std::runtime_error("failed to allocate vertex buffer memory!");
-		}
-
-		//bind now allocated memory to the buffer object
-		vkBindBufferMemory(m_LogicalDeviceReference, vertexBuffer, vertexBufferMemory, 0);
-
-		//push actual VertexData to the VBO
-		void* data;
-		vkMapMemory(m_LogicalDeviceReference, vertexBufferMemory, 0, bufferInfo.size, 0, &data);
-		memcpy(data, vertices.data(), (size_t)bufferInfo.size);
-		vkUnmapMemory(m_LogicalDeviceReference, vertexBufferMemory);
+		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+		vertexBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	}
 
 	void VulkanSwapchain::createCommandBuffers()
@@ -532,11 +506,11 @@ namespace Onyx {
 
 
 			vkCmdBindPipeline(m_CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
-			VkBuffer vertexBuffers[] = { vertexBuffer };
+			VkBuffer vertexBuffers[] = { vertexBufferTest->getBufferObject() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_CommandBuffers[i], 0, 1, vertexBuffers, offsets);
 
-			vkCmdDraw(m_CommandBuffers[i], 6, 1, 0, 0);
+			vkCmdDraw(m_CommandBuffers[i], 9, 1, 0, 0);
 
 			vkCmdEndRenderPass(m_CommandBuffers[i]);
 
@@ -577,7 +551,8 @@ namespace Onyx {
 		vkWaitForFences(m_LogicalDeviceReference, 1, &m_InFlightFences[m_CurrentFrame], VK_TRUE, UINT64_MAX);
 
 		uint32_t imageIndex;
-		VkResult result = vkAcquireNextImageKHR(m_LogicalDeviceReference, m_SwapChain, UINT64_MAX, m_ImageAvailableSemaphores[m_CurrentFrame], VK_NULL_HANDLE, &imageIndex);
+		VkResult result = vkAcquireNextImageKHR(m_LogicalDeviceReference, m_SwapChain, 
+			UINT64_MAX, m_ImageAvailableSemaphores[m_CurrentFrame], VK_NULL_HANDLE, &imageIndex);
 
 		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
 			recreateSwapchain();

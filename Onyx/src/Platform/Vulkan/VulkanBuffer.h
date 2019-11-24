@@ -3,17 +3,21 @@
 
 #include <Onyx/graphics/Buffer.h>
 
+#include <vulkan/vulkan.h>
+
 namespace Onyx {
 	class VulkanVertexBuffer : public VertexBuffer {
 	public:
-		VulkanVertexBuffer(float* vertices, uint32_t size);
+		VulkanVertexBuffer(float* vertices, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties);
 		virtual ~VulkanVertexBuffer();
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
+		inline const VkBuffer& getBufferObject() const { return m_Buffer; };
 
 	private:
-		uint32_t m_RendererID;
+		VkBuffer m_Buffer;
+		VkDeviceMemory m_BufferMemory;
 	};
 
 	class VulkanIndexBuffer : public IndexBuffer {
@@ -26,7 +30,7 @@ namespace Onyx {
 
 		virtual uint32_t getCount() const { return m_Count; }
 	private:
-		uint32_t m_RendererID;
+		VkBuffer m_RendererID;
 		uint32_t m_Count;
 	};
 

@@ -50,13 +50,16 @@ namespace Onyx {
 
 	};
 
-	const std::vector<Vertex> vertices = {
+	inline std::vector<Vertex> vertices = {
 	{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
 	{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
 	{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
-	{{0.0f, -0.8f}, {1.0f, 0.0f, 0.0f}},
-	{{0.1f, 0.2f}, {0.0f, 1.0f, 0.0f}},
-	{{-0.8f, 0.2f}, {0.0f, 0.0f, 1.0f}}
+	{{0.3f, -0.3f}, {1.0f, 0.0f, 0.0f}},
+	{{0.3f, 0.3f}, {0.8f, 0.2f, 0.56f}},
+	{{-0.3f, 0.3f}, {0.4f, 0.1f, 0.2f}},
+	{{0.6f, -0.1f}, {0.1f, 0.7f, 0.3f}},
+	{{0.7f, 0.1f}, {0.2f, 0.2f, 0.3f}},
+	{{0.5f, 0.1f}, {0.4f, 0.2f, 0.7f}}
 	};
 
 	class VulkanSwapchain {
@@ -70,7 +73,6 @@ namespace Onyx {
 		const VkRenderPass& getRenderPass() const { return m_RenderPass; };
 		const VkExtent2D& getExtent() const { return m_SwapChainExtent; };
 		const VkPipeline& getGraphicsPipeline() const { return m_GraphicsPipeline; };
-
 		void drawFrame();
 
 	private:
@@ -119,6 +121,7 @@ namespace Onyx {
 		VkShaderModule createShaderModule(const std::vector<char>& code);
 
 		uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+
 	};
 }
 
