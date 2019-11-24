@@ -27,6 +27,7 @@ namespace Onyx {
 		inline static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) { s_Instance->drawQuadImplementation(position, size, color); };
 		inline static void drawQuad(const glm::vec3& position, const glm::vec2& size, Texture2D* texture) { s_Instance->drawQuadImplementation(position, size, texture); };
 
+		inline static void flush() { s_Instance->flushImplementation(); };
 	protected:
 
 		virtual void initImplementation() = 0;
@@ -38,6 +39,7 @@ namespace Onyx {
 		virtual void drawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) = 0;
 		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) = 0;
 		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture) = 0;
+		virtual void flushImplementation() = 0;
 
 	private:
 		static Renderer2D* s_Instance;

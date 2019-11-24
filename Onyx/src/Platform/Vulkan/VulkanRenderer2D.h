@@ -1,5 +1,5 @@
-#ifndef _ONYX_PLATFORM_OPENGL_RENDERER2D_H_
-#define _ONYX_PLATFORM_OPENGL_RENDERER2D_H_
+#ifndef _ONYX_PLATFORM_VULKAN_RENDERER2D_H_
+#define _ONYX_PLATFORM_VULKAN_RENDERER2D_H_
 
 #include <Onyx/core/Core.h>
 #include <Onyx/Graphics/Renderer2D.h>
@@ -9,7 +9,7 @@
 
 namespace Onyx {
 
-	class OpenGLRenderer2D : public Renderer2D {
+	class VulkanRenderer2D : public Renderer2D {
 		virtual void initImplementation();
 		virtual void destroyImplementation();
 

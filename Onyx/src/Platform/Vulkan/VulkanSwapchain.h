@@ -2,8 +2,62 @@
 #define _ONYX_PLATFORM_VULKAN_SWAPCHAIN_H_
 
 #include <vulkan/vulkan.h>
+#include <glm/glm.hpp>
 
 namespace Onyx {
+
+	struct Vertex {
+		glm::vec2 pos;
+		glm::vec3 color;
+	
+		static VkVertexInputBindingDescription getBindingDescription() {
+			VkVertexInputBindingDescription bindingDescription = {};
+
+			bindingDescription.binding = 0; //starting index of data (per vertex)
+			bindingDescription.stride = sizeof(Vertex); //distance between each Vertex structure
+			bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+			
+			return bindingDescription;
+		}
+
+		static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() {
+			std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
+
+			/*
+				float: VK_FORMAT_R32_SFLOAT
+				vec2: VK_FORMAT_R32G32_SFLOAT
+				vec3: VK_FORMAT_R32G32B32_SFLOAT
+				vec4: VK_FORMAT_R32G32B32A32_SFLOAT
+
+				ivec2: VK_FORMAT_R32G32_SINT, a 2-component vector of 32-bit signed integers
+				uvec4: VK_FORMAT_R32G32B32A32_UINT, a 4-component vector of 32-bit unsigned integers
+				double: VK_FORMAT_R64_SFLOAT
+			*/
+
+			//LIKE VERTEX ATTRIBUTE POINTER
+			attributeDescriptions[0].binding = 0;
+			attributeDescriptions[0].location = 0;
+			attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+			attributeDescriptions[0].offset = offsetof(Vertex, pos);
+
+			attributeDescriptions[1].binding = 0;
+			attributeDescriptions[1].location = 1;
+			attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+			attributeDescriptions[1].offset = offsetof(Vertex, color);
+
+			return attributeDescriptions;
+		}
+
+	};
+
+	const std::vector<Vertex> vertices = {
+	{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+	{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+	{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+	{{0.0f, -0.8f}, {1.0f, 0.0f, 0.0f}},
+	{{0.1f, 0.2f}, {0.0f, 1.0f, 0.0f}},
+	{{-0.8f, 0.2f}, {0.0f, 0.0f, 1.0f}}
+	};
 
 	class VulkanSwapchain {
 	private:
@@ -28,6 +82,7 @@ namespace Onyx {
 		void createGraphicsPipeline();
 		void createFramebuffers();
 		void createCommandPool();
+		void createVertexBuffer();
 		void createCommandBuffers();
 		void createSyncObjects();
 
@@ -62,6 +117,8 @@ namespace Onyx {
 		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
 		VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 		VkShaderModule createShaderModule(const std::vector<char>& code);
+
+		uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 	};
 }
 

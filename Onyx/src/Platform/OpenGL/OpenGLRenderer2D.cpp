@@ -85,7 +85,6 @@ namespace Onyx {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, position.z });
 		s_Data->SH->uploadUniformMat4("u_Transform", transform);
 
-		glDrawElements(GL_TRIANGLES, s_Data->VA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
 	void OpenGLRenderer2D::drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
@@ -97,9 +96,13 @@ namespace Onyx {
 		s_Data->SH->uploadUniformMat4("u_Transform", transform);
 
 		s_Data->VA->bind();
-		glDrawElements(GL_TRIANGLES, s_Data->VA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
-
-		glBindTextureUnit(0, 0);
 
 	}
+
+	void OpenGLRenderer2D::flushImplementation()
+	{
+		glDrawElements(GL_TRIANGLES, s_Data->VA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+		glBindTextureUnit(0, 0);
+	}
+
 }

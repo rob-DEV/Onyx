@@ -94,6 +94,8 @@ namespace Onyx {
 
 			Renderer2D::drawQuad(glm::vec3(0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
 
+			Renderer2D::flush();
+
 			Renderer2D::endScene();
 		
 			if (Input::isKeyPressed(ONYX_KEY_F)) {

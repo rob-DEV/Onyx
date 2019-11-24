@@ -16,7 +16,6 @@ namespace Onyx {
 		const VkSurfaceKHR& getVkSurface() const { return m_VkSurface; };
 
 	private:
-		//VULKAN OBJECTS
 		VkSurfaceKHR m_VkSurface;
 	};
 
