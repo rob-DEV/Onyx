@@ -50,7 +50,7 @@ namespace Onyx {
 
 	};
 
-	inline std::vector<Vertex> vertices = {
+	/*inline std::vector<Vertex> vertices = {
 	{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
 	{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
 	{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
@@ -60,6 +60,17 @@ namespace Onyx {
 	{{0.6f, -0.1f}, {0.1f, 0.7f, 0.3f}},
 	{{0.7f, 0.1f}, {0.2f, 0.2f, 0.3f}},
 	{{0.5f, 0.1f}, {0.4f, 0.2f, 0.7f}}
+	};*/
+
+	inline std::vector<Vertex> vertices = {
+	{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+	{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+	{{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+	{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}
+	};
+
+	inline std::vector<uint16_t> indices = {
+	0, 1, 2, 2, 3, 0
 	};
 
 	class VulkanSwapchain {

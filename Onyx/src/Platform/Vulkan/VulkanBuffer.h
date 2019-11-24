@@ -27,11 +27,10 @@ namespace Onyx {
 
 		virtual void bind() const;
 		virtual void unbind() const;
-
-		virtual uint32_t getCount() const { return m_Count; }
+		inline const VkBuffer& getBufferObject() const { return m_Buffer; };
 	private:
-		VkBuffer m_RendererID;
-		uint32_t m_Count;
+		VkBuffer m_Buffer;
+		VkDeviceMemory m_BufferMemory;
 	};
 
 }

@@ -6,6 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Onyx-sandbox", "onyx-sandbox\onyx-sandbox.vcxproj", "{1238B3BD-16F3-4D55-B389-E888E0B94318}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Onyx", "Onyx\onyx.vcxproj", "{229305FA-A18C-4B5B-950D-F3A96CA2681C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE532407-74E9-4F26-A5CB-2B4272521418} = {EE532407-74E9-4F26-A5CB-2B4272521418}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGUI-docking", "ImGUI-docking\ImGUI-docking.vcxproj", "{EE532407-74E9-4F26-A5CB-2B4272521418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +36,14 @@ Global
 		{229305FA-A18C-4B5B-950D-F3A96CA2681C}.Release|x64.Build.0 = Release|x64
 		{229305FA-A18C-4B5B-950D-F3A96CA2681C}.Release|x86.ActiveCfg = Release|Win32
 		{229305FA-A18C-4B5B-950D-F3A96CA2681C}.Release|x86.Build.0 = Release|Win32
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Debug|x64.ActiveCfg = Debug|x64
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Debug|x64.Build.0 = Debug|x64
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Debug|x86.ActiveCfg = Debug|Win32
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Debug|x86.Build.0 = Debug|Win32
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x64.ActiveCfg = Release|x64
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x64.Build.0 = Release|x64
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x86.ActiveCfg = Release|Win32
+		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

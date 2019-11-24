@@ -12,8 +12,9 @@
 
 namespace Onyx {
 
-	VulkanVertexBuffer* vertexBufferTest = nullptr;
 	VulkanSwapchain* VulkanSwapchain::s_Instance = nullptr;
+	VulkanVertexBuffer* vertexBufferTest = nullptr;
+	VulkanVertexBuffer* indiceBufferTest = nullptr;
 
 	//VkBuffer vertexBuffer;
 	//VkDeviceMemory vertexBufferMemory;
@@ -39,6 +40,7 @@ namespace Onyx {
 	{
 		cleanupSwapchain();
 
+		delete indiceBufferTest;
 		delete vertexBufferTest;
 
 		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
@@ -464,9 +466,15 @@ namespace Onyx {
 
 	void VulkanSwapchain::createVertexBuffer()
 	{
-		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
-		vertexBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		VkDeviceSize vertBufferSize = sizeof(vertices[0]) * vertices.size();
+		vertexBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), vertBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	
+		VkDeviceSize indiceBufferSize = sizeof(indices[0]) * indices.size();
+		indiceBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(indices.data()), indiceBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+	
 	}
+
 
 	void VulkanSwapchain::createCommandBuffers()
 	{
@@ -509,8 +517,9 @@ namespace Onyx {
 			VkBuffer vertexBuffers[] = { vertexBufferTest->getBufferObject() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_CommandBuffers[i], 0, 1, vertexBuffers, offsets);
+			vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->getBufferObject(), 0, VK_INDEX_TYPE_UINT16);
 
-			vkCmdDraw(m_CommandBuffers[i], 9, 1, 0, 0);
+			vkCmdDrawIndexed(m_CommandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
 			vkCmdEndRenderPass(m_CommandBuffers[i]);
 
