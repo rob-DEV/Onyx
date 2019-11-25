@@ -33,7 +33,6 @@ namespace Onyx {
 		delete m_Window;
 	}
 
-
 	void Application::run()
 	{
 		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
@@ -65,8 +64,7 @@ namespace Onyx {
 			if (currentTime - previousTime >= 1.0)
 			{
 				printf("FPS: %d\n", frameCount);
-				frameCount = 0;
-				previousTime = currentTime;
+				frameCount = 0; previousTime = currentTime;
 			}
 
 			m_Window->onUpdate();
@@ -75,22 +73,16 @@ namespace Onyx {
 			m_RendererAPI->clear();
 			m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
 
-			OrthographicCamera f = cameraController->getCamera();
+			static const OrthographicCamera& f = cameraController->getCamera();
 
 			Renderer2D::beginScene(f);
-			
-			Renderer2D::drawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
 		
 			Renderer2D::drawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.8f, 1.5f), testMarioTexture);
-		
-			Renderer2D::drawQuad(glm::vec3(0.0f, -.9, 0.0f), glm::vec2(4.0f, .3f), glm::vec4(0.0f, 0.8f, 0.2f, 1.0f));
-
-			Renderer2D::drawQuad(glm::vec3(0.6f, 0.0f, 0.0f), glm::vec2(.1, .25), glm::vec4(0.0f, 0.62f, 0.86f, 1.0f));
+	
+			Renderer2D::endScene();
 
 			Renderer2D::flush();
 
-			Renderer2D::endScene();
-		
 			if (Input::isKeyPressed(ONYX_KEY_F)) {
 				if (sound == nullptr) {
 					sound = new OpenALSound("res/audio/theringer.wav");
@@ -106,6 +98,9 @@ namespace Onyx {
 
 			scale += 0.01f;
 		}
+
+		//cleanup sound if necessary
+		if (sound != nullptr) { delete sound; sound = nullptr; }
 	}
 
 }

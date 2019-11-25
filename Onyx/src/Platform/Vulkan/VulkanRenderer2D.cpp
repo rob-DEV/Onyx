@@ -37,7 +37,7 @@ namespace Onyx {
 
 	void VulkanRenderer2D::beginSceneImplementation(const OrthographicCamera& camera)
 	{
-
+		VulkanSwapchain::get()->setViewMatrixTest(camera.getViewProjectionMatrix());
 	}
 
 	void VulkanRenderer2D::endSceneImplementation()

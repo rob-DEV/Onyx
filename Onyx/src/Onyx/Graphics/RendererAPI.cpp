@@ -1,6 +1,8 @@
 #include "onyxpch.h"
 #include "RendererAPI.h"
 
+#include <Platform/OpenGL/OpenGLRendererAPI.h>
+#include <Platform/Vulkan/VulkanRendererAPI.h>
 
 namespace Onyx {
 
@@ -10,12 +12,25 @@ namespace Onyx {
 	//CURRENTLY SUPPORTING
 	//OPEN GL
 	//VULKAN
-	
+
 	///////////////////////////////////////////////////////////////
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
+	bool RendererAPI::s_Vsync = true;
 	///////////////////////////////////////////////////////////////
 
+	RendererAPI* RendererAPI::create()
+	{
+		switch (s_API)
+		{
+		case RendererAPI::API::None: printf("No API selected\n"); assert(false);
+		case RendererAPI::API::OpenGL: return new OpenGLRendererAPI();
+		case RendererAPI::API::Vulkan: return new VulkanRendererAPI();
+		}
 
+
+		printf("Unknown Renderer API\n"); assert(false);
+		return nullptr;
+	}
 	
 	
 }

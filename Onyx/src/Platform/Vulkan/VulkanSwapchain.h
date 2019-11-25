@@ -2,7 +2,10 @@
 #define _ONYX_PLATFORM_VULKAN_SWAPCHAIN_H_
 
 #include <vulkan/vulkan.h>
+
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 
 namespace Onyx {
 
@@ -73,6 +76,12 @@ namespace Onyx {
 	0, 1, 2, 2, 3, 0
 	};
 
+	struct UniformBufferObject {
+		glm::mat4 model;
+		glm::mat4 view;
+		glm::mat4 proj;
+	};
+
 	class VulkanSwapchain {
 	private:
 		VulkanSwapchain();
@@ -84,6 +93,8 @@ namespace Onyx {
 		const VkRenderPass& getRenderPass() const { return m_RenderPass; };
 		const VkExtent2D& getExtent() const { return m_SwapChainExtent; };
 		const VkPipeline& getGraphicsPipeline() const { return m_GraphicsPipeline; };
+		
+		void setViewMatrixTest(const glm::mat4& matrix) { m_ViewMatrix = matrix; };
 		void drawFrame();
 
 	private:
@@ -92,13 +103,20 @@ namespace Onyx {
 		void recreateSwapchain();
 		void createImageViews();
 		void createRenderPass();
+		void createDescriptorSetLayout();
+		void createDescriptorPool();
+		void createDescriptorSets();
 		void createGraphicsPipeline();
 		void createFramebuffers();
 		void createCommandPool();
 		void createVertexBuffer();
+		void createUniformBuffers();
+		void updateUniformBuffers(uint32_t imageIndex);
 		void createCommandBuffers();
 		void createSyncObjects();
 
+
+		glm::mat4 m_ViewMatrix;
 		const int MAX_FRAMES_IN_FLIGHT = 2;
 		size_t m_CurrentFrame = 0;
 		std::vector<VkFence> m_InFlightFences;
@@ -112,6 +130,10 @@ namespace Onyx {
 		VkExtent2D m_SwapChainExtent;
 		std::vector<VkImageView> m_SwapChainImageViews;
 
+		VkDescriptorSetLayout m_DescriptorSetLayout;
+		VkDescriptorPool m_DescriptorPool;
+		std::vector<VkDescriptorSet> m_DescriptorSets;
+
 		VkPipelineLayout m_PipelineLayout;
 		VkRenderPass m_RenderPass;
 		VkPipeline m_GraphicsPipeline;
@@ -122,6 +144,7 @@ namespace Onyx {
 
 		std::vector<VkSemaphore> m_ImageAvailableSemaphores;
 		std::vector<VkSemaphore> m_RenderFinishedSemaphores;
+
 
 		VkClearValue m_ClearColor = { 0.2f, 0.2f, 0.2f, 0.2f };
 

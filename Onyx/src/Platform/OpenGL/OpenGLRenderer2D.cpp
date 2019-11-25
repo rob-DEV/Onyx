@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <Onyx/Graphics/RenderCommand.h>
 #include <Platform/OpenGL/OpenGLShader.h>
 #include <Onyx/Graphics/VertexArray.h>
 
@@ -101,7 +102,7 @@ namespace Onyx {
 
 	void OpenGLRenderer2D::flushImplementation()
 	{
-		glDrawElements(GL_TRIANGLES, s_Data->VA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+		RenderCommand::DrawIndexed(s_Data->VA);
 		glBindTextureUnit(0, 0);
 	}
 

@@ -25,6 +25,7 @@
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCamera.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer2D.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RendererAPI.cpp" />
     <ClCompile Include="src\Onyx\graphics\Shader.cpp" />

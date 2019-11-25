@@ -1,8 +1,6 @@
 #include "onyxpch.h"
 #include "VulkanRendererAPI.h"
 
-#include <glad/glad.h>
-
 namespace Onyx {
 
 	void VulkanRendererAPI::init()
@@ -21,6 +19,11 @@ namespace Onyx {
 	}
 
 	void VulkanRendererAPI::clear()
+	{
+
+	}
+
+	void VulkanRendererAPI::drawIndexed(VertexArray* vertexArray)
 	{
 
 	}

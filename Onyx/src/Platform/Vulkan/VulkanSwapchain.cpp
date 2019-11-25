@@ -6,9 +6,12 @@
 
 #include <Onyx/Core/Window.h>
 #include <Onyx/Core/FileIO.h>
+#include <Onyx/Graphics/RendererAPI.h>
 
 #include "VulkanBuffer.h"
 
+#define GLM_FORCE_RADIANS
+#include <chrono>
 
 namespace Onyx {
 
@@ -16,22 +19,32 @@ namespace Onyx {
 	VulkanVertexBuffer* vertexStagingBufferTest = nullptr;
 	VulkanVertexBuffer* vertexBufferTest = nullptr;
 	VulkanVertexBuffer* indiceBufferTest = nullptr;
+	VulkanVertexBuffer* indiceStagingBufferTest = nullptr;
 
-	//VkBuffer vertexBuffer;
-	//VkDeviceMemory vertexBufferMemory;
+	std::vector<VulkanVertexBuffer*> uniformBuffers;
 
 	VulkanSwapchain::VulkanSwapchain() : m_LogicalDeviceReference(VulkanDevice::get()->getLogicalDevice())
 	{
+
+		//initialize view matrix
+		m_ViewMatrix = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+
 		createSwapchain();
 		createImageViews();
 		createRenderPass();
+		createDescriptorSetLayout();
 		createGraphicsPipeline();
 		createFramebuffers();
 		createCommandPool();
 		createVertexBuffer();
+
+		createUniformBuffers();
+		createDescriptorPool();
+		createDescriptorSets();
+
 		createCommandBuffers();
 		createSyncObjects();
-
 
 		s_Instance = this;
 	}
@@ -40,6 +53,14 @@ namespace Onyx {
 	VulkanSwapchain::~VulkanSwapchain()
 	{
 		cleanupSwapchain();
+
+		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+			delete uniformBuffers[i];
+		}
+
+		vkDestroyDescriptorPool(m_LogicalDeviceReference, m_DescriptorPool, nullptr);
+
+		vkDestroyDescriptorSetLayout(m_LogicalDeviceReference, m_DescriptorSetLayout, nullptr);
 
 		delete indiceBufferTest;
 		delete vertexBufferTest;
@@ -148,6 +169,11 @@ namespace Onyx {
 		createRenderPass();
 		createGraphicsPipeline();
 		createFramebuffers();
+		
+		createUniformBuffers();
+		createDescriptorPool();
+		createDescriptorSets();
+
 		createCommandBuffers();
 
 
@@ -166,6 +192,10 @@ namespace Onyx {
 
 	VkPresentModeKHR VulkanSwapchain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes)
 	{
+		if (RendererAPI::vsyncEnabled())
+			return VK_PRESENT_MODE_FIFO_KHR;
+
+		//check for mailbox support else FIFO
 		for (const auto& availablePresentMode : availablePresentModes) {
 			if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
 				return availablePresentMode;
@@ -296,6 +326,92 @@ namespace Onyx {
 		}
 	}
 
+	void VulkanSwapchain::createDescriptorSetLayout()
+	{
+		VkDescriptorSetLayoutBinding uboLayoutBinding = {};
+		uboLayoutBinding.binding = 0;
+		uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		uboLayoutBinding.descriptorCount = 1;
+
+		uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+
+		uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+
+		VkDescriptorSetLayoutCreateInfo layoutInfo = {};
+		layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		layoutInfo.bindingCount = 1;
+		layoutInfo.pBindings = &uboLayoutBinding;
+
+		if (vkCreateDescriptorSetLayout(m_LogicalDeviceReference, &layoutInfo, nullptr, &m_DescriptorSetLayout) != VK_SUCCESS) {
+			printf("VulkanSwapchain.cpp createDescriptorSetLayout : Failed to layout\n");
+			assert(false);
+		}
+
+	}
+
+	void VulkanSwapchain::createDescriptorPool()
+	{
+		VkDescriptorPoolSize poolSize = {};
+		poolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		poolSize.descriptorCount = static_cast<uint32_t>(m_SwapChainImages.size());
+
+		VkDescriptorPoolCreateInfo poolInfo = {};
+		poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+		poolInfo.poolSizeCount = 1;
+		poolInfo.pPoolSizes = &poolSize;
+
+		poolInfo.maxSets = static_cast<uint32_t>(m_SwapChainImages.size());;
+
+
+		if (vkCreateDescriptorPool(m_LogicalDeviceReference, &poolInfo, nullptr, &m_DescriptorPool) != VK_SUCCESS) {
+			printf("VulkanSwapchain.cpp createDescriptorPool : Failed to create descriptor pool\n");
+			assert(false);
+		}
+
+	}
+
+	void VulkanSwapchain::createDescriptorSets()
+	{
+		std::vector<VkDescriptorSetLayout> layouts(m_SwapChainImages.size(), m_DescriptorSetLayout);
+		VkDescriptorSetAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+		allocInfo.descriptorPool = m_DescriptorPool;
+		allocInfo.descriptorSetCount = static_cast<uint32_t>(m_SwapChainImages.size());
+		allocInfo.pSetLayouts = layouts.data();
+
+		m_DescriptorSets.resize(m_SwapChainImages.size());
+		if (vkAllocateDescriptorSets(m_LogicalDeviceReference, &allocInfo, m_DescriptorSets.data()) != VK_SUCCESS) {
+			printf("VulkanSwapchain.cpp createDescriptorSets : Failed to create descriptor sets\n");
+			assert(false);
+		}
+
+		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+			VkDescriptorBufferInfo bufferInfo = {};
+			bufferInfo.buffer = uniformBuffers[i]->getBufferObject();
+			bufferInfo.offset = 0;
+			bufferInfo.range = sizeof(UniformBufferObject);
+
+			VkWriteDescriptorSet descriptorWrite = {};
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = m_DescriptorSets[i];
+			descriptorWrite.dstBinding = 0;
+			descriptorWrite.dstArrayElement = 0;
+
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			descriptorWrite.descriptorCount = 1;
+
+			descriptorWrite.pBufferInfo = &bufferInfo;
+			descriptorWrite.pImageInfo = nullptr; // Optional
+			descriptorWrite.pTexelBufferView = nullptr; // Optional
+
+			vkUpdateDescriptorSets(m_LogicalDeviceReference, 1, &descriptorWrite, 0, nullptr);
+
+		}
+
+		
+
+	}
+
 	void VulkanSwapchain::createGraphicsPipeline()
 	{
 		//read in shaders push to shader modules
@@ -368,7 +484,8 @@ namespace Onyx {
 		rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
 		rasterizer.lineWidth = 1.0f;
 		rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-		rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		//rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		rasterizer.depthBiasEnable = VK_FALSE;
 
 		VkPipelineMultisampleStateCreateInfo multisampling = {};
@@ -392,9 +509,12 @@ namespace Onyx {
 		colorBlending.blendConstants[3] = 0.0f;
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
-		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
+		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;		
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
+
+
+		pipelineLayoutInfo.setLayoutCount = 1;
+		pipelineLayoutInfo.pSetLayouts = &m_DescriptorSetLayout;
 
 		if (vkCreatePipelineLayout(m_LogicalDeviceReference, &pipelineLayoutInfo, nullptr, &m_PipelineLayout) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 329 : Failed to create Pipeline Layout\n");
@@ -477,7 +597,19 @@ namespace Onyx {
 		memcpy(data, vertices.data(), (size_t)vertBufferSize);
 		vkUnmapMemory(VulkanDevice::get()->getLogicalDevice(), vertexStagingBufferTest->getBufferMemory());
 
+		VkDeviceSize indiceBufferSize = sizeof(indices[0]) * indices.size();
+		indiceStagingBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), vertBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+		void* data1;
+		vkMapMemory(VulkanDevice::get()->getLogicalDevice(), indiceStagingBufferTest->getBufferMemory(), 0, indiceBufferSize, 0, &data1);
+		memcpy(data1, &indices[0], (size_t)indiceBufferSize);
+		vkUnmapMemory(VulkanDevice::get()->getLogicalDevice(), indiceStagingBufferTest->getBufferMemory());
+
 		vertexBufferTest = new VulkanVertexBuffer(NULL, vertBufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		indiceBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(indices.data()), indiceBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+
+
 
 		//copy staging buffer (CPU) to Vertex Buffer on GPU
 		VkCommandBufferAllocateInfo allocInfo = {};
@@ -494,11 +626,19 @@ namespace Onyx {
 
 		vkBeginCommandBuffer(commandBuffer, &beginInfo);
 
-		VkBufferCopy copyRegion = {};
-		copyRegion.srcOffset = 0; // Optional
-		copyRegion.dstOffset = 0; // Optional
-		copyRegion.size = vertBufferSize;
-		vkCmdCopyBuffer(commandBuffer, vertexStagingBufferTest->getBufferObject(), vertexBufferTest->getBufferObject(), 1, &copyRegion);
+		VkBufferCopy vertCopyRegion = {};
+		vertCopyRegion.srcOffset = 0; // Optional
+		vertCopyRegion.dstOffset = 0; // Optional
+		vertCopyRegion.size = vertBufferSize;
+		vkCmdCopyBuffer(commandBuffer, vertexStagingBufferTest->getBufferObject(), vertexBufferTest->getBufferObject(), 1, &vertCopyRegion);
+
+		VkBufferCopy indiceCopyRegion = {};
+		indiceCopyRegion.srcOffset = 0; // Optional
+		indiceCopyRegion.dstOffset = 0; // Optional
+		indiceCopyRegion.size = indiceBufferSize;
+
+		vkCmdCopyBuffer(commandBuffer, indiceStagingBufferTest->getBufferObject(), indiceBufferTest->getBufferObject(), 1, &indiceCopyRegion);
+
 
 		vkEndCommandBuffer(commandBuffer);
 
@@ -515,13 +655,44 @@ namespace Onyx {
 
 		//cleanup VSB
 		delete vertexStagingBufferTest;
-
-		//VkDeviceSize indiceBufferSize = sizeof(indices[0]) * indices.size();
-		//indiceBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(indices.data()), indiceBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
+		delete indiceStagingBufferTest;
 	
 	}
 
+
+	void VulkanSwapchain::createUniformBuffers()
+	{
+
+		uniformBuffers.resize(m_SwapChainImages.size());
+
+		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+			uniformBuffers[i] = new VulkanVertexBuffer(NULL, sizeof(UniformBufferObject), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		}
+		
+	}
+
+	void VulkanSwapchain::updateUniformBuffers(uint32_t imageIndex)
+	{
+		static auto startTime = std::chrono::high_resolution_clock::now();
+
+		auto currentTime = std::chrono::high_resolution_clock::now();
+		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+		UniformBufferObject ubo = {};
+
+		ubo.model = m_ViewMatrix;
+
+		ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		ubo.proj = glm::perspective(glm::radians(45.0f), m_SwapChainExtent.width / (float)m_SwapChainExtent.height, 0.1f, 10.0f);
+
+		ubo.proj[1][1] *= -1;
+
+		void* data;
+		vkMapMemory(m_LogicalDeviceReference, uniformBuffers[imageIndex]->getBufferMemory(), 0, sizeof(ubo), 0, &data);
+		memcpy(data, &ubo, sizeof(ubo));
+		vkUnmapMemory(m_LogicalDeviceReference, uniformBuffers[imageIndex]->getBufferMemory());
+	}
 
 	void VulkanSwapchain::createCommandBuffers()
 	{
@@ -563,10 +734,15 @@ namespace Onyx {
 			VkBuffer vertexBuffers[] = { vertexBufferTest->getBufferObject() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_CommandBuffers[i], 0, 1, vertexBuffers, offsets);
-			//vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->getBufferObject(), 0, VK_INDEX_TYPE_UINT16);
+			
+			
+			vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->getBufferObject(), 0, VK_INDEX_TYPE_UINT16);
 
-			//vkCmdDrawIndexed(m_CommandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
-			vkCmdDraw(m_CommandBuffers[i], static_cast<uint32_t>(vertices.size()), 1, 0, 0);
+			vkCmdBindDescriptorSets(m_CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_PipelineLayout, 0, 1, &m_DescriptorSets[i], 0, nullptr);
+			//vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+
+			vkCmdDrawIndexed(m_CommandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+			//vkCmdDraw(m_CommandBuffers[i], static_cast<uint32_t>(vertices.size()), 1, 0, 0);
 			
 			vkCmdEndRenderPass(m_CommandBuffers[i]);
 
@@ -623,6 +799,9 @@ namespace Onyx {
 			vkWaitForFences(m_LogicalDeviceReference, 1, &m_ImagesInFlight[imageIndex], VK_TRUE, UINT64_MAX);
 		}
 		m_ImagesInFlight[imageIndex] = m_InFlightFences[m_CurrentFrame];
+
+		//update uniform buffers
+		updateUniformBuffers(imageIndex);
 
 
 		VkSubmitInfo submitInfo = {};
