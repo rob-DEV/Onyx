@@ -14,6 +14,7 @@ namespace Onyx {
 		virtual void bind() const override;
 		virtual void unbind() const override;
 		inline const VkBuffer& getBufferObject() const { return m_Buffer; };
+		inline const VkDeviceMemory& getBufferMemory() const { return m_BufferMemory; };
 
 	private:
 		VkBuffer m_Buffer;
@@ -28,6 +29,8 @@ namespace Onyx {
 		virtual void bind() const;
 		virtual void unbind() const;
 		inline const VkBuffer& getBufferObject() const { return m_Buffer; };
+		inline const VkDeviceMemory& getBufferMemory() const { return m_BufferMemory; };
+
 	private:
 		VkBuffer m_Buffer;
 		VkDeviceMemory m_BufferMemory;

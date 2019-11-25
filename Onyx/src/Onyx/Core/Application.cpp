@@ -15,10 +15,6 @@
 
 #include <GLFW/glfw3.h>
 
-//#include "imgui.h"
-//#include "imgui_internal.h"
-//#include "examples/imgui_impl_glfw.h"
-//#include "examples/imgui_impl_opengl3.h"
 
 namespace Onyx {
 	
@@ -62,9 +58,6 @@ namespace Onyx {
 		Sound* sound = nullptr;
 
 		while (!m_Window->isClosed()) {
-
-			if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
-				VulkanSwapchain::get()->drawFrame();
 
 			double currentTime = glfwGetTime();
 			frameCount++;

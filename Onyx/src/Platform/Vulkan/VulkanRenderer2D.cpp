@@ -62,7 +62,7 @@ namespace Onyx {
 
 	void VulkanRenderer2D::flushImplementation()
 	{
-
+		VulkanSwapchain::get()->drawFrame();
 	}
 
 }

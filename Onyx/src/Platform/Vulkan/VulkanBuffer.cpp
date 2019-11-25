@@ -49,10 +49,10 @@ namespace Onyx {
 
 		vkBindBufferMemory(VulkanDevice::get()->getLogicalDevice(), m_Buffer, m_BufferMemory, 0);
 
-		void* data;
-		vkMapMemory(device, m_BufferMemory, 0, size, 0, &data);
-		memcpy(data, &vertices[0], (size_t)size);
-		vkUnmapMemory(device, m_BufferMemory);
+		//void* data;
+		//vkMapMemory(device, m_BufferMemory, 0, size, 0, &data);
+		//memcpy(data, &vertices[0], (size_t)size);
+		//vkUnmapMemory(device, m_BufferMemory);
 
 	}
 

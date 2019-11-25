@@ -13,6 +13,7 @@
 namespace Onyx {
 
 	VulkanSwapchain* VulkanSwapchain::s_Instance = nullptr;
+	VulkanVertexBuffer* vertexStagingBufferTest = nullptr;
 	VulkanVertexBuffer* vertexBufferTest = nullptr;
 	VulkanVertexBuffer* indiceBufferTest = nullptr;
 
@@ -467,10 +468,56 @@ namespace Onyx {
 	void VulkanSwapchain::createVertexBuffer()
 	{
 		VkDeviceSize vertBufferSize = sizeof(vertices[0]) * vertices.size();
-		vertexBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), vertBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		vertexStagingBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), vertBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	
-		VkDeviceSize indiceBufferSize = sizeof(indices[0]) * indices.size();
-		indiceBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(indices.data()), indiceBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		//staging buffer test
+		//map vertex buffer
+		void* data;
+		vkMapMemory(VulkanDevice::get()->getLogicalDevice(), vertexStagingBufferTest->getBufferMemory(), 0, vertBufferSize, 0, &data);
+		memcpy(data, vertices.data(), (size_t)vertBufferSize);
+		vkUnmapMemory(VulkanDevice::get()->getLogicalDevice(), vertexStagingBufferTest->getBufferMemory());
+
+		vertexBufferTest = new VulkanVertexBuffer(NULL, vertBufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+
+		//copy staging buffer (CPU) to Vertex Buffer on GPU
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		allocInfo.commandPool = m_CommandPool;
+		allocInfo.commandBufferCount = 1;
+
+		VkCommandBuffer commandBuffer;
+		vkAllocateCommandBuffers(VulkanDevice::get()->getLogicalDevice(), &allocInfo, &commandBuffer);
+		VkCommandBufferBeginInfo beginInfo = {};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+
+		VkBufferCopy copyRegion = {};
+		copyRegion.srcOffset = 0; // Optional
+		copyRegion.dstOffset = 0; // Optional
+		copyRegion.size = vertBufferSize;
+		vkCmdCopyBuffer(commandBuffer, vertexStagingBufferTest->getBufferObject(), vertexBufferTest->getBufferObject(), 1, &copyRegion);
+
+		vkEndCommandBuffer(commandBuffer);
+
+		//execute the command buffer copy command
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+
+		vkQueueSubmit(VulkanDevice::get()->getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(VulkanDevice::get()->getGraphicsQueue());
+
+		vkFreeCommandBuffers(VulkanDevice::get()->getLogicalDevice(), m_CommandPool, 1, &commandBuffer);
+
+		//cleanup VSB
+		delete vertexStagingBufferTest;
+
+		//VkDeviceSize indiceBufferSize = sizeof(indices[0]) * indices.size();
+		//indiceBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(indices.data()), indiceBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	
 	}
@@ -512,15 +559,15 @@ namespace Onyx {
 
 			vkCmdBeginRenderPass(m_CommandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-
 			vkCmdBindPipeline(m_CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
 			VkBuffer vertexBuffers[] = { vertexBufferTest->getBufferObject() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_CommandBuffers[i], 0, 1, vertexBuffers, offsets);
-			vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->getBufferObject(), 0, VK_INDEX_TYPE_UINT16);
+			//vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->getBufferObject(), 0, VK_INDEX_TYPE_UINT16);
 
-			vkCmdDrawIndexed(m_CommandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
-
+			//vkCmdDrawIndexed(m_CommandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+			vkCmdDraw(m_CommandBuffers[i], static_cast<uint32_t>(vertices.size()), 1, 0, 0);
+			
 			vkCmdEndRenderPass(m_CommandBuffers[i]);
 
 			if (vkEndCommandBuffer(m_CommandBuffers[i]) != VK_SUCCESS) {
