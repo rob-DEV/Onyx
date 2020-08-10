@@ -24,6 +24,7 @@ namespace Onyx {
 		}
 
 		static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() {
+
 			std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
 
 			/*

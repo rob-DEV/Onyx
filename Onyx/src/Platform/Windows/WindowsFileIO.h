@@ -1,7 +1,7 @@
 #ifndef _ONYX_PLATFORM_WINDOWS_FILEIO_H_
 #define _ONYX_PLATFORM_WINDOWS_FILEIO_H_
 
-#include <Onyx/core/Input.h>
+#include <Onyx/Core/Input.h>
 #include <Onyx/core/FileIO.h>
 
 

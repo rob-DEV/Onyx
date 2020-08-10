@@ -13,6 +13,7 @@ namespace Onyx {
 		void setClearColor(const glm::vec4& color);
 		void clear();
 		void drawIndexed(VertexArray* vertexArray);
+		void drawIndexed(VertexArray* vertexArray, uint32_t indexCount);
 
 
 	};

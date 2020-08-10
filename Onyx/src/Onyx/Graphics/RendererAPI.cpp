@@ -15,16 +15,19 @@ namespace Onyx {
 
 	///////////////////////////////////////////////////////////////
 	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
-	bool RendererAPI::s_Vsync = true;
 	///////////////////////////////////////////////////////////////
+	
+	//TURN VSYNC ON OR OFF
+	bool RendererAPI::s_Vsync = true;
+
 
 	RendererAPI* RendererAPI::create()
 	{
 		switch (s_API)
 		{
-		case RendererAPI::API::None: printf("No API selected\n"); assert(false);
-		case RendererAPI::API::OpenGL: return new OpenGLRendererAPI();
-		case RendererAPI::API::Vulkan: return new VulkanRendererAPI();
+			case RendererAPI::API::None: printf("No API selected\n"); assert(false);
+			case RendererAPI::API::OpenGL: return new OpenGLRendererAPI();
+			case RendererAPI::API::Vulkan: return new VulkanRendererAPI();
 		}
 
 

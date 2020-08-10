@@ -8,7 +8,7 @@ namespace Onyx {
 
 	}
 
-	void SoundManager::add(std::string& fileName)
+	void SoundManager::add(const std::string& fileName)
 	{
 
 	}

@@ -62,6 +62,8 @@
     <ClInclude Include="src\Onyx\core\Core.h" />
     <ClInclude Include="src\Onyx\core\Entrypoint.h" />
     <ClInclude Include="src\Onyx\core\FileIO.h" />
+    <ClInclude Include="src\Onyx\Event\Event.h" />
+    <ClInclude Include="src\Onyx\Event\KeyEvent.h" />
     <ClInclude Include="src\Onyx\graphics\Buffer.h" />
     <ClInclude Include="src\Onyx\graphics\GraphicsContext.h" />
     <ClInclude Include="src\Onyx\core\Input.h" />

@@ -151,7 +151,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\FlatColor.glsl" />
     <None Include="res\shaders\Texture.glsl" />
     <None Include="res\shaders\vulkantest\compile.bat" />
     <None Include="res\shaders\vulkantest\glslc.exe" />

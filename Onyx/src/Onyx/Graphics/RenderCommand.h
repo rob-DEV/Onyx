@@ -9,6 +9,7 @@ namespace Onyx {
 	class ONYX_API RenderCommand {
 	public:
 		inline static void DrawIndexed(VertexArray* vertexArray) { m_RendererAPI->drawIndexed(vertexArray); };
+		inline static void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount) { m_RendererAPI->drawIndexed(vertexArray, indexCount); };
 	private:
 		static RendererAPI* m_RendererAPI;
 		

@@ -20,8 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\FlatColor.glsl" />
-    <None Include="res\shaders\Texture.glsl" />
     <None Include="res\shaders\vulkantest\vkfrag.spv" />
     <None Include="res\shaders\vulkantest\vkvert.spv" />
     <None Include="res\shaders\vulkantest\compile.bat">
@@ -30,5 +28,6 @@
     <None Include="res\shaders\vulkantest\glslc.exe" />
     <None Include="res\shaders\vulkantest\vkfrag.frag" />
     <None Include="res\shaders\vulkantest\vkvert.vert" />
+    <None Include="res\shaders\Texture.glsl" />
   </ItemGroup>
 </Project>

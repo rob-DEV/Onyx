@@ -16,7 +16,6 @@ namespace Onyx {
 
 	}
 
-
 	void OpenALDevice::initImplementation()
 	{
 		m_Device = alcOpenDevice(NULL);

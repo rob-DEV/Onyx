@@ -24,7 +24,7 @@ namespace Onyx {
 	{
 		s_Instance = this;
 		printf("Creating Onyx Application and Window!\n");
-		m_Window = new WindowsWindow(WindowProperties());
+		m_Window = new WindowsWindow(WindowProperties("Onyx Engine", 1280, 720));
 	}
 
 	Application::~Application()
@@ -37,8 +37,6 @@ namespace Onyx {
 	{
 		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			m_RendererAPI = new OpenGLRendererAPI();
-		else if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
-			m_RendererAPI = new VulkanRendererAPI();
 
 		m_RendererAPI->init();
 		m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
@@ -48,6 +46,7 @@ namespace Onyx {
 
 		OrthographicCameraController* cameraController = new OrthographicCameraController();
 		Texture2D* testMarioTexture = Texture2D::create("res/textures/mario.png");
+		//Texture2D* testMario2Texture = Texture2D::create("res/textures/mario2.png");
 
 		float scale = 0.01f;
 		double previousTime = glfwGetTime();
@@ -76,10 +75,14 @@ namespace Onyx {
 			static const OrthographicCamera& f = cameraController->getCamera();
 
 			Renderer2D::beginScene(f);
-		
-			Renderer2D::drawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.8f, 1.5f), testMarioTexture);
-	
+
+			//Renderer2D::drawQuad(glm::vec3(-0.3f, -0.2f, 0.0f), glm::vec2(0.75f, 0.75f), glm::vec4(0.0f, 0.2f, 0.9f, 1.0f));
+			Renderer2D::drawQuad(glm::vec3(-0.1f, -0.3f, 0.0f), glm::vec2(0.75f, 0.75f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+			Renderer2D::drawQuad(glm::vec3(0.2f, 0.3f, 0.0f), glm::vec2(0.75f, 0.75f), testMarioTexture);
+
+
 			Renderer2D::endScene();
+
 
 			Renderer2D::flush();
 
@@ -90,17 +93,27 @@ namespace Onyx {
 				}
 			}
 
-			if (Input::isKeyPressed(ONYX_KEY_G))
-				if (sound != nullptr) { delete sound; sound = nullptr; }
-
-			if (Input::isKeyPressed(ONYX_KEY_ESCAPE))
+			if (Input::isKeyPressed(ONYX_KEY_G)) {
+				if (sound != nullptr) { 
+					delete sound; sound = nullptr; 
+				}
+			}
+			
+			if (Input::isKeyPressed(ONYX_KEY_ESCAPE)) {
 				break;
+			}
 
 			scale += 0.01f;
+
 		}
 
 		//cleanup sound if necessary
 		if (sound != nullptr) { delete sound; sound = nullptr; }
+	}
+
+	void Application::onEvent(Event& e)
+	{
+		printf("%s\n",e.getName());
 	}
 
 }

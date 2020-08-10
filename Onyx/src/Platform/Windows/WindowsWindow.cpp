@@ -9,18 +9,30 @@
 #include <Platform/OpenGL/OpenGLGraphicsContext.h>
 #include <Platform/Vulkan/VulkanGraphicsContext.h>
 
+#include <Onyx/Event/KeyEvent.h>
+
 namespace Onyx {
 
 	static unsigned char s_WindowCount = 0;
 
 
-	WindowsWindow::WindowsWindow() : m_WindowProperties(WindowProperties())
+	WindowsWindow::WindowsWindow()
 	{
+		//initialize window attribute
+		WindowProperties props;
+		m_Data.Width = props.Width;
+		m_Data.Height = props.Height;
+		m_Data.Title = props.Title;
+
 		init();
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProperties& properties) : m_WindowProperties(properties)
+	WindowsWindow::WindowsWindow(const WindowProperties& properties)
 	{
+		//initialize window attribute
+		m_Data.Width = properties.Width;
+		m_Data.Height = properties.Height;
+		m_Data.Title = properties.Title;
 		init();
 	}
 
@@ -31,22 +43,57 @@ namespace Onyx {
 
 	void WindowsWindow::init()
 	{
-		printf("Title : %s\n", m_WindowProperties.Title.c_str());
+		printf("Title : %s\n", m_Data.Title.c_str());
 		
 		if (s_WindowCount == 0 && !glfwInit())	printf("Failed to initialize GLFW!");
 
 		if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-		m_Window = glfwCreateWindow(m_WindowProperties.Width, m_WindowProperties.Height, m_WindowProperties.Title.c_str(), nullptr, nullptr);
+		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		
-		glfwSetWindowUserPointer(m_Window, &m_WindowProperties);
+		glfwSetWindowUserPointer(m_Window, &m_Data);
+
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 			{
-				WindowProperties& data = *(WindowProperties*)glfwGetWindowUserPointer(window);
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				data.Width = width;
 				data.Height = height;
 			});
+
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				
+			});
+
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				switch (action)
+				{
+					case GLFW_PRESS:
+					{
+						//KeyPressedEvent event(key, 0);
+						//data.EventCallback(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						//KeyReleasedEvent event(key);
+						//data.EventCallback(event);
+						//break;
+					}
+					case GLFW_REPEAT:
+					{
+						//KeyPressedEvent event(key, 1);
+						//data.EventCallback(event);
+						//break;
+					}
+				}
+			});
+
 
 		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
 			m_Context = new Onyx::OpenGLGraphicsContext(m_Window);

@@ -12,7 +12,7 @@ namespace Onyx {
 	class ONYX_API SoundManager {	
 	public:
 		static void init();
-		static void add(std::string& fileName); //TODO check sound name against map for caching purposes
+		static void add(const std::string& fileName); //TODO check sound name against map for caching purposes
 		static void remove();
 		static Sound* getSound();
 

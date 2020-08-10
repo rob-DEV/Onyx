@@ -17,8 +17,8 @@ namespace Onyx {
 		virtual uint32_t getHeight() const override { return m_Height; }
 
 		virtual void setData(void* data, uint32_t size) override;
-
 		virtual void bind(uint32_t slot = 0) const override;
+
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;

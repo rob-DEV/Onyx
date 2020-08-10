@@ -1,9 +1,7 @@
 #include "onyxpch.h"
+
 #include "WindowsFileIO.h"
-
 #include <fstream>
-
-
 
 namespace Onyx {
 
@@ -21,7 +19,6 @@ namespace Onyx {
 				fclose(file);
 			return "";
 		}
-
 
 		fseek(file, 0, SEEK_END);
 		unsigned long length = (unsigned long)ftell(file);
@@ -44,6 +41,7 @@ namespace Onyx {
 
 		if (!file.is_open()) {
 			std::cout << "Error opening file readFileByteImplementation()\n";
+			assert(false);
 		}
 
 		size_t fileSize = (size_t)file.tellg();

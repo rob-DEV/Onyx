@@ -69,6 +69,12 @@ namespace Onyx {
 		glUniform1i(location, value);
 	}
 
+	void OpenGLShader::uploadIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1iv(location, count, values);
+	}
+
 	void OpenGLShader::uploadUniformFloat(const std::string& name, float value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
@@ -104,6 +110,7 @@ namespace Onyx {
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
+
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::preProcess(const std::string& source)
 	{

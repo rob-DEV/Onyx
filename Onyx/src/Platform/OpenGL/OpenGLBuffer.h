@@ -6,11 +6,13 @@
 namespace Onyx {
 	class OpenGLVertexBuffer : public VertexBuffer {
 	public:
+		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer();
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
+		virtual void setData(void* data, uint32_t size) override;
 
 	private:
 		uint32_t m_RendererID;
@@ -18,6 +20,7 @@ namespace Onyx {
 
 	class OpenGLIndexBuffer : public IndexBuffer {
 	public:
+		OpenGLIndexBuffer(uint32_t count);
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
 		virtual ~OpenGLIndexBuffer();
 

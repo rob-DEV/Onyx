@@ -21,7 +21,7 @@ namespace Onyx {
 
 	void VulkanGraphicsContext::init()
 	{
-		std::cout << "Vulkan Context Initialization\n";
+		std::cout << "\nVulkan Context Initialization\n";
 
 		//creates and assigns the initial vkInstance 
 		m_VulkanInstance = VulkanInstance::get();
@@ -35,7 +35,7 @@ namespace Onyx {
 
 	void VulkanGraphicsContext::swapBuffers()
 	{
-		
+		glfwSwapBuffers(m_WindowHandle);
 	}
 
 }

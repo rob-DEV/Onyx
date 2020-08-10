@@ -5,13 +5,10 @@
 #include <Onyx/Graphics/OrthographicCamera.h>
 #include <Onyx/Graphics/Texture.h>
 
+#define RENDERER2D_MAX_VERTEX 600000
+
 namespace Onyx {
 
-	struct Vertex2D {
-		glm::vec3 position;
-		glm::vec4 color;
-		glm::vec2 texCoord;
-	};
 
 	class ONYX_API Renderer2D {
 	public:	

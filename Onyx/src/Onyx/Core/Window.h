@@ -1,7 +1,9 @@
 #ifndef _ONYX_WINDOW_H_
 #define  _ONYX_WINDOW_H_
 
-#include "Core.h"
+#include "onyxpch.h"
+#include <Onyx/Core/Core.h>
+#include <Onyx/Event/Event.h>
 
 namespace Onyx {
 
@@ -23,10 +25,11 @@ namespace Onyx {
 	class ONYX_API Window {
 
 	public:
+		using EventCallbackFn = std::function<void(Event&)>;
+
 		virtual ~Window() = default;
 
 		virtual void init() = 0;
-
 		virtual void onUpdate() = 0;
 
 		virtual uint32_t getWidth() = 0;
@@ -34,6 +37,8 @@ namespace Onyx {
 		virtual const std::string& getTitle() = 0;
 		       
 		virtual bool isClosed() = 0;
+
+		virtual void setEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void* getNativeWindow() = 0;
 	};
 

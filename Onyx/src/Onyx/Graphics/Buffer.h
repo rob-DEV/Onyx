@@ -14,7 +14,9 @@ namespace Onyx {
 
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
+		virtual void setData(void* data, uint32_t size) {};
 
+		static VertexBuffer* create(uint32_t size);
 		static VertexBuffer* create(float* vertices, uint32_t size);
 	};
 
@@ -27,7 +29,8 @@ namespace Onyx {
 		virtual void unbind() const = 0;
 		virtual uint32_t getCount() const = 0;
 
-		static IndexBuffer* create(uint32_t* indices, uint32_t size);
+		static IndexBuffer* create(uint32_t count);
+		static IndexBuffer* create(uint32_t* indices, uint32_t count);
 	};
 
 }

@@ -35,4 +35,10 @@ namespace Onyx {
 		glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
+	void OpenGLRendererAPI::drawIndexed(VertexArray* vertexArray, uint32_t indexCount)
+	{
+		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
 }

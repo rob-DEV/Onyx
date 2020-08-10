@@ -1,7 +1,7 @@
 #ifndef _ONYX_PLATFORM_WINDOWS_INPUT_H_
 #define _ONYX_PLATFORM_WINDOWS_INPUT_H_
 
-#include <Onyx/core/Input.h>
+#include <Onyx/Core/Input.h>
 
 namespace Onyx {
 

@@ -25,7 +25,6 @@ namespace Onyx {
 		printf("  Renderer: %s\n", glGetString(GL_RENDERER));
 		printf("  Version: %s\n", glGetString(GL_VERSION));
 
-
 	}
 
 	void OpenGLGraphicsContext::swapBuffers()
