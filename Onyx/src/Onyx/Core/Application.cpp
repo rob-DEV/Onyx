@@ -46,7 +46,7 @@ namespace Onyx {
 
 		OrthographicCameraController* cameraController = new OrthographicCameraController();
 		Texture2D* testMarioTexture = Texture2D::create("res/textures/mario.png");
-		//Texture2D* testMario2Texture = Texture2D::create("res/textures/mario2.png");
+		Texture2D* testMario2Texture = Texture2D::create("res/textures/mario2.png");
 
 		float scale = 0.01f;
 		double previousTime = glfwGetTime();
@@ -78,13 +78,14 @@ namespace Onyx {
 
 			//Renderer2D::drawQuad(glm::vec3(-0.3f, -0.2f, 0.0f), glm::vec2(0.75f, 0.75f), glm::vec4(0.0f, 0.2f, 0.9f, 1.0f));
 			Renderer2D::drawQuad(glm::vec3(-0.1f, -0.3f, 0.0f), glm::vec2(0.75f, 0.75f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
-			Renderer2D::drawQuad(glm::vec3(0.2f, 0.3f, 0.0f), glm::vec2(0.75f, 0.75f), testMarioTexture);
+			Renderer2D::drawQuad(glm::vec3(0.8f, 0.8f, 0.0f), glm::vec2(0.75f, 0.75f), testMarioTexture);
+			Renderer2D::drawQuad(glm::vec3(0.2f, 0.3f, 0.0f), glm::vec2(0.75f, 0.75f), testMario2Texture);
 
 
 			Renderer2D::endScene();
-
-
 			Renderer2D::flush();
+
+		
 
 			if (Input::isKeyPressed(ONYX_KEY_F)) {
 				if (sound == nullptr) {

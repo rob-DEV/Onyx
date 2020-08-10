@@ -30,8 +30,8 @@ namespace Onyx {
 		static const uint32_t MaxTextureSlots = 32;
 
 
-		Texture* WhiteTexture;
-		std::array<Texture*, MaxTextureSlots> TextureSlots;
+		Texture2D* WhiteTexture;
+		std::array<Texture2D*, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1; // 0 = white texture
 
 
@@ -191,27 +191,48 @@ namespace Onyx {
 	void OpenGLRenderer2D::drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
 	{
 
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		{
+			if (*s_Data.TextureSlots[i] == *texture)
+			{
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f)
+		{
+			//if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				//FlushAndReset();
+
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
+
+
 		m_QuadVertexBufferWritePtr->Position = position;
 		m_QuadVertexBufferWritePtr->Color = glm::vec4(1,1,1,1);
-		m_QuadVertexBufferWritePtr->TexID = 1;
+		m_QuadVertexBufferWritePtr->TexID = textureIndex;
 		m_QuadVertexBufferWritePtr->TexCoord = glm::vec2(0.0f, 0.0f);
 		m_QuadVertexBufferWritePtr++;
 
 		m_QuadVertexBufferWritePtr->Position = position + glm::vec3(size.x, 0.0f, 0.0f);
 		m_QuadVertexBufferWritePtr->Color = glm::vec4(1, 1, 1, 1);
-		m_QuadVertexBufferWritePtr->TexID = 1;
+		m_QuadVertexBufferWritePtr->TexID = textureIndex;
 		m_QuadVertexBufferWritePtr->TexCoord = glm::vec2(1.0f, 0.0f);
 		m_QuadVertexBufferWritePtr++;
 
 		m_QuadVertexBufferWritePtr->Position = position + glm::vec3(size.x, size.y, 0.0f);
 		m_QuadVertexBufferWritePtr->Color = glm::vec4(1,1,1,1);
-		m_QuadVertexBufferWritePtr->TexID = 1;
+		m_QuadVertexBufferWritePtr->TexID = textureIndex;
 		m_QuadVertexBufferWritePtr->TexCoord = glm::vec2(1.0f, 1.0f);
 		m_QuadVertexBufferWritePtr++;
 
 		m_QuadVertexBufferWritePtr->Position = position + glm::vec3(0.0f, size.y, 0.0f);
 		m_QuadVertexBufferWritePtr->Color = glm::vec4(1, 1, 1, 1);
-		m_QuadVertexBufferWritePtr->TexID = 1;
+		m_QuadVertexBufferWritePtr->TexID = textureIndex;
 		m_QuadVertexBufferWritePtr->TexCoord = glm::vec2(0.0f, 1.0f);
 		m_QuadVertexBufferWritePtr++;
 

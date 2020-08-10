@@ -7,6 +7,10 @@ namespace Onyx {
 
 	OrthographicCameraController::OrthographicCameraController() : m_Camera(-1.6f, 1.6f, -m_ZoomLevel, m_ZoomLevel)
 	{
+		glm::vec3 pos = m_Camera.getPosition();
+		pos.x += 0.6;
+		pos.y += 0.7;
+		m_Camera.setPosition(pos);
 	}
 
 	void OrthographicCameraController::onUpdate()
