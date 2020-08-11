@@ -5,9 +5,6 @@
 #include <Platform/Windows/WindowsWindow.h>
 
 #include <Platform/OpenGL/OpenGLRendererAPI.h>
-#include <Platform/Vulkan/VulkanRendererAPI.h>
-#include <Platform/Vulkan/VulkanSwapchain.h>
-
 #include <Platform/OpenAL/OpenALSound.h>
 
 #include <Onyx/Graphics/Texture.h>
@@ -50,7 +47,12 @@ namespace Onyx {
 
 		float scale = 0.01f;
 		double previousTime = glfwGetTime();
+		double previousTime1 = glfwGetTime();
+		double deltatime = 0.0f;
+		double deltatime1 = 0.0f;
 		int frameCount = 0;
+
+		float rotation = 0;
 
 		SoundDevice::init();
 		Sound* sound = nullptr;
@@ -59,8 +61,9 @@ namespace Onyx {
 
 			double currentTime = glfwGetTime();
 			frameCount++;
-
-			if (currentTime - previousTime >= 1.0)
+			deltatime = currentTime - previousTime1;
+			deltatime1 = currentTime - previousTime;
+			if (deltatime1 >= 1.0)
 			{
 				printf("FPS: %d\n", frameCount);
 				frameCount = 0; previousTime = currentTime;
@@ -76,10 +79,14 @@ namespace Onyx {
 
 			Renderer2D::beginScene(f);
 
-			//Renderer2D::drawQuad(glm::vec3(-0.3f, -0.2f, 0.0f), glm::vec2(0.75f, 0.75f), glm::vec4(0.0f, 0.2f, 0.9f, 1.0f));
-			Renderer2D::drawQuad(glm::vec3(-0.1f, -0.3f, 0.0f), glm::vec2(0.75f, 0.75f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
-			Renderer2D::drawQuad(glm::vec3(0.8f, 0.8f, 0.0f), glm::vec2(0.75f, 0.75f), testMarioTexture);
-			Renderer2D::drawQuad(glm::vec3(0.2f, 0.3f, 0.0f), glm::vec2(0.75f, 0.75f), testMario2Texture);
+			Renderer2D::drawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+
+			Renderer2D::drawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), testMarioTexture);
+
+			rotation = 12 * deltatime;
+
+			Renderer2D::drawRotatedQuad(glm::vec3(0.2f, -0.6f, 0.0f), rotation, glm::vec3(0.0f,0.0f, 1.0f), glm::vec2(0.45f, 0.45f), testMarioTexture);
+
 
 
 			Renderer2D::endScene();

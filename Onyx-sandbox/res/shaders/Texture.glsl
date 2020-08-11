@@ -6,26 +6,22 @@ layout(location = 1) in vec4 a_VertColor;
 layout(location = 2) in float a_TextID;
 layout(location = 3) in vec2 a_TextureCoord;
 
-uniform vec3 u_VertexColor;
-uniform mat4 u_Transform;
 uniform mat4 u_ViewProjection;
 
 out DATA
 {
-	vec4 position;
-	vec4 color;
-	float texID;
+	vec4 v_Color;
 	vec2 v_TexCoord;
+	float v_TextureIndex;
 } vs_out;
 
 void main() {
 	
-	gl_Position = u_ViewProjection * u_Transform *  vec4(a_Position, 1);
-
-	vs_out.position =  u_ViewProjection * u_Transform * vec4(a_Position, 1);
-	vs_out.color = a_VertColor;
-	vs_out.texID = a_TextID;
+	vs_out.v_Color = a_VertColor;
 	vs_out.v_TexCoord = a_TextureCoord;
+	vs_out.v_TextureIndex = a_TextID;
+	
+	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
 
 #type fragment
@@ -34,10 +30,9 @@ layout (location = 0) out vec4 color;
 
 in DATA
 {
-	vec4 position;
-	vec4 color;
-	float texID;
+	vec4 v_Color;
 	vec2 v_TexCoord;
+	float v_TextureIndex;
 } fs_in;
 
 uniform sampler2D u_Textures[32];
@@ -45,9 +40,10 @@ uniform sampler2D u_Textures[32];
 void main() {
 
 
-	vec4 texColor = fs_in.color;
+	vec4 texColor = fs_in.v_Color;
 	vec2 v_TexCoord = fs_in.v_TexCoord;
-	switch(int(fs_in.texID))
+
+	switch(int(fs_in.v_TextureIndex))
 	{
 		case 0: texColor *= texture(u_Textures[0], v_TexCoord); break;
 		case 1: texColor *= texture(u_Textures[1], v_TexCoord); break;

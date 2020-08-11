@@ -20,9 +20,13 @@ namespace Onyx {
 		inline static void beginScene(const OrthographicCamera& camera) { s_Instance->beginSceneImplementation(camera); };
 		inline static void endScene() { s_Instance->endSceneImplementation(); };
 
-		inline static void drawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) { s_Instance->drawQuadImplementation(position, size, color); };
 		inline static void drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) { s_Instance->drawQuadImplementation(position, size, color); };
 		inline static void drawQuad(const glm::vec3& position, const glm::vec2& size, Texture2D* texture) { s_Instance->drawQuadImplementation(position, size, texture); };
+
+		inline static void drawRotatedQuad(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color) { s_Instance->drawRotatedQuadImplementation(position, angle, ax, size, color); };
+		inline static void drawRotatedQuad(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, Texture2D* texture) { s_Instance->drawRotatedQuadImplementation(position, angle, ax, size, texture); };
+
+
 
 		inline static void flush() { s_Instance->flushImplementation(); };
 	protected:
@@ -33,9 +37,12 @@ namespace Onyx {
 		virtual void beginSceneImplementation(const OrthographicCamera& camera) = 0;
 		virtual void endSceneImplementation() = 0;
 
-		virtual void drawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color) = 0;
 		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) = 0;
 		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture) = 0;
+
+		virtual void drawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color) = 0;
+		virtual void drawRotatedQuadImplementation(const glm::vec3 & position, float angle, const glm::vec3 & ax, const glm::vec2 & size, Texture2D * texture) = 0;
+
 		virtual void flushImplementation() = 0;
 
 	private:

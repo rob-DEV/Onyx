@@ -25,11 +25,18 @@ namespace Onyx {
 
 		virtual void beginSceneImplementation(const OrthographicCamera& camera);
 		virtual void endSceneImplementation();
+		virtual void flushImplementation();
 
-		virtual void drawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+
 		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture);
-		virtual void flushImplementation();
+
+		virtual void drawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color);
+		virtual void drawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, Texture2D* texture);
+
+		virtual void drawQuadImplementation(const glm::mat4& transform, const glm::vec4& color);
+		virtual void drawQuadImplementation(const glm::mat4& transform, Texture2D* texture);
+
 
 	private:
 		OpenGLVertexArray* m_QuadVertexArray;
