@@ -10,16 +10,16 @@ namespace Onyx {
 	public:
 		virtual ~Sound() = default;
 
-		virtual void play() = 0;
-		virtual void loop() = 0;
-		virtual void pause() = 0;
-		virtual void resume() = 0;
-		virtual void stop() = 0;
+		virtual void Play() = 0;
+		virtual void Loop() = 0;
+		virtual void Pause() = 0;
+		virtual void Resume() = 0;
+		virtual void Stop() = 0;
 
-		virtual void setGain(float gain) = 0;
-		inline float getGain() const { return m_Gain; };
-		inline bool isPlaying() const { return m_IsPlaying; };
-		inline const std::string& getName() const { return m_Name; };
+		virtual void SetGain(float gain) = 0;
+		inline float GetGain() const { return m_Gain; };
+		inline bool IsPlaying() const { return m_IsPlaying; };
+		inline const std::string& GetName() const { return m_Name; };
 	protected:
 		std::string m_Name;
 		std::string m_FilePath;
@@ -31,11 +31,11 @@ namespace Onyx {
 
 	class SoundDevice {
 	public:
-		inline static void init() { s_Instance->initImplementation(); };
-		inline static void destroy() { s_Instance->destroyImplementation(); };
+		inline static void Init() { s_Instance->InitImplementation(); };
+		inline static void Destroy() { s_Instance->DestroyImplementation(); };
 	protected:
-		virtual void initImplementation() = 0;
-		virtual void destroyImplementation() = 0;
+		virtual void InitImplementation() = 0;
+		virtual void DestroyImplementation() = 0;
 	private:
 		static SoundDevice* s_Instance;
 	};

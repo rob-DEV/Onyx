@@ -8,13 +8,13 @@ namespace Onyx {
 	class VulkanRendererAPI : public RendererAPI {
 	public:
 
-		void init();
-		void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-		void setClearColor(const glm::vec4& color);
-		void clear();
-		void drawIndexed(VertexArray* vertexArray);
+		void Init();
+		void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+		void SetClearColor(const glm::vec4& color);
+		void Clear();
+		void DrawIndexed(VertexArray* vertexArray);
 		//TODO: change
-		void drawIndexed(VertexArray* vertexArray, uint32_t indexCount) {};
+		void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount) {};
 	};
 }
 

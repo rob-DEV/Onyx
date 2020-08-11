@@ -7,9 +7,9 @@
 namespace Onyx {
 
 
-	Texture2D* Texture2D::create(const std::string& path) {
+	Texture2D* Texture2D::Create(const std::string& path) {
 
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLTexture2D(path);
 
 		return nullptr;
@@ -18,9 +18,9 @@ namespace Onyx {
 	}
 
 
-	Onyx::Texture2D* Texture2D::create(uint32_t width, uint32_t height)
+	Onyx::Texture2D* Texture2D::Create(uint32_t width, uint32_t height)
 	{
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLTexture2D(width, height);
 
 		return nullptr;

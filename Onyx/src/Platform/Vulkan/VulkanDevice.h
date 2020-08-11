@@ -19,7 +19,7 @@ namespace Onyx {
 			std::optional<uint32_t> graphicsFamily;
 			std::optional<uint32_t> presentFamily;
 
-			bool isComplete() {
+			bool IsComplete() {
 				return graphicsFamily.has_value() && presentFamily.has_value();
 			}
 		};
@@ -35,15 +35,15 @@ namespace Onyx {
 		static VulkanDevice* s_Instance;
 	public:
 		~VulkanDevice();
-		static VulkanDevice* get();
-		const VkPhysicalDevice& getPhysicalDevice() const { return m_PhysicalDevice; };
-		const VkDevice& getLogicalDevice() const { return m_Device; };
-		const VkQueue& getGraphicsQueue() const { return m_GraphicsQueue; };
-		const VkQueue& getPresentQueue() const { return m_PresentQueue; };
+		static VulkanDevice* Get();
+		const VkPhysicalDevice& GetPhysicalDevice() const { return m_PhysicalDevice; };
+		const VkDevice& GetLogicalDevice() const { return m_Device; };
+		const VkQueue& GetGraphicsQueue() const { return m_GraphicsQueue; };
+		const VkQueue& GetPresentQueue() const { return m_PresentQueue; };
 
 	private:
-		void pickPhysicalDevice();
-		void createLogicalDevice();
+		void PickPhysicalDevice();
+		void CreateLogicalDevice();
 		
 		//VULKAN OBJECTS
 		VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
@@ -53,10 +53,10 @@ namespace Onyx {
 
 	public:
 		//HELPER METHODS
-		bool isDeviceSuitable(VkPhysicalDevice device);
-		bool checkDeviceExtensionSupport(VkPhysicalDevice device);
-		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-		SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+		bool IsDeviceSuitable(VkPhysicalDevice device);
+		bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
+		QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
+		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
 	};
 
 

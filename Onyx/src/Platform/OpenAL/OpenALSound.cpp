@@ -11,7 +11,7 @@ namespace Onyx {
 		m_FilePath = filePath;
 		m_Name = filePath;
 
-		FileIO::getFileNameWithoutExtension(m_Name);
+		FileIO::GetFileNameWithoutExtension(m_Name);
 
 		FILE* fp = NULL;
 		fopen_s(&fp, filePath.c_str(), "rb");
@@ -122,30 +122,30 @@ namespace Onyx {
 
 	OpenALSound::~OpenALSound()
 	{
-		stop();
+		Stop();
 	}
 
-	void OpenALSound::play()
+	void OpenALSound::Play()
 	{
 		alSourcei(m_Source, AL_LOOPING, false);
 		alSourcePlay(m_Source);
 		m_IsPlaying = true;
 	}
 
-	void OpenALSound::loop()
+	void OpenALSound::Loop()
 	{
 		alSourcei(m_Source, AL_LOOPING, true);
 		alSourcePlay(m_Source);
 		m_IsPlaying = true;
 	}
 
-	void OpenALSound::pause()
+	void OpenALSound::Pause()
 	{
 		alSourcePause(m_Source);
 		m_IsPlaying = false;
 	}
 
-	void OpenALSound::resume()
+	void OpenALSound::Resume()
 	{
 		if (!m_IsPlaying) {
 			alSourcePlay(m_Source);
@@ -153,7 +153,7 @@ namespace Onyx {
 		}
 	}
 
-	void OpenALSound::stop()
+	void OpenALSound::Stop()
 	{
 		alSourceStop(m_Source);
 		m_IsPlaying = false;
@@ -161,13 +161,13 @@ namespace Onyx {
 		alDeleteBuffers(1, &m_Buffer); 
 	}
 
-	void OpenALSound::setGain(float gain)
+	void OpenALSound::SetGain(float gain)
 	{
 		m_Gain = std::clamp(gain, 0.0f, 5.0f);
 		alSourcef(m_Source, AL_GAIN, m_Gain);
 	}
 
-	void OpenALSound::loadWavFile()
+	void OpenALSound::LoadWavFile()
 	{
 
 	}

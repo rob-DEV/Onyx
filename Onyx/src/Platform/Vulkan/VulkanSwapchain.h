@@ -23,9 +23,9 @@ namespace Onyx {
 			return bindingDescription;
 		}
 
-		static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() {
+		static std::array<VkVertexInputAttributeDescription, 2 > GetAttributeDescriptions() {
 
-			std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
+			std::array<VkVertexInputAttributeDescription, 2 > attributeDescriptions = {};
 
 			/*
 				float: VK_FORMAT_R32_SFLOAT
@@ -89,14 +89,14 @@ namespace Onyx {
 		static VulkanSwapchain* s_Instance;
 	public:
 		~VulkanSwapchain();
-		static VulkanSwapchain* get();
+		static VulkanSwapchain* Get();
 		const std::vector<VkFramebuffer> getFrameBuffers() const { return m_SwapChainFramebuffers; };
 		const VkRenderPass& getRenderPass() const { return m_RenderPass; };
 		const VkExtent2D& getExtent() const { return m_SwapChainExtent; };
 		const VkPipeline& getGraphicsPipeline() const { return m_GraphicsPipeline; };
 		
-		void setViewMatrixTest(const glm::mat4& matrix) { m_ViewMatrix = matrix; };
-		void drawFrame();
+		void SetViewMatrixTest(const glm::mat4& matrix) { m_ViewMatrix = matrix; };
+		void DrawFrame();
 
 	private:
 		void createSwapchain();

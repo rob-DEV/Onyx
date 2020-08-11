@@ -8,7 +8,7 @@ namespace Onyx {
 	uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
 	{
 		VkPhysicalDeviceMemoryProperties memProperties;
-		vkGetPhysicalDeviceMemoryProperties(VulkanDevice::get()->getPhysicalDevice(), &memProperties);
+		vkGetPhysicalDeviceMemoryProperties(VulkanDevice::Get()->GetPhysicalDevice(), &memProperties);
 
 		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
 			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
@@ -22,7 +22,7 @@ namespace Onyx {
 
 	VulkanVertexBuffer::VulkanVertexBuffer(float* vertices, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties)
 	{
-		VkDevice device = VulkanDevice::get()->getLogicalDevice();
+		VkDevice device = VulkanDevice::Get()->GetLogicalDevice();
 		VkBufferCreateInfo bufferInfo = {};
 		bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		bufferInfo.size = size;
@@ -47,7 +47,7 @@ namespace Onyx {
 			assert(false);
 		}
 
-		vkBindBufferMemory(VulkanDevice::get()->getLogicalDevice(), m_Buffer, m_BufferMemory, 0);
+		vkBindBufferMemory(VulkanDevice::Get()->GetLogicalDevice(), m_Buffer, m_BufferMemory, 0);
 
 		//void* data;
 		//vkMapMemory(device, m_BufferMemory, 0, size, 0, &data);
@@ -58,16 +58,16 @@ namespace Onyx {
 
 	VulkanVertexBuffer::~VulkanVertexBuffer()
 	{
-		vkDestroyBuffer(VulkanDevice::get()->getLogicalDevice(), m_Buffer, nullptr);
-		vkFreeMemory(VulkanDevice::get()->getLogicalDevice(), m_BufferMemory, nullptr);
+		vkDestroyBuffer(VulkanDevice::Get()->GetLogicalDevice(), m_Buffer, nullptr);
+		vkFreeMemory(VulkanDevice::Get()->GetLogicalDevice(), m_BufferMemory, nullptr);
 	}
 
-	void VulkanVertexBuffer::bind() const
+	void VulkanVertexBuffer::Bind() const
 	{
 		
 	}
 
-	void VulkanVertexBuffer::unbind() const
+	void VulkanVertexBuffer::Unbind() const
 	{
 		
 

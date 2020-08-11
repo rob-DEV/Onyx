@@ -3,6 +3,6 @@
 
 namespace Onyx {
 
-	RendererAPI* RenderCommand::m_RendererAPI = RendererAPI::create();
+	RendererAPI* RenderCommand::m_RendererAPI = RendererAPI::Create();
 
 }

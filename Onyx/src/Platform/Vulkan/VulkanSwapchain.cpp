@@ -23,7 +23,7 @@ namespace Onyx {
 
 	std::vector<VulkanVertexBuffer*> uniformBuffers;
 
-	VulkanSwapchain::VulkanSwapchain() : m_LogicalDeviceReference(VulkanDevice::get()->getLogicalDevice())
+	VulkanSwapchain::VulkanSwapchain() : m_LogicalDeviceReference(VulkanDevice::Get()->GetLogicalDevice())
 	{
 
 		//initialize view matrix
@@ -75,7 +75,7 @@ namespace Onyx {
 
 	}
 
-	VulkanSwapchain* VulkanSwapchain::get()
+	VulkanSwapchain* VulkanSwapchain::Get()
 	{
 		if (s_Instance == nullptr)
 			return new VulkanSwapchain();
@@ -85,7 +85,7 @@ namespace Onyx {
 
 	void VulkanSwapchain::createSwapchain()
 	{
-		VulkanDevice::SwapChainSupportDetails swapChainSupport = VulkanDevice::get()->querySwapChainSupport(VulkanDevice::get()->getPhysicalDevice());
+		VulkanDevice::SwapChainSupportDetails swapChainSupport = VulkanDevice::Get()->QuerySwapChainSupport(VulkanDevice::Get()->GetPhysicalDevice());
 
 		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
@@ -98,7 +98,7 @@ namespace Onyx {
 
 		VkSwapchainCreateInfoKHR createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-		createInfo.surface = VulkanSurface::get()->getVkSurface();
+		createInfo.surface = VulkanSurface::Get()->GetVkSurface();
 
 		createInfo.minImageCount = imageCount;
 		createInfo.imageFormat = surfaceFormat.format;
@@ -107,7 +107,7 @@ namespace Onyx {
 		createInfo.imageArrayLayers = 1;
 		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-		VulkanDevice::QueueFamilyIndices indices = VulkanDevice::get()->findQueueFamilies(VulkanDevice::get()->getPhysicalDevice());
+		VulkanDevice::QueueFamilyIndices indices = VulkanDevice::Get()->FindQueueFamilies(VulkanDevice::Get()->GetPhysicalDevice());
 		uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
 
 		if (indices.graphicsFamily != indices.presentFamily) {
@@ -192,7 +192,7 @@ namespace Onyx {
 
 	VkPresentModeKHR VulkanSwapchain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes)
 	{
-		if (RendererAPI::vsyncEnabled())
+		if (RendererAPI::VsyncEnabled())
 			return VK_PRESENT_MODE_FIFO_KHR;
 
 		//check for mailbox support else FIFO
@@ -213,7 +213,7 @@ namespace Onyx {
 		else {
 
 			int width, height;
-			glfwGetFramebufferSize(VulkanInstance::get()->getGLFWwindow(), &width, &height);
+			glfwGetFramebufferSize(VulkanInstance::Get()->GetGLFWwindow(), &width, &height);
 
 			VkExtent2D actualExtent = {
 				static_cast<uint32_t>(width),
@@ -243,7 +243,7 @@ namespace Onyx {
 	uint32_t VulkanSwapchain::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
 	{
 		VkPhysicalDeviceMemoryProperties memProperties;
-		vkGetPhysicalDeviceMemoryProperties(VulkanDevice::get()->getPhysicalDevice(), &memProperties);
+		vkGetPhysicalDeviceMemoryProperties(VulkanDevice::Get()->GetPhysicalDevice(), &memProperties);
 		
 		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
 			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
@@ -387,7 +387,7 @@ namespace Onyx {
 
 		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
 			VkDescriptorBufferInfo bufferInfo = {};
-			bufferInfo.buffer = uniformBuffers[i]->getBufferObject();
+			bufferInfo.buffer = uniformBuffers[i]->GetBufferObject();
 			bufferInfo.offset = 0;
 			bufferInfo.range = sizeof(UniformBufferObject);
 
@@ -415,8 +415,8 @@ namespace Onyx {
 	void VulkanSwapchain::createGraphicsPipeline()
 	{
 		//read in shaders push to shader modules
-		auto vertSprivSource = FileIO::readFileByte("res/shaders/vulkantest/vkvert.spv");
-		auto fragSprivSource = FileIO::readFileByte("res/shaders/vulkantest/vkfrag.spv");
+		auto vertSprivSource = FileIO::ReadFileByte("res/shaders/vulkantest/vkvert.spv");
+		auto fragSprivSource = FileIO::ReadFileByte("res/shaders/vulkantest/vkfrag.spv");
 
 
 		VkShaderModule vertShaderModule = createShaderModule(vertSprivSource);
@@ -439,7 +439,7 @@ namespace Onyx {
 		//vertex attribute pointer like code
 		//MODIFY VERTEX ATTRIBUTES TO ACCEPT Vertex structure
 		auto bindingDescription = Vertex::getBindingDescription();
-		auto attributeDescriptions = Vertex::getAttributeDescriptions();
+		auto attributeDescriptions = Vertex::GetAttributeDescriptions();
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		
@@ -572,7 +572,7 @@ namespace Onyx {
 
 	void VulkanSwapchain::createCommandPool()
 	{
-		VulkanDevice::QueueFamilyIndices queueFamilyIndices = VulkanDevice::get()->findQueueFamilies(VulkanDevice::get()->getPhysicalDevice());
+		VulkanDevice::QueueFamilyIndices queueFamilyIndices = VulkanDevice::Get()->FindQueueFamilies(VulkanDevice::Get()->GetPhysicalDevice());
 
 		VkCommandPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
@@ -593,17 +593,17 @@ namespace Onyx {
 		//staging buffer test
 		//map vertex buffer
 		void* data;
-		vkMapMemory(VulkanDevice::get()->getLogicalDevice(), vertexStagingBufferTest->getBufferMemory(), 0, vertBufferSize, 0, &data);
+		vkMapMemory(VulkanDevice::Get()->GetLogicalDevice(), vertexStagingBufferTest->GetBufferMemory(), 0, vertBufferSize, 0, &data);
 		memcpy(data, vertices.data(), (size_t)vertBufferSize);
-		vkUnmapMemory(VulkanDevice::get()->getLogicalDevice(), vertexStagingBufferTest->getBufferMemory());
+		vkUnmapMemory(VulkanDevice::Get()->GetLogicalDevice(), vertexStagingBufferTest->GetBufferMemory());
 
 		VkDeviceSize indiceBufferSize = sizeof(indices[0]) * indices.size();
 		indiceStagingBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(vertices.data()), vertBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void* data1;
-		vkMapMemory(VulkanDevice::get()->getLogicalDevice(), indiceStagingBufferTest->getBufferMemory(), 0, indiceBufferSize, 0, &data1);
+		vkMapMemory(VulkanDevice::Get()->GetLogicalDevice(), indiceStagingBufferTest->GetBufferMemory(), 0, indiceBufferSize, 0, &data1);
 		memcpy(data1, &indices[0], (size_t)indiceBufferSize);
-		vkUnmapMemory(VulkanDevice::get()->getLogicalDevice(), indiceStagingBufferTest->getBufferMemory());
+		vkUnmapMemory(VulkanDevice::Get()->GetLogicalDevice(), indiceStagingBufferTest->GetBufferMemory());
 
 		vertexBufferTest = new VulkanVertexBuffer(NULL, vertBufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 		indiceBufferTest = new VulkanVertexBuffer(reinterpret_cast<float*>(indices.data()), indiceBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -619,7 +619,7 @@ namespace Onyx {
 		allocInfo.commandBufferCount = 1;
 
 		VkCommandBuffer commandBuffer;
-		vkAllocateCommandBuffers(VulkanDevice::get()->getLogicalDevice(), &allocInfo, &commandBuffer);
+		vkAllocateCommandBuffers(VulkanDevice::Get()->GetLogicalDevice(), &allocInfo, &commandBuffer);
 		VkCommandBufferBeginInfo beginInfo = {};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
@@ -630,14 +630,14 @@ namespace Onyx {
 		vertCopyRegion.srcOffset = 0; // Optional
 		vertCopyRegion.dstOffset = 0; // Optional
 		vertCopyRegion.size = vertBufferSize;
-		vkCmdCopyBuffer(commandBuffer, vertexStagingBufferTest->getBufferObject(), vertexBufferTest->getBufferObject(), 1, &vertCopyRegion);
+		vkCmdCopyBuffer(commandBuffer, vertexStagingBufferTest->GetBufferObject(), vertexBufferTest->GetBufferObject(), 1, &vertCopyRegion);
 
 		VkBufferCopy indiceCopyRegion = {};
 		indiceCopyRegion.srcOffset = 0; // Optional
 		indiceCopyRegion.dstOffset = 0; // Optional
 		indiceCopyRegion.size = indiceBufferSize;
 
-		vkCmdCopyBuffer(commandBuffer, indiceStagingBufferTest->getBufferObject(), indiceBufferTest->getBufferObject(), 1, &indiceCopyRegion);
+		vkCmdCopyBuffer(commandBuffer, indiceStagingBufferTest->GetBufferObject(), indiceBufferTest->GetBufferObject(), 1, &indiceCopyRegion);
 
 
 		vkEndCommandBuffer(commandBuffer);
@@ -648,10 +648,10 @@ namespace Onyx {
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		vkQueueSubmit(VulkanDevice::get()->getGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(VulkanDevice::get()->getGraphicsQueue());
+		vkQueueSubmit(VulkanDevice::Get()->GetGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(VulkanDevice::Get()->GetGraphicsQueue());
 
-		vkFreeCommandBuffers(VulkanDevice::get()->getLogicalDevice(), m_CommandPool, 1, &commandBuffer);
+		vkFreeCommandBuffers(VulkanDevice::Get()->GetLogicalDevice(), m_CommandPool, 1, &commandBuffer);
 
 		//cleanup VSB
 		delete vertexStagingBufferTest;
@@ -689,9 +689,9 @@ namespace Onyx {
 		ubo.proj[1][1] *= -1;
 
 		void* data;
-		vkMapMemory(m_LogicalDeviceReference, uniformBuffers[imageIndex]->getBufferMemory(), 0, sizeof(ubo), 0, &data);
+		vkMapMemory(m_LogicalDeviceReference, uniformBuffers[imageIndex]->GetBufferMemory(), 0, sizeof(ubo), 0, &data);
 		memcpy(data, &ubo, sizeof(ubo));
-		vkUnmapMemory(m_LogicalDeviceReference, uniformBuffers[imageIndex]->getBufferMemory());
+		vkUnmapMemory(m_LogicalDeviceReference, uniformBuffers[imageIndex]->GetBufferMemory());
 	}
 
 	void VulkanSwapchain::createCommandBuffers()
@@ -731,12 +731,12 @@ namespace Onyx {
 			vkCmdBeginRenderPass(m_CommandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 			vkCmdBindPipeline(m_CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
-			VkBuffer vertexBuffers[] = { vertexBufferTest->getBufferObject() };
+			VkBuffer vertexBuffers[] = { vertexBufferTest->GetBufferObject() };
 			VkDeviceSize offsets[] = { 0 };
 			vkCmdBindVertexBuffers(m_CommandBuffers[i], 0, 1, vertexBuffers, offsets);
 			
 			
-			vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->getBufferObject(), 0, VK_INDEX_TYPE_UINT16);
+			vkCmdBindIndexBuffer(m_CommandBuffers[i], indiceBufferTest->GetBufferObject(), 0, VK_INDEX_TYPE_UINT16);
 
 			vkCmdBindDescriptorSets(m_CommandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, m_PipelineLayout, 0, 1, &m_DescriptorSets[i], 0, nullptr);
 			//vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
@@ -778,7 +778,7 @@ namespace Onyx {
 		}
 	}
 
-	void VulkanSwapchain::drawFrame()
+	void VulkanSwapchain::DrawFrame()
 	{
 		vkWaitForFences(m_LogicalDeviceReference, 1, &m_InFlightFences[m_CurrentFrame], VK_TRUE, UINT64_MAX);
 
@@ -822,7 +822,7 @@ namespace Onyx {
 		
 		vkResetFences(m_LogicalDeviceReference, 1, &m_InFlightFences[m_CurrentFrame]);
 
-		if (vkQueueSubmit(VulkanDevice::get()->getGraphicsQueue(), 1, &submitInfo, m_InFlightFences[m_CurrentFrame]) != VK_SUCCESS) {
+		if (vkQueueSubmit(VulkanDevice::Get()->GetGraphicsQueue(), 1, &submitInfo, m_InFlightFences[m_CurrentFrame]) != VK_SUCCESS) {
 			printf("VulkanSwapchain.cpp 500 : Failed to submit draw to the Command Buffer\n");
 			assert(false);
 		}
@@ -839,7 +839,7 @@ namespace Onyx {
 
 		presentInfo.pImageIndices = &imageIndex;
 
-		VkResult presentResult = vkQueuePresentKHR(VulkanDevice::get()->getGraphicsQueue(), &presentInfo);
+		VkResult presentResult = vkQueuePresentKHR(VulkanDevice::Get()->GetGraphicsQueue(), &presentInfo);
 		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
 			recreateSwapchain();
 		}

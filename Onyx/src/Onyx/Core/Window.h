@@ -29,17 +29,17 @@ namespace Onyx {
 
 		virtual ~Window() = default;
 
-		virtual void init() = 0;
-		virtual void onUpdate() = 0;
+		virtual void Init() = 0;
+		virtual void OnUpdate() = 0;
 
-		virtual uint32_t getWidth() = 0;
-		virtual uint32_t getHeight() = 0;
-		virtual const std::string& getTitle() = 0;
+		virtual uint32_t GetWidth() = 0;
+		virtual uint32_t GetHeight() = 0;
+		virtual const std::string& GetTitle() = 0;
 		       
-		virtual bool isClosed() = 0;
+		virtual bool IsClosed() = 0;
 
-		virtual void setEventCallback(const EventCallbackFn& callback) = 0;
-		virtual void* getNativeWindow() = 0;
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+		virtual void* GetNativeWindow() = 0;
 	};
 
 }

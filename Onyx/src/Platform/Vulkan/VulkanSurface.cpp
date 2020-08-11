@@ -19,7 +19,7 @@ namespace Onyx {
 	VulkanSurface::VulkanSurface()
 	{
 
-		if (glfwCreateWindowSurface(VulkanInstance::get()->getVkInstance(), VulkanInstance::get()->getGLFWwindow(), nullptr, &m_VkSurface) != VK_SUCCESS) {
+		if (glfwCreateWindowSurface(VulkanInstance::Get()->GetVkInstance(), VulkanInstance::Get()->GetGLFWwindow(), nullptr, &m_VkSurface) != VK_SUCCESS) {
 			printf("VulkanSurface.cpp 22 : Failed to create GLFW VkSurface\n");
 			assert(false);
 		}
@@ -30,10 +30,10 @@ namespace Onyx {
 
 	VulkanSurface::~VulkanSurface()
 	{
-		vkDestroySurfaceKHR(VulkanInstance::get()->getVkInstance(), m_VkSurface, nullptr);
+		vkDestroySurfaceKHR(VulkanInstance::Get()->GetVkInstance(), m_VkSurface, nullptr);
 	}
 	
-	VulkanSurface* VulkanSurface::get()
+	VulkanSurface* VulkanSurface::Get()
 	{
 		if(s_Instance == nullptr)
 			s_Instance = new VulkanSurface();

@@ -3,22 +3,22 @@
 
 namespace Onyx {
 
-	void SoundManager::init()
+	void SoundManager::Init()
 	{
 
 	}
 
-	void SoundManager::add(const std::string& fileName)
+	void SoundManager::Add(const std::string& fileName)
 	{
 
 	}
 
-	void SoundManager::remove()
+	void SoundManager::Remove()
 	{
 
 	}
 
-	Onyx::Sound* SoundManager::getSound()
+	Onyx::Sound* SoundManager::GetSound()
 	{
 		return nullptr;
 	}

@@ -19,8 +19,8 @@ namespace Onyx {
 	class Event {
 	public:
 		//virtual EventType getEventType() const = 0;
-		virtual const char* getName() const = 0;
-		virtual std::string toString() const { return getName(); };
+		virtual const char* GetName() const = 0;
+		virtual std::string ToString() const { return GetName(); };
 	};
 
 }

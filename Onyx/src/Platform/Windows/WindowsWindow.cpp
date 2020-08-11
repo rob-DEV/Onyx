@@ -24,7 +24,7 @@ namespace Onyx {
 		m_Data.Height = props.Height;
 		m_Data.Title = props.Title;
 
-		init();
+		Init();
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProperties& properties)
@@ -33,7 +33,7 @@ namespace Onyx {
 		m_Data.Width = properties.Width;
 		m_Data.Height = properties.Height;
 		m_Data.Title = properties.Title;
-		init();
+		Init();
 	}
 
 	WindowsWindow::~WindowsWindow()
@@ -41,13 +41,13 @@ namespace Onyx {
 		delete m_Context;
 	}
 
-	void WindowsWindow::init()
+	void WindowsWindow::Init()
 	{
 		printf("Title : %s\n", m_Data.Title.c_str());
 		
 		if (s_WindowCount == 0 && !glfwInit())	printf("Failed to initialize GLFW!");
 
-		if (RendererAPI::getAPI() == RendererAPI::API::Vulkan)
+		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -95,25 +95,25 @@ namespace Onyx {
 			});
 
 
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			m_Context = new Onyx::OpenGLGraphicsContext(m_Window);
 
-		if(RendererAPI::getAPI() == RendererAPI::API::Vulkan)
+		if(RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
 			m_Context = new Onyx::VulkanGraphicsContext(m_Window);
 
-		m_Context->init();
+		m_Context->Init();
 		
 		glfwSwapInterval(1);
 		glfwShowWindow(m_Window);
 	}
 
-	void WindowsWindow::onUpdate()
+	void WindowsWindow::OnUpdate()
 	{
-		m_Context->swapBuffers();
+		m_Context->SwapBuffers();
 		glfwPollEvents();
 	}
 
-	bool WindowsWindow::isClosed()
+	bool WindowsWindow::IsClosed()
 	{
 		return glfwWindowShouldClose(m_Window) == true;
 	}

@@ -5,7 +5,10 @@
 #include <Platform/Windows/WindowsWindow.h>
 
 #include <Platform/OpenGL/OpenGLRendererAPI.h>
+#include <Platform/Vulkan/VulkanRendererAPI.h>
 #include <Platform/OpenAL/OpenALSound.h>
+
+
 
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/OrthographicCameraController.h>
@@ -30,20 +33,23 @@ namespace Onyx {
 		delete m_Window;
 	}
 
-	void Application::run()
+	void Application::Run()
 	{
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			m_RendererAPI = new OpenGLRendererAPI();
+		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
+			m_RendererAPI = new VulkanRendererAPI();
 
-		m_RendererAPI->init();
-		m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
-		m_RendererAPI->setClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
 
-		Renderer2D::init();
+		m_RendererAPI->Init();
+		m_RendererAPI->SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+		m_RendererAPI->SetClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
+
+		Renderer2D::Init();
 
 		OrthographicCameraController* cameraController = new OrthographicCameraController();
-		Texture2D* testMarioTexture = Texture2D::create("res/textures/mario.png");
-		Texture2D* testMario2Texture = Texture2D::create("res/textures/mario2.png");
+		Texture2D* testMarioTexture = Texture2D::Create("res/textures/mario.png");
+		Texture2D* testMario2Texture = Texture2D::Create("res/textures/mario2.png");
 
 		float scale = 0.01f;
 		double previousTime = glfwGetTime();
@@ -54,10 +60,10 @@ namespace Onyx {
 
 		float rotation = 0;
 
-		SoundDevice::init();
+		SoundDevice::Init();
 		Sound* sound = nullptr;
 
-		while (!m_Window->isClosed()) {
+		while (!m_Window->IsClosed()) {
 
 			double currentTime = glfwGetTime();
 			frameCount++;
@@ -69,45 +75,43 @@ namespace Onyx {
 				frameCount = 0; previousTime = currentTime;
 			}
 
-			m_Window->onUpdate();
-			cameraController->onUpdate();
+			m_Window->OnUpdate();
+			cameraController->OnUpdate();
 
-			m_RendererAPI->clear();
-			m_RendererAPI->setViewport(0, 0, m_Window->getWidth(), m_Window->getHeight());
+			m_RendererAPI->Clear();
+			m_RendererAPI->SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 
-			static const OrthographicCamera& f = cameraController->getCamera();
+			static const OrthographicCamera& f = cameraController->GetCamera();
 
-			Renderer2D::beginScene(f);
+			Renderer2D::BeginScene(f);
 
-			Renderer2D::drawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+			Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
 
-			Renderer2D::drawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), testMarioTexture);
+			Renderer2D::DrawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), testMarioTexture);
 
 			rotation = 12 * deltatime;
 
-			Renderer2D::drawRotatedQuad(glm::vec3(0.2f, -0.6f, 0.0f), rotation, glm::vec3(0.0f,0.0f, 1.0f), glm::vec2(0.45f, 0.45f), testMarioTexture);
+			Renderer2D::DrawRotatedQuad(glm::vec3(0.2f, -0.6f, 0.0f), rotation, glm::vec3(0.0f,0.0f, 1.0f), glm::vec2(0.45f, 0.45f), testMarioTexture);
 
-
-
-			Renderer2D::endScene();
-			Renderer2D::flush();
+			Renderer2D::EndScene();
+			Renderer2D::Flush();
 
 		
 
-			if (Input::isKeyPressed(ONYX_KEY_F)) {
+			if (Input::IsKeyPressed(ONYX_KEY_F)) {
 				if (sound == nullptr) {
 					sound = new OpenALSound("res/audio/theringer.wav");
-					sound->play();
+					sound->Play();
 				}
 			}
 
-			if (Input::isKeyPressed(ONYX_KEY_G)) {
+			if (Input::IsKeyPressed(ONYX_KEY_G)) {
 				if (sound != nullptr) { 
 					delete sound; sound = nullptr; 
 				}
 			}
 			
-			if (Input::isKeyPressed(ONYX_KEY_ESCAPE)) {
+			if (Input::IsKeyPressed(ONYX_KEY_ESCAPE)) {
 				break;
 			}
 
@@ -119,9 +123,9 @@ namespace Onyx {
 		if (sound != nullptr) { delete sound; sound = nullptr; }
 	}
 
-	void Application::onEvent(Event& e)
+	void Application::OnEvent(Event& e)
 	{
-		printf("%s\n",e.getName());
+		printf("%s\n", e.GetName());
 	}
 
 }

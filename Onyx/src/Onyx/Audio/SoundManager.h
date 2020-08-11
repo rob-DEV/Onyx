@@ -11,10 +11,10 @@ namespace Onyx {
 
 	class ONYX_API SoundManager {	
 	public:
-		static void init();
-		static void add(const std::string& fileName); //TODO check sound name against map for caching purposes
-		static void remove();
-		static Sound* getSound();
+		static void Init();
+		static void Add(const std::string& fileName); //TODO check sound name against map for caching purposes
+		static void Remove();
+		static Sound* GetSound();
 
 	private:
 		std::unordered_map<std::string, Sound*> m_Sounds;

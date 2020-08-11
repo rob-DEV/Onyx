@@ -3,27 +3,27 @@
 
 namespace Onyx {
 
-	void VulkanRendererAPI::init()
+	void VulkanRendererAPI::Init()
 	{
 		
 	}
 
-	void VulkanRendererAPI::setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	void VulkanRendererAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 	{
 		
 	}
 
-	void VulkanRendererAPI::setClearColor(const glm::vec4& color)
+	void VulkanRendererAPI::SetClearColor(const glm::vec4& color)
 	{
 
 	}
 
-	void VulkanRendererAPI::clear()
+	void VulkanRendererAPI::Clear()
 	{
 
 	}
 
-	void VulkanRendererAPI::drawIndexed(VertexArray* vertexArray)
+	void VulkanRendererAPI::DrawIndexed(VertexArray* vertexArray)
 	{
 
 	}

@@ -13,14 +13,14 @@ namespace Onyx {
 		OpenGLVertexArray();
 		~OpenGLVertexArray();
 
-		void bind() const;
-		void unbind() const;
+		void Bind() const;
+		void Unbind() const;
 
-		void addVertexBuffer(VertexBuffer* vertexBuffer);
-		void setIndexBuffer(IndexBuffer* indexBuffer);
+		void AddVertexBuffer(VertexBuffer* vertexBuffer);
+		void SetIndexBuffer(IndexBuffer* indexBuffer);
 
-		const std::vector<VertexBuffer*>& getVertexBuffers() const { return m_VertexBuffers; };
-		IndexBuffer* getIndexBuffer() const { return m_IndexBuffer; };
+		const std::vector<VertexBuffer*>& GetVertexBuffers() const { return m_VertexBuffers; };
+		IndexBuffer* GetIndexBuffer() const { return m_IndexBuffer; };
 
 	private:
 		uint32_t m_RendererID;

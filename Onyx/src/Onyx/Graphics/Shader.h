@@ -13,26 +13,26 @@ namespace Onyx {
 
 		virtual ~Shader() = default;
 
-		virtual void bind() const = 0;
-		virtual void unbind() const = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-		virtual const std::string& getName() const = 0;
+		virtual const std::string& GetName() const = 0;
 
-		static Shader* create(const std::string& filepath);
-		static Shader* create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+		static Shader* Create(const std::string& filepath);
+		static Shader* Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 
 	};
 
 	class ONYX_API ShaderLibrary {
 	public:
-		void add(const std::string& name, Shader* shader);
-		void add(Shader* shader);
-		Shader* load(const std::string& filepath);
-		Shader* load(const std::string& name, const std::string& filepath);
+		void Add(const std::string& name, Shader* shader);
+		void Add(Shader* shader);
+		Shader* Load(const std::string& filepath);
+		Shader* Load(const std::string& name, const std::string& filepath);
 
-		Shader* get(const std::string& name);
+		Shader* Get(const std::string& name);
 
-		bool exists(const std::string& name) const;
+		bool Exists(const std::string& name) const;
 	private:
 		std::unordered_map<std::string, Shader*> m_Shaders;
 	};

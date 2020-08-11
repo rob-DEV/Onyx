@@ -25,44 +25,54 @@ namespace Onyx {
 	
 	static Data* s_Data;
 
-	void VulkanRenderer2D::initImplementation()
+	void VulkanRenderer2D::InitImplementation()
 	{
 		
 	}
 
-	void VulkanRenderer2D::destroyImplementation()
+	void VulkanRenderer2D::DestroyImplementation()
 	{
 
 	}
 
-	void VulkanRenderer2D::beginSceneImplementation(const OrthographicCamera& camera)
+	void VulkanRenderer2D::BeginSceneImplementation(const OrthographicCamera& camera)
 	{
-		VulkanSwapchain::get()->setViewMatrixTest(camera.getViewProjectionMatrix());
+		VulkanSwapchain::Get()->SetViewMatrixTest(camera.GetViewProjectionMatrix());
 	}
 
-	void VulkanRenderer2D::endSceneImplementation()
-	{
-
-	}
-
-	void VulkanRenderer2D::drawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
-	{
-		drawQuad(glm::vec3(position, 0.0f), size, color);
-	}
-
-	void VulkanRenderer2D::drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	void VulkanRenderer2D::EndSceneImplementation()
 	{
 
 	}
 
-	void VulkanRenderer2D::drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
+	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	{
+		DrawQuad(glm::vec3(position, 0.0f), size, color);
+	}
+
+	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 
 	}
 
-	void VulkanRenderer2D::flushImplementation()
+	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
 	{
-		VulkanSwapchain::get()->drawFrame();
+
+	}
+
+	void VulkanRenderer2D::DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color)
+	{
+
+	}
+
+	void VulkanRenderer2D::DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, Texture2D* texture)
+	{
+
+	}
+
+	void VulkanRenderer2D::FlushImplementation()
+	{
+		VulkanSwapchain::Get()->DrawFrame();
 	}
 
 }

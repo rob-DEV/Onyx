@@ -16,7 +16,7 @@ namespace Onyx {
 
 	}
 
-	void OpenALDevice::initImplementation()
+	void OpenALDevice::InitImplementation()
 	{
 		m_Device = alcOpenDevice(NULL);
 		if (!m_Device) {
@@ -33,7 +33,7 @@ namespace Onyx {
 
 	}
 
-	void OpenALDevice::destroyImplementation()
+	void OpenALDevice::DestroyImplementation()
 	{
 		alcCloseDevice(m_Device);
 		alcDestroyContext(m_Context);

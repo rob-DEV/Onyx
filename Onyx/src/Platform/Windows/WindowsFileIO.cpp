@@ -7,7 +7,7 @@ namespace Onyx {
 
 	FileIO* FileIO::s_Instance = new WindowsFileIO();
 
-	const std::string WindowsFileIO::readFileStringImplementation(const std::string& filepath)
+	const std::string WindowsFileIO::ReadFileStringImplementation(const std::string& filepath)
 	{
 		
 		FILE* file;
@@ -35,7 +35,7 @@ namespace Onyx {
 		return result;
 	}
 
-	const std::vector<char> WindowsFileIO::readFileByteImplementation(const std::string& filepath)
+	const std::vector<char> WindowsFileIO::ReadFileByteImplementation(const std::string& filepath)
 	{
 		std::ifstream file(filepath, std::ios::ate | std::ios::binary);
 
@@ -56,7 +56,7 @@ namespace Onyx {
 
 	}
 
-	void WindowsFileIO::getFileNameWithoutExtensionImplementation(std::string& filepath)
+	void WindowsFileIO::GetFileNameWithoutExtensionImplementation(std::string& filepath)
 	{
 
 		const size_t last_slash_idx = filepath.find_last_of("\\/");

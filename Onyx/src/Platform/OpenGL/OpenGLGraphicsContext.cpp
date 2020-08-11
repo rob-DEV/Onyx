@@ -14,7 +14,7 @@ namespace Onyx {
 		m_WindowHandle = window;
 	}
 
-	void OpenGLGraphicsContext::init()
+	void OpenGLGraphicsContext::Init()
 	{
 		glfwMakeContextCurrent(m_WindowHandle);
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -27,7 +27,7 @@ namespace Onyx {
 
 	}
 
-	void OpenGLGraphicsContext::swapBuffers()
+	void OpenGLGraphicsContext::SwapBuffers()
 	{
 		glfwSwapBuffers(m_WindowHandle);
 	}

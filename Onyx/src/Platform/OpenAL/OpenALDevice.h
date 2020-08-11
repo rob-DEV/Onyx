@@ -13,9 +13,9 @@ namespace Onyx {
 	public:
 		OpenALDevice();
 		~OpenALDevice();
-		virtual void initImplementation();
-		virtual void destroyImplementation();
-		ALCdevice* getNativeDevice() { return m_Device; };
+		virtual void InitImplementation();
+		virtual void DestroyImplementation();
+		ALCdevice* GetNativeDevice() { return m_Device; };
 
 	private:
 		ALCdevice* m_Device = nullptr;

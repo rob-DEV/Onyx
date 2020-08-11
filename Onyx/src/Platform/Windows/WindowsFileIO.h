@@ -10,9 +10,9 @@ namespace Onyx {
 	class WindowsFileIO : public FileIO {
 
 	public:
-		const std::string readFileStringImplementation(const std::string& filepath);
-		const std::vector<char> readFileByteImplementation(const std::string& filepath);
-		void getFileNameWithoutExtensionImplementation(std::string& filepath);
+		const std::string ReadFileStringImplementation(const std::string& filepath);
+		const std::vector<char> ReadFileByteImplementation(const std::string& filepath);
+		void GetFileNameWithoutExtensionImplementation(std::string& filepath);
 	};
 
 }

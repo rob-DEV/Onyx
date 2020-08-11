@@ -6,9 +6,9 @@
 
 namespace Onyx {
 
-	Onyx::VertexArray* VertexArray::create()
+	Onyx::VertexArray* VertexArray::Create()
 	{
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLVertexArray();
 
 		return nullptr;

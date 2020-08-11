@@ -10,16 +10,21 @@
 namespace Onyx {
 
 	class VulkanRenderer2D : public Renderer2D {
-		virtual void initImplementation();
-		virtual void destroyImplementation();
+		virtual void InitImplementation();
+		virtual void DestroyImplementation();
 
-		virtual void beginSceneImplementation(const OrthographicCamera& camera);
-		virtual void endSceneImplementation();
+		virtual void BeginSceneImplementation(const OrthographicCamera& camera);
+		virtual void EndSceneImplementation();
 
-		virtual void drawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
-		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
-		virtual void drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture);
-		virtual void flushImplementation();
+		virtual void DrawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		virtual void DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		virtual void DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture);
+
+		virtual void DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color);
+		virtual void DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, Texture2D* texture);
+
+
+		virtual void FlushImplementation();
 	};
 
 }

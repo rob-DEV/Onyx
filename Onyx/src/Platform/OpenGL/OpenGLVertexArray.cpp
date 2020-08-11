@@ -16,26 +16,26 @@ namespace Onyx {
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
-	void OpenGLVertexArray::bind() const
+	void OpenGLVertexArray::Bind() const
 	{
 		glBindVertexArray(m_RendererID);
 	}
 
-	void OpenGLVertexArray::unbind() const
+	void OpenGLVertexArray::Unbind() const
 	{
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::addVertexBuffer(VertexBuffer* vertexBuffer)
+	void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer)
 	{
 		
 		m_VertexBuffers.push_back(vertexBuffer);
 	}
 
-	void OpenGLVertexArray::setIndexBuffer(IndexBuffer* indexBuffer)
+	void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
 	{
 		glBindVertexArray(m_RendererID);
-		indexBuffer->bind();
+		indexBuffer->Bind();
 
 		m_IndexBuffer = indexBuffer;
 	}

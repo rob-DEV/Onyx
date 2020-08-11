@@ -19,8 +19,8 @@ namespace Onyx {
 		s_GpuVendors[0x8086] = "Intel (R) Graphics";
 		s_GpuVendors[0x13B5] = "ARM";
 
-		pickPhysicalDevice();
-		createLogicalDevice();
+		PickPhysicalDevice();
+		CreateLogicalDevice();
 		
 		s_Instance = this;
 	}
@@ -30,7 +30,7 @@ namespace Onyx {
 		vkDestroyDevice(m_Device, nullptr);
 	}
 
-	VulkanDevice* VulkanDevice::get()
+	VulkanDevice* VulkanDevice::Get()
 	{
 		if (s_Instance == nullptr)
 			return new VulkanDevice();
@@ -38,10 +38,10 @@ namespace Onyx {
 			return s_Instance;
 	}
 
-	void VulkanDevice::pickPhysicalDevice()
+	void VulkanDevice::PickPhysicalDevice()
 	{
 		uint32_t deviceCount = 0;
-		vkEnumeratePhysicalDevices(VulkanInstance::get()->getVkInstance(), &deviceCount, nullptr);
+		vkEnumeratePhysicalDevices(VulkanInstance::Get()->GetVkInstance(), &deviceCount, nullptr);
 
 		if (deviceCount == 0) {
 			printf("VulkanDevice.cpp 14 : Failed to find a GPU with Vulkan support\n");
@@ -49,10 +49,10 @@ namespace Onyx {
 		}
 
 		std::vector<VkPhysicalDevice> devices(deviceCount);
-		vkEnumeratePhysicalDevices(VulkanInstance::get()->getVkInstance(), &deviceCount, devices.data());
+		vkEnumeratePhysicalDevices(VulkanInstance::Get()->GetVkInstance(), &deviceCount, devices.data());
 
 		for (const auto& device : devices) {
-			if (isDeviceSuitable(device)) {
+			if (IsDeviceSuitable(device)) {
 				m_PhysicalDevice = device;
 				break;
 			}
@@ -74,9 +74,9 @@ namespace Onyx {
 
 	}
 
-	void VulkanDevice::createLogicalDevice()
+	void VulkanDevice::CreateLogicalDevice()
 	{
-		QueueFamilyIndices indices = findQueueFamilies(m_PhysicalDevice);
+		QueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
 
 		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 		std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -104,7 +104,7 @@ namespace Onyx {
 		createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
 		createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
-		if (VulkanInstance::get()->validationLayersEnabled()) {
+		if (VulkanInstance::Get()->ValidationLayersEnabled()) {
 			createInfo.enabledLayerCount = static_cast<uint32_t>(KHR_ValidationLayers.size());
 			createInfo.ppEnabledLayerNames = KHR_ValidationLayers.data();
 		}
@@ -121,22 +121,22 @@ namespace Onyx {
 		vkGetDeviceQueue(m_Device, indices.presentFamily.value(), 0, &m_PresentQueue);
 	}
 
-	bool VulkanDevice::isDeviceSuitable(VkPhysicalDevice device)
+	bool VulkanDevice::IsDeviceSuitable(VkPhysicalDevice device)
 	{
-		QueueFamilyIndices indices = findQueueFamilies(device);
+		QueueFamilyIndices indices = FindQueueFamilies(device);
 
-		bool extensionsSupported = checkDeviceExtensionSupport(device);
+		bool extensionsSupported = CheckDeviceExtensionSupport(device);
 
 		bool swapChainAdequate = false;
 		if (extensionsSupported) {
-			SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
+			SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(device);
 			swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
 		}
 
-		return indices.isComplete() && extensionsSupported && swapChainAdequate;
+		return indices.IsComplete() && extensionsSupported && swapChainAdequate;
 	}
 
-	bool VulkanDevice::checkDeviceExtensionSupport(VkPhysicalDevice device)
+	bool VulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
 	{
 		uint32_t extensionCount;
 		vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
@@ -153,7 +153,7 @@ namespace Onyx {
 		return requiredExtensions.empty();
 	}
 
-	VulkanDevice::QueueFamilyIndices VulkanDevice::findQueueFamilies(VkPhysicalDevice device)
+	VulkanDevice::QueueFamilyIndices VulkanDevice::FindQueueFamilies(VkPhysicalDevice device)
 	{
 		QueueFamilyIndices indices;
 
@@ -170,13 +170,13 @@ namespace Onyx {
 			}
 
 			VkBool32 presentSupport = false;
-			vkGetPhysicalDeviceSurfaceSupportKHR(device, i, VulkanSurface::get()->getVkSurface(), &presentSupport);
+			vkGetPhysicalDeviceSurfaceSupportKHR(device, i, VulkanSurface::Get()->GetVkSurface(), &presentSupport);
 
 			if (presentSupport) {
 				indices.presentFamily = i;
 			}
 
-			if (indices.isComplete()) {
+			if (indices.IsComplete()) {
 				break;
 			}
 
@@ -186,26 +186,26 @@ namespace Onyx {
 		return indices;
 	}
 
-	VulkanDevice::SwapChainSupportDetails VulkanDevice::querySwapChainSupport(VkPhysicalDevice device)
+	VulkanDevice::SwapChainSupportDetails VulkanDevice::QuerySwapChainSupport(VkPhysicalDevice device)
 	{
 		SwapChainSupportDetails details;
 
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, VulkanSurface::get()->getVkSurface(), &details.capabilities);
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, VulkanSurface::Get()->GetVkSurface(), &details.capabilities);
 
 		uint32_t formatCount;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, VulkanSurface::get()->getVkSurface(), &formatCount, nullptr);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(device, VulkanSurface::Get()->GetVkSurface(), &formatCount, nullptr);
 
 		if (formatCount != 0) {
 			details.formats.resize(formatCount);
-			vkGetPhysicalDeviceSurfaceFormatsKHR(device, VulkanSurface::get()->getVkSurface(), &formatCount, details.formats.data());
+			vkGetPhysicalDeviceSurfaceFormatsKHR(device, VulkanSurface::Get()->GetVkSurface(), &formatCount, details.formats.data());
 		}
 
 		uint32_t presentModeCount;
-		vkGetPhysicalDeviceSurfacePresentModesKHR(device, VulkanSurface::get()->getVkSurface(), &presentModeCount, nullptr);
+		vkGetPhysicalDeviceSurfacePresentModesKHR(device, VulkanSurface::Get()->GetVkSurface(), &presentModeCount, nullptr);
 
 		if (presentModeCount != 0) {
 			details.presentModes.resize(presentModeCount);
-			vkGetPhysicalDeviceSurfacePresentModesKHR(device, VulkanSurface::get()->getVkSurface(), &presentModeCount, details.presentModes.data());
+			vkGetPhysicalDeviceSurfacePresentModesKHR(device, VulkanSurface::Get()->GetVkSurface(), &presentModeCount, details.presentModes.data());
 		}
 
 		return details;

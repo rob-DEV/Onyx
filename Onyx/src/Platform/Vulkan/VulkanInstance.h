@@ -26,12 +26,12 @@ namespace Onyx {
 		static VulkanInstance* s_Instance;
 	public:
 		~VulkanInstance();
-		static VulkanInstance* get();
-		const VkInstance& getVkInstance() const { return m_VkInstance; };
+		static VulkanInstance* Get();
+		const VkInstance& GetVkInstance() const { return m_VkInstance; };
 
-		void setGLFWwindow(GLFWwindow* window) const { m_WindowHandle = window; };
-		GLFWwindow* getGLFWwindow() const { return (GLFWwindow*)m_WindowHandle; };
-		bool validationLayersEnabled() const { return KHR_EnableValidationLayers; };
+		void SetGLFWwindow(GLFWwindow* window) const { m_WindowHandle = window; };
+		GLFWwindow* GetGLFWwindow() const { return (GLFWwindow*)m_WindowHandle; };
+		bool ValidationLayersEnabled() const { return KHR_EnableValidationLayers; };
 
 	private:
 		static GLFWwindow* m_WindowHandle;
@@ -40,8 +40,8 @@ namespace Onyx {
 		VkDebugUtilsMessengerEXT m_VkDebugMessenger;
 
 		//HELPER METHODS
-		bool checkValidationLayerSupport();
-		std::vector<const char*> getRequiredExtensions();
+		bool CheckValidationLayerSupport();
+		std::vector<const char*> GetRequiredExtensions();
 
 		//VULKAN VALIDATION LAYERS DEBUG CALLBACK
 		static VKAPI_ATTR VkBool32 VKAPI_CALL VulkanInstanceDebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData);

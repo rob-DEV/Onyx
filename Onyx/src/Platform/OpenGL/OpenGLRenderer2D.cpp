@@ -39,22 +39,22 @@ namespace Onyx {
 
 	static Renderer2DData s_Data;
 
-	void OpenGLRenderer2D::initImplementation()
+	void OpenGLRenderer2D::InitImplementation()
 	{
 		const uint32_t MAX_QUADS = 250000;
 		const uint32_t VB_SIZE = MAX_QUADS * sizeof(Vertex2D) * 4;
 		const uint32_t IB_COUNT = MAX_QUADS * 6;
 
-		m_QuadVertexArray = (OpenGLVertexArray*)VertexArray::create();
+		m_QuadVertexArray = (OpenGLVertexArray*)VertexArray::Create();
 
-		m_QuadVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::create(VB_SIZE);
+		m_QuadVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::Create(VB_SIZE);
 
-		m_QuadVertexArray->addVertexBuffer(m_QuadVertexBuffer);
+		m_QuadVertexArray->AddVertexBuffer(m_QuadVertexBuffer);
 		
-		m_QuadVertexBuffer->bind();
+		m_QuadVertexBuffer->Bind();
 
 		//TODO: buffer layout needs work
-		m_QuadVertexArray->bind();
+		m_QuadVertexArray->Bind();
 
 		//index, size of each vertex, type, normalized?, byte size of each vertex packet, offset into packet for data
 		
@@ -93,8 +93,8 @@ namespace Onyx {
 			offset += 4;
 		}
 
-		m_QuadIndexBuffer = (OpenGLIndexBuffer*)IndexBuffer::create(indices, IB_COUNT);
-		m_QuadVertexArray->setIndexBuffer(m_QuadIndexBuffer);
+		m_QuadIndexBuffer = (OpenGLIndexBuffer*)IndexBuffer::Create(indices, IB_COUNT);
+		m_QuadVertexArray->SetIndexBuffer(m_QuadIndexBuffer);
 
 		delete[] indices;
 
@@ -104,9 +104,9 @@ namespace Onyx {
 
 		//create textures and sampler for the 32 texture slots
 
-		s_Data.WhiteTexture = Texture2D::create(1, 1);
+		s_Data.WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t pureWhiteTexture = 0xffffffff;
-		s_Data.WhiteTexture->setData(&pureWhiteTexture, sizeof(uint32_t));
+		s_Data.WhiteTexture->SetData(&pureWhiteTexture, sizeof(uint32_t));
 
 		int32_t samplers[s_Data.MaxTextureSlots];
 		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
@@ -116,9 +116,9 @@ namespace Onyx {
 		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
 		
 		//set samplers in shader
-		m_QuadShader = (OpenGLShader*)Shader::create("res/shaders/Texture.glsl");
-		m_QuadShader->bind();
-		m_QuadShader->uploadIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+		m_QuadShader = (OpenGLShader*)Shader::Create("res/shaders/Texture.glsl");
+		m_QuadShader->Bind();
+		m_QuadShader->UploadIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
 
 		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
 		s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
@@ -128,67 +128,67 @@ namespace Onyx {
 
 	}
 
-	void OpenGLRenderer2D::destroyImplementation()
+	void OpenGLRenderer2D::DestroyImplementation()
 	{
 		delete[] m_QuadVertexBufferData;
 	}
 
-	void OpenGLRenderer2D::beginSceneImplementation(const OrthographicCamera& camera)
+	void OpenGLRenderer2D::BeginSceneImplementation(const OrthographicCamera& camera)
 	{
 		m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
 		m_IndexCount = 0;
 
-		m_QuadShader->bind();		
-		((OpenGLShader*)m_QuadShader)->uploadUniformMat4("u_ViewProjection", camera.getViewProjectionMatrix());
+		m_QuadShader->Bind();		
+		((OpenGLShader*)m_QuadShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
 		s_Data.TextureSlotIndex = 1;
 	}
 
-	void OpenGLRenderer2D::endSceneImplementation()
+	void OpenGLRenderer2D::EndSceneImplementation()
 	{
 		unsigned long long vertexBufferSize = (unsigned char*)m_QuadVertexBufferWritePtr - (unsigned char*)m_QuadVertexBufferData;
 
 		if (vertexBufferSize != 0) {
 			//set vertex buffer to draw
-			m_QuadVertexBuffer->setData((void*)m_QuadVertexBufferData, vertexBufferSize);
+			m_QuadVertexBuffer->SetData((void*)m_QuadVertexBufferData, vertexBufferSize);
 		}
 
 	}
 
-	void OpenGLRenderer2D::flushImplementation()
+	void OpenGLRenderer2D::FlushImplementation()
 	{
 		if (m_IndexCount == 0)
 			return;
 
 		//bind textures
 		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
-			s_Data.TextureSlots[i]->bind(i);
+			s_Data.TextureSlots[i]->Bind(i);
 
 		RenderCommand::DrawIndexed(m_QuadVertexArray, m_IndexCount);
 		glBindTextureUnit(0, 0);
 	}
 
-	void OpenGLRenderer2D::drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	void OpenGLRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		drawQuadImplementation(transform, color);
+		DrawQuadImplementation(transform, color);
 
 	}
 
-	void OpenGLRenderer2D::drawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
+	void OpenGLRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		drawQuadImplementation(transform, texture);
+		DrawQuadImplementation(transform, texture);
 
 	}
 
 
-	void OpenGLRenderer2D::drawQuadImplementation(const glm::mat4& transform, const glm::vec4& color)
+	void OpenGLRenderer2D::DrawQuadImplementation(const glm::mat4& transform, const glm::vec4& color)
 	{
 		constexpr size_t quadVertexCount = 4;
 		const float textureIndex = 0.0f; // White Texture
@@ -210,7 +210,7 @@ namespace Onyx {
 
 	}
 
-	void OpenGLRenderer2D::drawQuadImplementation(const glm::mat4& transform, Texture2D* texture)
+	void OpenGLRenderer2D::DrawQuadImplementation(const glm::mat4& transform, Texture2D* texture)
 	{
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -246,23 +246,23 @@ namespace Onyx {
 		m_IndexCount += 6;
 	}
 
-	void OpenGLRenderer2D::drawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color)
+	void OpenGLRenderer2D::DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(angle), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		drawQuadImplementation(transform, color);
+		DrawQuadImplementation(transform, color);
 
 	}
 
-	void OpenGLRenderer2D::drawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, Texture2D* texture)
+	void OpenGLRenderer2D::DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, Texture2D* texture)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(angle), ax)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		drawQuadImplementation(transform, texture);
+		DrawQuadImplementation(transform, texture);
 	
 	}
 

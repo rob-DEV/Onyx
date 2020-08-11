@@ -19,21 +19,21 @@ namespace Onyx {
 		delete m_VulkanInstance;
 	}
 
-	void VulkanGraphicsContext::init()
+	void VulkanGraphicsContext::Init()
 	{
 		std::cout << "\nVulkan Context Initialization\n";
 
 		//creates and assigns the initial vkInstance 
-		m_VulkanInstance = VulkanInstance::get();
-		m_VulkanInstance->setGLFWwindow(m_WindowHandle);
-		m_VulkanSurface = VulkanSurface::get();
-		m_VulkanDevice = VulkanDevice::get();
-		m_VulkanSwapchain = VulkanSwapchain::get();
+		m_VulkanInstance = VulkanInstance::Get();
+		m_VulkanInstance->SetGLFWwindow(m_WindowHandle);
+		m_VulkanSurface = VulkanSurface::Get();
+		m_VulkanDevice = VulkanDevice::Get();
+		m_VulkanSwapchain = VulkanSwapchain::Get();
 
 		std::cout << "Vulkan Initialization End!\n";
 	}
 
-	void VulkanGraphicsContext::swapBuffers()
+	void VulkanGraphicsContext::SwapBuffers()
 	{
 		glfwSwapBuffers(m_WindowHandle);
 	}

@@ -14,11 +14,11 @@ namespace Onyx {
 
 		Application();
 		virtual ~Application();
-		inline static Application* get() { return s_Instance; };		
+		inline static Application* Get() { return s_Instance; };		
 		
-		Window& getOnyxWindow() const { return *m_Window; };
-		void run();
-		void onEvent(Event& e);
+		Window& GetOnyxWindow() const { return *m_Window; };
+		void Run();
+		void OnEvent(Event& e);
 
 	private:
 		Window* m_Window = nullptr;

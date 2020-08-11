@@ -12,8 +12,8 @@ namespace Onyx {
 		static VulkanSurface* s_Instance;
 	public:
 		~VulkanSurface();
-		static VulkanSurface* get();
-		const VkSurfaceKHR& getVkSurface() const { return m_VkSurface; };
+		static VulkanSurface* Get();
+		const VkSurfaceKHR& GetVkSurface() const { return m_VkSurface; };
 
 	private:
 		VkSurfaceKHR m_VkSurface;

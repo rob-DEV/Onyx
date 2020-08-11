@@ -9,14 +9,14 @@ namespace Onyx {
 	class ONYX_API Input {
 
 	public:
-		inline static bool isKeyPressed(int keycode) {	return s_Instance->isKeyPressedImplementation(keycode); };
-		inline static float getMouseX() { return s_Instance->getMouseXImplementation(); };
-		inline static float getMouseY() { return s_Instance->getMouseYImplementation(); };
+		inline static bool IsKeyPressed(int keycode) {	return s_Instance->IsKeyPressedImplementation(keycode); };
+		inline static float GetMouseX() { return s_Instance->GetMouseXImplementation(); };
+		inline static float GetMouseY() { return s_Instance->GetMouseYImplementation(); };
 
 	protected:
-		virtual bool isKeyPressedImplementation(int keycode) = 0;
-		virtual float getMouseXImplementation() = 0;
-		virtual float getMouseYImplementation() = 0;
+		virtual bool IsKeyPressedImplementation(int keycode) = 0;
+		virtual float GetMouseXImplementation() = 0;
+		virtual float GetMouseYImplementation() = 0;
 	
 	private:
 		static Input* s_Instance;

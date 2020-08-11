@@ -17,8 +17,8 @@ namespace Onyx {
 
 		VulkanGraphicsContext(GLFWwindow* window);
 		virtual ~VulkanGraphicsContext();
-		void init();
-		void swapBuffers();
+		void Init();
+		void SwapBuffers();
 
 	private:
 		VulkanInstance* m_VulkanInstance = nullptr;

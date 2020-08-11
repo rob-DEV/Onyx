@@ -12,7 +12,7 @@ namespace Onyx {
 	VulkanInstance::VulkanInstance()
 	{
 		//create VkInstance
-		if (KHR_EnableValidationLayers && !checkValidationLayerSupport()) {
+		if (KHR_EnableValidationLayers && !CheckValidationLayerSupport()) {
 			printf("VulkanInstance.cpp 14 : Validation layers Requested but not available, install SDK\n");
 			assert(false);
 		}
@@ -29,7 +29,7 @@ namespace Onyx {
 		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		createInfo.pApplicationInfo = &appInfo;
 
-		auto extensions = getRequiredExtensions();
+		auto extensions = GetRequiredExtensions();
 		createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
 		createInfo.ppEnabledExtensionNames = extensions.data();
 
@@ -81,13 +81,13 @@ namespace Onyx {
 
 	VulkanInstance::~VulkanInstance()
 	{
-		if (this->validationLayersEnabled())
-			DestroyDebugUtilsMessengerEXT(this->getVkInstance(), m_VkDebugMessenger, nullptr);
+		if (this->ValidationLayersEnabled())
+			DestroyDebugUtilsMessengerEXT(this->GetVkInstance(), m_VkDebugMessenger, nullptr);
 
 		vkDestroyInstance(m_VkInstance, nullptr);
 	}
 
-	VulkanInstance* VulkanInstance::get()
+	VulkanInstance* VulkanInstance::Get()
 	{
 		if (s_Instance == nullptr)
 			return new VulkanInstance();
@@ -98,7 +98,7 @@ namespace Onyx {
 
 
 	//VULKAN HELPER METHODS
-	bool VulkanInstance::checkValidationLayerSupport() {
+	bool VulkanInstance::CheckValidationLayerSupport() {
 		uint32_t layerCount;
 		vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -123,7 +123,7 @@ namespace Onyx {
 		return true;
 	}
 
-	std::vector<const char*> VulkanInstance::getRequiredExtensions() {
+	std::vector<const char*> VulkanInstance::GetRequiredExtensions() {
 		uint32_t glfwExtensionCount = 0;
 		const char** glfwExtensions;
 		glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);

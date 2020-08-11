@@ -14,14 +14,14 @@ namespace Onyx {
 	//VULKAN
 
 	///////////////////////////////////////////////////////////////
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
 	///////////////////////////////////////////////////////////////
 	
 	//TURN VSYNC ON OR OFF
 	bool RendererAPI::s_Vsync = true;
 
 
-	RendererAPI* RendererAPI::create()
+	RendererAPI* RendererAPI::Create()
 	{
 		switch (s_API)
 		{

@@ -12,20 +12,20 @@ namespace Onyx {
 		OpenALSound(const std::string& filePath);
 		~OpenALSound();
 
-		virtual void play();
-		virtual void loop();
-		virtual void pause();
-		virtual void resume();
-		virtual void stop();
+		virtual void Play();
+		virtual void Loop();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Stop();
 
-		virtual void setGain(float gain);
-		virtual ALuint getSource() const { return m_Source; };
+		virtual void SetGain(float gain);
+		virtual ALuint GetSource() const { return m_Source; };
 
 	private:
 		ALuint m_Source;
 		ALuint m_Buffer;
 
-		void loadWavFile();
+		void LoadWavFile();
 
 	};
 

@@ -12,10 +12,10 @@ namespace Onyx {
 		~VulkanShader();
 
 
-		virtual void bind() const = 0;
-		virtual void unbind() const = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-		virtual const std::string& getName() const = 0;
+		virtual const std::string& GetName() const = 0;
 
 
 	};

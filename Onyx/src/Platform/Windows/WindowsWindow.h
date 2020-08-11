@@ -17,17 +17,17 @@ namespace Onyx {
 		WindowsWindow(const WindowProperties& properties);
 		~WindowsWindow();
 
-		void init();
-		void onUpdate();
+		void Init();
+		void OnUpdate();
 
-		inline uint32_t getWidth() { return m_Data.Width; };
-		inline uint32_t getHeight() { return m_Data.Height; };
-		inline const std::string& getTitle() { return m_Data.Title; };
+		inline uint32_t GetWidth() { return m_Data.Width; };
+		inline uint32_t GetHeight() { return m_Data.Height; };
+		inline const std::string& GetTitle() { return m_Data.Title; };
 
-		inline void setEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 
-		virtual bool isClosed();
-		inline void* getNativeWindow() { return m_Window; };
+		virtual bool IsClosed();
+		inline void* GetNativeWindow() { return m_Window; };
 		
 
 	private:

@@ -13,8 +13,8 @@ namespace Onyx {
 		
 		OpenGLGraphicsContext(GLFWwindow* window);
 		virtual ~OpenGLGraphicsContext() {};
-		void init();
-		void swapBuffers();
+		void Init();
+		void SwapBuffers();
 
 
 	private:

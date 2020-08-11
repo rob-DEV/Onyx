@@ -6,9 +6,9 @@
 
 namespace Onyx {
 
-	Shader* Shader::create(const std::string& filepath)
+	Shader* Shader::Create(const std::string& filepath)
 	{
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLShader(filepath);
 
 		printf("Shader is nullptr!\n");
@@ -16,48 +16,48 @@ namespace Onyx {
 	}
 
 
-	Shader* Shader::create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+	Shader* Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
-		if (RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLShader(name, vertexSrc, fragmentSrc);
 		
 		return nullptr;
 
 	}
 
-	void ShaderLibrary::add(const std::string& name, Shader* shader)
+	void ShaderLibrary::Add(const std::string& name, Shader* shader)
 	{
 		m_Shaders[name] = shader;
 	}
 
-	void ShaderLibrary::add(Shader* shader)
+	void ShaderLibrary::Add(Shader* shader)
 	{
-		const std::string& name = shader->getName();
+		const std::string& name = shader->GetName();
 		m_Shaders[name] = shader;
 	}
 
-	Onyx::Shader* ShaderLibrary::load(const std::string& filepath)
+	Onyx::Shader* ShaderLibrary::Load(const std::string& filepath)
 	{
-		Shader* shader = Shader::create(filepath);
-		add(shader);
+		Shader* shader = Shader::Create(filepath);
+		Add(shader);
 		return shader;
 	}
 
-	Onyx::Shader* ShaderLibrary::load(const std::string& name, const std::string& filepath)
+	Onyx::Shader* ShaderLibrary::Load(const std::string& name, const std::string& filepath)
 	{
-		Shader* shader = Shader::create(filepath);
-		add(name, shader);
+		Shader* shader = Shader::Create(filepath);
+		Add(name, shader);
 		return shader;
 	}
 
-	Onyx::Shader* ShaderLibrary::get(const std::string& name)
+	Onyx::Shader* ShaderLibrary::Get(const std::string& name)
 	{
-		if (!exists(name))
+		if (!Exists(name))
 			printf("Can't find shader!\n");
 		return m_Shaders[name];
 	}
 
-	bool ShaderLibrary::exists(const std::string& name) const
+	bool ShaderLibrary::Exists(const std::string& name) const
 	{
 		return m_Shaders.find(name) != m_Shaders.end();
 	}

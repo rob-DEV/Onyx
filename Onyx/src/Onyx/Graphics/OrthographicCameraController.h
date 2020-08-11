@@ -10,8 +10,8 @@ namespace Onyx {
 	{
 	public:
 		OrthographicCameraController();
-		void onUpdate();
-		const OrthographicCamera& getCamera() { return m_Camera; };
+		void OnUpdate();
+		const OrthographicCamera& GetCamera() { return m_Camera; };
 
 	private:
 		float m_ZoomLevel = 1.0f;

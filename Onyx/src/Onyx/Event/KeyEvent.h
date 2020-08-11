@@ -9,7 +9,7 @@ namespace Onyx {
 	class KeyEvent : public Event
 	{
 	public:
-		inline int getKeyCode() const { return m_KeyCode; }
+		inline int GetKeyCode() const { return m_KeyCode; }
 
 	protected:
 		KeyEvent(int keycode)
@@ -26,13 +26,13 @@ namespace Onyx {
 		KeyPressedEvent(int keycode, int repeatCount)
 			: KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
-		inline int getRepeatCount() const { return m_RepeatCount; }
+		inline int GetRepeatCount() const { return m_RepeatCount; }
 
-		virtual const char* getName() const {
+		virtual const char* GetName() const {
 			return "KEY PRESSED EVENT";
 		};
 
-		std::string toString() const override
+		std::string ToString() const override
 		{
 			std::stringstream ss;
 			ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";

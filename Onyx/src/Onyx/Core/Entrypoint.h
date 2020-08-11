@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 
 	Onyx::Application* onyxApplication = CreateApplication();
 
-	onyxApplication->run();
+	onyxApplication->Run();
 	delete onyxApplication;
 
 	return 0;

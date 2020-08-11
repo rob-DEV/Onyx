@@ -11,10 +11,10 @@ namespace Onyx {
 		VulkanVertexBuffer(float* vertices, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties);
 		virtual ~VulkanVertexBuffer();
 
-		virtual void bind() const override;
-		virtual void unbind() const override;
-		inline const VkBuffer& getBufferObject() const { return m_Buffer; };
-		inline const VkDeviceMemory& getBufferMemory() const { return m_BufferMemory; };
+		virtual void Bind() const override;
+		virtual void Unbind() const override;
+		inline const VkBuffer& GetBufferObject() const { return m_Buffer; };
+		inline const VkDeviceMemory& GetBufferMemory() const { return m_BufferMemory; };
 
 	private:
 		VkBuffer m_Buffer;
@@ -26,10 +26,10 @@ namespace Onyx {
 		VulkanIndexBuffer(uint32_t* indices, uint32_t count);
 		virtual ~VulkanIndexBuffer();
 
-		virtual void bind() const;
-		virtual void unbind() const;
-		inline const VkBuffer& getBufferObject() const { return m_Buffer; };
-		inline const VkDeviceMemory& getBufferMemory() const { return m_BufferMemory; };
+		virtual void Bind() const;
+		virtual void Unbind() const;
+		inline const VkBuffer& GetBufferObject() const { return m_Buffer; };
+		inline const VkDeviceMemory& GetBufferMemory() const { return m_BufferMemory; };
 
 	private:
 		VkBuffer m_Buffer;
