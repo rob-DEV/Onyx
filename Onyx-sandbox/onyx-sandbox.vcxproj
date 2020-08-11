@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\SandboxApplication.cpp" />
+    <ClCompile Include="src\Sandbox2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\onyx\onyx.vcxproj">
@@ -158,6 +159,9 @@
     <None Include="res\shaders\vulkantest\vkfrag.spv" />
     <None Include="res\shaders\vulkantest\vkvert.spv" />
     <None Include="res\shaders\vulkantest\vkvert.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Sandbox2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

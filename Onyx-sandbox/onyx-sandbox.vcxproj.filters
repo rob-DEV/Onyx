@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\SandboxApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="res\shaders\vulkantest\vkfrag.spv" />
     <None Include="res\shaders\vulkantest\vkvert.spv" />
     <None Include="res\shaders\vulkantest\compile.bat">
@@ -29,5 +24,18 @@
     <None Include="res\shaders\vulkantest\vkfrag.frag" />
     <None Include="res\shaders\vulkantest\vkvert.vert" />
     <None Include="res\shaders\Texture.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Sandbox2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Sandbox2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SandboxApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

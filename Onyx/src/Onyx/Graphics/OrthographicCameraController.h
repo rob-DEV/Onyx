@@ -2,11 +2,11 @@
 #define _ONYX_ORTHOGRAPHIC_CAMERA_CONTROLLER_H_
 
 #include "OrthographicCamera.h"
-#include <glm/glm.hpp>
+#include <Onyx/Core/Core.h>
 
 namespace Onyx {
 
-	class OrthographicCameraController
+	class ONYX_API OrthographicCameraController
 	{
 	public:
 		OrthographicCameraController();

@@ -22,6 +22,7 @@
     <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\core\Application.cpp" />
     <ClCompile Include="src\onyxpch.cpp" />
+    <ClCompile Include="src\Onyx\Core\Layer.cpp" />
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCamera.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="src\Onyx\core\Core.h" />
     <ClInclude Include="src\Onyx\core\Entrypoint.h" />
     <ClInclude Include="src\Onyx\core\FileIO.h" />
+    <ClInclude Include="src\Onyx\Core\Layer.h" />
     <ClInclude Include="src\Onyx\Event\Event.h" />
     <ClInclude Include="src\Onyx\Event\KeyEvent.h" />
     <ClInclude Include="src\Onyx\graphics\Buffer.h" />

@@ -2,7 +2,7 @@
 #define _ONYX_APPLICATION_H_
 
 #include <Onyx/Core/Window.h>
-#include <Onyx/Core/Window.h>
+#include <Onyx/Core/Layer.h>
 #include <Onyx/Event/Event.h>
 
 #include <Onyx/Graphics/RendererAPI.h>
@@ -24,6 +24,11 @@ namespace Onyx {
 		Window* m_Window = nullptr;
 		RendererAPI* m_RendererAPI = nullptr;
 		static Application* s_Instance;
+
+
+	protected:
+		//TODO : redo
+		std::vector<Layer*> m_LayerStack;
 
 
 	};

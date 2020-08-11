@@ -16,7 +16,6 @@ namespace Onyx {
 		virtual void BeginSceneImplementation(const OrthographicCamera& camera);
 		virtual void EndSceneImplementation();
 
-		virtual void DrawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 		virtual void DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 		virtual void DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture);
 

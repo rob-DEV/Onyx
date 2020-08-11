@@ -15,16 +15,10 @@
 #include "VulkanSwapchain.h"
 
 
-struct Data {
-	Onyx::VertexArray* VA;
-	Onyx::OpenGLShader* SH;
-	Onyx::Texture* WhiteTexture;
-};
+
 
 namespace Onyx {
 	
-	static Data* s_Data;
-
 	void VulkanRenderer2D::InitImplementation()
 	{
 		
@@ -43,11 +37,6 @@ namespace Onyx {
 	void VulkanRenderer2D::EndSceneImplementation()
 	{
 
-	}
-
-	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
-	{
-		DrawQuad(glm::vec3(position, 0.0f), size, color);
 	}
 
 	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
