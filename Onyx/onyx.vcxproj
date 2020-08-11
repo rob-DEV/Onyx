@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
     <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\core\Application.cpp" />
     <ClCompile Include="src\onyxpch.cpp" />

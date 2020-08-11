@@ -22,7 +22,6 @@ namespace Onyx {
 
 	private:
 		Window* m_Window = nullptr;
-		RendererAPI* m_RendererAPI = nullptr;
 		static Application* s_Instance;
 
 

@@ -3,6 +3,8 @@
 #include <Onyx/Core/Window.h>
 #include <Onyx/Event/Event.h>
 #include <Onyx/Core/Input.h>
+
+#include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/Renderer2D.h>
 
 
@@ -19,11 +21,16 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	RenderCommand::SetClearColour(glm::vec4(.2f, .2f, .2f, 1.0f));
+	RenderCommand::Clear();
+
 	Renderer2D::Init();
 
 	m_CameraController = new OrthographicCameraController();
 	m_Texture1 = Texture2D::Create("res/textures/mario.png");
 	m_Texture2 = Texture2D::Create("res/textures/mario2.png");
+
+	m_Sound = Sound::Create("res/audio/theringer.wav");
 
 }
 
@@ -32,6 +39,8 @@ void Sandbox2D::OnDetach()
 	delete m_CameraController;
 	delete m_Texture1;
 	delete m_Texture2;
+
+	delete m_Sound;
 }
 
 void Sandbox2D::OnUpdate()
@@ -49,6 +58,19 @@ void Sandbox2D::OnUpdate()
 
 	Renderer2D::EndScene();
 	Renderer2D::Flush();
+
+
+	if (Input::IsKeyPressed(ONYX_KEY_SPACE)) {
+		
+		if (m_Sound->IsPlaying()) {
+			m_Sound->Pause();
+		}
+		else {
+			m_Sound->Play();
+		}
+
+
+	}
 
 
 }

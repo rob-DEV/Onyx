@@ -20,6 +20,9 @@ namespace Onyx {
 		inline float GetGain() const { return m_Gain; };
 		inline bool IsPlaying() const { return m_IsPlaying; };
 		inline const std::string& GetName() const { return m_Name; };
+
+		static Sound* Create(const std::string& filePath);
+
 	protected:
 		std::string m_Name;
 		std::string m_FilePath;

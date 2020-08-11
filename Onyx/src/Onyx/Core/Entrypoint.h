@@ -17,10 +17,6 @@ int main(int argc, char** argv) {
 	onyxApplication->Run();
 	delete onyxApplication;
 
-
-	while (1) {
-
-	}
 	return 0;
 }
 

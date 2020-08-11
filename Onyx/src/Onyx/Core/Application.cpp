@@ -11,6 +11,7 @@
 
 
 #include <Onyx/Graphics/Texture.h>
+#include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/OrthographicCameraController.h>
 
 #include <GLFW/glfw3.h>
@@ -22,25 +23,35 @@ namespace Onyx {
 
 	Application::Application()
 	{
+		//MAIN INITIALISATION
+
+		//Application Instance
 		s_Instance = this;
+		
+		//Window
 		printf("Creating Onyx Application and Window!\n");
 		m_Window = new WindowsWindow(WindowProperties("Onyx Engine", 1280, 720));
 
-		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
-			m_RendererAPI = new OpenGLRendererAPI();
-		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
-			m_RendererAPI = new VulkanRendererAPI();
+		//Renderer API
+		RenderCommand::Init();
+		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 
-		m_RendererAPI->Init();
-		m_RendererAPI->SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-		m_RendererAPI->SetClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
+		//Sound
+		SoundDevice::Init();
 
+
+
+		//LayerStack 
+		//TODO: abstract to LayerStack
 		m_LayerStack = std::vector<Layer*>();
+
+
+
+
 	}
 
 	Application::~Application()
 	{
-		delete m_RendererAPI;
 		delete m_Window;
 	}
 
@@ -57,15 +68,14 @@ namespace Onyx {
 
 			m_Window->OnUpdate();
 			
-			m_RendererAPI->Clear();
-			m_RendererAPI->SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-
+			RenderCommand::Clear();
+			//TODO: move to resize callback function
+			RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+			
 			for (auto layer : m_LayerStack) {
 				layer->OnUpdate();
 			}
 		
-
-
 		}
 
 		for (auto layer : m_LayerStack) {

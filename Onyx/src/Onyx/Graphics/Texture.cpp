@@ -18,7 +18,7 @@ namespace Onyx {
 	}
 
 
-	Onyx::Texture2D* Texture2D::Create(uint32_t width, uint32_t height)
+	Texture2D* Texture2D::Create(uint32_t width, uint32_t height)
 	{
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLTexture2D(width, height);

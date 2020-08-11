@@ -1,4 +1,5 @@
 #include "Sandbox2D.h"
+#include "Sandbox2DSecond.h"
 
 #include <Onyx/Onyx.h>
 
@@ -9,6 +10,7 @@ public:
 	Sandbox() {
 
 		m_LayerStack.push_back(new Sandbox2D);
+		m_LayerStack.push_back(new Sandbox2DSecond);
 
 	}
 
