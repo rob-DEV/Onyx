@@ -13,12 +13,11 @@ namespace Onyx {
 		
 		OpenGLGraphicsContext(GLFWwindow* window);
 		virtual ~OpenGLGraphicsContext() {};
-		void Init();
-		void SwapBuffers();
-
+		void Init() override;
+		void SwapBuffers() override;
+		void DebugGraphicsError(const std::string& error);
 
 	private:
-
 		GLFWwindow* m_WindowHandle;
 
 	};

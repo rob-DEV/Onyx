@@ -52,6 +52,14 @@ namespace Onyx {
 
 	Application::~Application()
 	{
+		for (auto layer : m_LayerStack)
+		{
+			delete layer;
+		}
+
+		m_LayerStack.clear();
+
+
 		delete m_Window;
 	}
 

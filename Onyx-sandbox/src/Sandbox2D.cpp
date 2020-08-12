@@ -39,8 +39,10 @@ void Sandbox2D::OnDetach()
 	delete m_CameraController;
 	delete m_Texture1;
 	delete m_Texture2;
-
 	delete m_Sound;
+
+	Renderer2D::Destroy();
+
 }
 
 void Sandbox2D::OnUpdate()
@@ -55,6 +57,16 @@ void Sandbox2D::OnUpdate()
 	Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.1f, 0.1f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
 
 	Renderer2D::DrawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), m_Texture1);
+
+
+	for (float x = 0.25f; x < 100.0f; x+= 0.1f)
+	{
+		for (float y = 0.25f; y < 100.0f; y += 0.1f)
+		{
+			Renderer2D::DrawQuad(glm::vec3(x + 0.25f , y + 0.25f, 0.0f), glm::vec2(0.03f, 0.03f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+		}
+	}
+
 
 	Renderer2D::EndScene();
 	Renderer2D::Flush();

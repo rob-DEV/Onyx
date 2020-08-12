@@ -5,6 +5,8 @@
 #include "Core.h"
 #include "Application.h"
 
+#include <Windows.h>
+
 
 extern Onyx::Application* CreateApplication();
 

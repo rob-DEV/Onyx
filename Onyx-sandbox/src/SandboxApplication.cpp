@@ -10,7 +10,7 @@ public:
 	Sandbox() {
 
 		m_LayerStack.push_back(new Sandbox2D);
-		m_LayerStack.push_back(new Sandbox2DSecond);
+		//m_LayerStack.push_back(new Sandbox2DSecond);
 
 	}
 

@@ -47,7 +47,7 @@ void Sandbox2DSecond::OnUpdate()
 
 	Renderer2D::BeginScene(camera);
 
-	Renderer2D::DrawQuad(glm::vec3(-0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), m_Texture1);
+	Renderer2D::DrawQuad(glm::vec3(-0.8f, 0.0f, -0.5f), glm::vec2(0.45f, 0.45f), m_Texture1);
 
 	Renderer2D::EndScene();
 	Renderer2D::Flush();

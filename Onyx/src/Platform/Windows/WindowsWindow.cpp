@@ -39,6 +39,8 @@ namespace Onyx {
 	WindowsWindow::~WindowsWindow()
 	{
 		delete m_Context;
+		glfwDestroyWindow(m_Window);
+		glfwTerminate();
 	}
 
 	void WindowsWindow::Init()

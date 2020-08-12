@@ -37,18 +37,42 @@ namespace Onyx {
 		virtual void DrawQuadImplementation(const glm::mat4& transform, const glm::vec4& color);
 		virtual void DrawQuadImplementation(const glm::mat4& transform, Texture2D* texture);
 
-
 	private:
+
+		//CONSTANT
+		static const uint32_t MAX_TEXTURE_SLOTS = 32;
+		
+		static const uint32_t MAX_QUADS_PER_DRAWCALL = 1000;
+		static const uint32_t MAX_VERTICES_PER_DRAWCALL = MAX_QUADS_PER_DRAWCALL * 4;
+		static const uint32_t MAX_INDICIES_PER_DRAWCALL = MAX_QUADS_PER_DRAWCALL * 6;
+
+		//TODO: review remove?
+		const uint32_t m_MaxQuadCount = 250000;
+
+		Texture2D* m_WhiteTexture;
+		std::array<Texture2D*, MAX_TEXTURE_SLOTS> m_TextureSlots;
+		uint32_t m_TextureSlotIndex = 1; // 0 = white texture
+
+		glm::vec4 m_QuadVertexPositions[4];
+
 		OpenGLVertexArray* m_QuadVertexArray;
 		OpenGLVertexBuffer* m_QuadVertexBuffer;
 		OpenGLIndexBuffer* m_QuadIndexBuffer;
+
 		uint32_t m_IndexCount = 0;
+		uint32_t m_QuadCount = 0;
 
 		OpenGLShader* m_QuadShader;
 
 		//CPU mapped storage
 		Vertex2D* m_QuadVertexBufferData;
 		Vertex2D* m_QuadVertexBufferWritePtr;
+
+		//Stats
+		uint32_t m_DrawCalls = 0;
+		uint32_t m_DrawnQuads = 0;
+
+		
 
 	};
 

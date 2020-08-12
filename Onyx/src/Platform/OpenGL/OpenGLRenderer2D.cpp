@@ -12,7 +12,7 @@ namespace Onyx {
 
 	struct Vertex2D {
 
-#define Vertex2D_NO_TEXTURE 0.0f
+		#define Vertex2D_NO_TEXTURE 0.0f
 
 		glm::vec3 Position;
 		glm::vec4 Color;
@@ -23,27 +23,11 @@ namespace Onyx {
 
 	};
 
-
-	struct Renderer2DData {
-		
-		static const uint32_t MaxTextureSlots = 32;
-
-		Texture2D* WhiteTexture;
-		std::array<Texture2D*, MaxTextureSlots> TextureSlots;
-		uint32_t TextureSlotIndex = 1; // 0 = white texture
-
-		glm::vec4 QuadVertexPositions[4];
-		
-
-	};
-
-	static Renderer2DData s_Data;
-
 	void OpenGLRenderer2D::InitImplementation()
 	{
-		const uint32_t MAX_QUADS = 250000;
-		const uint32_t VB_SIZE = MAX_QUADS * sizeof(Vertex2D) * 4;
-		const uint32_t IB_COUNT = MAX_QUADS * 6;
+		
+		const uint32_t VB_SIZE = m_MaxQuadCount * sizeof(Vertex2D) * 4;
+		const uint32_t IB_COUNT = m_MaxQuadCount * 6;
 
 		m_QuadVertexArray = (OpenGLVertexArray*)VertexArray::Create();
 
@@ -56,14 +40,14 @@ namespace Onyx {
 		//TODO: buffer layout needs work
 		m_QuadVertexArray->Bind();
 
-		//index, size of each vertex, type, normalized?, byte size of each vertex packet, offset into packet for data
+		//Index, size of each vertex, type, normalized?, byte size of each vertex packet, offset into packet for data
 		
-		//position
+		//Position
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::Position));
 
 
-		//color
+		//Color
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::Color));
 
@@ -72,7 +56,7 @@ namespace Onyx {
 		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::TexID));
 
 
-		//tex-coord
+		//Tex-Co-Ord
 		glEnableVertexAttribArray(3);
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::TexCoord));
 		
@@ -98,32 +82,32 @@ namespace Onyx {
 
 		delete[] indices;
 
-		m_QuadVertexBufferData = new Vertex2D[MAX_QUADS * 4];
+		m_QuadVertexBufferData = new Vertex2D[m_MaxQuadCount * 4];
 		m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
 
 
 		//create textures and sampler for the 32 texture slots
 
-		s_Data.WhiteTexture = Texture2D::Create(1, 1);
+		m_WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t pureWhiteTexture = 0xffffffff;
-		s_Data.WhiteTexture->SetData(&pureWhiteTexture, sizeof(uint32_t));
+		m_WhiteTexture->SetData(&pureWhiteTexture, sizeof(uint32_t));
 
-		int32_t samplers[s_Data.MaxTextureSlots];
-		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
+		int32_t samplers[MAX_TEXTURE_SLOTS];
+		for (uint32_t i = 0; i < MAX_TEXTURE_SLOTS; i++)
 			samplers[i] = i;
 
 		//set 0th to white texture
-		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
+		m_TextureSlots[0] = m_WhiteTexture;
 		
 		//set samplers in shader
 		m_QuadShader = (OpenGLShader*)Shader::Create("res/shaders/Texture.glsl");
 		m_QuadShader->Bind();
-		m_QuadShader->UploadIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+		m_QuadShader->UploadIntArray("u_Textures", samplers, MAX_TEXTURE_SLOTS);
 
-		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+		m_QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+		m_QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
+		m_QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
+		m_QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 
 
 	}
@@ -131,6 +115,7 @@ namespace Onyx {
 	void OpenGLRenderer2D::DestroyImplementation()
 	{
 		delete[] m_QuadVertexBufferData;
+		delete m_QuadIndexBuffer;
 	}
 
 	void OpenGLRenderer2D::BeginSceneImplementation(const OrthographicCamera& camera)
@@ -141,7 +126,15 @@ namespace Onyx {
 		m_QuadShader->Bind();		
 		((OpenGLShader*)m_QuadShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
-		s_Data.TextureSlotIndex = 1;
+		m_TextureSlotIndex = 1;
+
+		//Print stats
+		printf("DrawCalls %d\n", m_DrawCalls);
+		printf("Quads Drawn %d\n", m_DrawnQuads);
+
+		m_DrawnQuads = 0;
+		m_DrawCalls = 0;
+
 	}
 
 	void OpenGLRenderer2D::EndSceneImplementation()
@@ -161,11 +154,13 @@ namespace Onyx {
 			return;
 
 		//bind textures
-		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
-			s_Data.TextureSlots[i]->Bind(i);
+		for (uint32_t i = 0; i < m_TextureSlotIndex; i++)
+			m_TextureSlots[i]->Bind(i);
 
 		RenderCommand::DrawIndexed(m_QuadVertexArray, m_IndexCount);
 		glBindTextureUnit(0, 0);
+
+		++m_DrawCalls;
 	}
 
 	void OpenGLRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
@@ -196,10 +191,20 @@ namespace Onyx {
 		const float tilingFactor = 1.0f;
 
 
+		if (m_IndexCount >= MAX_INDICIES_PER_DRAWCALL) {
+
+			EndScene();
+			Flush();
+			m_IndexCount = 0;
+			m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
+			m_TextureSlotIndex = 1;
+
+		}
+
 
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
-			m_QuadVertexBufferWritePtr->Position = transform * s_Data.QuadVertexPositions[i];
+			m_QuadVertexBufferWritePtr->Position = transform * m_QuadVertexPositions[i];
 			m_QuadVertexBufferWritePtr->Color = color;
 			m_QuadVertexBufferWritePtr->TexID = Vertex2D_NO_TEXTURE;
 			m_QuadVertexBufferWritePtr->TexCoord = textureCoords[i];
@@ -208,6 +213,9 @@ namespace Onyx {
 
 		m_IndexCount += 6;
 
+		//Stats
+		++m_DrawnQuads;
+
 	}
 
 	void OpenGLRenderer2D::DrawQuadImplementation(const glm::mat4& transform, Texture2D* texture)
@@ -215,10 +223,21 @@ namespace Onyx {
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
+
+		if (m_IndexCount >= MAX_INDICIES_PER_DRAWCALL) {
+
+			EndScene();
+			Flush();
+			m_IndexCount = 0;
+			m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
+			m_TextureSlotIndex = 1;
+
+		}
+
 		float textureIndex = 0.0f;
-		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		for (uint32_t i = 1; i < m_TextureSlotIndex; i++)
 		{
-			if (*s_Data.TextureSlots[i] == *texture)
+			if (*m_TextureSlots[i] == *texture)
 			{
 				textureIndex = (float)i;
 				break;
@@ -228,14 +247,14 @@ namespace Onyx {
 		if (textureIndex == 0.0f)
 		{
 
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-			s_Data.TextureSlotIndex++;
+			textureIndex = (float)m_TextureSlotIndex;
+			m_TextureSlots[m_TextureSlotIndex] = texture;
+			m_TextureSlotIndex++;
 		}
 
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
-			m_QuadVertexBufferWritePtr->Position = transform * s_Data.QuadVertexPositions[i];
+			m_QuadVertexBufferWritePtr->Position = transform * m_QuadVertexPositions[i];
 			m_QuadVertexBufferWritePtr->Color = glm::vec4(1, 1, 1, 1);
 			m_QuadVertexBufferWritePtr->TexID = textureIndex;
 			m_QuadVertexBufferWritePtr->TexCoord = textureCoords[i];
@@ -244,6 +263,10 @@ namespace Onyx {
 
 
 		m_IndexCount += 6;
+
+		//Stats
+		++m_DrawnQuads;
+
 	}
 
 	void OpenGLRenderer2D::DrawRotatedQuadImplementation(const glm::vec3& position, float angle, const glm::vec3& ax, const glm::vec2& size, const glm::vec4& color)
