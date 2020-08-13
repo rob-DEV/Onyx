@@ -1,10 +1,6 @@
 #pragma once
 
-#include <Onyx/Core/Layer.h>
-#include <Onyx/Graphics/Texture.h>
-#include <Onyx/Graphics/OrthographicCameraController.h>
-
-#include <Onyx/Audio/Sound.h>
+#include <Onyx/Onyx.h>
 
 using namespace Onyx;
 
@@ -18,7 +14,7 @@ public:
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	void OnUpdate() override;
+	void OnUpdate(TimeStep timestep) override;
 
 private:
 	OrthographicCameraController* m_CameraController;

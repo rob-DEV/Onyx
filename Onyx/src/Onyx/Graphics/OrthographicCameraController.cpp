@@ -10,23 +10,23 @@ namespace Onyx {
 
 	}
 
-	void OrthographicCameraController::OnUpdate()
+	void OrthographicCameraController::OnUpdate(TimeStep timestep)
 	{
-		float testSpeed = 0.02f;
+		float testSpeed = 0.01f;
+
 
 		if (Input::IsKeyPressed(ONYX_KEY_D)) {
 
 			glm::vec3 pos = m_Camera.GetPosition();
-			pos.x += testSpeed;
+			pos.x += testSpeed * timestep;
 			m_Camera.SetPosition(pos);
-
 
 		}
 
 		if (Input::IsKeyPressed(ONYX_KEY_A)) {
 
 			glm::vec3 pos = m_Camera.GetPosition();
-			pos.x -= testSpeed;
+			pos.x -= testSpeed * timestep;
 			m_Camera.SetPosition(pos);
 
 		}
@@ -34,7 +34,7 @@ namespace Onyx {
 		if (Input::IsKeyPressed(ONYX_KEY_W)) {
 
 			glm::vec3 pos = m_Camera.GetPosition();
-			pos.y += testSpeed;
+			pos.y += testSpeed * timestep;
 			m_Camera.SetPosition(pos);
 
 		}
@@ -42,14 +42,14 @@ namespace Onyx {
 		if (Input::IsKeyPressed(ONYX_KEY_S)) {
 
 			glm::vec3 pos = m_Camera.GetPosition();
-			pos.y -= testSpeed;
+			pos.y -= testSpeed * timestep;
 			m_Camera.SetPosition(pos);
 
 		}
 
 		if (Input::IsKeyPressed(ONYX_KEY_Q)) {
 
-			m_ZoomLevel -= testSpeed;
+			m_ZoomLevel -= testSpeed * timestep;
 			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 			m_Camera.SetProjection(-1.6f * m_ZoomLevel, 1.6f * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 
@@ -58,7 +58,7 @@ namespace Onyx {
 		if (Input::IsKeyPressed(ONYX_KEY_E)) {
 
 			
-			m_ZoomLevel += testSpeed;
+			m_ZoomLevel += testSpeed * timestep;
 			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 			m_Camera.SetProjection(-1.6f * m_ZoomLevel, 1.6f * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 

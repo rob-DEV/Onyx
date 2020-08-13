@@ -143,7 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Sandbox2DSecond.cpp" />
+    <ClCompile Include="src\Sandbox3D.cpp" />
     <ClCompile Include="src\SandboxApplication.cpp" />
     <ClCompile Include="src\Sandbox2D.cpp" />
   </ItemGroup>
@@ -153,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\basic.glsl" />
     <None Include="res\shaders\Texture.glsl" />
     <None Include="res\shaders\vulkantest\compile.bat" />
     <None Include="res\shaders\vulkantest\glslc.exe" />
@@ -163,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Sandbox2D.h" />
-    <ClInclude Include="src\Sandbox2DSecond.h" />
+    <ClInclude Include="src\Sandbox3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,7 @@
 #include <Platform/OpenAL/OpenALSound.h>
 
 
-
+#include <Onyx/Core/TimeStep.h>
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/OrthographicCameraController.h>
@@ -74,6 +74,12 @@ namespace Onyx {
 
 		while (!m_Window->IsClosed()) {
 
+
+
+			float time = (float)glfwGetTime();
+			TimeStep timestep = time;
+			m_LastTime = time;
+
 			m_Window->OnUpdate();
 			
 			RenderCommand::Clear();
@@ -81,7 +87,7 @@ namespace Onyx {
 			RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 			
 			for (auto layer : m_LayerStack) {
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 			}
 		
 		}

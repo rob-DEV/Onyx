@@ -10,17 +10,6 @@
 
 extern Onyx::Application* CreateApplication();
 
-int main(int argc, char** argv) {
-
-	printf("--------------------------------------------------- Onyx Game Engine ---------------------------------------------------\n");
-
-	Onyx::Application* onyxApplication = CreateApplication();
-
-	onyxApplication->Run();
-	delete onyxApplication;
-
-	return 0;
-}
-
+int main(int argc, char** argv);
 
 #endif // !_ONYX_ENTRYPOINT_H_

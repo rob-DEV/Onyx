@@ -10,7 +10,10 @@
 
 #include "VulkanBuffer.h"
 
+
+
 #define GLM_FORCE_RADIANS
+#include <GLFW/glfw3.h>
 #include <chrono>
 
 namespace Onyx {
@@ -23,7 +26,8 @@ namespace Onyx {
 
 	std::vector<VulkanVertexBuffer*> uniformBuffers;
 
-	VulkanSwapchain::VulkanSwapchain() : m_LogicalDeviceReference(VulkanDevice::Get()->GetLogicalDevice())
+	VulkanSwapchain::VulkanSwapchain() 
+		: m_LogicalDeviceReference(VulkanDevice::Get()->GetLogicalDevice())
 	{
 
 		//initialize view matrix
@@ -682,9 +686,11 @@ namespace Onyx {
 
 		ubo.model = m_ViewMatrix;
 
-		ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		ubo.view = glm::mat4(1.0f);
 
-		ubo.proj = glm::perspective(glm::radians(45.0f), m_SwapChainExtent.width / (float)m_SwapChainExtent.height, 0.1f, 10.0f);
+
+		ubo.proj = m_ViewMatrix;
+		//ubo.proj = glm::ortho(glm::radians(45.0f), m_SwapChainExtent.width / (float)m_SwapChainExtent.height, 0.1f, 10.0f);
 
 		ubo.proj[1][1] *= -1;
 

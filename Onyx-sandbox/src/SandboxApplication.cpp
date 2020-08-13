@@ -1,5 +1,5 @@
 #include "Sandbox2D.h"
-#include "Sandbox2DSecond.h"
+#include "Sandbox3D.h"
 
 #include <Onyx/Onyx.h>
 
@@ -10,7 +10,7 @@ public:
 	Sandbox() {
 
 		m_LayerStack.push_back(new Sandbox2D);
-		//m_LayerStack.push_back(new Sandbox2DSecond);
+		m_LayerStack.push_back(new Sandbox3D);
 
 	}
 
@@ -25,4 +25,16 @@ public:
 Onyx::Application* CreateApplication() {
 
 	return new Sandbox();
+}
+
+int main(int argc, char** argv) {
+
+	printf("--------------------------------------------------- Onyx Game Engine ---------------------------------------------------\n");
+
+	Onyx::Application* onyxApplication = CreateApplication();
+
+	onyxApplication->Run();
+	delete onyxApplication;
+
+	return 0;
 }

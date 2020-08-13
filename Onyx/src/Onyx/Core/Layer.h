@@ -1,8 +1,12 @@
 #ifndef _ONYX_LAYER_H_
 #define _ONYX_LAYER_H_
 
+
 #include <Onyx/Core/Core.h>
+#include <Onyx/Core/TimeStep.h>
+
 #include <string>
+
 
 namespace Onyx {
 
@@ -14,7 +18,7 @@ namespace Onyx {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(TimeStep timestep) {}
 
 		const std::string& GetName() const { return m_LayerName; }
 

@@ -3,6 +3,7 @@
 
 #include "OrthographicCamera.h"
 #include <Onyx/Core/Core.h>
+#include <Onyx/Core/TimeStep.h>
 
 namespace Onyx {
 
@@ -10,7 +11,7 @@ namespace Onyx {
 	{
 	public:
 		OrthographicCameraController();
-		void OnUpdate();
+		void OnUpdate(TimeStep timestep);
 		const OrthographicCamera& GetCamera() { return m_Camera; };
 
 	private:

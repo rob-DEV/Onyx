@@ -105,7 +105,7 @@ namespace Onyx {
 
 		m_Context->Init();
 		
-		glfwSwapInterval(1);
+		glfwSwapInterval(0);
 		glfwShowWindow(m_Window);
 	}
 

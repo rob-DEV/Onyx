@@ -14,11 +14,16 @@
 #include "VulkanShader.h"
 #include "VulkanSwapchain.h"
 
-
-
-
 namespace Onyx {
 	
+
+	struct Vertex2D {
+
+		glm::vec3 Position;
+		glm::vec4 Color;
+
+	};
+
 	void VulkanRenderer2D::InitImplementation()
 	{
 		
@@ -41,7 +46,7 @@ namespace Onyx {
 
 	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-
+		//submit a quad for drawing
 	}
 
 	void VulkanRenderer2D::DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, Texture2D* texture)

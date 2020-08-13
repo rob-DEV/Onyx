@@ -26,8 +26,8 @@ namespace Onyx {
 	void OpenGLRenderer2D::InitImplementation()
 	{
 		
-		const uint32_t VB_SIZE = m_MaxQuadCount * sizeof(Vertex2D) * 4;
-		const uint32_t IB_COUNT = m_MaxQuadCount * 6;
+		const uint32_t VB_SIZE = MAX_QUADS * sizeof(Vertex2D) * 4;
+		const uint32_t IB_COUNT = MAX_QUADS * 6;
 
 		m_QuadVertexArray = (OpenGLVertexArray*)VertexArray::Create();
 
@@ -82,7 +82,7 @@ namespace Onyx {
 
 		delete[] indices;
 
-		m_QuadVertexBufferData = new Vertex2D[m_MaxQuadCount * 4];
+		m_QuadVertexBufferData = new Vertex2D[MAX_QUADS * 4];
 		m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
 
 
@@ -116,21 +116,28 @@ namespace Onyx {
 	{
 		delete[] m_QuadVertexBufferData;
 		delete m_QuadIndexBuffer;
+		delete m_QuadVertexArray;
 	}
 
 	void OpenGLRenderer2D::BeginSceneImplementation(const OrthographicCamera& camera)
-	{
+	{	
+
 		m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
 		m_IndexCount = 0;
 
-		m_QuadShader->Bind();		
+		m_QuadVertexArray->Bind();
+		m_QuadVertexBuffer->Bind();
+		m_QuadIndexBuffer->Bind();
+		m_QuadShader->Bind();
+
+
 		((OpenGLShader*)m_QuadShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
 		m_TextureSlotIndex = 1;
 
 		//Print stats
-		printf("DrawCalls %d\n", m_DrawCalls);
-		printf("Quads Drawn %d\n", m_DrawnQuads);
+		//printf("DrawCalls %d\n", m_DrawCalls);
+		//printf("Quads Drawn %d\n", m_DrawnQuads);
 
 		m_DrawnQuads = 0;
 		m_DrawCalls = 0;
@@ -158,6 +165,7 @@ namespace Onyx {
 			m_TextureSlots[i]->Bind(i);
 
 		RenderCommand::DrawIndexed(m_QuadVertexArray, m_IndexCount);
+		
 		glBindTextureUnit(0, 0);
 
 		++m_DrawCalls;

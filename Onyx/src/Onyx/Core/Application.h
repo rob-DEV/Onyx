@@ -23,7 +23,7 @@ namespace Onyx {
 	private:
 		Window* m_Window = nullptr;
 		static Application* s_Instance;
-
+		float m_LastTime;
 
 	protected:
 		//TODO : redo

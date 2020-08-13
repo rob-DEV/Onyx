@@ -5,8 +5,6 @@
 #include <Onyx/Graphics/OrthographicCamera.h>
 #include <Onyx/Graphics/Texture.h>
 
-#define RENDERER2D_MAX_VERTEX 600000
-
 namespace Onyx {
 
 

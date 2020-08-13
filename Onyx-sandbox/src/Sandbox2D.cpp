@@ -1,14 +1,7 @@
 #include "Sandbox2D.h"
 
-#include <Onyx/Core/Window.h>
-#include <Onyx/Event/Event.h>
-#include <Onyx/Core/Input.h>
 
-#include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Graphics/Renderer2D.h>
-
-
-
+//TODO: sort out
 #include "../.../../glfw3/GLFW/glfw3.h"
 
 using namespace Onyx;
@@ -45,28 +38,20 @@ void Sandbox2D::OnDetach()
 
 }
 
-void Sandbox2D::OnUpdate()
+void Sandbox2D::OnUpdate(TimeStep timestep)
 {
 
 	static const OrthographicCamera& camera = m_CameraController->GetCamera();
 
-	m_CameraController->OnUpdate();
+	m_CameraController->OnUpdate(timestep);
 
 	Renderer2D::BeginScene(camera);
 
-	Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.1f, 0.1f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+	Renderer2D::DrawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(0.1f, 0.1f), glm::vec4(0.1f, 0.66f, 0.8f, 1.0f));
 
 	Renderer2D::DrawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), m_Texture1);
 
-
-	for (float x = 0.25f; x < 100.0f; x+= 0.1f)
-	{
-		for (float y = 0.25f; y < 100.0f; y += 0.1f)
-		{
-			Renderer2D::DrawQuad(glm::vec3(x + 0.25f , y + 0.25f, 0.0f), glm::vec2(0.03f, 0.03f), glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
-		}
-	}
-
+	
 
 	Renderer2D::EndScene();
 	Renderer2D::Flush();

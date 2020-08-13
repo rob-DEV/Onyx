@@ -5,11 +5,18 @@
 #include <Onyx/Graphics/Renderer2D.h>
 
 
+#include "VulkanDevice.h"
+#include "VulkanBuffer.h"
+#include "VulkanSwapchain.h"
+
 #include <glm/glm.hpp>
 
 namespace Onyx {
 
+	struct Vertex2D;
+
 	class VulkanRenderer2D : public Renderer2D {
+		
 		virtual void InitImplementation();
 		virtual void DestroyImplementation();
 
@@ -24,6 +31,13 @@ namespace Onyx {
 
 
 		virtual void FlushImplementation();
+
+	private:		
+		Vertex2D* m_QuadVertexBufferData;
+		Vertex2D* m_QuadVertexBufferDataPtr;
+
+		VulkanSwapchain* m_Swapchain;
+
 	};
 
 }

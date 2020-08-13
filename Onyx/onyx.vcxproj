@@ -29,6 +29,7 @@
     <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer2D.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\Renderer3D.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RendererAPI.cpp" />
     <ClCompile Include="src\Onyx\graphics\Shader.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLGraphicsContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
@@ -65,6 +67,7 @@
     <ClInclude Include="src\Onyx\core\Entrypoint.h" />
     <ClInclude Include="src\Onyx\core\FileIO.h" />
     <ClInclude Include="src\Onyx\Core\Layer.h" />
+    <ClInclude Include="src\Onyx\Core\TimeStep.h" />
     <ClInclude Include="src\Onyx\Event\Event.h" />
     <ClInclude Include="src\Onyx\Event\KeyEvent.h" />
     <ClInclude Include="src\Onyx\graphics\Buffer.h" />
@@ -75,6 +78,7 @@
     <ClInclude Include="src\Onyx\Graphics\OrthographicCameraController.h" />
     <ClInclude Include="src\Onyx\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Onyx\graphics\Renderer2D.h" />
+    <ClInclude Include="src\Onyx\Graphics\Renderer3D.h" />
     <ClInclude Include="src\Onyx\graphics\RendererAPI.h" />
     <ClInclude Include="src\Onyx\graphics\Shader.h" />
     <ClInclude Include="src\Onyx\Graphics\Texture.h" />
@@ -85,6 +89,7 @@
     <ClInclude Include="src\Platform\OpenAL\OpenALDevice.h" />
     <ClInclude Include="src\Platform\OpenAL\OpenALSound.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer3D.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />

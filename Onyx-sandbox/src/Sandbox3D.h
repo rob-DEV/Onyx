@@ -6,17 +6,17 @@
 
 using namespace Onyx;
 
-class Sandbox2DSecond : public Onyx::Layer
+class Sandbox3D : public Onyx::Layer
 {
 public:
 
-	Sandbox2DSecond();
-	virtual ~Sandbox2DSecond() = default;
+	Sandbox3D();
+	virtual ~Sandbox3D() = default;
 
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	void OnUpdate() override;
+	void OnUpdate(TimeStep timestep) override;
 
 private:
 	OrthographicCameraController* m_CameraController;

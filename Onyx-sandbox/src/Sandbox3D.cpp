@@ -1,11 +1,11 @@
-#include "Sandbox2DSecond.h"
+#include "Sandbox3D.h"
 
 #include <Onyx/Core/Window.h>
 #include <Onyx/Event/Event.h>
 #include <Onyx/Core/Input.h>
 
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Graphics/Renderer2D.h>
+#include <Onyx/Graphics/Renderer3D.h>
 
 
 
@@ -13,44 +13,44 @@
 
 using namespace Onyx;
 
-Sandbox2DSecond::Sandbox2DSecond()
+Sandbox3D::Sandbox3D()
 	: Layer("Sandbox2DSecond")
 {
 
 }
 
-void Sandbox2DSecond::OnAttach()
+void Sandbox3D::OnAttach()
 {
 
-	//RenderCommand::SetClearColour(glm::vec4(.2f, .2f, .2f, 1.0f));
-	//RenderCommand::Clear();
+	RenderCommand::SetClearColour(glm::vec4(.2f, .2f, .2f, 1.0f));
+	RenderCommand::Clear();
 
-	//Renderer2D::Init();
+	Renderer3D::Init();
 
 	m_CameraController = new OrthographicCameraController();
 	m_Texture1 = Texture2D::Create("res/textures/mario2.png");
 
 }
 
-void Sandbox2DSecond::OnDetach()
+void Sandbox3D::OnDetach()
 {
 	delete m_CameraController;
 	delete m_Texture1;
 }
 
-void Sandbox2DSecond::OnUpdate()
+void Sandbox3D::OnUpdate(TimeStep timestep)
 {
 
 	static const OrthographicCamera& camera = m_CameraController->GetCamera();
 
 	//m_CameraController->OnUpdate();
 
-	Renderer2D::BeginScene(camera);
+	Renderer3D::BeginScene(camera);
 
-	Renderer2D::DrawQuad(glm::vec3(-0.8f, 0.0f, -0.5f), glm::vec2(0.45f, 0.45f), m_Texture1);
+	Renderer3D::DrawCube(glm::vec3(-100.0f * timestep, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec4(1.0f,1.0f,1.0f,1.0f));
 
-	Renderer2D::EndScene();
-	Renderer2D::Flush();
+	Renderer3D::EndScene();
+	Renderer3D::Flush();
 
 
 }

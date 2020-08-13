@@ -11,15 +11,12 @@
 #include <Platform/OpenGL/OpenGLVertexArray.h>
 
 
-#include <glm/glm.hpp>
-
-
 namespace Onyx {
 
 	struct Vertex2D;
 
 	class OpenGLRenderer2D : public Renderer2D {
-	public:
+	private:
 		virtual void InitImplementation();
 		virtual void DestroyImplementation();
 
@@ -42,12 +39,11 @@ namespace Onyx {
 		//CONSTANT
 		static const uint32_t MAX_TEXTURE_SLOTS = 32;
 		
-		static const uint32_t MAX_QUADS_PER_DRAWCALL = 1000;
+		static const uint32_t MAX_QUADS = 100000;
+		static const uint32_t MAX_QUADS_PER_DRAWCALL = 10000;
 		static const uint32_t MAX_VERTICES_PER_DRAWCALL = MAX_QUADS_PER_DRAWCALL * 4;
 		static const uint32_t MAX_INDICIES_PER_DRAWCALL = MAX_QUADS_PER_DRAWCALL * 6;
 
-		//TODO: review remove?
-		const uint32_t m_MaxQuadCount = 250000;
 
 		Texture2D* m_WhiteTexture;
 		std::array<Texture2D*, MAX_TEXTURE_SLOTS> m_TextureSlots;
