@@ -47,7 +47,7 @@ namespace Onyx {
 
 		if (Input::IsKeyPressed(ONYX_KEY_Q)) {
 
-			m_ZoomLevel -= testSpeed * timestep;
+			m_ZoomLevel += testSpeed * timestep;
 			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 			m_Camera.SetProjection(-1.6f * m_ZoomLevel, 1.6f * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 
@@ -55,12 +55,10 @@ namespace Onyx {
 
 		if (Input::IsKeyPressed(ONYX_KEY_E)) {
 
-			
-			m_ZoomLevel += testSpeed * timestep;
+			m_ZoomLevel -= testSpeed * timestep;
 			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 			m_Camera.SetProjection(-1.6f * m_ZoomLevel, 1.6f * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
-
-
+			
 		}
 		
 	}

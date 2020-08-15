@@ -35,9 +35,6 @@ void Sandbox3D::OnDetach()
 	delete m_CameraController;
 	delete m_Texture1;
 }
-double normalize(double value, double min, double max) {
-	return 1 - ((value - min) / (max - min));
-}
 
 void Sandbox3D::OnUpdate(Timestep timestep)
 {
@@ -61,7 +58,7 @@ void Sandbox3D::OnUpdate(Timestep timestep)
 	{
 		for (float y = -50.0f; y < 10; y += 1.5f)
 		{
-			//Renderer3D::DrawMesh(m_Cube, glm::vec3(x, y, 0.0f), glm::vec3(0.015f, 0.015f, 0.015f));
+			Renderer3D::DrawMesh(m_Cube, glm::vec3(x, y, 0.0f), glm::vec3(0.25f, 0.25f, 0.25f));
 		}
 	}
 
