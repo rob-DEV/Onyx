@@ -9,5 +9,7 @@ Multi API Game Engine aiming for performance.
 
 
 
-Reference
-https://github.com/TheCherno/Hazel/ 
+References
+Hazel Engine
+LearnOpenGL.com
+VulkanTutorial.com
