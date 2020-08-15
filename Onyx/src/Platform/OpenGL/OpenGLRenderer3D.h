@@ -17,30 +17,21 @@ namespace Onyx {
 
 	class OpenGLRenderer3D : public Renderer3D {
 	private:
-		virtual void InitImplementation();
-		virtual void DestroyImplementation();
+		virtual void InitImplementation() override;
+		virtual void DestroyImplementation() override;
 
-		virtual void BeginSceneImplementation(const OrthographicCamera& camera);
-		virtual void EndSceneImplementation();
-		virtual void FlushImplementation();
+		virtual void BeginSceneImplementation(const OrthographicCamera& camera) override;
+		virtual void EndSceneImplementation() override;
+		virtual void FlushImplementation() override;
 
 
-		virtual void DrawCubeImplementation(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
-		
+		virtual void DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size) override;
+
 
 	private:
 
-
-		static const uint32_t MAX_CUBES = 100;
-		static const uint32_t MAX_CUBE_VERTICES = MAX_CUBES * 8;
-		static const uint32_t MAX_CUBE_INDICES = MAX_CUBES * 36;
-
-
-		static const float cube_vertices[];
-		static const uint32_t cube_elements[];
-
-		//CONSTANT
-		glm::vec4 m_CubePositions[8];
+		static const uint32_t MAX_VERTICES = 1000000;
+		static const uint32_t MAX_INDICES = 3000000;
 
 		OpenGLVertexArray* m_MeshVertexArray;
 		OpenGLVertexBuffer* m_MeshVertexBuffer;
@@ -52,8 +43,11 @@ namespace Onyx {
 		OpenGLShader* m_MeshBasicShader;
 
 		//CPU mapped storage
-		Vertex3D* m_MeshVertexBufferData;
+		Vertex3D* m_MeshVertexBufferBase;
 		Vertex3D* m_MeshVertexBufferWritePtr;
+
+		uint32_t* m_MeshIndexBufferBase;
+		uint32_t* m_MeshIndexBufferWritePtr;
 		
 
 	};

@@ -4,7 +4,7 @@
 
 using namespace Onyx;
 
-class Sandbox2D : public Onyx::Layer
+class Sandbox2D : public Layer
 {
 public:
 
@@ -14,7 +14,7 @@ public:
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	void OnUpdate(TimeStep timestep) override;
+	void OnUpdate(Timestep timestep) override;
 
 private:
 	OrthographicCameraController* m_CameraController;

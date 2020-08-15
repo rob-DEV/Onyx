@@ -5,11 +5,11 @@
 
 namespace Onyx {
 
-	class ONYX_API TimeStep {
+	class ONYX_API Timestep {
 
 	public:
 
-		TimeStep(float time) 
+		Timestep(float time) 
 			: m_Time(time)
 		{
 

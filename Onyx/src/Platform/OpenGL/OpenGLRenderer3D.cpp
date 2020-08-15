@@ -16,46 +16,12 @@ namespace Onyx {
 
 	};
 
-	const float OpenGLRenderer3D::cube_vertices[] = {
-		// front
-		-0.5, -0.5,  0.5,
-		0.5, -0.5,  0.5,
-		0.5,  0.5,  0.5,
-		-0.5,  0.5,  0.5,
-		// back
-		-0.5, -0.5, -0.5,
-		0.5, -0.5, -0.5,
-		0.5,  0.5, -0.5,
-		-0.5,  0.5, -0.5
-	};
-
-	const uint32_t OpenGLRenderer3D::cube_elements[] = {
-		// front
-		0, 1, 2,
-		2, 3, 0,
-		// right
-		1, 5, 6,
-		6, 2, 1,
-		// back
-		7, 6, 5,
-		5, 4, 7,
-		// left
-		4, 0, 3,
-		3, 7, 4,
-		// bottom
-		4, 5, 1,
-		1, 0, 4,
-		// top
-		3, 2, 6,
-		6, 7, 3
-
-	};
 
 	void OpenGLRenderer3D::InitImplementation()
 	{
 		
 		m_MeshVertexArray = (OpenGLVertexArray*)VertexArray::Create();
-		m_MeshVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::Create(MAX_CUBE_VERTICES);
+		m_MeshVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::Create(MAX_VERTICES);
 
 
 		m_MeshVertexArray->AddVertexBuffer(m_MeshVertexBuffer);
@@ -74,27 +40,25 @@ namespace Onyx {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Color));
 
-		//TODO: removing const bad idea
-		uint32_t* indices = ((uint32_t*)cube_elements);
+		m_MeshVertexBufferBase = new Vertex3D[MAX_VERTICES];
+		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
 
-		m_MeshIndexBuffer = (OpenGLIndexBuffer*)IndexBuffer::Create(indices, 36);
+		m_MeshIndexBuffer = (OpenGLIndexBuffer*)IndexBuffer::Create(MAX_INDICES);
 		m_MeshVertexArray->SetIndexBuffer(m_MeshIndexBuffer);
 
-		m_MeshVertexBufferData = new Vertex3D[MAX_CUBE_VERTICES];
-		m_MeshVertexBufferWritePtr = m_MeshVertexBufferData;
+		m_MeshIndexBufferBase = new uint32_t[MAX_INDICES];
+		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
+
 
 
 		m_MeshBasicShader = (OpenGLShader*)Shader::Create("res/shaders/basic.glsl");
-		//m_MeshBasicShader->Bind();
+		m_MeshBasicShader->Bind();
 
-
-		glEnable(GL_DEPTH_TEST);
-		//glDepthFunc(GL_LESS);
 	}
 
 	void OpenGLRenderer3D::DestroyImplementation()
 	{
-		delete[] m_MeshVertexBufferData;
+		delete[] m_MeshVertexBufferBase;
 		delete m_MeshIndexBuffer;
 		delete m_MeshIndexBuffer;
 		delete m_MeshVertexArray;
@@ -102,8 +66,10 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::BeginSceneImplementation(const OrthographicCamera& camera)
 	{
-		m_MeshVertexBufferWritePtr = m_MeshVertexBufferData;
+		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
+		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
 		m_IndexCount = 0;
+		m_VertexCount = 0;
 
 		m_MeshVertexArray->Bind();
 		m_MeshVertexBuffer->Bind();
@@ -130,11 +96,12 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::EndSceneImplementation()
 	{
-		unsigned long long vertexBufferSize = (unsigned char*)m_MeshVertexBufferWritePtr - (unsigned char*)m_MeshVertexBufferData;
+		unsigned long long vertexBufferSize = (unsigned char*)m_MeshVertexBufferWritePtr - (unsigned char*)m_MeshVertexBufferBase;
 
 		if (vertexBufferSize != 0) {
 			//set vertex buffer to draw
-			m_MeshVertexBuffer->SetData((void*)m_MeshVertexBufferData, vertexBufferSize);
+			m_MeshVertexBuffer->SetData((void*)m_MeshVertexBufferBase, vertexBufferSize);
+			m_MeshIndexBuffer->SetData((void*)m_MeshIndexBufferBase, m_IndexCount);
 		}
 	}
 
@@ -147,24 +114,33 @@ namespace Onyx {
 
 	}
 
-	void OpenGLRenderer3D::DrawCubeImplementation(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
+	void OpenGLRenderer3D::DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size)
 	{
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(position.x), glm::vec3(1.0f,1.0f,0.0f))
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
+		const std::vector<glm::vec3>& vertices = mesh->GetVertices();
+		const std::vector<uint32_t>& indices = mesh->GetIndices();
+
 
 		//submit vertices
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < vertices.size(); i++) {
 
-			m_MeshVertexBufferWritePtr->Position = glm::vec4(((glm::vec3*)cube_vertices)[i], 1.0f) * transform;
-			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.6f, 0.1f, 0.2f, 1.0f);
+			m_MeshVertexBufferWritePtr->Position = glm::vec4(vertices[i], 0.0f) + glm::vec4(position, 0.0f);
+			m_MeshVertexBufferWritePtr->Color = mesh->Color;
 			m_MeshVertexBufferWritePtr++;
 		}
-		
-		m_IndexCount += 36;
 
+		//submit indices
+		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
+		for (int i = 0; i < indices.size(); i++) {
+
+			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
+			m_MeshIndexBufferWritePtr++;
+		}
+
+
+		m_VertexCount += vertices.size();
+		m_IndexCount += indices.size();
 	}
-
 
 }

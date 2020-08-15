@@ -11,7 +11,7 @@ namespace Onyx {
 	{
 	public:
 		OrthographicCameraController();
-		void OnUpdate(TimeStep timestep);
+		void OnUpdate(Timestep timestep);
 		const OrthographicCamera& GetCamera() { return m_Camera; };
 
 	private:

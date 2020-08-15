@@ -27,6 +27,9 @@ namespace Onyx {
 
 		//Application Instance
 		s_Instance = this;
+
+		//Must initialise of Timestep messes up on first frame
+		m_LastTime = 0;
 		
 		//Window
 		printf("Creating Onyx Application and Window!\n");
@@ -39,14 +42,9 @@ namespace Onyx {
 		//Sound
 		SoundDevice::Init();
 
-
-
 		//LayerStack 
 		//TODO: abstract to LayerStack
 		m_LayerStack = std::vector<Layer*>();
-
-
-
 
 	}
 
@@ -72,13 +70,16 @@ namespace Onyx {
 			layer->OnAttach();
 		}
 
+
 		while (!m_Window->IsClosed()) {
 
 
 
 			float time = (float)glfwGetTime();
-			TimeStep timestep = time;
+			Timestep timestep(time - m_LastTime);
 			m_LastTime = time;
+
+			std::cout << "FrameTime : " << timestep.GetMilliseconds()  << std::endl;
 
 			m_Window->OnUpdate();
 			

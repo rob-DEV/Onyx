@@ -1,6 +1,5 @@
 #include "onyxpch.h"
 #include "OrthographicCameraController.h"
-
 #include <Onyx/Core/Input.h>
 
 namespace Onyx {
@@ -10,10 +9,9 @@ namespace Onyx {
 
 	}
 
-	void OrthographicCameraController::OnUpdate(TimeStep timestep)
+	void OrthographicCameraController::OnUpdate(Timestep timestep)
 	{
-		float testSpeed = 0.01f;
-
+		float testSpeed = 10.0f;
 
 		if (Input::IsKeyPressed(ONYX_KEY_D)) {
 

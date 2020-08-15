@@ -71,4 +71,10 @@ namespace Onyx {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
+	void OpenGLIndexBuffer::SetData(void* data, uint32_t count)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_DYNAMIC_DRAW);
+	}
+
 }

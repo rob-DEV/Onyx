@@ -26,8 +26,10 @@ namespace Onyx {
 
 		virtual void Bind() const;
 		virtual void Unbind() const;
-
 		virtual uint32_t GetCount() const { return m_Count; }
+		virtual void SetData(void* data, uint32_t count);
+
+
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_Count;

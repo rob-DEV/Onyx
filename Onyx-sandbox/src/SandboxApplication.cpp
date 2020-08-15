@@ -9,8 +9,9 @@ class Sandbox : public Onyx::Application {
 public:
 	Sandbox() {
 
-		m_LayerStack.push_back(new Sandbox2D);
 		m_LayerStack.push_back(new Sandbox3D);
+
+		m_LayerStack.push_back(new Sandbox2D);
 
 	}
 

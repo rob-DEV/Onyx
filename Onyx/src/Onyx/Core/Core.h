@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 
-
 //--ONYX--EXPORTS--//
 #ifdef _ONYX_BUILD_DLL_
 #define ONYX_API __declspec(dllexport)

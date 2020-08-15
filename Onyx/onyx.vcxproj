@@ -25,6 +25,7 @@
     <ClCompile Include="src\onyxpch.cpp" />
     <ClCompile Include="src\Onyx\Core\Layer.cpp" />
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCamera.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RenderCommand.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="src\Onyx\graphics\GraphicsContext.h" />
     <ClInclude Include="src\Onyx\core\Input.h" />
     <ClInclude Include="src\Onyx\core\Keycodes.h" />
+    <ClInclude Include="src\Onyx\Graphics\Mesh.h" />
     <ClInclude Include="src\Onyx\Graphics\OrthographicCamera.h" />
     <ClInclude Include="src\Onyx\Graphics\OrthographicCameraController.h" />
     <ClInclude Include="src\Onyx\Graphics\RenderCommand.h" />
@@ -107,6 +109,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsFileIO.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="vendor\autodesk\fbx\fbx\fbxsdk.h" />
     <ClInclude Include="vendor\glad\include\glad\glad.h" />
     <ClInclude Include="vendor\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="vendor\glfw3\GLFW\glfw3.h" />
@@ -210,6 +213,8 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>
+      </MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -249,6 +254,8 @@
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>
+      </MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

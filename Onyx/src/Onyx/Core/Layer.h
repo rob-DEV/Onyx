@@ -18,7 +18,7 @@ namespace Onyx {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate(TimeStep timestep) {}
+		virtual void OnUpdate(Timestep timestep) {}
 
 		const std::string& GetName() const { return m_LayerName; }
 

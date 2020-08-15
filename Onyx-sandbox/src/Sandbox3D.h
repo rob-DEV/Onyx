@@ -1,12 +1,10 @@
 #pragma once
 
-#include <Onyx/Core/Layer.h>
-#include <Onyx/Graphics/Texture.h>
-#include <Onyx/Graphics/OrthographicCameraController.h>
+#include <Onyx/Onyx.h>
 
 using namespace Onyx;
 
-class Sandbox3D : public Onyx::Layer
+class Sandbox3D : public Layer
 {
 public:
 
@@ -16,10 +14,12 @@ public:
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	void OnUpdate(TimeStep timestep) override;
+	void OnUpdate(Timestep timestep) override;
 
 private:
 	OrthographicCameraController* m_CameraController;
 	Texture2D* m_Texture1;
+	Mesh* m_Mesh;
+
 
 };
