@@ -100,7 +100,7 @@ namespace Onyx {
 		m_TextureSlots[0] = m_WhiteTexture;
 		
 		//set samplers in shader
-		m_QuadShader = (OpenGLShader*)Shader::Create("res/shaders/Texture.glsl");
+		m_QuadShader = (OpenGLShader*)Shader::Create("res/shaders/2DQuad.glsl");
 		m_QuadShader->Bind();
 		m_QuadShader->UploadIntArray("u_Textures", samplers, MAX_TEXTURE_SLOTS);
 

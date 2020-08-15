@@ -20,13 +20,13 @@ namespace Onyx {
 		virtual void InitImplementation() override;
 		virtual void DestroyImplementation() override;
 
-		virtual void BeginSceneImplementation(const OrthographicCamera& camera) override;
+		virtual void BeginSceneImplementation(const PerspectiveCamera& camera) override;
 		virtual void EndSceneImplementation() override;
 		virtual void FlushImplementation() override;
 
 
 		virtual void DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size) override;
-
+		virtual void DrawRotatedMeshImplementation(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size) override;
 
 	private:
 

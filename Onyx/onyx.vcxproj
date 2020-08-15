@@ -26,8 +26,10 @@
     <ClCompile Include="src\Onyx\Core\Layer.cpp" />
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Mesh.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCamera.cpp" />
     <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\PerspectiveCameraController.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer2D.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer3D.cpp" />
@@ -76,8 +78,10 @@
     <ClInclude Include="src\Onyx\core\Input.h" />
     <ClInclude Include="src\Onyx\core\Keycodes.h" />
     <ClInclude Include="src\Onyx\Graphics\Mesh.h" />
+    <ClInclude Include="src\Onyx\Graphics\PerspectiveCamera.h" />
     <ClInclude Include="src\Onyx\Graphics\OrthographicCamera.h" />
     <ClInclude Include="src\Onyx\Graphics\OrthographicCameraController.h" />
+    <ClInclude Include="src\Onyx\Graphics\PerspectiveCameraController.h" />
     <ClInclude Include="src\Onyx\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Onyx\graphics\Renderer2D.h" />
     <ClInclude Include="src\Onyx\Graphics\Renderer3D.h" />
@@ -215,6 +219,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>
       </MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

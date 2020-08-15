@@ -24,10 +24,11 @@ namespace Onyx {
 		const std::vector<glm::vec3>& GetVertices() const { return *m_Vertices; };
 		const std::vector<uint32_t>& GetIndices() const { return *m_Indices; };
 		const std::vector<uint32_t>& GetNormals() const { return *m_Indices; };
+		const glm::vec4& GetColor() const { return m_Color; };
 
-		glm::vec4 Color;
+		void SetColor(const glm::vec4& color) { m_Color = color; };
 
-	protected:
+	public:
 		Mesh(const std::vector<glm::vec3>* vertices, const std::vector<uint32_t>* indices);
 		Mesh(const std::string& path);
 
@@ -40,6 +41,16 @@ namespace Onyx {
 	private:
 		const std::vector<glm::vec3>* m_Vertices;
 		const std::vector<uint32_t>* m_Indices;
+
+		//color test
+		glm::vec4 m_Color;
+
+
+		//normals
+	
+		//material
+
+
 
 
 	};
@@ -56,7 +67,8 @@ namespace Onyx {
 		const static std::vector<uint32_t>* s_SphereIndices;
 
 		//CONE
-
+		const static std::vector<glm::vec3>* s_ConeVertices;
+		const static std::vector<uint32_t>* s_ConeIndices;
 
 		//TORIOD
 

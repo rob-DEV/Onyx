@@ -86,6 +86,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\onyx\src\; $(SolutionDir)\onyx\vendor\glm\; </AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,8 +154,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\basic.glsl" />
-    <None Include="res\shaders\Texture.glsl" />
+    <None Include="res\shaders\3DTest.glsl" />
+    <None Include="res\shaders\2DQuad.glsl" />
     <None Include="res\shaders\vulkantest\compile.bat" />
     <None Include="res\shaders\vulkantest\glslc.exe" />
     <None Include="res\shaders\vulkantest\vkfrag.frag" />

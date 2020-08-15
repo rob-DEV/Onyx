@@ -18,6 +18,7 @@
 #include <Onyx/Graphics/Renderer3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/OrthographicCameraController.h>
+#include <Onyx/Graphics/PerspectiveCameraController.h>
 
 //Sound
 #include <Onyx/Audio/Sound.h>

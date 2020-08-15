@@ -16,6 +16,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <ctime>
+
 
 namespace Onyx {
 	
@@ -28,8 +30,9 @@ namespace Onyx {
 		//Application Instance
 		s_Instance = this;
 
-		//Must initialise of Timestep messes up on first frame
+		//Must initialise, to setup Timestep on first frame
 		m_LastTime = 0;
+		srand(time(NULL));
 		
 		//Window
 		printf("Creating Onyx Application and Window!\n");
@@ -79,8 +82,7 @@ namespace Onyx {
 			Timestep timestep(time - m_LastTime);
 			m_LastTime = time;
 
-			std::cout << "FrameTime : " << timestep.GetMilliseconds()  << std::endl;
-
+	
 			m_Window->OnUpdate();
 			
 			RenderCommand::Clear();

@@ -2,7 +2,6 @@
 #include "Renderer3D.h"
 
 #include <Onyx/Graphics/RendererAPI.h>
-
 #include <Platform/OpenGL/OpenGLRenderer3D.h>
 
 namespace Onyx {

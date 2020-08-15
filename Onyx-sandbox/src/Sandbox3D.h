@@ -17,9 +17,9 @@ public:
 	void OnUpdate(Timestep timestep) override;
 
 private:
-	OrthographicCameraController* m_CameraController;
+	PerspectiveCameraController* m_CameraController;
 	Texture2D* m_Texture1;
-	Mesh* m_Mesh;
-
+	Mesh* m_Cube;
+	Mesh* m_Cone;
 
 };

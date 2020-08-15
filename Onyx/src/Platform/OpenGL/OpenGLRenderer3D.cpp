@@ -51,7 +51,7 @@ namespace Onyx {
 
 
 
-		m_MeshBasicShader = (OpenGLShader*)Shader::Create("res/shaders/basic.glsl");
+		m_MeshBasicShader = (OpenGLShader*)Shader::Create("res/shaders/3DTest.glsl");
 		m_MeshBasicShader->Bind();
 
 	}
@@ -64,7 +64,7 @@ namespace Onyx {
 		delete m_MeshVertexArray;
 	}
 
-	void OpenGLRenderer3D::BeginSceneImplementation(const OrthographicCamera& camera)
+	void OpenGLRenderer3D::BeginSceneImplementation(const PerspectiveCamera& camera)
 	{
 		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
 		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
@@ -76,23 +76,15 @@ namespace Onyx {
 		m_MeshIndexBuffer->Bind();
 		m_MeshBasicShader->Bind();
 
-		glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)1280 / (float)720, 0.1f, 100.0f);
 
-		// Camera matrix
-		glm::mat4 View = glm::lookAt(
-			glm::vec3(4, 3, 3), // Camera is at (4,3,3), in World Space
-			glm::vec3(0, 0, 0), // and looks at the origin
-			glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
-			);
 
-		// Model matrix : an identity matrix (model will be at the origin)
-		glm::mat4 Model = glm::mat4(1.0f);
+		((OpenGLShader*)m_MeshBasicShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
-		glm::mat4 mvp = Projection * View * Model; // Remember, matrix multiplication is the other way around
+		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {2.0f, 2.0f, 0.0f});
 
-		((OpenGLShader*)m_MeshBasicShader)->UploadUniformMat4("u_ViewProjection",  mvp);
 
 	}
+
 
 	void OpenGLRenderer3D::EndSceneImplementation()
 	{
@@ -116,24 +108,50 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size)
 	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), size);
 
 		const std::vector<glm::vec3>& vertices = mesh->GetVertices();
 		const std::vector<uint32_t>& indices = mesh->GetIndices();
 
-
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
-
-			m_MeshVertexBufferWritePtr->Position = glm::vec4(vertices[i], 0.0f) + glm::vec4(position, 0.0f);
-			m_MeshVertexBufferWritePtr->Color = mesh->Color;
+			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
+			m_MeshVertexBufferWritePtr->Color = mesh->GetColor();
 			m_MeshVertexBufferWritePtr++;
 		}
 
 		//submit indices
 		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
 		for (int i = 0; i < indices.size(); i++) {
+			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
+			m_MeshIndexBufferWritePtr++;
+		}
 
+
+		m_VertexCount += vertices.size();
+		m_IndexCount += indices.size();
+	}
+
+	void OpenGLRenderer3D::DrawRotatedMeshImplementation(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size)
+	{
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), glm::radians(angle), ax)
+			* glm::scale(glm::mat4(1.0f), size);
+
+		const std::vector<glm::vec3>& vertices = mesh->GetVertices();
+		const std::vector<uint32_t>& indices = mesh->GetIndices();
+
+		//submit vertices
+		for (int i = 0; i < vertices.size(); i++) {
+			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
+			m_MeshVertexBufferWritePtr->Color = mesh->GetColor();
+			m_MeshVertexBufferWritePtr++;
+		}
+
+		//submit indices
+		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
+		for (int i = 0; i < indices.size(); i++) {
 			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
 			m_MeshIndexBufferWritePtr++;
 		}
