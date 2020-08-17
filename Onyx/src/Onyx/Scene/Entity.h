@@ -5,6 +5,7 @@
 #include <Onyx/ECS//EntityRegistry.h>
 
 #include "Scene.h"
+#include "Components.h"
 
 namespace Onyx {
 
@@ -16,11 +17,11 @@ namespace Onyx {
 
 
 		template<typename T, typename... Args>
-		T& AddComponent(Args&& ... args) {
+		T AddComponent(Args&& ... args) {
 
 			//add component to the entity ID in ECS
-			return m_Scene->m_ECSEntityRegistry->Create();
-
+			//return m_Scene->m_ECSEntityRegistry.AddComponent(m_EntityID, std::forward<Args>(args));
+			return T(args ...);
 		}
 
 

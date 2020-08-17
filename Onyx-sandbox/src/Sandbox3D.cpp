@@ -36,6 +36,9 @@ void Sandbox3D::OnAttach()
 	Entity e1 = m_Scene->CreateEntity();
 	Entity e2 = m_Scene->CreateEntity();
 	
+	TagComponent component = e.AddComponent<TagComponent>("TagTest");
+
+
 
 
 }

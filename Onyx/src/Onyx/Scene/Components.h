@@ -10,10 +10,24 @@
 
 namespace Onyx {
 
+	struct ONYX_API TagComponent
+	{
+		TagComponent() = default;
+		TagComponent(const std::string& tag) : Tag(Tag) {}
+		TagComponent(const TagComponent& other) {
+			Tag = other.Tag;
+			printf("COPIED!\n");
+
+		};
+
+		std::string Tag;
+	};
+
 	struct ONYX_API Transform 
 	{
 	public:
 		//PUBLIC CONSTRUCTOR
+		Transform() = default;
 		Transform(const Transform& other) = default;
 
 		//PROPERTIES
@@ -25,8 +39,6 @@ namespace Onyx {
 		inline void SetLocalRotation(const glm::quat& rotation) { m_LocalRotation = rotation; }
 
 	private:
-		//PRIVATE CONSTRUCTOR - Accessible from Entity
-		Transform() = default;
 		Transform(const glm::vec3& position) 
 			: m_LocalPosition(position) {}
 
@@ -50,7 +62,6 @@ namespace Onyx {
 		const Mesh& GetMesh() const { return *m_Mesh; }
 
 	private:
-		MeshRenderer();
 		Mesh* m_Mesh = nullptr;
 
 	};
