@@ -25,6 +25,10 @@
     <None Include="res\shaders\vulkantest\vkvert.vert" />
     <None Include="res\shaders\3DTest.glsl" />
     <None Include="res\shaders\2DQuad.glsl" />
+    <None Include="res\models\Cube.fbx" />
+    <None Include="res\models\Plane.fbx" />
+    <None Include="res\models\Lantern.fbx" />
+    <None Include="res\models\Teapot.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Sandbox2D.h">
@@ -44,5 +48,25 @@
     <ClCompile Include="src\Sandbox3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\skybox\Back.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\Down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\Front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\Left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\Right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\skybox\Up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

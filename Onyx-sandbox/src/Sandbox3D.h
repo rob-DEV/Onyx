@@ -21,5 +21,5 @@ private:
 	Texture2D* m_Texture1;
 	Mesh* m_Cube;
 	Mesh* m_Cone;
-
+	Mesh* m_FbxMeshTest;
 };

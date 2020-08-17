@@ -35,6 +35,7 @@ namespace Onyx {
 		virtual uint32_t GetWidth() = 0;
 		virtual uint32_t GetHeight() = 0;
 		virtual const std::string& GetTitle() = 0;
+		virtual double GetScroll() = 0;
 		       
 		virtual bool IsClosed() = 0;
 

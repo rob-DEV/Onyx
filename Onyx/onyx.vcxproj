@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Scene\Entity.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
     <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\core\Application.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
     <ClCompile Include="src\Onyx\ImGUI\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Onyx\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALDevice.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALSound.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
@@ -63,6 +65,7 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\Scene\Entity.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
     <ClInclude Include="src\Onyx\core\Application.h" />
@@ -92,6 +95,7 @@
     <ClInclude Include="src\Onyx\Onyx.h" />
     <ClInclude Include="src\Onyx\core\Window.h" />
     <ClInclude Include="src\onyxpch.h" />
+    <ClInclude Include="src\Onyx\Scene\Scene.h" />
     <ClInclude Include="src\Platform\OpenAL\OpenALDevice.h" />
     <ClInclude Include="src\Platform\OpenAL\OpenALSound.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
@@ -213,7 +217,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_DEBUG_;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -223,8 +227,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;libfbxsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;$(ProjectDir)vendor/autodesk/fbx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>
@@ -254,7 +258,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -266,8 +270,8 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;libfbxsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;$(ProjectDir)vendor/autodesk/fbx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>

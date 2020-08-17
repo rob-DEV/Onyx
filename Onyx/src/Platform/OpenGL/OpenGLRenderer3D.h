@@ -25,6 +25,7 @@ namespace Onyx {
 		virtual void FlushImplementation() override;
 
 
+		virtual void DrawSceneImplementation(const Scene* scene) override;
 		virtual void DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size) override;
 		virtual void DrawRotatedMeshImplementation(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size) override;
 

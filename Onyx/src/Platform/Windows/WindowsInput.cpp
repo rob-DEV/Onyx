@@ -1,7 +1,7 @@
 #include "onyxpch.h"
 
 #include "WindowsInput.h"
-
+#include "WindowsWindow.h"
 #include <Onyx/core/Application.h>
 #include <GLFW/glfw3.h>
 
@@ -33,5 +33,12 @@ namespace Onyx {
 	}
 
 
+
+	double WindowsInput::GetMouseScrollImplementation()
+	{
+		Window* window = &Application::Get()->GetOnyxWindow();
+
+		return window->GetScroll();
+	}
 
 }

@@ -154,6 +154,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\models\Cube.fbx" />
+    <None Include="res\models\Lantern.fbx" />
+    <None Include="res\models\Plane.fbx" />
+    <None Include="res\models\Teapot.FBX" />
     <None Include="res\shaders\3DTest.glsl" />
     <None Include="res\shaders\2DQuad.glsl" />
     <None Include="res\shaders\vulkantest\compile.bat" />
@@ -166,6 +170,14 @@
   <ItemGroup>
     <ClInclude Include="src\Sandbox2D.h" />
     <ClInclude Include="src\Sandbox3D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\skybox\Back.png" />
+    <Image Include="res\textures\skybox\Down.png" />
+    <Image Include="res\textures\skybox\Front.png" />
+    <Image Include="res\textures\skybox\Left.png" />
+    <Image Include="res\textures\skybox\Right.png" />
+    <Image Include="res\textures\skybox\Up.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

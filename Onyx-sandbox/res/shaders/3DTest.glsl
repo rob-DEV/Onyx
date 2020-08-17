@@ -36,7 +36,7 @@ in DATA
 void main() {
 
 	float intensity = 5.0f / length(fs_in.v_Position.xyz - u_LightPosition.xyz);
-	color = fs_in.v_Color * intensity * vec4(1.0,1.0,1.0,999999.0);
+	color = fs_in.v_Color * intensity * vec4(1.0,1.0,1.0,99999999999.0);
 	
 
 	

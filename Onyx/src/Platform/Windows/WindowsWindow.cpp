@@ -23,6 +23,8 @@ namespace Onyx {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 		m_Data.Title = props.Title;
+		m_Data.ScrollX = 0;
+		m_Data.ScrollY = 0;
 
 		Init();
 	}
@@ -33,6 +35,8 @@ namespace Onyx {
 		m_Data.Width = properties.Width;
 		m_Data.Height = properties.Height;
 		m_Data.Title = properties.Title;
+		m_Data.ScrollX = 0;
+		m_Data.ScrollY = 0;
 		Init();
 	}
 
@@ -96,6 +100,15 @@ namespace Onyx {
 				}
 			});
 
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
+
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			data.ScrollX = xOffset;
+			data.ScrollY = yOffset;
+
+		});
+
 
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			m_Context = new Onyx::OpenGLGraphicsContext(m_Window);
@@ -105,12 +118,13 @@ namespace Onyx {
 
 		m_Context->Init();
 		
-		glfwSwapInterval(0);
+		glfwSwapInterval(1);
 		glfwShowWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+		m_Data.ScrollX = 0; m_Data.ScrollY = 0;
 		m_Context->SwapBuffers();
 		glfwPollEvents();
 	}

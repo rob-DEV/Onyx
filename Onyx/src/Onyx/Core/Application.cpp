@@ -84,7 +84,7 @@ namespace Onyx {
 
 	
 			m_Window->OnUpdate();
-			
+
 			RenderCommand::Clear();
 			//TODO: move to resize callback function
 			RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
@@ -99,11 +99,6 @@ namespace Onyx {
 			layer->OnDetach();
 		}
 
-	}
-
-	void Application::OnEvent(Event& e)
-	{
-		printf("%s\n", e.GetName());
 	}
 
 }

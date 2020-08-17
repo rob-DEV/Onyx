@@ -23,6 +23,8 @@ namespace Onyx {
 		inline uint32_t GetWidth() { return m_Data.Width; };
 		inline uint32_t GetHeight() { return m_Data.Height; };
 		inline const std::string& GetTitle() { return m_Data.Title; };
+		inline double GetScroll() { return  m_Data.ScrollY; }
+
 
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 
@@ -39,6 +41,8 @@ namespace Onyx {
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
+
+			double ScrollX, ScrollY;
 
 			EventCallbackFn EventCallback;
 		};

@@ -18,7 +18,6 @@ namespace Onyx {
 		
 		Window& GetOnyxWindow() const { return *m_Window; };
 		void Run();
-		void OnEvent(Event& e);
 
 	private:
 		Window* m_Window = nullptr;

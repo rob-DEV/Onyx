@@ -1,8 +1,9 @@
 #include "onyxpch.h"
 #include "Mesh.h"
 
-namespace Onyx {
+#include <fbx/fbxsdk.h>
 
+namespace Onyx {
 
 	Mesh::Mesh(const std::vector<glm::vec3>* vertices, const std::vector<uint32_t>* indices)
 		: m_Vertices(vertices), m_Indices(indices), m_Color(static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f)
@@ -23,7 +24,62 @@ namespace Onyx {
 
 	Mesh* Mesh::Create(const std::string& path)
 	{
-		return nullptr;
+
+		fbxsdk::FbxManager* manager = fbxsdk::FbxManager::Create();
+
+		fbxsdk::FbxIOSettings* ioSettings = fbxsdk::FbxIOSettings::Create(manager, IOSROOT);
+		manager->SetIOSettings(ioSettings);
+
+		FbxImporter* importer = FbxImporter::Create(manager, "");
+		importer->Initialize(path.c_str());
+
+		FbxScene* scene = FbxScene::Create(manager, "tempScene");
+
+		importer->Import(scene);
+		importer->Destroy();
+
+		FbxNode* rootNode = scene->GetRootNode();
+		assert(rootNode, "RootNode not found!");
+
+		std::vector<glm::vec3>* vertices = new std::vector<glm::vec3>();
+		std::vector<uint32_t>* indices = new std::vector<uint32_t>();
+
+		int numChildNodes = rootNode->GetChildCount();
+		FbxNode* childNode = nullptr;
+
+		for (int i = 0; i < numChildNodes; i++)
+		{
+			childNode = rootNode->GetChild(i);
+			fbxsdk::FbxMesh* mesh = childNode->GetMesh();
+
+			if (mesh != nullptr) {
+				//Loop mesh - pull vertices and indices
+				int numVertices = mesh->GetControlPointsCount();
+				
+				for (int j = 0; j < numVertices; j++)
+				{
+					FbxVector4 vert = mesh->GetControlPointAt(j);
+					vertices->emplace_back(glm::vec3((float)vert.mData[0], (float)vert.mData[1], (float)vert.mData[2]));
+				}
+				
+				int numIndices = mesh->GetPolygonVertexCount();
+				int* ptrIndices = mesh->GetPolygonVertices();
+
+				for (int i = 0; i < numIndices; i++)
+				{
+					indices->push_back(ptrIndices[i]);
+				}
+
+
+
+
+			}
+
+		}
+
+		
+		return new Mesh(vertices, indices);
+
 	}
 
 	Mesh* Mesh::Create(PrimitiveMeshType primitive)

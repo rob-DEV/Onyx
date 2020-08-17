@@ -14,7 +14,7 @@ namespace Onyx  {
 
 	void PerspectiveCameraController::OnUpdate(Timestep timestep)
 	{
-		float testSpeed = 10.0f;
+		float testSpeed = 50.0f;
 
 		if (Input::IsKeyPressed(ONYX_KEY_D)) {
 
@@ -48,7 +48,9 @@ namespace Onyx  {
 
 		}
 
-		if (Input::IsKeyPressed(ONYX_KEY_Q)) {
+		auto mouseScroll = Input::GetMouseScroll();
+
+		if (mouseScroll < 0.0f) {
 
 			m_ZoomLevel += testSpeed * (float)timestep;
 			m_ZoomLevel = std::min(m_ZoomLevel, 90.0f);
@@ -56,15 +58,13 @@ namespace Onyx  {
 			
 		}
 
-		if (Input::IsKeyPressed(ONYX_KEY_E)) {
+		if (mouseScroll > 0.0f) {
 
 			m_ZoomLevel -= testSpeed * (float)timestep;
 			m_ZoomLevel = std::max(m_ZoomLevel, 20.0f);
 			m_Camera.SetProjection(m_ZoomLevel, 1280.0f / 720.0f, 0.0001f, 10000000.0f);
 
 		}
-		
-		//printf("Perspective FOV : %.4f\n", m_ZoomLevel);
 
 	}
 

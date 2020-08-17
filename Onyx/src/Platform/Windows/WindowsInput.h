@@ -8,10 +8,10 @@ namespace Onyx {
 	class WindowsInput : public Input {
 
 	protected:
-		bool IsKeyPressedImplementation(int keycode);
-		float GetMouseXImplementation();
-		float GetMouseYImplementation();
-
+		virtual bool IsKeyPressedImplementation(int keycode);
+		virtual float GetMouseXImplementation();
+		virtual float GetMouseYImplementation();
+		virtual double GetMouseScrollImplementation();
 	};
 
 }

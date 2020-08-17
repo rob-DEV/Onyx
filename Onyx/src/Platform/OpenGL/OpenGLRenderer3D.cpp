@@ -106,6 +106,15 @@ namespace Onyx {
 
 	}
 
+	void OpenGLRenderer3D::DrawSceneImplementation(const Scene* scene)
+	{
+		//render skybox
+		//loop all entities and draw
+		//lighting
+		//PBR
+
+	}
+
 	void OpenGLRenderer3D::DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
@@ -117,7 +126,7 @@ namespace Onyx {
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = mesh->GetColor();
+			m_MeshVertexBufferWritePtr->Color = mesh->GetTintColor();
 			m_MeshVertexBufferWritePtr++;
 		}
 
@@ -145,7 +154,7 @@ namespace Onyx {
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = mesh->GetColor();
+			m_MeshVertexBufferWritePtr->Color = mesh->GetTintColor();
 			m_MeshVertexBufferWritePtr++;
 		}
 

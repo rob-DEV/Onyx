@@ -13,10 +13,13 @@ namespace Onyx {
 		inline static float GetMouseX() { return s_Instance->GetMouseXImplementation(); };
 		inline static float GetMouseY() { return s_Instance->GetMouseYImplementation(); };
 
+		inline static double GetMouseScroll() { return s_Instance->GetMouseScrollImplementation(); };
+
 	protected:
 		virtual bool IsKeyPressedImplementation(int keycode) = 0;
 		virtual float GetMouseXImplementation() = 0;
 		virtual float GetMouseYImplementation() = 0;
+		virtual double GetMouseScrollImplementation() = 0;
 	
 	private:
 		static Input* s_Instance;
@@ -24,4 +27,4 @@ namespace Onyx {
 	};
 }
 
-#endif // !_ONYX_APPLICATION_H_
+#endif // !_ONYX_INPUT_H_
