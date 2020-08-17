@@ -1,28 +1,36 @@
-#ifndef _ONYX_ENTITY_H_
-#define _ONYX_ENTITY_H_
+#ifndef _ONYX_SCENE_ENTITY_H_
+#define _ONYX_SCENE_ENTITY_H_
 
 #include <Onyx/Core/Core.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include <Onyx/ECS//EntityRegistry.h>
 
+#include "Scene.h"
 
 namespace Onyx {
 
-	struct ONYX_API Transform
-	{
-		glm::vec3 Position;
-		glm::quat Rotation;
-		glm::vec3 Scale;
-
-	};
-
-	class ONYX_API Entity
-	{
+	class ONYX_API Entity {
 	public:
-		Transform Transform;
+		Entity() = default;
+		Entity(ECSEntity entityID, Scene* scene) 
+			: m_EntityID(entityID), m_Scene(scene) { };
+
+
+		template<typename T, typename... Args>
+		T& AddComponent(Args&& ... args) {
+
+			//add component to the entity ID in ECS
+			return m_Scene->m_ECSEntityRegistry->Create();
+
+		}
+
+
+
+	private:
+		ECSEntity m_EntityID;
+		Scene* m_Scene = nullptr;
 
 	};
-}
 
+}
 
 #endif

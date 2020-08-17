@@ -22,4 +22,7 @@ private:
 	Mesh* m_Cube;
 	Mesh* m_Cone;
 	Mesh* m_FbxMeshTest;
+
+	Scene* m_Scene;
+
 };

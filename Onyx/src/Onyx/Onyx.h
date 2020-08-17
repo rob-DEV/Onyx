@@ -9,6 +9,11 @@
 #include <Onyx/Core/Input.h >
 #include <Onyx/Event/Event.h>
 
+//ECS
+#include <Onyx/Scene/Scene.h>
+#include <Onyx/Scene/Entity.h>
+#include <Onyx/ECS/EntityRegistry.h>
+
 //Graphics
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/Mesh.h>

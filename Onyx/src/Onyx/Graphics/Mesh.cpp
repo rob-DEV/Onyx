@@ -42,10 +42,13 @@ namespace Onyx {
 		assert(rootNode, "RootNode not found!");
 
 		std::vector<glm::vec3>* vertices = new std::vector<glm::vec3>();
-		std::vector<uint32_t>* indices = new std::vector<uint32_t>();
+		std::vector<int32_t>* indices = new std::vector<int32_t>();
 
 		int numChildNodes = rootNode->GetChildCount();
 		FbxNode* childNode = nullptr;
+
+		uint32_t vertexCount = 0;
+		uint32_t indexCount = 0;
 
 		for (int i = 0; i < numChildNodes; i++)
 		{
@@ -65,20 +68,55 @@ namespace Onyx {
 				int numIndices = mesh->GetPolygonVertexCount();
 				int* ptrIndices = mesh->GetPolygonVertices();
 
-				for (int i = 0; i < numIndices; i++)
-				{
-					indices->push_back(ptrIndices[i]);
+				//check if indices are triangular or quad indexed
+				//covert to triangular if needed
+				bool indexed = false;
+
+				float ratio = (float)numIndices / (float)numVertices;
+				if (ratio != 3) {
+
+					for (int i = 0; i < numIndices; i++)
+					{
+						indices->push_back(ptrIndices[i] + indexCount);
+
+					}
+					indexCount += numIndices;
+
+					indexed = true;
+				}
+				
+
+				if (ratio == 3) {
+
+					for (int i = 0; i < numIndices; i += 4) {
+
+						int32_t zero = *ptrIndices++;
+						int32_t one = *ptrIndices++;
+						int32_t two = *ptrIndices++;
+						int32_t three = *ptrIndices++;
+
+						indices->push_back(zero + indexCount);
+						indices->push_back(one + indexCount);
+						indices->push_back(two + indexCount);
+
+						indices->push_back(two + indexCount);
+						indices->push_back(three + indexCount);
+						indices->push_back(one + indexCount);
+
+						indexCount += 6;
+					}
+					indexed = true;
 				}
 
-
-
-
+				assert(indexed, "Mesh index format not supported!");
 			}
 
 		}
 
+
+
 		
-		return new Mesh(vertices, indices);
+		return new Mesh(vertices, (std::vector<uint32_t>*)indices);
 
 	}
 

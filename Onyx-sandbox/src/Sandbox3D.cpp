@@ -23,12 +23,20 @@ void Sandbox3D::OnAttach()
 	m_Texture1 = Texture2D::Create("res/textures/mario2.png");
 	m_Cube = Mesh::Create(PrimitiveMeshType::Cube);
 	m_Cone = Mesh::Create(PrimitiveMeshType::Cone);
-	m_FbxMeshTest = Mesh::Create("res/models/Teapot.fbx");
+	m_FbxMeshTest = Mesh::Create("res/models/CubeTri.fbx");
 
 
 	
 	m_Cube->SetTintColor(glm::vec4(1.0, 0.2, 0.5, 1.0));
 	m_Cone->SetTintColor(glm::vec4(0.2, 1.0, 0.5, 1.0));
+
+	m_Scene = new Scene();
+
+	Entity e = m_Scene->CreateEntity();
+	Entity e1 = m_Scene->CreateEntity();
+	Entity e2 = m_Scene->CreateEntity();
+	
+
 
 }
 
@@ -40,33 +48,25 @@ void Sandbox3D::OnDetach()
 
 void Sandbox3D::OnUpdate(Timestep timestep)
 {
-//	printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
+	printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
 
 	static float rotation = 0.0f;
+
+	//UPDATES
 	static const PerspectiveCamera& camera = m_CameraController->GetCamera();
-
 	m_CameraController->OnUpdate(timestep);
+	m_Scene->OnUpdate(timestep);
 
+	//LOGIC
 	rotation += timestep * 90.0f;
+	float scale = 7.0f;
 
+
+	//RENDER
 	Renderer3D::BeginScene(camera);
 
-	float scale = 0.003f;
-
-	//Renderer3D::DrawMesh(m_FbxMeshTest, { 0.0f,0.0f,0.0f }, glm::vec3(scale, scale, scale));
-	Renderer3D::DrawRotatedMesh(m_FbxMeshTest, rotation, { 0.0f,1.0f,0.0f }, glm::vec3(0.0f, -15.0f, 0.0f), glm::vec3(scale, scale, scale));
-
-	//Renderer3D::DrawRotatedMesh(m_Cone, rotation, {1.0f,0.0f,0.0f}, glm::vec3(5.0f, 1.0f, 0.0f), glm::vec3(5.0f, 5.0f, 5.0f));
-
-	/*for (float x = -50.0f; x < 10; x+= 1.5f)
-	{
-		for (float y = -50.0f; y < 10; y += 1.5f)
-		{
-			Renderer3D::DrawMesh(m_Cube, glm::vec3(x, y, 0.0f), glm::vec3(0.25f, 0.25f, 0.25f));
-		}
-	}*/
-
-	
+	Renderer3D::DrawMesh(m_Cube, { 10.0f,0.0f,0.0f }, glm::vec3(scale, scale, scale));
+	Renderer3D::DrawRotatedMesh(m_FbxMeshTest, rotation, glm::vec3(1.0f, 1.0f,0.0f), glm::vec3(-10.0f, 0.0, 0.0f), glm::vec3(scale, scale, scale));
 
 	Renderer3D::EndScene();
 	Renderer3D::Flush();

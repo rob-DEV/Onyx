@@ -16,7 +16,8 @@ namespace Onyx {
 		Toroid
 	};
 
-	class ONYX_API Mesh {
+	class ONYX_API Mesh 
+	{
 	public:
 
 		virtual ~Mesh();
