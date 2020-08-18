@@ -5,7 +5,7 @@
 
 using ECSEntity = uint32_t;
 
-#define MAX_ENTITIES 100
+#define MAX_ENTITIES 100000
 #define MAX_COMPONENTS 32
 
 

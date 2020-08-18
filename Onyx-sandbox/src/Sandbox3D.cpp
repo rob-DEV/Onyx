@@ -18,8 +18,6 @@ void Sandbox3D::OnAttach()
 
 	Renderer3D::Init();
 
-	m_CameraController = new PerspectiveCameraController();
-
 	m_Texture1 = Texture2D::Create("res/textures/mario2.png");
 	m_Cube = Mesh::Create(PrimitiveMeshType::Cube);
 	m_Cone = Mesh::Create(PrimitiveMeshType::Cone);
@@ -33,19 +31,21 @@ void Sandbox3D::OnAttach()
 	m_Scene = new Scene();
 
 	Entity e = m_Scene->CreateEntity();
-	Entity e1 = m_Scene->CreateEntity();
-	Entity e2 = m_Scene->CreateEntity();
-	
-	TagComponent component = e.AddComponent<TagComponent>("TagTest");
+	e.AddComponent<TransformComponent>();
+	e.RemoveComponent<TransformComponent>();
+	e.AddComponent<TransformComponent>();
 
+	for (int i = 0; i < 1000; ++i) {
 
+		Entity e = m_Scene->CreateEntity();
+		MeshRendererComponent& meshRenderComponent = e.AddComponent<MeshRendererComponent>(m_FbxMeshTest);
 
+	}
 
 }
 
 void Sandbox3D::OnDetach()
 {
-	delete m_CameraController;
 	delete m_Texture1;
 }
 
@@ -53,25 +53,8 @@ void Sandbox3D::OnUpdate(Timestep timestep)
 {
 	printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
 
-	static float rotation = 0.0f;
-
-	//UPDATES
-	static const PerspectiveCamera& camera = m_CameraController->GetCamera();
-	m_CameraController->OnUpdate(timestep);
+	//SCENE & RENDER
 	m_Scene->OnUpdate(timestep);
 
-	//LOGIC
-	rotation += timestep * 90.0f;
-	float scale = 7.0f;
-
-
-	//RENDER
-	Renderer3D::BeginScene(camera);
-
-	Renderer3D::DrawMesh(m_Cube, { 10.0f,0.0f,0.0f }, glm::vec3(scale, scale, scale));
-	Renderer3D::DrawRotatedMesh(m_FbxMeshTest, rotation, glm::vec3(1.0f, 1.0f,0.0f), glm::vec3(-10.0f, 0.0, 0.0f), glm::vec3(scale, scale, scale));
-
-	Renderer3D::EndScene();
-	Renderer3D::Flush();
 
 }

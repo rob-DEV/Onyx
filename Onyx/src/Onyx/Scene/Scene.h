@@ -3,8 +3,9 @@
 
 #include <Onyx/Core/Core.h>
 #include <Onyx/Core/TimeStep.h>
-
 #include <Onyx/ECS/EntityRegistry.h>
+#include <Onyx/Graphics/PerspectiveCameraController.h>
+
 
 namespace Onyx {
 
@@ -21,6 +22,7 @@ namespace Onyx {
 
 	private:
 		ECSEntityRegistry m_ECSEntityRegistry;
+		PerspectiveCameraController m_CameraController;
 
 		friend class Entity;
 
