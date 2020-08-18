@@ -4,22 +4,23 @@
 #include <Onyx/Core/Core.h>
 #include <Onyx/ECS//EntityRegistry.h>
 
-#include "Scene.h"
 #include "Components.h"
+#include "Scene.h"
 
 namespace Onyx {
 
+	class Scene;
+
 	class ONYX_API Entity {
 	public:
-		Entity() = default;
-		Entity(ECSEntity entity, Scene* scene)
-			: m_EntityID(entity), m_Scene(scene) { };
-
+		Entity();
+		Entity(ECSEntity entity, Scene* scene);	
+		~Entity();
 
 		template<typename T, typename... Args>
 		T& AddComponent(Args&& ... args) {
 
-			//add component to the entity ID in ECS
+			//Add component to the entity ID in ECS
 			return m_Scene->m_ECSEntityRegistry.AddComponent<T>(m_EntityID, std::forward<Args>(args)...);
 
 		}
@@ -27,15 +28,15 @@ namespace Onyx {
 		template<typename T>
 		T& GetComponent() {
 
-			//get component from ECS registry
+			//Get component from ECS registry
 			return m_Scene->m_ECSEntityRegistry.GetComponent<T>(m_EntityID);
 
 		}
 
 		template<typename T>
 		void RemoveComponent() {
-
-			//remove component from ECS registry
+			
+			//Remove component from ECS registry
 			return m_Scene->m_ECSEntityRegistry.RemoveComponent<T>(m_EntityID);
 
 		}

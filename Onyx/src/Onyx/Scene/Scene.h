@@ -6,6 +6,7 @@
 #include <Onyx/ECS/EntityRegistry.h>
 #include <Onyx/Graphics/PerspectiveCameraController.h>
 
+#include <vector>
 
 namespace Onyx {
 
@@ -16,13 +17,14 @@ namespace Onyx {
 		Scene();
 		~Scene();
 
-		Entity CreateEntity();
-
+		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
 
 	private:
 		ECSEntityRegistry m_ECSEntityRegistry;
 		PerspectiveCameraController m_CameraController;
+
+		std::vector<Entity*> m_Entities;
 
 		friend class Entity;
 

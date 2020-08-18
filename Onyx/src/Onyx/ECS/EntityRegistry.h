@@ -4,11 +4,13 @@
 #include <Onyx/Core/Core.h>
 
 #include "Types.h"
+#include "EntityView.h"
 #include "ComponentArray.h"
 
 #include <queue>
-
+#include <unordered_map>
 #include <cassert>
+
 
 namespace Onyx {
 
@@ -21,11 +23,6 @@ namespace Onyx {
 		return results;
 	}
 
-	template<typename T>
-	struct ECSView {
-		T* data;
-		uint32_t size;
-	};
 
 	class ECSEntityRegistry {
 	public:
@@ -58,11 +55,12 @@ namespace Onyx {
 
 			if (got == m_ComponentArrays.end()) {
 				//Create the Component Array should it not already exist
-				m_ComponentArrays.emplace(typeHash, new ComponentArray<T>());
+				ComponentArray<T>* f = new ComponentArray<T>();
+				m_ComponentArrays.emplace(typeHash, f);
 			}
 
 			ComponentArray<T>* componentArray = (ComponentArray<T>*)m_ComponentArrays.at(typeHash);
-			return componentArray->Insert(entity, T(args ...));
+			return componentArray->Insert(entity, std::forward<Args&&>(args)...);
 
 
 		}
@@ -114,14 +112,34 @@ namespace Onyx {
 			if (got == m_ComponentArrays.end()) {
 				//Create the Component Array should it not already exist
 				assert(false, "No valid ComponentArray found");
+				ECSView<T> view;
+				view.data = nullptr;
+				view.size = 0;
+				return view;
 			}
-
 			ComponentArray<T>* componentArray = (ComponentArray<T>*)m_ComponentArrays.at(typeHash);
-			//T* ptr = componentArray->m_ComponentArray.data();
-			//ECSView<T> v;
-			//v.data = ptr;
-			//v.size = componentArray->m_Size;
-			return ECSView<T>();
+
+			ECSView<T> view;
+			view.data = componentArray->m_ComponentArray.data();
+			view.size = componentArray->m_Size;
+			return view;
+		}
+
+		template<typename T>
+		ECSView<T> GetViewOfTemplateArg(T) {
+
+			return View<T>();
+		}
+
+		template<typename ... Ts>
+		std::vector<std::tuple<Ts...>> View2()
+		{
+			std::vector<std::tuple<Ts...>> result = std::vector<std::tuple<Ts...>>();
+
+
+
+
+			return result;
 		}
 		
 

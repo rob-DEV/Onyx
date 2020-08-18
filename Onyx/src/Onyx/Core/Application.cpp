@@ -77,11 +77,11 @@ namespace Onyx {
 		while (!m_Window->IsClosed()) {
 
 
-
 			float time = (float)glfwGetTime();
 			Timestep timestep(time - m_LastTime);
 			m_LastTime = time;
 
+			printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
 	
 			m_Window->OnUpdate();
 

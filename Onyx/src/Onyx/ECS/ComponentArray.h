@@ -5,13 +5,24 @@
 
 #include <array>
 #include <algorithm>
+#include <unordered_map>
+#include <cassert>
 
 namespace Onyx {
 	class IComponentArray
 	{
 	public:
-		virtual ~IComponentArray() = default;
+		virtual ~IComponentArray() {
+		
+			printf("DESTROYED IComponentArray");
+		
+		}
 		virtual void EntityDestroyed(ECSEntity entity) = 0;
+
+#if _ONYX_DEBUG_
+		std::string DEBUG_NAME;
+#endif
+	
 	};
 
 
@@ -21,9 +32,30 @@ namespace Onyx {
 	class ComponentArray : public IComponentArray
 	{
 	public:
+		ComponentArray<T>()
+		{
+			#if _ONYX_DEBUG_
+			DEBUG_NAME = typeid(T).name();
+			printf("Setup ComponentArray of type %s\n\n", DEBUG_NAME.c_str());
+			#endif
+		}
+
+		ComponentArray<T>(const ComponentArray<T>& other)
+		{
+			printf("COPIED!\n");
+		}
+
+		~ComponentArray<T>()
+		{
+			printf("DESTROYED!\n");
+		}
+
 
 		T& Insert(ECSEntity entity, T component)
 		{
+			#if _ONYX_DEBUG_
+			printf("Inserting Component of Type %s, ComponentArray of type %s\n\n", typeid(T).name(), DEBUG_NAME.c_str());
+			#endif
 			assert(m_Size < MAX_ENTITIES, "Adding Component to full ComponentArray");
 
 			if (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end())
@@ -32,17 +64,19 @@ namespace Onyx {
 			}
 
 			//insert the component and increment m_Size
-			m_EntityToIndexMap[entity] = entity;
-			m_IndexToEntityMap[m_EntityToIndexMap[entity]] = entity;
-			m_EntityToIndexMap[entity, m_EntityToIndexMap[entity]];
+			m_EntityToIndexMap[entity] = m_Size;
 			m_ComponentArray[m_EntityToIndexMap[entity]] = component;
+			m_IndexToEntityMap[m_Size] = entity;
 			
 			++m_Size;
-			return m_ComponentArray[m_EntityToIndexMap[entity, m_Size - 1]];
+			return m_ComponentArray[m_EntityToIndexMap[entity]];
 		}
 
 		void Remove(ECSEntity entity) 
 		{
+			#if _ONYX_DEBUG_
+			printf("Removing Component of Type %s, ComponentArray of type %s\n\n", typeid(T).name(), DEBUG_NAME.c_str());
+			#endif
 			if (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end())
 			{
 				uint32_t indexToCompInComponentArray = m_EntityToIndexMap[entity];
@@ -59,6 +93,8 @@ namespace Onyx {
 				m_EntityToIndexMap.erase(entity);
 				m_IndexToEntityMap[indexToCompInComponentArray = lastComponentEntity];
 
+				--m_Size;
+
 				return;
 			}
 
@@ -69,7 +105,9 @@ namespace Onyx {
 
 		T& Get(ECSEntity entity) 
 		{
-
+			#if _ONYX_DEBUG_
+			printf("Getting Component of Type %s, ComponentArray of type %s\n\n", typeid(T).name(), DEBUG_NAME.c_str());
+			#endif
 			if (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end())
 			{
 				return m_ComponentArray.at(m_EntityToIndexMap[entity]);

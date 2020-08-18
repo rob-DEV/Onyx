@@ -14,7 +14,7 @@ namespace Onyx {
 	{
 		TagComponent() = default;
 		TagComponent(const std::string& tag) : Tag(tag) {}
-		TagComponent(const TagComponent& other) = delete;
+		TagComponent(const TagComponent& other) = default;
 		std::string Tag;
 	};
 
@@ -24,8 +24,9 @@ namespace Onyx {
 		//PUBLIC CONSTRUCTOR
 		TransformComponent() = default;
 		TransformComponent(const glm::vec3& position)
-			: m_LocalPosition(position) {}
-		TransformComponent(const TransformComponent& other) = delete;
+			: m_LocalPosition(std::move(position)) {}
+		TransformComponent(const TransformComponent& other) = default;
+		~TransformComponent() = default;
 
 		//PROPERTIES
 		inline const glm::vec3& GetLocalPosition() const { return m_LocalPosition; };
@@ -55,6 +56,8 @@ namespace Onyx {
 		MeshRendererComponent() = default;
 		MeshRendererComponent(Mesh* mesh) : m_Mesh(mesh) {}
 		MeshRendererComponent(const MeshRendererComponent& other) = delete;
+		~MeshRendererComponent() = default;
+
 		Mesh* GetMesh() const { return m_Mesh; }
 
 	private:

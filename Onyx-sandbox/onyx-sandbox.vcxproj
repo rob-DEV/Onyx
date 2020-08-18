@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\models\Cube.fbx" />
+    <None Include="res\models\CubeTri.fbx" />
     <None Include="res\models\Lantern.fbx" />
     <None Include="res\models\Monkey.fbx" />
     <None Include="res\models\Plane.fbx" />

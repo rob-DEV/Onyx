@@ -29,19 +29,6 @@ void Sandbox3D::OnAttach()
 	m_Cone->SetTintColor(glm::vec4(0.2, 1.0, 0.5, 1.0));
 
 	m_Scene = new Scene();
-
-	Entity e = m_Scene->CreateEntity();
-	e.AddComponent<TransformComponent>();
-	e.RemoveComponent<TransformComponent>();
-	e.AddComponent<TransformComponent>();
-
-	for (int i = 0; i < 1000; ++i) {
-
-		Entity e = m_Scene->CreateEntity();
-		MeshRendererComponent& meshRenderComponent = e.AddComponent<MeshRendererComponent>(m_FbxMeshTest);
-
-	}
-
 }
 
 void Sandbox3D::OnDetach()
@@ -51,10 +38,7 @@ void Sandbox3D::OnDetach()
 
 void Sandbox3D::OnUpdate(Timestep timestep)
 {
-	printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
-
 	//SCENE & RENDER
 	m_Scene->OnUpdate(timestep);
-
 
 }
