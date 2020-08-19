@@ -103,45 +103,38 @@ namespace Onyx {
 
 		}
 
-		template<typename T>
-		ECSView<T> View() 
+
+		template<typename ...Types>
+		ECSView<Types...> View()
 		{
-			uint64_t typeHash = hash(typeid(T).name());
-			std::unordered_map<uint64_t, IComponentArray*>::const_iterator got = m_ComponentArrays.find((uint64_t)typeHash);
 
-			if (got == m_ComponentArrays.end()) {
-				//Create the Component Array should it not already exist
-				assert(false, "No valid ComponentArray found");
-				ECSView<T> view;
-				view.data = nullptr;
-				view.size = 0;
-				return view;
-			}
-			ComponentArray<T>* componentArray = (ComponentArray<T>*)m_ComponentArrays.at(typeHash);
+			//works
+			ECSView<Types...> view;
 
-			ECSView<T> view;
-			view.data = componentArray->m_ComponentArray.data();
-			view.size = componentArray->m_Size;
-			return view;
-		}
-
-		template<typename T>
-		ECSView<T> GetViewOfTemplateArg(T) {
-
-			return View<T>();
-		}
-
-		template<typename ... Ts>
-		std::vector<std::tuple<Ts...>> View2()
-		{
-			std::vector<std::tuple<Ts...>> result = std::vector<std::tuple<Ts...>>();
+			//FOREACH TYPE IN TYPES
+			//collect the data and add to the view
 
 
-
-
-			return result;
 		}
 		
+		template<class KeyType>
+		class AVL
+		{
+		public:
+			class AVLNode {};
+			AVLNode m_root;
+
+			AVLNode* insert(const KeyType& key)
+			{
+				if (m_root == 0)
+				{
+					m_root = new AVLNode(key);
+					return m_root;
+				}
+				else
+					return insert_Helper(key, m_root);
+			}
+		};
 
 	private:
 		std::queue<ECSEntity> m_AvailableECSEntities;

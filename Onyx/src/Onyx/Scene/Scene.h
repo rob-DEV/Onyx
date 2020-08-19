@@ -3,13 +3,13 @@
 
 #include <Onyx/Core/Core.h>
 #include <Onyx/Core/TimeStep.h>
-#include <Onyx/ECS/EntityRegistry.h>
 #include <Onyx/Graphics/PerspectiveCameraController.h>
 
-#include <vector>
+#include <entt/entt.hpp>
 
 namespace Onyx {
 
+	class Mesh;
 	class Entity;
 
 	class ONYX_API Scene {
@@ -21,10 +21,9 @@ namespace Onyx {
 		void OnUpdate(Timestep timestep);
 
 	private:
-		ECSEntityRegistry m_ECSEntityRegistry;
 		PerspectiveCameraController m_CameraController;
-
-		std::vector<Entity*> m_Entities;
+		entt::registry m_EntityRegistry;
+		Mesh* m_Mesh = nullptr;
 
 		friend class Entity;
 

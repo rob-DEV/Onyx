@@ -1,0 +1,6 @@
+#ifndef _ONYX_ECS_ENTITY_SYSTEM_H_
+#define _ONYX_ECS_ENTITY_SYSTEM_H_
+
+
+
+#endif

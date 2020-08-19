@@ -4,13 +4,7 @@
 
 namespace Onyx {
 
-	Entity::Entity() 
-	{
-		m_EntityID = 0xFFFFFFFF;
-		m_Scene = nullptr;
-	}
-
-	Entity::Entity(ECSEntity entity, Scene* scene)
+	Entity::Entity(entt::entity entity, Scene* scene)
 		: m_EntityID(entity), m_Scene(scene)
 	{
 

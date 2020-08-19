@@ -13,8 +13,8 @@ namespace Onyx {
 	struct ONYX_API TagComponent
 	{
 		TagComponent() = default;
-		TagComponent(const std::string& tag) : Tag(tag) {}
 		TagComponent(const TagComponent& other) = default;
+		TagComponent(const std::string& tag) : Tag(tag) {}
 		std::string Tag;
 	};
 
@@ -23,14 +23,17 @@ namespace Onyx {
 	public:
 		//PUBLIC CONSTRUCTOR
 		TransformComponent() = default;
-		TransformComponent(const glm::vec3& position)
-			: m_LocalPosition(std::move(position)) {}
 		TransformComponent(const TransformComponent& other) = default;
-		~TransformComponent() = default;
+		TransformComponent(const glm::vec3& position)
+			: m_LocalPosition(position) {}
+
+		operator glm::mat4& () { return m_LocalMatrix; }
+		operator const glm::mat4& () const { return m_LocalMatrix; }
 
 		//PROPERTIES
 		inline const glm::vec3& GetLocalPosition() const { return m_LocalPosition; };
 		inline const glm::quat& GetLocalRotation() const { return m_LocalRotation; };
+		inline const glm::vec3& GetScale() const { return m_LocalScale; };
 
 		//METHODS
 		inline void SetLocalPostion(const glm::vec3& position) { m_LocalPosition = position; }
@@ -54,9 +57,9 @@ namespace Onyx {
 	{
 	public:
 		MeshRendererComponent() = default;
-		MeshRendererComponent(Mesh* mesh) : m_Mesh(mesh) {}
-		MeshRendererComponent(const MeshRendererComponent& other) = delete;
+		MeshRendererComponent(const MeshRendererComponent& other) = default;
 		~MeshRendererComponent() = default;
+		MeshRendererComponent(Mesh* mesh) : m_Mesh(mesh) {}
 
 		Mesh* GetMesh() const { return m_Mesh; }
 

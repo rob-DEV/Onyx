@@ -54,7 +54,7 @@ void Sandbox2D::OnUpdate(Timestep timestep)
 	Renderer2D::DrawRotatedQuad(glm::vec3(-0.6f, 0.0f, 0.0f), rotation, glm::vec3(0.0f,0.0f,0.0f), glm::vec2(0.1f, 0.1f), glm::vec4(0.1f, 0.66f, 0.8f, 1.0f));
 
 	Renderer2D::DrawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), m_Texture1);
-	Renderer2D::DrawRotatedQuad(glm::vec3(0.8f, 0.0f, 0.1f), rotation, glm::vec3(0.0f,0.0f,1.0f), glm::vec2(0.25f, 0.25f), m_Texture2);
+	//Renderer2D::DrawRotatedQuad(glm::vec3(0.8f, 0.0f, 0.1f), rotation, glm::vec3(0.0f,0.0f,1.0f), glm::vec2(0.25f, 0.25f), m_Texture2);
 
 
 	Renderer2D::EndScene();

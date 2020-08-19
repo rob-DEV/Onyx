@@ -65,10 +65,6 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Onyx\ECS\EntityView.h" />
-    <ClInclude Include="src\Onyx\ECS\Types.h" />
-    <ClInclude Include="src\Onyx\ECS\EntityRegistry.h" />
-    <ClInclude Include="src\Onyx\ECS\ComponentArray.h" />
     <ClInclude Include="src\Onyx\Scene\Components.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
@@ -123,6 +119,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="vendor\autodesk\fbx\fbx\fbxsdk.h" />
+    <ClInclude Include="vendor\entt\include\entt\entt.hpp" />
     <ClInclude Include="vendor\glad\include\glad\glad.h" />
     <ClInclude Include="vendor\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="vendor\glfw3\GLFW\glfw3.h" />
@@ -222,7 +219,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_DEBUG_;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -263,7 +260,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
