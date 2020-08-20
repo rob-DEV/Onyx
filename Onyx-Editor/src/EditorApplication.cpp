@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	printf("--------------------------------------------------- Onyx Game Engine ---------------------------------------------------\n");
 
 	Onyx::Application* onyxApplication = CreateApplication();
-	onyxApplication->SetWindowTitle("Onyx Editor");
+	onyxApplication->SetWindowTitle("Onyx Editor : Test Scene");
 	onyxApplication->Run();
 	delete onyxApplication;
 
