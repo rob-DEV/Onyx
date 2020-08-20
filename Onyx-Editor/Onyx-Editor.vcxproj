@@ -91,10 +91,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)onyx\src\;$(SolutionDir)onyx\vendor\glm\;$(SolutionDir)onyx\vendor\entt\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>onyx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\onyx\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,16 +137,49 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)onyx\src\;$(SolutionDir)onyx\vendor\glm\;$(SolutionDir)onyx\vendor\entt\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>onyx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\onyx\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApplication.cpp" />
+    <ClCompile Include="src\EditorLayer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\EditorLayer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\models\Cube.fbx" />
+    <None Include="res\models\CubeTri.fbx" />
+    <None Include="res\models\Monkey.fbx" />
+    <None Include="res\models\Plane.fbx" />
+    <None Include="res\models\Teapot.FBX" />
+    <None Include="res\shaders\2DQuad.glsl" />
+    <None Include="res\shaders\3DTest.glsl" />
+    <None Include="res\shaders\FlatColor.glsl" />
+    <None Include="res\shaders\Texture.glsl" />
+    <None Include="res\shaders\vulkantest\compile.bat" />
+    <None Include="res\shaders\vulkantest\glslc.exe" />
+    <None Include="res\shaders\vulkantest\vkfrag.frag" />
+    <None Include="res\shaders\vulkantest\vkfrag.spv" />
+    <None Include="res\shaders\vulkantest\vkvert.spv" />
+    <None Include="res\shaders\vulkantest\vkvert.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\skybox\Back.png" />
+    <Image Include="res\textures\skybox\Down.png" />
+    <Image Include="res\textures\skybox\Front.png" />
+    <Image Include="res\textures\skybox\Left.png" />
+    <Image Include="res\textures\skybox\Right.png" />
+    <Image Include="res\textures\skybox\Up.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

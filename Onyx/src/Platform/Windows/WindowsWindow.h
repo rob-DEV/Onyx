@@ -25,7 +25,7 @@ namespace Onyx {
 		inline const std::string& GetTitle() { return m_Data.Title; };
 		inline double GetScroll() { return  m_Data.ScrollY; }
 
-
+		virtual void SetTitle(const char* title);
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 
 		virtual bool IsClosed();

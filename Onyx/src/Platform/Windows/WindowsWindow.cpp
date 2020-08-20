@@ -129,6 +129,12 @@ namespace Onyx {
 		glfwPollEvents();
 	}
 
+	void WindowsWindow::SetTitle(const char* title)
+	{
+		m_Data.Title = title;
+		glfwSetWindowTitle(m_Window, title);
+	}
+
 	bool WindowsWindow::IsClosed()
 	{
 		return glfwWindowShouldClose(m_Window) == true;

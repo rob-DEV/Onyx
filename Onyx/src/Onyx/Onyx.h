@@ -9,7 +9,7 @@
 #include <Onyx/Core/Input.h >
 #include <Onyx/Event/Event.h>
 
-//SCENE
+//Scene
 #include <Onyx/Scene/Scene.h>
 #include <Onyx/Scene/Entity.h>
 

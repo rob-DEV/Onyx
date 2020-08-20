@@ -60,6 +60,16 @@ namespace Onyx {
 
 		printf("RAY: %.3f, %.3f, %.3f\n", pointOnRay.x, pointOnRay.y, pointOnRay.z);
 
+		Ray rayWorld = Ray(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 1.0f));
+
+		for (float i = 0; i < 200; i += 0.5f) {
+
+			glm::vec3 point = rayWorld.GetPoint(i);
+			Renderer3D::DrawMesh(m_Mesh, point, glm::vec3(0.5f));
+		}
+
+		
+
 		Renderer3D::DrawMesh(m_Mesh, pointOnRay, glm::vec3(0.5f));
 
 		for (auto entity : view)

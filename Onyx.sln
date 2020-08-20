@@ -11,9 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGUI-docking", "Dependencies\ImGUI-docking\ImGUI-docking.vcxproj", "{EE532407-74E9-4F26-A5CB-2B4272521418}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Onyx-ECS", "Onyx-ECS\Onyx-ECS.vcxproj", "{68A796C0-3933-445D-9C5E-529C759ACF31}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Onyx-Editor", "Onyx-Editor\Onyx-Editor.vcxproj", "{E8BA19F3-2617-4E7C-9531-570BD38D6B7C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{229305FA-A18C-4B5B-950D-F3A96CA2681C} = {229305FA-A18C-4B5B-950D-F3A96CA2681C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,14 +48,6 @@ Global
 		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x64.Build.0 = Release|x64
 		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x86.ActiveCfg = Release|Win32
 		{EE532407-74E9-4F26-A5CB-2B4272521418}.Release|x86.Build.0 = Release|Win32
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Debug|x64.ActiveCfg = Debug|x64
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Debug|x64.Build.0 = Debug|x64
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Debug|x86.ActiveCfg = Debug|Win32
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Debug|x86.Build.0 = Debug|Win32
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Release|x64.ActiveCfg = Release|x64
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Release|x64.Build.0 = Release|x64
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Release|x86.ActiveCfg = Release|Win32
-		{68A796C0-3933-445D-9C5E-529C759ACF31}.Release|x86.Build.0 = Release|Win32
 		{E8BA19F3-2617-4E7C-9531-570BD38D6B7C}.Debug|x64.ActiveCfg = Debug|x64
 		{E8BA19F3-2617-4E7C-9531-570BD38D6B7C}.Debug|x64.Build.0 = Debug|x64
 		{E8BA19F3-2617-4E7C-9531-570BD38D6B7C}.Debug|x86.ActiveCfg = Debug|Win32

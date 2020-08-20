@@ -18,6 +18,8 @@ namespace Onyx {
 		
 		Window& GetOnyxWindow() const { return *m_Window; };
 		void Run();
+		void SetWindowTitle(const char* name) { m_Window->SetTitle(name); }
+
 
 	private:
 		Window* m_Window = nullptr;
