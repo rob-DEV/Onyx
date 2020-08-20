@@ -8,7 +8,7 @@ namespace Onyx {
 	Mesh::Mesh(const std::vector<glm::vec3>* vertices, const std::vector<uint32_t>* indices)
 		: m_Vertices(vertices), m_Indices(indices), m_Color(static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f)
 	{
-		
+		m_BaseColor = m_Color;
 	}
 
 	Mesh::~Mesh()
@@ -21,6 +21,18 @@ namespace Onyx {
 	{
 
 	}
+
+
+	void Mesh::Select(bool isSelected)
+	{
+		if (isSelected) {
+			m_Color += m_Tint;
+		}
+		else {
+			m_Color = m_BaseColor;
+		}
+	}
+
 
 	Mesh* Mesh::Create(const std::string& path)
 	{

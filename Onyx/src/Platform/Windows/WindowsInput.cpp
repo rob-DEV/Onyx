@@ -16,23 +16,28 @@ namespace Onyx {
 		return keyState == GLFW_PRESS || keyState == GLFW_REPEAT;
 	}
 
-	float WindowsInput::GetMouseXImplementation()
+	std::pair<float, float> WindowsInput::GetMousePositionImplementation()
 	{
 		auto window = (GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow();
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		return (float)xpos;
+
+		return std::pair<float, float>((float)xpos, (float)ypos);
 	}
 
-	float WindowsInput::GetMouseYImplementation()
+	std::pair<float, float> WindowsInput::GetMousePositionNormalizedImplementation()
 	{
 		auto window = (GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow();
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		return (float)ypos;
+
+		//normalize to viewport between -1 - 1
+		float xposNormalized = (2.0f * xpos) / (float)Application::Get()->GetOnyxWindow().GetWidth() - 1.0f;
+		float yposNormalized = (2.0f * ypos) / (float)Application::Get()->GetOnyxWindow().GetHeight() - 1.0f;
+
+		return std::pair<float, float>(xposNormalized, -yposNormalized);
+
 	}
-
-
 
 	double WindowsInput::GetMouseScrollImplementation()
 	{

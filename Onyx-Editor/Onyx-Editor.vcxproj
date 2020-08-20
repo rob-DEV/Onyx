@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{68A796C0-3933-445D-9C5E-529C759ACF31}</ProjectGuid>
-    <RootNamespace>OnyxECS</RootNamespace>
+    <ProjectGuid>{E8BA19F3-2617-4E7C-9531-570BD38D6B7C}</ProjectGuid>
+    <RootNamespace>OnyxEditor</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,12 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\ECS\ComponentArray.h" />
-    <ClInclude Include="src\ECS\EntityRegistry.h" />
-    <ClInclude Include="src\ECS\EntityView.h" />
-    <ClInclude Include="src\ECS\System.h" />
-    <ClInclude Include="src\ECS\TupleTest.h" />
-    <ClInclude Include="src\ECS\Types.h" />
+    <ClCompile Include="src\EditorApplication.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

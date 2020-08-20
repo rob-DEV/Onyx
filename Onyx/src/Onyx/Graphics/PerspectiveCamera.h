@@ -2,6 +2,7 @@
 #define _ONYX_PERSPECTIVE_CAMERA_H_
 
 #include <glm/glm.hpp>
+#include <Onyx/Physics/Ray.h>
 
 namespace Onyx {
 
@@ -21,6 +22,9 @@ namespace Onyx {
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+
+		Ray ScreenPointToRay() const;
+
 	private:
 		void RecalculateViewMatrix();
 		glm::mat4 m_ProjectionMatrix;

@@ -19,6 +19,7 @@ namespace Onyx {
 
 		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
+		glm::vec3 Raycast(float mouse_x, float mouse_y);
 
 	private:
 		PerspectiveCameraController m_CameraController;

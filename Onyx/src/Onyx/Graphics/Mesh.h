@@ -28,6 +28,7 @@ namespace Onyx {
 		const glm::vec4& GetTintColor() const { return m_Color; };
 
 		void SetTintColor(const glm::vec4& color) { m_Color = color; };
+		void Select(bool isSelected);
 
 	public:
 		Mesh(const std::vector<glm::vec3>* vertices, const std::vector<uint32_t>* indices);
@@ -44,8 +45,9 @@ namespace Onyx {
 		const std::vector<uint32_t>* m_Indices;
 
 		//color test
+		glm::vec4 m_Tint = { 1.0f,0.0f,0.85f, 1.0f };
+		glm::vec4 m_BaseColor;
 		glm::vec4 m_Color;
-
 
 		//normals
 	

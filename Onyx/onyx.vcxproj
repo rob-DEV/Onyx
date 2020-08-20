@@ -38,6 +38,7 @@
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
     <ClCompile Include="src\Onyx\ImGUI\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Onyx\Physics\Physics.cpp" />
     <ClCompile Include="src\Onyx\Scene\Entity.cpp" />
     <ClCompile Include="src\Onyx\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALDevice.cpp" />
@@ -65,6 +66,8 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\Physics\Ray.h" />
+    <ClInclude Include="src\Onyx\Physics\Physics.h" />
     <ClInclude Include="src\Onyx\Scene\Components.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Audio\SoundManager.h" />

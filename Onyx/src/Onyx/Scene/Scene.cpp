@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include <Onyx/Graphics/Renderer3D.h>
 
+#include <Onyx/Core/Input.h>
+
 namespace Onyx {
 
 	Scene::Scene()
@@ -13,9 +15,16 @@ namespace Onyx {
 		for (int i=0; i < 100; ++i)
 		{
 			Entity* e = CreateEntity();
-			e->AddComponent<TransformComponent>(TransformComponent(glm::vec3(i,i,0.0f)));
-			e->AddComponent<MeshRendererComponent>(MeshRendererComponent(m_Mesh));
-
+			TransformComponent& ss = e->AddComponent<TransformComponent>(TransformComponent(glm::vec3(2*i,2*i,0.0f)));
+			ss.Scale = glm::vec3(2.5f);
+			
+			if (i % 2)
+			{
+				e->AddComponent<MeshRendererComponent>(MeshRendererComponent(Mesh::Create(PrimitiveMeshType::Cube)));
+			}
+			else {
+				e->AddComponent<MeshRendererComponent>(MeshRendererComponent(Mesh::Create(PrimitiveMeshType::Cone)));
+			}
 
 		}
 
@@ -33,7 +42,6 @@ namespace Onyx {
 
 	void Scene::OnUpdate(Timestep timestep)
 	{
-
 		//2D
 
 		//3D
@@ -44,17 +52,34 @@ namespace Onyx {
 		
 		auto view = m_EntityRegistry.view<TransformComponent, MeshRendererComponent>();
 
+		//Mouse interaction (editor)
+		std::pair<float,float> normalizedMouseInput = Input::GetMousePositionNormalized();
+
+		Ray ray = camera.ScreenPointToRay();
+		glm::vec3 pointOnRay = ray.GetPoint(10.0f);
+
+		printf("RAY: %.3f, %.3f, %.3f\n", pointOnRay.x, pointOnRay.y, pointOnRay.z);
+
+		Renderer3D::DrawMesh(m_Mesh, pointOnRay, glm::vec3(0.5f));
+
 		for (auto entity : view)
 		{
 			auto [transform, meshRenderer] = view.get<TransformComponent, MeshRendererComponent>(entity);
 
-			Renderer3D::DrawMesh(meshRenderer.GetMesh(),transform.GetLocalPosition(), transform.GetScale());
+			glm::vec3 position = transform.Position;
+
+			//assuming scale is uniform
+			//if (abs(glm::distance(position, pointonray)) < transform.Scale.x - .35f) {
+				//meshRenderer.GetMesh()->Select(true);
+			//}
+			//else {
+				//meshRenderer.GetMesh()->Select(false);
+			//}
+
+			Renderer3D::DrawMesh(meshRenderer.GetMesh(),transform.Position, transform.Scale);
 
 
 		}
-
-		//Renderer3D::DrawMesh(m_Mesh, glm::vec3(0.0f), glm::vec3(10.0f));
- 		
 
 		Renderer3D::EndScene();
 		Renderer3D::Flush();
