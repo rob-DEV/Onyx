@@ -91,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)onyx\src\;$(SolutionDir)onyx\vendor\glm\;$(SolutionDir)onyx\vendor\entt\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Onyx-CLR\src\;$(SolutionDir)onyx\src\;$(SolutionDir)onyx\vendor\glm\;$(SolutionDir)onyx\vendor\entt\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

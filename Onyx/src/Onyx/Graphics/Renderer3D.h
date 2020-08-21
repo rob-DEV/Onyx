@@ -5,9 +5,15 @@
 #include <Onyx/Graphics/PerspectiveCamera.h>
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/Mesh.h>
-#include <Onyx/Scene/Scene.h>
+
+//TODO: move entt away from the header
+//#include <Onyx/Scene/Scene.h>
 
 namespace Onyx {
+
+	//TODO: forward declare Scene
+	class Scene;
+
 
 	class ONYX_API Renderer3D {
 	public:	

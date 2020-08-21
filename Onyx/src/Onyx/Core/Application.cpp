@@ -109,6 +109,7 @@ namespace Onyx {
 
 			RenderCommand::Clear();
 
+
 			for (auto layer : m_LayerStack) {
 				layer->OnUpdate(timestep);
 			}

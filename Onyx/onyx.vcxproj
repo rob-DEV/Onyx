@@ -66,6 +66,7 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\OnyxEditor.h" />
     <ClInclude Include="src\Onyx\Physics\Ray.h" />
     <ClInclude Include="src\Onyx\Physics\Physics.h" />
     <ClInclude Include="src\Onyx\Scene\Components.h" />

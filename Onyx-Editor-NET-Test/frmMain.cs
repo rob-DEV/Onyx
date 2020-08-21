@@ -22,8 +22,7 @@ namespace Onyx_Editor_NET_Test
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //MessageBox.Show(WrapperTest.add().ToString());
-            OnyxCLR.EditorWrapper wrapper = new EditorWrapper();
+            OnyxCLR.OnyxEditor onyxEditor = new OnyxEditor();
             
         }
 
