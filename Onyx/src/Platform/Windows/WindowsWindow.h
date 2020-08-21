@@ -41,8 +41,8 @@ namespace Onyx {
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
-
 			double ScrollX, ScrollY;
+			bool Hidden;
 
 			EventCallbackFn EventCallback;
 		};

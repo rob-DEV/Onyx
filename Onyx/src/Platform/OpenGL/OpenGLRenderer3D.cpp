@@ -165,7 +165,6 @@ namespace Onyx {
 			m_MeshIndexBufferWritePtr++;
 		}
 
-
 		m_VertexCount += vertices.size();
 		m_IndexCount += indices.size();
 	}

@@ -13,6 +13,7 @@ namespace Onyx {
 	public:
 
 		Application();
+		Application(bool isEditor);
 		virtual ~Application();
 		inline static Application* Get() { return s_Instance; };		
 		

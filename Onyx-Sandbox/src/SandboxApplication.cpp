@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 
 	Onyx::Application* onyxApplication = CreateApplication();
 	onyxApplication->SetWindowTitle("Onyx : Sandbox3D");
-	//onyxApplication->Run();
+	onyxApplication->Run();
 	delete onyxApplication;
 
 	return 0;

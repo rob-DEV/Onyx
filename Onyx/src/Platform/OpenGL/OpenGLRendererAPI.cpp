@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include <fstream>
+
 namespace Onyx {
 
 	void OpenGLRendererAPI::Init()
@@ -39,6 +41,21 @@ namespace Onyx {
 	{
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+	}
+
+	////EXPERIMENTAL
+	RenderedPixelData OpenGLRendererAPI::GetRenderedFrameBuffer()
+	{
+		RenderedPixelData renderedFrame(NULL, 0);
+		const uint32_t frameBufferSize = 4 * 1280 * 720;
+		char* pixelData = new char[frameBufferSize];
+		glReadPixels(0, 0, 1280, 720, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+		renderedFrame.Data = pixelData;
+		renderedFrame.Size = frameBufferSize;
+
+		return renderedFrame;
+
 	}
 
 }

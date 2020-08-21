@@ -3,6 +3,7 @@
 
 
 #include <Onyx/Graphics/RendererAPI.h>
+#include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/GraphicsContext.h>
 
 #include <GLFW/glfw3.h>
@@ -25,7 +26,7 @@ namespace Onyx {
 		m_Data.Title = props.Title;
 		m_Data.ScrollX = 0;
 		m_Data.ScrollY = 0;
-
+		m_Data.Hidden = false;
 		Init();
 	}
 
@@ -37,6 +38,7 @@ namespace Onyx {
 		m_Data.Title = properties.Title;
 		m_Data.ScrollX = 0;
 		m_Data.ScrollY = 0;
+		m_Data.Hidden = properties.Hidden;
 		Init();
 	}
 
@@ -56,6 +58,10 @@ namespace Onyx {
 		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
+		//EXPERIMENTAL - used for "off-screen" graphics rendering
+		if (m_Data.Hidden)
+			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -65,6 +71,8 @@ namespace Onyx {
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				data.Width = width;
 				data.Height = height;
+				RenderCommand::SetViewport(0, 0, width, height);
+
 			});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
@@ -119,7 +127,9 @@ namespace Onyx {
 		m_Context->Init();
 		
 		glfwSwapInterval(1);
-		glfwShowWindow(m_Window);
+		
+		if(!m_Data.Hidden)
+			glfwShowWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()

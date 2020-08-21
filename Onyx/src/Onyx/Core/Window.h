@@ -11,11 +11,13 @@ namespace Onyx {
 
 		std::string Title;
 		uint32_t Width, Height;
+		bool Hidden;
 
 		WindowProperties(const std::string& title = "Onyx Engine",
 			unsigned int width = 1280,
-			unsigned int height = 720)
-			: Title(title), Width(width), Height(height)
+			unsigned int height = 720,
+			bool isHidden = false)
+			: Title(title), Width(width), Height(height), Hidden(isHidden)
 		{
 
 		}

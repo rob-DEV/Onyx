@@ -237,7 +237,7 @@
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>
-      <Command>xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.dll" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.dll" /Y &amp;&amp; xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.lib" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.lib" /Y &amp;&amp; xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.pdb" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.pdb" /Y</Command>
+      <Command>xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.dll" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.dll" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.lib" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.lib" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.pdb" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.pdb" /Y &amp;&amp;  xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.dll" "$(SolutionDir)bin\Onyx-Editor\$(Configuration)\onyx.dll" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.lib" "$(SolutionDir)bin\Onyx-Editor\$(Configuration)\onyx.lib" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.pdb" "$(SolutionDir)bin\Onyx-Editor\$(Configuration)\onyx.pdb" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -280,7 +280,7 @@
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>
-      <Command>xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.dll" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.dll" /Y &amp;&amp; xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.lib" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.lib" /Y &amp;&amp; xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.pdb" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.pdb" /Y</Command>
+      <Command>xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.dll" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.dll" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.lib" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.lib" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.pdb" "$(SolutionDir)bin\onyx-sandbox\$(Configuration)\onyx.pdb" /Y &amp;&amp;  xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.dll" "$(SolutionDir)bin\Onyx-Editor\$(Configuration)\onyx.dll" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.lib" "$(SolutionDir)bin\Onyx-Editor\$(Configuration)\onyx.lib" /Y &amp;&amp;   xcopy "$(SolutionDir)bin\onyx\$(Configuration)\onyx.pdb" "$(SolutionDir)bin\Onyx-Editor\$(Configuration)\onyx.pdb" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

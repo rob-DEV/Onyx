@@ -6,7 +6,7 @@
 class Editor : public Onyx::Application {
 
 public:
-	Editor() {
+	Editor(bool hidden) : Application(hidden) {
 
 		m_LayerStack.emplace_back(new EditorSandbox);
 
@@ -20,16 +20,19 @@ public:
 
 Onyx::Application* CreateApplication() {
 
-	return new Editor();
+	return new Editor(true);
 }
-int main(int argc, char** argv) {
 
-	printf("--------------------------------------------------- Onyx Game Engine ---------------------------------------------------\n");
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine, int nCmdShow)
+{
+	printf("--------------------------------------------------- Onyx Editor ---------------------------------------------------\n");
 
-	Onyx::Application* onyxApplication = CreateApplication();
-	onyxApplication->SetWindowTitle("Onyx Editor : Test Scene");
+	auto onyxApplication = CreateApplication();
+
 	onyxApplication->Run();
+
 	delete onyxApplication;
 
-	return 0;
+
 }

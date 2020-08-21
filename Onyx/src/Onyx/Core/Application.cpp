@@ -16,24 +16,20 @@
 
 #include <GLFW/glfw3.h>
 
-#include <ctime>
-
-
 namespace Onyx {
 	
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(void)
 	{
 		//MAIN INITIALISATION
 
 		//Application Instance
 		s_Instance = this;
 
-		//Must initialise, to setup Timestep on first frame
+		//Must initialize, to setup Timestep on first frame
 		m_LastTime = 0;
-		srand(time(NULL));
-		
+
 		//Window
 		printf("Creating Onyx Application and Window!\n");
 		m_Window = new WindowsWindow(WindowProperties("Onyx Engine", 1280, 720));
@@ -51,6 +47,35 @@ namespace Onyx {
 
 	}
 
+	Application::Application(bool isEditor)
+	{
+		if (!isEditor) assert(false, "Attempting to use Onyx Editor!");
+		
+		//MAIN INITIALISATION
+
+		//Application Instance
+		s_Instance = this;
+
+		//Must initialize, to setup Timestep on first frame
+		m_LastTime = 0;
+
+		//Window
+		printf("Creating Onyx Application and Window!\n");
+		m_Window = new WindowsWindow(WindowProperties("Onyx Engine", 1280, 720, true));
+
+		//Renderer API
+		RenderCommand::Init();
+		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+
+		//Sound
+		SoundDevice::Init();
+
+		//LayerStack 
+		//TODO: abstract to LayerStack
+		m_LayerStack = std::vector<Layer*>();
+		
+	}
+
 	Application::~Application()
 	{
 		for (auto layer : m_LayerStack)
@@ -59,8 +84,6 @@ namespace Onyx {
 		}
 
 		m_LayerStack.clear();
-
-
 		delete m_Window;
 	}
 
@@ -83,15 +106,13 @@ namespace Onyx {
 
 			//printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
 	
-			m_Window->OnUpdate();
 
 			RenderCommand::Clear();
-			//TODO: move to resize callback function
-			RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-			
+
 			for (auto layer : m_LayerStack) {
 				layer->OnUpdate(timestep);
 			}
+			m_Window->OnUpdate();
 		
 		}
 
