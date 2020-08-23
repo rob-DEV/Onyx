@@ -1,9 +1,9 @@
 #include "onyxpch.h"
 #include "OpenGLRendererAPI.h"
 
-#include <glad/glad.h>
 
-#include <fstream>
+#include <Onyx/Core/Application.h>
+#include <glad/glad.h>
 
 namespace Onyx {
 
@@ -45,14 +45,20 @@ namespace Onyx {
 	}
 
 	////EXPERIMENTAL
+	//TODO: Abstract to framebuffer class
 	RenderedPixelData OpenGLRendererAPI::GetRenderedFrameBuffer()
 	{
+		uint32_t width = 960;
+		uint32_t height = 540;
+
 		RenderedPixelData renderedFrame(NULL, 0);
-		const uint32_t frameBufferSize = 4 * 1280 * 720;
+		const uint32_t frameBufferSize = 3 * width * height;
 		char* pixelData = new char[frameBufferSize];
-		glReadPixels(0, 0, 1280, 720, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixelData);
 		renderedFrame.Data = pixelData;
 		renderedFrame.Size = frameBufferSize;
+
+
 
 		return renderedFrame;
 

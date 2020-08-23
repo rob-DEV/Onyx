@@ -37,7 +37,7 @@ namespace Onyx {
 		//Renderer API
 		RenderCommand::Init();
 		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-
+	
 		//Sound
 		SoundDevice::Init();
 
@@ -45,35 +45,6 @@ namespace Onyx {
 		//TODO: abstract to LayerStack
 		m_LayerStack = std::vector<Layer*>();
 
-	}
-
-	Application::Application(bool isEditor)
-	{
-		if (!isEditor) assert(false, "Attempting to use Onyx Editor!");
-		
-		//MAIN INITIALISATION
-
-		//Application Instance
-		s_Instance = this;
-
-		//Must initialize, to setup Timestep on first frame
-		m_LastTime = 0;
-
-		//Window
-		printf("Creating Onyx Application and Window!\n");
-		m_Window = new WindowsWindow(WindowProperties("Onyx Engine", 1280, 720, true));
-
-		//Renderer API
-		RenderCommand::Init();
-		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-
-		//Sound
-		SoundDevice::Init();
-
-		//LayerStack 
-		//TODO: abstract to LayerStack
-		m_LayerStack = std::vector<Layer*>();
-		
 	}
 
 	Application::~Application()
