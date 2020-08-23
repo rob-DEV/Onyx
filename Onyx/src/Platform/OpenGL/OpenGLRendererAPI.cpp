@@ -58,8 +58,6 @@ namespace Onyx {
 		renderedFrame.Data = pixelData;
 		renderedFrame.Size = frameBufferSize;
 
-
-
 		return renderedFrame;
 
 	}

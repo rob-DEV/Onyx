@@ -87,9 +87,9 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
-            this.panel2.Location = new System.Drawing.Point(233, 499);
+            this.panel2.Location = new System.Drawing.Point(233, 494);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(811, 165);
+            this.panel2.Size = new System.Drawing.Size(811, 177);
             this.panel2.TabIndex = 4;
             // 
             // panel3

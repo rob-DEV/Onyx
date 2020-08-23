@@ -23,6 +23,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Onyx-CLR", "Onyx-CLR\Onyx-C
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onyx-Editor-NET", "Onyx-Editor-NET\Onyx-Editor-NET.csproj", "{1E6511D8-2A76-4379-9E6F-44B0C2AB716F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3B32CD22-5BE2-43DD-AA4F-48299F0E1134} = {3B32CD22-5BE2-43DD-AA4F-48299F0E1134}
+		{229305FA-A18C-4B5B-950D-F3A96CA2681C} = {229305FA-A18C-4B5B-950D-F3A96CA2681C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

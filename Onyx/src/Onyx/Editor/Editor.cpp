@@ -44,12 +44,13 @@ namespace Onyx {
 
 		//Window
 		printf("Creating Onyx Editor Instance and Graphics Context!\n");
-		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 960, 540, false));
+		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 960, 540, true));
 
 		m_EditorCamera = new PerspectiveCamera(45.0f, 1280.0f / 720.0f, 0.0001f, 10000000.0f);
 		m_EditorCamera->SetPosition(glm::vec3(0.0f, 0.0f, 50.0f));
 		m_Mesh = Mesh::Create(PrimitiveMeshType::Cube);
 		m_Mesh->SetTintColor(glm::vec4(1.0, 0.0, 0.0, 1.0));
+
 		//Renderer API
 		RenderCommand::Init();
 		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());

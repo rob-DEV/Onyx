@@ -34,9 +34,13 @@ namespace Onyx_Editor_NET_Test
 
             DirectBitmap b = new DirectBitmap(960, 540);
      
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            int frames = 0;
+
             while (true)
             {
-
                 m_EditorInstance.Update();
 
                 //Bitmap test = m_EditorInstance.GetRenderedFrame();
@@ -51,19 +55,25 @@ namespace Onyx_Editor_NET_Test
                     {
                         b.SetPixel(x, y, Color.FromArgb(255, s[pos], s[pos + 1], s[pos + 2]));
                         pos += 3;
-                    }
-                    //    pos += offset;  
+                    } 
                 }
 
                 
                 //set Viewport image in UI thread
                 m_Viewport.Invoke(new MethodInvoker(delegate ()
                 {
-
                     m_Viewport.Image = b.Bitmap;
-
-                    //m_Viewport.SizeMode = PictureBoxSizeMode.Zoom;
                 }));
+
+                ++frames;
+
+                if(sw.ElapsedMilliseconds >= 1000)
+                {
+                    Console.WriteLine("Viewport FrameTime {0}", (float)sw.ElapsedMilliseconds / (float)frames);
+                    frames = 0;
+                    sw.Restart();
+                }
+
 
 
             }

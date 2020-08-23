@@ -13,6 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Diagnostics;
+
+using Onyx_Editor_NET.Helpers;
+using System.Threading;
+using System.Drawing;
+
 namespace Onyx_Editor_NET
 {
     /// <summary>
@@ -20,9 +26,83 @@ namespace Onyx_Editor_NET
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Thread m_ViewportThread;
+
+        private void EditorThread()
+        {
+            m_OnyxEditorCLR = new OnyxCLR.OnyxEditor();
+
+            DirectBitmap b = new DirectBitmap(960, 540);
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            int frames = 0;
+
+            while (true)
+            {
+                m_OnyxEditorCLR.Update();
+
+                //Bitmap test = m_EditorInstance.GetRenderedFrame();
+                byte[] s = m_OnyxEditorCLR.GetRenderedFrame();
+
+
+
+                int pos = 0;
+                for (int y = 539; y >= 0; y--)
+                {
+                    for (int x = 0; x < 960; x++)
+                    {
+                        b.SetPixel(x, y, System.Drawing.Color.FromArgb(255, s[pos], s[pos + 1], s[pos + 2]));
+                        pos += 3;
+                    }
+                }
+
+                var bitmapData = b.Bitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, b.Bitmap.Width, b.Bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly, b.Bitmap.PixelFormat);
+
+                var bitmapSource = BitmapSource.Create(
+                   bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Bgra32, null,
+                   bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
+
+                b.Bitmap.UnlockBits(bitmapData);
+                bitmapSource.Freeze();
+                Dispatcher.Invoke(() => m_Viewport.Source = bitmapSource);
+
+                //set Viewport image in UI thread
+                //m_Viewport.Invoke(new MethodInvoker(delegate ()
+                //{
+                  //  m_Viewport.Image = b.Bitmap;
+               // }));
+
+                ++frames;
+
+                if (sw.ElapsedMilliseconds >= 1000)
+                {
+                    Console.WriteLine("Viewport FrameTime {0}", (float)sw.ElapsedMilliseconds / (float)frames);
+                    frames = 0;
+                    sw.Restart();
+                }
+
+
+
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+
+        private OnyxCLR.OnyxEditor m_OnyxEditorCLR;
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            m_ViewportThread = new Thread(new ThreadStart(EditorThread));
+            m_ViewportThread.Start();
         }
     }
 }
