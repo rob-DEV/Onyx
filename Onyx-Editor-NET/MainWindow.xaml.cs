@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-using System.Diagnostics;
-
-using Onyx_Editor_NET.Helpers;
 using System.Threading;
-using System.Drawing;
+using System.Diagnostics;
+using Onyx_Editor_NET.Framebuffer;
 
 namespace Onyx_Editor_NET
 {
@@ -43,7 +41,6 @@ namespace Onyx_Editor_NET
             {
                 m_OnyxEditorCLR.Update();
 
-                //Bitmap test = m_EditorInstance.GetRenderedFrame();
                 byte[] s = m_OnyxEditorCLR.GetRenderedFrame();
 
 
@@ -69,12 +66,6 @@ namespace Onyx_Editor_NET
                 b.Bitmap.UnlockBits(bitmapData);
                 bitmapSource.Freeze();
                 Dispatcher.Invoke(() => m_Viewport.Source = bitmapSource);
-
-                //set Viewport image in UI thread
-                //m_Viewport.Invoke(new MethodInvoker(delegate ()
-                //{
-                  //  m_Viewport.Image = b.Bitmap;
-               // }));
 
                 ++frames;
 
@@ -103,6 +94,11 @@ namespace Onyx_Editor_NET
         {
             m_ViewportThread = new Thread(new ThreadStart(EditorThread));
             m_ViewportThread.Start();
+        }
+
+        void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            m_ViewportThread.Abort();
         }
     }
 }
