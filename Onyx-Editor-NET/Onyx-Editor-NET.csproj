@@ -56,21 +56,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="src\Onyx-Editor-NET\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="src\Onyx-Editor-NET\Debug\Console.cs" />
     <Compile Include="src\Onyx-Editor-NET\Framebuffer\BitmapDirect.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="src\Onyx-Editor-NET\UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="src\Onyx-Editor-NET\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="src\Onyx-Editor-NET\UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -99,7 +99,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="src\Onyx-Editor-NET\App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Onyx-CLR\Onyx-CLR.vcxproj">
