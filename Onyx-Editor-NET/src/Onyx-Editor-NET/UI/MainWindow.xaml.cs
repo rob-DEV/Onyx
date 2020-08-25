@@ -98,7 +98,13 @@ namespace Onyx_Editor_NET
 
         void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            m_ViewportThread.Abort();
+            if(m_ViewportThread.ThreadState == System.Threading.ThreadState.Running && m_ViewportThread.ThreadState != System.Threading.ThreadState.AbortRequested)
+                m_ViewportThread.Abort();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

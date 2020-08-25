@@ -11,7 +11,6 @@
 
 //Scene
 #include <Onyx/Scene/Scene.h>
-#include <Onyx/Scene/Entity.h>
 
 //Graphics
 #include <Onyx/Graphics/Texture.h>

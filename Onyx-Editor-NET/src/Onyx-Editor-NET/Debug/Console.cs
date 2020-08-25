@@ -22,7 +22,6 @@ namespace Onyx_Editor_NET.Debug
         public static void Create()
         {
             AllocConsole();
-
         }
 
     }

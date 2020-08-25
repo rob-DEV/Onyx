@@ -5,10 +5,11 @@
 #include <Onyx/Core/TimeStep.h>
 #include <Onyx/Graphics/PerspectiveCameraController.h>
 
-#include <entt/entt.hpp>
+#include <Onyx/Entity/Entity.h>
+#include <Onyx/Entity/Registry.h>
 
 namespace Onyx {
-	
+
 	class Mesh;
 	class Entity;
 
@@ -19,11 +20,12 @@ namespace Onyx {
 
 		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
-		glm::vec3 Raycast(float mouse_x, float mouse_y);
-
+		
 	private:
+		Registry m_EntityRegistry;
+
+		//TESTING
 		PerspectiveCameraController m_CameraController;
-		entt::registry m_EntityRegistry;
 		Mesh* m_Mesh = nullptr;
 
 		friend class Entity;

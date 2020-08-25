@@ -6,9 +6,27 @@
         xmlns:local="clr-namespace:Onyx_Editor_NET"
         Closing="MainWindow_Closing"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="1050" Width="1920" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
+        >
+        
+    
     <Grid>
-        <Image x:Name="m_Viewport" HorizontalAlignment="Left" Height="344" Margin="61,30,0,0" VerticalAlignment="Top" Width="654"/>
+
+
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open"/>
+                    <MenuItem Header="_Close" Click="MenuItem_Click"/>
+                    <MenuItem Header="_Save"/>
+                </MenuItem>
+            </Menu>
+            <StackPanel Background="#FF474747"></StackPanel>
+        </DockPanel>
+
+
+        <Image x:Name="m_Viewport" HorizontalAlignment="Left" Height="540" Margin="480,62,0,0" VerticalAlignment="Top" Width="960"/>
 
     </Grid>
 </Window>

@@ -1,3 +1,7 @@
+
+#undef max
+#undef min
+
 // #include "core/algorithm.hpp"
 #ifndef ENTT_CORE_ALGORITHM_HPP
 #define ENTT_CORE_ALGORITHM_HPP

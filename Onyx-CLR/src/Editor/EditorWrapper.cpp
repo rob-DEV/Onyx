@@ -7,12 +7,16 @@ using namespace System;
 using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
 
+#include "../../../Onyx/vendor/glm/glm/glm.hpp"
 
 namespace OnyxCLR {
 
 	OnyxEditor::OnyxEditor()
 	{
 		m_Editor = new Onyx::Editor();
+		glm::vec3 a(10.0f);
+
+
 	}
 
 	OnyxEditor::~OnyxEditor()

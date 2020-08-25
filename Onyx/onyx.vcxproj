@@ -25,6 +25,8 @@
     <ClCompile Include="src\Onyx\core\Application.cpp" />
     <ClCompile Include="src\onyxpch.cpp" />
     <ClCompile Include="src\Onyx\Core\Layer.cpp" />
+    <ClCompile Include="src\Onyx\Entity\Entity.cpp" />
+    <ClCompile Include="src\Onyx\Entity\Registry.cpp" />
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Onyx\Graphics\PerspectiveCamera.cpp" />
@@ -40,7 +42,6 @@
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
     <ClCompile Include="src\Onyx\ImGUI\ImGuiBuild.cpp" />
     <ClCompile Include="src\Onyx\Physics\Physics.cpp" />
-    <ClCompile Include="src\Onyx\Scene\Entity.cpp" />
     <ClCompile Include="src\Onyx\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALDevice.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALSound.cpp" />
@@ -68,10 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Onyx\Editor\Editor.h" />
+    <ClInclude Include="src\Onyx\Entity\Entity.h" />
+    <ClInclude Include="src\Onyx\Entity\Registry.h" />
     <ClInclude Include="src\Onyx\OnyxEditor.h" />
     <ClInclude Include="src\Onyx\Physics\Ray.h" />
     <ClInclude Include="src\Onyx\Physics\Physics.h" />
-    <ClInclude Include="src\Onyx\Scene\Components.h" />
+    <ClInclude Include="src\Onyx\Entity\Components.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
     <ClInclude Include="src\Onyx\core\Application.h" />
@@ -101,7 +104,6 @@
     <ClInclude Include="src\Onyx\Onyx.h" />
     <ClInclude Include="src\Onyx\core\Window.h" />
     <ClInclude Include="src\onyxpch.h" />
-    <ClInclude Include="src\Onyx\Scene\Entity.h" />
     <ClInclude Include="src\Onyx\Scene\Scene.h" />
     <ClInclude Include="src\Platform\OpenAL\OpenALDevice.h" />
     <ClInclude Include="src\Platform\OpenAL\OpenALSound.h" />
