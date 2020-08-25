@@ -17,22 +17,16 @@ namespace Onyx {
 	}
 
 
-// 	TransformComponent& Entity::AddComponent(TransformComponent& component)
-// 	{
-// 		void* reg = m_Scene->m_EntityRegistry.m_Registry;
-// 		return ((entt::registry*)(reg))->emplace<TransformComponent>((entt::entity)m_EntityID, component);
-// 	}
-// 
-// 	MeshRendererComponent& Entity::AddComponent(MeshRendererComponent& component)
-// 	{
-// 		void* reg = m_Scene->m_EntityRegistry.m_Registry;
-// 		return ((entt::registry*)(reg))->emplace<MeshRendererComponent>((entt::entity)m_EntityID, component);
-// 	}
-
 	template <> TransformComponent& Entity::AddComponent<TransformComponent>(TransformComponent& component) {
 		void* reg = m_Scene->m_EntityRegistry.m_Registry;
 		return ((entt::registry*)(reg))->emplace<TransformComponent>((entt::entity)m_EntityID, component);
 	}
+
+	template <> MeshRendererComponent& Entity::AddComponent<MeshRendererComponent>(MeshRendererComponent& component) {
+		void* reg = m_Scene->m_EntityRegistry.m_Registry;
+		return ((entt::registry*)(reg))->emplace<MeshRendererComponent>((entt::entity)m_EntityID, component);
+	}
+
 
 
 	template <> TransformComponent& Entity::GetComponent<TransformComponent>() {

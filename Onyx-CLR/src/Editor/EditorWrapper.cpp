@@ -9,14 +9,14 @@ using namespace System::Runtime::InteropServices;
 
 #include "../../../Onyx/vendor/glm/glm/glm.hpp"
 
+#include <ctime>
 namespace OnyxCLR {
 
 	OnyxEditor::OnyxEditor()
 	{
 		m_Editor = new Onyx::Editor();
-		glm::vec3 a(10.0f);
-
-
+		//Add some randomness
+		m_Editor->RandomSeed(System::DateTime::Now.Millisecond + System::DateTime::Now.Minute);
 	}
 
 	OnyxEditor::~OnyxEditor()
@@ -55,6 +55,11 @@ namespace OnyxCLR {
 	void OnyxEditor::SaveScene(System::String^ filePath)
 	{
 
+	}
+
+	void OnyxEditor::CreateEntity(float x, float y, float z)
+	{
+		m_Editor->CreateEntity(glm::vec3(x,y,z));
 	}
 
 }

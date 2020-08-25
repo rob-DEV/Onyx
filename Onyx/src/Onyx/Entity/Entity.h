@@ -17,7 +17,11 @@ namespace Onyx {
 
 		//ADD COMPONENTS CAN'T USE TEMPLATING ATM DUE TO CLR
 		template<typename T, typename... Args>
-		T& AddComponent(Args&& ... args);
+		T& AddComponent(Args& ... args);
+
+		template <> TransformComponent& AddComponent<TransformComponent>(TransformComponent& component);
+		template <> MeshRendererComponent& AddComponent<MeshRendererComponent>(MeshRendererComponent& component);
+
 
 		template<typename T>
 		T& GetComponent();
@@ -28,7 +32,6 @@ namespace Onyx {
 		
 		uint32_t m_EntityID;
 		Scene* m_Scene = nullptr;
-
 	};
 
 }

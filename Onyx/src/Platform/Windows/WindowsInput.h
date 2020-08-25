@@ -3,6 +3,7 @@
 
 #include <Onyx/Core/Input.h>
 
+
 namespace Onyx {
 
 	class WindowsInput : public Input {

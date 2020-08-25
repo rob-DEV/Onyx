@@ -68,4 +68,9 @@ namespace Onyx {
 			filepath.erase(period_idx);
 	}
 
+	const std::string WindowsFileIO::GetFileExtensionImplementation(const std::string& filePath)
+	{
+		return filePath.substr(filePath.find_last_of(".") + 1);
+	}
+
 }

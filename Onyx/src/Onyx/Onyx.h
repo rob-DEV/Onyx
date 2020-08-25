@@ -16,6 +16,9 @@
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/Mesh.h>
 
+//Model
+#include <Onyx/Model/ModelLoader.h>
+
 //Renderer
 #include <Onyx/Graphics/Renderer2D.h>
 #include <Onyx/Graphics/Renderer3D.h>

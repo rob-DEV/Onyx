@@ -45,14 +45,6 @@ namespace Onyx {
 		printf("Creating Onyx Editor Instance and Graphics Context!\n");
 		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 960, 540, true));
 
-		m_PerspEditorCamera = new PerspectiveCamera(45.0f, 1280.0f / 720.0f, 0.0001f, 10000000.0f);
-		m_PerspEditorCamera->SetPosition(glm::vec3(0.0f, 0.0f, 50.0f));
-
-		m_OrthoEditorCamera = new OrthographicCamera(-1.6f, 1.6f, -1.0f, 1.0f);
-
-		m_Mesh = Mesh::Create(PrimitiveMeshType::Cube);
-		m_Mesh->SetTintColor(glm::vec4(1.0, 0.0, 0.0, 1.0));
-		m_Texture = Texture2D::Create("res/textures/mario.png");
 		//Renderer API
 		RenderCommand::Init();
 		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
@@ -66,11 +58,8 @@ namespace Onyx {
 		Renderer2D::Init();
 		Renderer3D::Init();
 
-
-		//LayerStack 
-		//TODO: abstract to LayerStack
-		//m_LayerStack = std::vector<Layer*>();
-
+		//Initalize editor scene
+		m_EditorScene = new Scene();
 
 	}
 
@@ -82,37 +71,13 @@ namespace Onyx {
 	void Editor::OnUpdate()
 	{
 
-		static float rotation = 0.0f;
-		rotation += 10.0f;
-
 		RenderCommand::SetClearColour(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 		RenderCommand::Clear();
 
-		Renderer2D::BeginScene(*m_OrthoEditorCamera);
-
-		Renderer2D::DrawQuad(glm::vec3(-0.6f, 0.0f, 0.0f), glm::vec2(0.1f, 0.1f), glm::vec4(0.1f, 0.66f, 0.8f, 1.0f));
-		Renderer2D::DrawRotatedQuad(glm::vec3(-0.6f, 0.0f, 0.0f), rotation, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.1f, 0.1f), glm::vec4(0.1f, 0.66f, 0.8f, 1.0f));
-
-		Renderer2D::DrawQuad(glm::vec3(0.8f, 0.0f, 0.0f), glm::vec2(0.45f, 0.45f), (Texture2D*)m_Texture);
-
-		Renderer2D::EndScene();
-		Renderer2D::Flush();
-
-		Renderer3D::BeginScene(*m_PerspEditorCamera);
-		Renderer3D::DrawMesh(m_Mesh, glm::vec3(-25.0f,15.0f, 0.0f), glm::vec3(3.0f));
-
-		for (size_t i = 0; i < 2; i++)
-		{
-			Renderer3D::DrawRotatedMesh(Mesh::Create(PrimitiveMeshType::Cone), m_Rotation, glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(5 * i, 5 * i, 0.0f), glm::vec3(3.0f));
-		}
-
-		Renderer3D::DrawRotatedMesh(m_Mesh, m_Rotation, glm::vec3(0.0f,1.0f,0.0f), glm::vec3(0.0f), glm::vec3(3.0f));
-		Renderer3D::EndScene();
-		Renderer3D::Flush();
+		m_EditorScene->OnUpdate(0);
+		
 
 		m_Window->OnUpdate();
-
-		m_Rotation += 1.0f;
 
 	}
 
@@ -124,6 +89,30 @@ namespace Onyx {
 	void Editor::OnDetach()
 	{
 
+	}
+
+	void Editor::RandomSeed(uint32_t seed)
+	{
+		srand(seed);
+
+		int sum = 0;
+		for (int i = seed / 2; i < seed; i++) {
+			sum += rand();
+		}
+
+		srand(sum);
+
+	}
+
+	void Editor::CreateEntity(glm::vec3 position)
+	{
+		Entity* a = m_EditorScene->CreateEntity();
+		TransformComponent s = TransformComponent(glm::vec3(position));
+		a->AddComponent<TransformComponent>(s);
+
+		//For testing
+		//MeshRendererComponent m = MeshRendererComponent(Mesh::CreatePrimitive(PrimitiveMeshType::Cube));
+		//a->AddComponent<MeshRendererComponent>(m);
 	}
 
 }

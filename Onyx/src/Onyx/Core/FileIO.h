@@ -13,10 +13,15 @@ namespace Onyx {
 		inline static std::string ReadFileString(const std::string& filepath) { return s_Instance->ReadFileStringImplementation(filepath); };
 		inline static std::vector<char> ReadFileByte(const std::string& filepath) { return s_Instance->ReadFileByteImplementation(filepath); };
 		inline static void GetFileNameWithoutExtension(std::string& filePath) { return s_Instance->GetFileNameWithoutExtensionImplementation(filePath); };
+		inline static const std::string GetFileExtension(const  std::string& filePath) { return s_Instance->GetFileExtensionImplementation(filePath); };
+
+
+
 	protected:
 		virtual const std::string ReadFileStringImplementation(const std::string& filepath) = 0;
 		virtual const std::vector<char> ReadFileByteImplementation(const std::string& filepath) = 0;
 		virtual void GetFileNameWithoutExtensionImplementation(std::string& filepath) = 0;
+		virtual const std::string GetFileExtensionImplementation(const std::string& filepath) = 0;
 	private:
 		static FileIO* s_Instance;
 

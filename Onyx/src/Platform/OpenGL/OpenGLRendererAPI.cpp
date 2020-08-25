@@ -48,11 +48,11 @@ namespace Onyx {
 	//TODO: Abstract to framebuffer class
 	RenderedPixelData OpenGLRendererAPI::GetRenderedFrameBuffer()
 	{
-		uint32_t width = 960;
-		uint32_t height = 540;
+		constexpr uint32_t width = 960;
+		constexpr uint32_t height = 540;
+		constexpr uint32_t frameBufferSize = 3 * width * height;
 
 		RenderedPixelData renderedFrame(NULL, 0);
-		const uint32_t frameBufferSize = 3 * width * height;
 		char* pixelData = new char[frameBufferSize];
 		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixelData);
 		renderedFrame.Data = pixelData;

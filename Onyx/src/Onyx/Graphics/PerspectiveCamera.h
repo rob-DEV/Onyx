@@ -6,7 +6,7 @@
 
 namespace Onyx {
 
-	class PerspectiveCamera
+	class ONYX_API PerspectiveCamera
 	{
 	public:
 		PerspectiveCamera(float fov, float aspect, float zNear, float zFar);

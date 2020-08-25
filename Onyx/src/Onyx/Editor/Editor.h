@@ -4,16 +4,12 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Core/Window.h>
 
-
+#include <glm/glm.hpp>
 
 namespace Onyx {
 
 	class Window;
-	class PerspectiveCamera;
-	class OrthographicCamera;
-	class PerspectiveCameraController;
-	class Mesh;
-	class Texture;
+	class Scene;
 
 	class ONYX_API Editor
 	{
@@ -25,16 +21,15 @@ namespace Onyx {
 		RenderedPixelData GetRenderedFrame();
 		void OnDetach();
 
+		void RandomSeed(uint32_t seed);
+
+		void CreateEntity(glm::vec3 position);
+
+
 	private:
 		Window* m_Window;
-
-		OrthographicCamera* m_OrthoEditorCamera;
-		PerspectiveCamera* m_PerspEditorCamera;
-
-		Mesh* m_Mesh;
-		Texture* m_Texture;
+		Scene* m_EditorScene;
 		static Editor* s_EditorInstance;
-		float m_Rotation = 0.0f;
 
 	};
 

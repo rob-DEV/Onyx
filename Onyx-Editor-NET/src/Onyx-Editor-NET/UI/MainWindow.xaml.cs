@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Diagnostics;
 using Onyx_Editor_NET.Framebuffer;
+using System.Windows.Media.Media3D;
 
 namespace Onyx_Editor_NET
 {
@@ -25,6 +26,7 @@ namespace Onyx_Editor_NET
     public partial class MainWindow : Window
     {
         private Thread m_ViewportThread;
+        private volatile bool m_Aborted = false;
 
         private void EditorThread()
         {
@@ -37,7 +39,7 @@ namespace Onyx_Editor_NET
 
             int frames = 0;
 
-            while (true)
+            while (!m_Aborted)
             {
                 m_OnyxEditorCLR.Update();
 
@@ -71,14 +73,15 @@ namespace Onyx_Editor_NET
 
                 if (sw.ElapsedMilliseconds >= 1000)
                 {
-                    Console.WriteLine("Viewport FrameTime {0}", (float)sw.ElapsedMilliseconds / (float)frames);
+                    Console.WriteLine("Viewport FrameTime {0}",(float)frames);
                     frames = 0;
                     sw.Restart();
                 }
-
-
-
             }
+
+            //Clean Onyx Engine
+            m_OnyxEditorCLR.Dispose();
+
         }
 
         public MainWindow()
@@ -98,13 +101,24 @@ namespace Onyx_Editor_NET
 
         void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if(m_ViewportThread.ThreadState == System.Threading.ThreadState.Running && m_ViewportThread.ThreadState != System.Threading.ThreadState.AbortRequested)
-                m_ViewportThread.Abort();
+            m_Aborted = true;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void m_CreateEntityButton_Click(object sender, RoutedEventArgs e)
+        {
+            float x, y, z = 0;
+
+            x = (float)Convert.ToDecimal(m_PositionTextboxX.Text);
+            y = (float)Convert.ToDecimal(m_PositionTextboxY.Text);
+            z = (float)Convert.ToDecimal(m_PositionTextboxZ.Text);
+
+            m_OnyxEditorCLR.CreateEntity(x, y, z);
+
         }
     }
 }

@@ -1,8 +1,12 @@
 #include "Sandbox3D.h"
 
 #include "../.../../glfw3/GLFW/glfw3.h"
+#include <Onyx/Entity/Entity.h>
+#include <Onyx/Model/ModelLoader.h>
+#include <Onyx/Graphics/PerspectiveCameraController.h>
 
 using namespace Onyx;
+Model* modelTest = nullptr;
 
 Sandbox3D::Sandbox3D()
 	: Layer("Sandbox2DSecond")
@@ -19,16 +23,21 @@ void Sandbox3D::OnAttach()
 	Renderer3D::Init();
 
 	m_Texture1 = Texture2D::Create("res/textures/mario2.png");
-	m_Cube = Mesh::Create(PrimitiveMeshType::Cube);
-	m_Cone = Mesh::Create(PrimitiveMeshType::Cone);
-	m_FbxMeshTest = Mesh::Create("res/models/CubeTri.fbx");
+	
+	modelTest = ModelLoader::LoadFromFile("res/models/Cube.obj");
 
 
 	
-	m_Cube->SetTintColor(glm::vec4(1.0, 0.2, 0.5, 1.0));
-	m_Cone->SetTintColor(glm::vec4(0.2, 1.0, 0.5, 1.0));
+	
 
 	m_Scene = new Scene();
+
+	Entity* ent = m_Scene->CreateEntity();
+	TransformComponent t = TransformComponent(glm::vec3(0.0f));
+	ent->AddComponent<TransformComponent>(t);
+	MeshRendererComponent m = MeshRendererComponent(m_FbxMeshTest);
+	ent->AddComponent<MeshRendererComponent>(m);
+
 }
 
 void Sandbox3D::OnDetach()
@@ -39,6 +48,22 @@ void Sandbox3D::OnDetach()
 void Sandbox3D::OnUpdate(Timestep timestep)
 {
 	//SCENE & RENDER
-	m_Scene->OnUpdate(timestep);
+	static PerspectiveCamera cam = PerspectiveCamera(45.0f, 1.777777f, 0.00001f, 100000.0f);
+	static float pos = 0;
+	pos += 10.0f;
+	cam.SetPosition(glm::vec3(0.0f, 0.0f, 100.0f));
+	Renderer3D::BeginScene(cam);
+
+
+	Renderer3D::DrawMesh(modelTest->m_Meshes[0], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(3));
+	for (size_t i = 0; i < modelTest->m_Meshes.size(); i++)
+	{
+	}
+	
+
+	Renderer3D::EndScene();
+	Renderer3D::Flush();
+
+	//m_Scene->OnUpdate(timestep);
 
 }

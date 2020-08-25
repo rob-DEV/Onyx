@@ -16,6 +16,7 @@ namespace Onyx {
 	private:
 		void* m_Registry;
 
+		friend class Scene;
 		friend class Entity;
 	};
 

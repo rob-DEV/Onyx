@@ -13,6 +13,7 @@ namespace Onyx {
 		const std::string ReadFileStringImplementation(const std::string& filepath);
 		const std::vector<char> ReadFileByteImplementation(const std::string& filepath);
 		void GetFileNameWithoutExtensionImplementation(std::string& filepath);
+		const std::string GetFileExtensionImplementation(const std::string& filePath);
 	};
 
 }

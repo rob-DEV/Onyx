@@ -120,20 +120,20 @@ namespace Onyx {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), size);
 
-		const std::vector<glm::vec3>& vertices = mesh->GetVertices();
-		const std::vector<uint32_t>& indices = mesh->GetIndices();
+		const std::vector<glm::vec3>& vertices = mesh->vertices;
+		const std::vector<uint32_t>& indices = mesh->normalIndices;
 
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = mesh->GetTintColor();
+			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
 			m_MeshVertexBufferWritePtr++;
 		}
 
 		//submit indices
 		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
 		for (int i = 0; i < indices.size(); i++) {
-			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
+			*m_MeshIndexBufferWritePtr = (indices[i]-1) + m_VertexCount;
 			m_MeshIndexBufferWritePtr++;
 		}
 
@@ -144,29 +144,7 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::DrawRotatedMeshImplementation(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size)
 	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(angle), ax)
-			* glm::scale(glm::mat4(1.0f), size);
-
-		const std::vector<glm::vec3>& vertices = mesh->GetVertices();
-		const std::vector<uint32_t>& indices = mesh->GetIndices();
-
-		//submit vertices
-		for (int i = 0; i < vertices.size(); i++) {
-			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = mesh->GetTintColor();
-			m_MeshVertexBufferWritePtr++;
-		}
-
-		//submit indices
-		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
-		for (int i = 0; i < indices.size(); i++) {
-			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
-			m_MeshIndexBufferWritePtr++;
-		}
-
-		m_VertexCount += vertices.size();
-		m_IndexCount += indices.size();
+		
 	}
 
 }
