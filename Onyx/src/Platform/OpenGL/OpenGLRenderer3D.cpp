@@ -80,7 +80,7 @@ namespace Onyx {
 
 		((OpenGLShader*)m_MeshBasicShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
-		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {2.0f, 2.0f, 0.0f});
+		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {0.0f, 4.0f, 0.0f});
 
 
 	}
@@ -99,11 +99,12 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::FlushImplementation()
 	{
-		if (m_IndexCount == 0)
-			return;
-
-		RenderCommand::DrawIndexed(m_MeshVertexArray, m_IndexCount);
-
+		RenderCommand::DrawArrays(m_MeshVertexArray, m_VertexCount);
+		
+		return;
+		if(m_IndexCount > 0)
+			RenderCommand::DrawIndexed(m_MeshVertexArray, m_IndexCount);
+		
 	}
 
 	void OpenGLRenderer3D::DrawSceneImplementation(const Scene* scene)
@@ -120,31 +121,60 @@ namespace Onyx {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), size);
 
-		const std::vector<glm::vec3>& vertices = mesh->vertices;
-		const std::vector<uint32_t>& indices = mesh->normalIndices;
+		const std::vector<glm::vec3>& vertices = *mesh->m_Vertices;
+		const std::vector<uint32_t>& indices = *mesh->m_Indices;
 
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
 			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
 			m_MeshVertexBufferWritePtr++;
+
+			//nice orange
+			//glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
 		}
+		m_VertexCount += vertices.size();
 
 		//submit indices
 		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
-		for (int i = 0; i < indices.size(); i++) {
-			*m_MeshIndexBufferWritePtr = (indices[i]-1) + m_VertexCount;
-			m_MeshIndexBufferWritePtr++;
-		}
+ 		for (int i = 0; i < indices.size(); i++) {
+ 			*m_MeshIndexBufferWritePtr = indices[i]  + m_VertexCount;
+ 			m_MeshIndexBufferWritePtr++;
+ 		}
 
-
-		m_VertexCount += vertices.size();
 		m_IndexCount += indices.size();
 	}
 
 	void OpenGLRenderer3D::DrawRotatedMeshImplementation(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size)
 	{
-		
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			//* glm::rotate(glm::mat4(1.0f), angle, ax)
+			* glm::scale(glm::mat4(1.0f), size);
+
+		const std::vector<glm::vec3>& vertices = *mesh->m_Vertices;
+		const std::vector<uint32_t>& indices = *mesh->m_Indices;
+
+		//submit vertices
+		for (int i = 0; i < vertices.size(); i++) {
+			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
+			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
+			m_MeshVertexBufferWritePtr++;
+			//nice orange
+			//glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
+		}
+ 
+ 		//submit indices
+ 		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
+ 		for (int i = 0; i < indices.size(); i++) {
+ 			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
+ 			m_MeshIndexBufferWritePtr++;
+ 		}
+
+
+		m_VertexCount += vertices.size();
+		m_IndexCount += indices.size();
+
+
 	}
 
 }

@@ -24,11 +24,7 @@ void Sandbox3D::OnAttach()
 
 	m_Texture1 = Texture2D::Create("res/textures/mario2.png");
 	
-	modelTest = ModelLoader::LoadFromFile("res/models/Cube.obj");
-
-
-	
-	
+	modelTest = ModelLoader::LoadFromFile("res/models/Scene.obj");
 
 	m_Scene = new Scene();
 
@@ -50,14 +46,15 @@ void Sandbox3D::OnUpdate(Timestep timestep)
 	//SCENE & RENDER
 	static PerspectiveCamera cam = PerspectiveCamera(45.0f, 1.777777f, 0.00001f, 100000.0f);
 	static float pos = 0;
-	pos += 10.0f;
-	cam.SetPosition(glm::vec3(0.0f, 0.0f, 100.0f));
+	pos += 0.1f;
+	cam.SetPosition(glm::vec3(0.0f, 10.0f, pos));
+	//cam.SetRotation(pos);
 	Renderer3D::BeginScene(cam);
 
-
-	Renderer3D::DrawMesh(modelTest->m_Meshes[0], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(3));
+	//std::cout << "Num verts " << modelTest->m_Meshes[0]->m_Vertices->size();
 	for (size_t i = 0; i < modelTest->m_Meshes.size(); i++)
 	{
+		Renderer3D::DrawMesh(modelTest->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(3.0f));
 	}
 	
 

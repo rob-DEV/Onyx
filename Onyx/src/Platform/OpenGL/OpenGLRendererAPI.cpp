@@ -12,9 +12,10 @@ namespace Onyx {
 		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		glEnable(GL_CULL_FACE);
+		
 		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
+		glDepthFunc(GL_ALWAYS);
 	}
 
 	void OpenGLRendererAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
@@ -30,6 +31,11 @@ namespace Onyx {
 	void OpenGLRendererAPI::Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	void OpenGLRendererAPI::DrawArrays(VertexArray* vertexArray, uint32_t count)
+	{
+		glDrawArrays(GL_TRIANGLES, 0, count);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray)

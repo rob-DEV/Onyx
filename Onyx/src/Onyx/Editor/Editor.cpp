@@ -33,6 +33,8 @@
 #include <Platform/OpenGL/OpenGLRenderer2D.h>
 #include <Platform/OpenGL/OpenGLRenderer3D.h>
 
+
+
 namespace Onyx {
 
 	Editor* Editor::s_EditorInstance = nullptr;
@@ -111,8 +113,8 @@ namespace Onyx {
 		a->AddComponent<TransformComponent>(s);
 
 		//For testing
-		//MeshRendererComponent m = MeshRendererComponent(Mesh::CreatePrimitive(PrimitiveMeshType::Cube));
-		//a->AddComponent<MeshRendererComponent>(m);
+		MeshRendererComponent m = MeshRendererComponent(PrimitiveMesh::Create(PrimitiveMeshType::Cone));
+		a->AddComponent<MeshRendererComponent>(m);
 	}
 
 }

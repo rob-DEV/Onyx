@@ -3,9 +3,9 @@
 
 #include <Onyx/Core/FileIO.h>
 
-#include <fstream>
-#include <sstream>
-#include <map>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 namespace Onyx {
 
@@ -19,7 +19,7 @@ namespace Onyx {
 		if (ext == "obj")
 			return LoadObjFromFile(path);
 		if (ext == "fbx")
-			return LoadFbxFromFile(path);
+			return LoadObjFromFile(path);
 
 
 		assert(false, "Unsupported model format!");
@@ -28,110 +28,113 @@ namespace Onyx {
 
 	Model* ModelLoader::LoadObjFromFile(const std::string& path)
 	{
-		//Load obj - objects can models have multiple meshes
-		Model* model = new Model();
-		
-		std::vector<InternalMesh>* internalMeshes = new std::vector<InternalMesh>();
-	
-		std::ifstream fileStream(path);
-		std::string line = "";
-		std::stringstream ss;
+		Assimp::Importer importer;
 
-		InternalMesh* currentMesh = nullptr;
+		const aiScene* scene = importer.ReadFile(path.c_str(),
+			aiProcess_Triangulate |
+			aiProcess_GenSmoothNormals |
+			aiProcess_FlipUVs);
 
-		if (fileStream.is_open()) {
-
-			while (std::getline(fileStream, line)) {
-
-				ss.clear();
-				ss.str(line);
-				//get "o" prefix for current mesh
-				std::string prefix;
-				ss >> prefix;
-
-				//Mesh found add to model meshes
-				if (prefix == "o") {
-					internalMeshes->push_back(InternalMesh());
-					currentMesh = &internalMeshes->back();
-				}
-
-				if (prefix == "v") {
-					glm::vec3 vertex;
-					ss >> vertex.x >> vertex.y >> vertex.z;
-					currentMesh->vertices.push_back(vertex);
-				}
-
-				if (prefix == "vt") {
-					glm::vec2 textureCoord;
-					ss >> textureCoord.x >> textureCoord.y;
-					currentMesh->texCoord.push_back(textureCoord);
-				}
-
-				if (prefix == "vn") {
-					glm::vec3 normal;
-					ss >> normal.x >> normal.y >> normal.z;
-					currentMesh->normals.push_back(normal);
-				}
-
-
-				if (prefix == "f") {
-					//f 5/1/1 3/2/1 1/3/1   - obj data
-					//  v/t/n v/t/n v/t/n   - type of data
-					//  0/1/2               - counter
-					uint32_t temp = -1;
-					uint32_t counter = 0;
-					while (ss >> temp) {
-
-						if (counter == 0)
-							currentMesh->vertexIndices.push_back(temp);
-						else if (counter == 1)
-							currentMesh->texCoordIndices.push_back(temp);
-						else if (counter == 2)
-							currentMesh->normalIndices.push_back(temp);
-
-						if (ss.peek() == '/') {
-							++counter;
-							ss.ignore(1, '/');
-						}
-						else if (ss.peek() == ' ') {
-							++counter;
-							ss.ignore(1, ' ');
-						}
-
-						if (counter > 2)
-							counter = 0;
-					}
-
-
-				}
-
-
-
-
-			}
-
-			///POST IMPORT PROCESSING
-			//For each internal mesh convert to an optimized renderer friendly version
-
-		
-			
-
-
-
-		}
-		else {
-			printf("Failed to open OBJ file!\n");
+		if (!scene)
+		{
+			std::cout << "Mesh load failed!: " << path << std::endl;
+			assert(0 == 0);
 			return nullptr;
 		}
 
-		
+		Model* result = new Model();
 
-		return model;
+		for (int x = 0; x < scene->mNumMeshes; ++x) {
+
+			const aiMesh* model = scene->mMeshes[x];
+
+
+			std::vector<glm::vec3> vertices;
+			std::vector<uint32_t> indices;
+
+			const aiVector3D aiZeroVector(0.0f, 0.0f, 0.0f);
+			for (unsigned int i = 0; i < model->mNumVertices; i++)
+			{
+				const aiVector3D* pPos = &(model->mVertices[i]);
+				const aiVector3D* pNormal = &(model->mNormals[i]);
+				const aiVector3D* pTexCoord = model->HasTextureCoords(0) ? &(model->mTextureCoords[0][i]) : &aiZeroVector;
+
+				glm::vec3 vert(pPos->x, pPos->y, pPos->z);
+
+				vertices.push_back(vert);
+			}
+
+			for (unsigned int i = 0; i < model->mNumFaces; i++)
+			{
+				const aiFace& face = model->mFaces[i];
+				assert(face.mNumIndices == 3);
+				indices.push_back(face.mIndices[0]);
+				indices.push_back(face.mIndices[1]);
+				indices.push_back(face.mIndices[2]);
+			}
+
+			result->m_Meshes.push_back(new Mesh());
+			result->m_Meshes.back()->m_Vertices = new std::vector<glm::vec3>(vertices);
+			result->m_Meshes.back()->m_Indices = new std::vector<uint32_t>(indices);
+
+		}
+
+
+
+		return result;
+
 	}
 
 	Model* ModelLoader::LoadFbxFromFile(const std::string& path)
 	{
-		return nullptr;
+		Assimp::Importer importer;
+
+		const aiScene* scene = importer.ReadFile(path.c_str(),
+			aiProcess_Triangulate |
+			aiProcess_GenSmoothNormals |
+			aiProcess_FlipUVs);
+
+		if (!scene)
+		{
+			std::cout << "Mesh load failed!: " << path << std::endl;
+			assert(0 == 0);
+		}
+
+
+		const aiMesh* model = scene->mMeshes[0];
+
+
+		std::vector<glm::vec3> vertices;
+		std::vector<uint32_t> indices;
+
+		const aiVector3D aiZeroVector(0.0f, 0.0f, 0.0f);
+		for (unsigned int i = 0; i < model->mNumVertices; i++)
+		{
+			const aiVector3D* pPos = &(model->mVertices[i]);
+			const aiVector3D* pNormal = &(model->mNormals[i]);
+			const aiVector3D* pTexCoord = model->HasTextureCoords(0) ? &(model->mTextureCoords[0][i]) : &aiZeroVector;
+
+			glm::vec3 vert(pPos->x, pPos->y, pPos->z);
+
+			vertices.push_back(vert);
+		}
+
+		for (unsigned int i = 0; i < model->mNumFaces; i++)
+		{
+			const aiFace& face = model->mFaces[i];
+			assert(face.mNumIndices == 3);
+			indices.push_back(face.mIndices[0]);
+			indices.push_back(face.mIndices[1]);
+			indices.push_back(face.mIndices[2]);
+		}
+
+		Model* result = new Model();
+		result->m_Meshes.push_back(new Mesh());
+		result->m_Meshes[0]->m_Vertices = new std::vector<glm::vec3>(vertices);
+		result->m_Meshes[0]->m_Indices = new std::vector<uint32_t>(indices);
+
+
+		return result;
 	}
 
 }

@@ -75,7 +75,7 @@ namespace Onyx {
 			Timestep timestep(time - m_LastTime);
 			m_LastTime = time;
 
-			//printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
+			printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
 	
 
 			RenderCommand::Clear();

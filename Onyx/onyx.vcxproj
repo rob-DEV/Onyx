@@ -70,6 +70,7 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\Robert\Downloads\assimp-5.0.1\build\include\assimp\config.h" />
     <ClInclude Include="src\Onyx\Model\Model.h" />
     <ClInclude Include="src\Onyx\Editor\Editor.h" />
     <ClInclude Include="src\Onyx\Entity\Entity.h" />
@@ -130,7 +131,79 @@
     <ClInclude Include="src\Platform\Windows\WindowsFileIO.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="vendor\autodesk\fbx\fbx\fbxsdk.h" />
+    <ClInclude Include="vendor\assimp\assimp\aabb.h" />
+    <ClInclude Include="vendor\assimp\assimp\ai_assert.h" />
+    <ClInclude Include="vendor\assimp\assimp\anim.h" />
+    <ClInclude Include="vendor\assimp\assimp\BaseImporter.h" />
+    <ClInclude Include="vendor\assimp\assimp\Bitmap.h" />
+    <ClInclude Include="vendor\assimp\assimp\BlobIOSystem.h" />
+    <ClInclude Include="vendor\assimp\assimp\ByteSwapper.h" />
+    <ClInclude Include="vendor\assimp\assimp\camera.h" />
+    <ClInclude Include="vendor\assimp\assimp\cexport.h" />
+    <ClInclude Include="vendor\assimp\assimp\cfileio.h" />
+    <ClInclude Include="vendor\assimp\assimp\cimport.h" />
+    <ClInclude Include="vendor\assimp\assimp\color4.h" />
+    <ClInclude Include="vendor\assimp\assimp\config.h" />
+    <ClInclude Include="vendor\assimp\assimp\CreateAnimMesh.h" />
+    <ClInclude Include="vendor\assimp\assimp\DefaultIOStream.h" />
+    <ClInclude Include="vendor\assimp\assimp\DefaultIOSystem.h" />
+    <ClInclude Include="vendor\assimp\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\Defines.h" />
+    <ClInclude Include="vendor\assimp\assimp\defs.h" />
+    <ClInclude Include="vendor\assimp\assimp\Exceptional.h" />
+    <ClInclude Include="vendor\assimp\assimp\Exporter.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\fast_atof.h" />
+    <ClInclude Include="vendor\assimp\assimp\GenericProperty.h" />
+    <ClInclude Include="vendor\assimp\assimp\Hash.h" />
+    <ClInclude Include="vendor\assimp\assimp\Importer.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\importerdesc.h" />
+    <ClInclude Include="vendor\assimp\assimp\IOStream.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\IOStreamBuffer.h" />
+    <ClInclude Include="vendor\assimp\assimp\IOSystem.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\irrXMLWrapper.h" />
+    <ClInclude Include="vendor\assimp\assimp\light.h" />
+    <ClInclude Include="vendor\assimp\assimp\LineSplitter.h" />
+    <ClInclude Include="vendor\assimp\assimp\LogAux.h" />
+    <ClInclude Include="vendor\assimp\assimp\Logger.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\LogStream.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\Macros.h" />
+    <ClInclude Include="vendor\assimp\assimp\material.h" />
+    <ClInclude Include="vendor\assimp\assimp\MathFunctions.h" />
+    <ClInclude Include="vendor\assimp\assimp\matrix3x3.h" />
+    <ClInclude Include="vendor\assimp\assimp\matrix4x4.h" />
+    <ClInclude Include="vendor\assimp\assimp\MemoryIOWrapper.h" />
+    <ClInclude Include="vendor\assimp\assimp\mesh.h" />
+    <ClInclude Include="vendor\assimp\assimp\metadata.h" />
+    <ClInclude Include="vendor\assimp\assimp\NullLogger.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\ParsingUtils.h" />
+    <ClInclude Include="vendor\assimp\assimp\pbrmaterial.h" />
+    <ClInclude Include="vendor\assimp\assimp\postprocess.h" />
+    <ClInclude Include="vendor\assimp\assimp\Profiler.h" />
+    <ClInclude Include="vendor\assimp\assimp\ProgressHandler.hpp" />
+    <ClInclude Include="vendor\assimp\assimp\qnan.h" />
+    <ClInclude Include="vendor\assimp\assimp\quaternion.h" />
+    <ClInclude Include="vendor\assimp\assimp\RemoveComments.h" />
+    <ClInclude Include="vendor\assimp\assimp\scene.h" />
+    <ClInclude Include="vendor\assimp\assimp\SceneCombiner.h" />
+    <ClInclude Include="vendor\assimp\assimp\SGSpatialSort.h" />
+    <ClInclude Include="vendor\assimp\assimp\SkeletonMeshBuilder.h" />
+    <ClInclude Include="vendor\assimp\assimp\SmoothingGroups.h" />
+    <ClInclude Include="vendor\assimp\assimp\SpatialSort.h" />
+    <ClInclude Include="vendor\assimp\assimp\StandardShapes.h" />
+    <ClInclude Include="vendor\assimp\assimp\StreamReader.h" />
+    <ClInclude Include="vendor\assimp\assimp\StreamWriter.h" />
+    <ClInclude Include="vendor\assimp\assimp\StringComparison.h" />
+    <ClInclude Include="vendor\assimp\assimp\StringUtils.h" />
+    <ClInclude Include="vendor\assimp\assimp\Subdivision.h" />
+    <ClInclude Include="vendor\assimp\assimp\texture.h" />
+    <ClInclude Include="vendor\assimp\assimp\TinyFormatter.h" />
+    <ClInclude Include="vendor\assimp\assimp\types.h" />
+    <ClInclude Include="vendor\assimp\assimp\vector2.h" />
+    <ClInclude Include="vendor\assimp\assimp\vector3.h" />
+    <ClInclude Include="vendor\assimp\assimp\version.h" />
+    <ClInclude Include="vendor\assimp\assimp\Vertex.h" />
+    <ClInclude Include="vendor\assimp\assimp\XMLTools.h" />
+    <ClInclude Include="vendor\assimp\assimp\ZipArchiveIOSystem.h" />
     <ClInclude Include="vendor\entt\include\entt\entt.hpp" />
     <ClInclude Include="vendor\glad\include\glad\glad.h" />
     <ClInclude Include="vendor\glad\include\KHR\khrplatform.h" />
@@ -146,9 +219,22 @@
     <ClInclude Include="src\Platform\Vulkan\VulkanSwapchain.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="vendor\assimp\assimp\.editorconfig" />
+    <None Include="vendor\assimp\assimp\color4.inl" />
+    <None Include="vendor\assimp\assimp\config.h.in" />
+    <None Include="vendor\assimp\assimp\material.inl" />
+    <None Include="vendor\assimp\assimp\matrix3x3.inl" />
+    <None Include="vendor\assimp\assimp\matrix4x4.inl" />
+    <None Include="vendor\assimp\assimp\quaternion.inl" />
+    <None Include="vendor\assimp\assimp\SmoothingGroups.inl" />
+    <None Include="vendor\assimp\assimp\vector2.inl" />
+    <None Include="vendor\assimp\assimp\vector3.inl" />
+    <None Include="vendor\assimp\lib\assimp-vc142-mt.dll" />
+    <None Include="vendor\assimp\lib\assimp-vc142-mt.exp" />
     <None Include="vendor\glfw3\lib\glfw3.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="vendor\assimp\lib\assimp-vc142-mt.lib" />
     <Library Include="vendor\glfw3\lib\glfw3.lib" />
     <Library Include="vendor\glfw3\lib\glfw3dll.lib" />
     <Library Include="vendor\openal\lib\OpenAL32.lib" />
@@ -231,7 +317,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_DEBUG_;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\assimp\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -241,8 +327,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;libfbxsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;$(ProjectDir)vendor/autodesk/fbx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;$(ProjectDir)vendor/autodesk/fbx/lib/;$(ProjectDir)vendor/assimp/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>
@@ -272,7 +358,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\autodesk\fbx\;$(ProjectDir)vendor\autodesk\fbx\fbx\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\assimp\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -284,8 +370,8 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;libfbxsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;$(ProjectDir)vendor/autodesk/fbx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;vulkan-1.lib;OpenAL32.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw3/lib/;$(ProjectDir)vendor/vulkan/lib/;$(ProjectDir)vendor/openal/lib/;$(ProjectDir)vendor/autodesk/fbx/lib/;$(ProjectDir)vendor/assimp/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Message>copy output binaries and linker scripts to the sandbox directory</Message>

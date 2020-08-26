@@ -77,6 +77,8 @@ namespace Onyx_Editor_NET
                     frames = 0;
                     sw.Restart();
                 }
+
+                Thread.Sleep(1000 / 60);
             }
 
             //Clean Onyx Engine
