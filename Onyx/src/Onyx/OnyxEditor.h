@@ -4,6 +4,7 @@
 //EXPOSES ONYX EDITOR TO CLR and .NET EDITOR
 
 #include <Onyx/Editor/Editor.h>
+#include <Onyx/Editor/EditorInput.h>
 
 #endif // !_ONYX_H_
 

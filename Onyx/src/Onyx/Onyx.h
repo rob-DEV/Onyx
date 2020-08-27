@@ -7,7 +7,6 @@
 #include <Onyx/Core/Layer.h>
 #include <Onyx/Core/Window.h>
 #include <Onyx/Core/Input.h >
-#include <Onyx/Event/Event.h>
 
 //Scene
 #include <Onyx/Scene/Scene.h>

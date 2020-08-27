@@ -33,7 +33,7 @@ namespace Onyx {
 		virtual void SetMousePositionImplementation(glm::vec2 position) = 0;
 		virtual void SetMousePositionImplementation(Input::MousePosition position) = 0;
 
-	private:
+	public:
 		static Input* s_Instance;
 
 	};

@@ -3,7 +3,6 @@
 
 #include "onyxpch.h"
 #include <Onyx/Core/Core.h>
-#include <Onyx/Event/Event.h>
 
 namespace Onyx {
 
@@ -27,7 +26,6 @@ namespace Onyx {
 	class ONYX_API Window {
 
 	public:
-		using EventCallbackFn = std::function<void(Event&)>;
 
 		virtual ~Window() = default;
 
@@ -41,8 +39,7 @@ namespace Onyx {
 		virtual void SetTitle(const char* title) = 0;
 		       
 		virtual bool IsClosed() = 0;
-
-		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+		virtual bool IsHidden() = 0;
 		virtual void* GetNativeWindow() = 0;
 	};
 

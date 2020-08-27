@@ -25,6 +25,11 @@ namespace Onyx {
 
 	void Scene::OnUpdate(Timestep timestep)
 	{
+		static FirstPersonCameraController cam = FirstPersonCameraController();
+		cam.OnUpdate(timestep);
+		
+		
+
 		timestep = Timestep(16.6f);
 
 		static float rotation = 0;
@@ -33,7 +38,8 @@ namespace Onyx {
 		RenderCommand::SetClearColour(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 		RenderCommand::Clear();
 
-		Renderer3D::BeginScene(m_CameraController);
+
+		Renderer3D::BeginScene(cam.GetCamera());
 
 		for (int i = 0; i < m_ModelTest->m_Meshes.size(); ++i) {
 			Renderer3D::DrawMesh(m_ModelTest->m_Meshes[i], glm::vec3(0.0f, -4.0f, -15.0f), glm::vec3(1.0f));

@@ -31,14 +31,13 @@ namespace Onyx {
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
 
-		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 m_EyeVector = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 m_Position = glm::vec3(10, 0, 5);
 
-		float m_Roll = 0;
-		float m_Pitch = 0;
-		float m_Yaw = 0;
-
-		glm::mat4 m_Transform = glm::mat4(1.0f);
+		float horizontalAngle = 3.14f;
+		// vertical angle : 0, look at the horizon
+		float verticalAngle = 0.0f;
+		// Initial Field of View
+		
 
 		friend class FirstPersonCameraController;
 	};

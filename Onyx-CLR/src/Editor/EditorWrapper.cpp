@@ -1,20 +1,27 @@
 #include "pch.h"
 #include "EditorWrapper.h"
 #include <Onyx/Graphics/RendererAPI.h>
+#include <Onyx/Core/Keycodes.h>
 
+#include <Onyx/Editor/EditorInput.h>
 
 using namespace System;
 using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
 
+
+
 #include "../../../Onyx/vendor/glm/glm/glm.hpp"
 
-#include <ctime>
 namespace OnyxCLR {
 
 	OnyxEditor::OnyxEditor()
 	{
 		m_Editor = new Onyx::Editor();
+		for (size_t i = 0; i < 350; i++)
+		{
+			Onyx::EditorInput::Keys[i] = 0;
+		}
 	}
 
 	OnyxEditor::~OnyxEditor()
@@ -28,6 +35,14 @@ namespace OnyxCLR {
 	}
 
 	
+	void OnyxEditor::PollInput(array<System::Boolean>^ keys)
+	{
+		for (size_t i = 0; i < 350; i++)
+		{
+			Onyx::EditorInput::Keys[i] = keys[i];
+		}
+	}
+
 	array<System::Byte>^ OnyxEditor::GetRenderedFrame()
 	{
 		Onyx::RenderedPixelData dd = m_Editor->GetRenderedFrame();

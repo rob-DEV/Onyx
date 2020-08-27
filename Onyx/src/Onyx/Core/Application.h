@@ -3,7 +3,6 @@
 
 #include <Onyx/Core/Window.h>
 #include <Onyx/Core/Layer.h>
-#include <Onyx/Event/Event.h>
 
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/Renderer2D.h>

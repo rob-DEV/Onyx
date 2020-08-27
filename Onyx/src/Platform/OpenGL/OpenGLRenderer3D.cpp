@@ -127,7 +127,7 @@ namespace Onyx {
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
+			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.2f, 0.0f, 1.0f);
 			m_MeshVertexBufferWritePtr++;
 
 			//nice orange

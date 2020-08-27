@@ -15,73 +15,59 @@ namespace Onyx  {
 
 	void FirstPersonCameraController::OnUpdate(Timestep timestep)
 	{
-		float testSpeed = 50.0f;
-		float dx = 0; //how much we strafe on x
-		float dy = 0; //how much we strafe on x
-		float dz = 0; //how much we walk on z
+		float initialFoV = 45.0f;
+
+		float speed = 30.0f; // 3 units / second
+		float mouseSpeed = 0.005f;
+
+		glm::vec2 mousePosition = glm::vec2(0.0f);
+
+		m_Camera.horizontalAngle += mouseSpeed  * float(1280 / 2 - mousePosition.x); //timestep
+		m_Camera.verticalAngle += mouseSpeed  * float(720 / 2 - mousePosition.y);
+
+		glm::vec3 direction(
+			cos(m_Camera.verticalAngle) * sin(m_Camera.horizontalAngle),
+			sin(m_Camera.verticalAngle),
+			cos(m_Camera.verticalAngle) * cos(m_Camera.horizontalAngle)
+		);
+
+		// Right vector
+		glm::vec3 right = glm::vec3(
+			sin(m_Camera.horizontalAngle - 3.14f / 2.0f),
+			0,
+			cos(m_Camera.horizontalAngle - 3.14f / 2.0f)
+		);
+
+		// Up vector : perpendicular to both direction and right
+		glm::vec3 up = glm::cross(right, direction);
+
 
 		if (Input::IsKeyPressed(ONYX_KEY_W)) {
-			dz = 2;
+			m_Camera.m_Position += 0.5;
 		}
 		if (Input::IsKeyPressed(ONYX_KEY_S)) {
-			dz = -2;
-		}
-		if (Input::IsKeyPressed(ONYX_KEY_D)) {
-			dx = 2;
+			m_Camera.m_Position -= 0.5;
 		}
 		if (Input::IsKeyPressed(ONYX_KEY_A)) {
-			dx = -2;
-		}
-		if (Input::IsKeyPressed(ONYX_KEY_Q)) {
-			dy = -2;
-		}
-		if (Input::IsKeyPressed(ONYX_KEY_E)) {
-			dy = 2;
+			m_Camera.m_Position -= right * timestep.GetSeconds() * speed;
 		}
 
-		//process mouse movement
+		if (Input::IsKeyPressed(ONYX_KEY_D)) {
+			m_Camera.m_Position += right * timestep.GetSeconds() * speed;
+		}
 
+		glm::mat4 viewMatrix = glm::lookAt(
+			m_Camera.m_Position,           // Camera is here
+			glm::vec3(0, 0, 0), // and looks here : at the same position, plus "direction"
+			glm::vec3(0,1,0)                  // Head is up (set to 0,-1,0 to look upside-down)
+		);
 
-		glm::vec2 mouse_delta = Input::GetMousePosition()
-			- mouseCenterPosition;
-
-		const float mouseX_Sensitivity = 0.25f;
-		const float mouseY_Sensitivity = 0.00025f;
-
-		m_Camera.m_Yaw -= mouseX_Sensitivity * mouse_delta.x;
-		m_Camera.m_Pitch -= mouseY_Sensitivity * mouse_delta.y;
-
-
-		//mousePosition = glm::vec2(Input::GetMousePosition().first, Input::GetMousePosition().second);
-
-		glm::mat4 mat = m_Camera.GetViewMatrix();
-
-		glm::vec3 forward(mat[0][2], mat[1][2], mat[2][2]);
-		glm::vec3 strafe(mat[0][0], mat[1][0], mat[2][0]);
-		//glm::vec3 strafe(mat[0][0], mat[1][0], mat[2][0]);
-
-		const float speed = 0.12f;//how fast we move
-
-		m_Camera.m_EyeVector += (-dz * forward + dx * strafe) * speed;
-
-		glm::mat4 matRoll = glm::mat4(1.0f);//identity matrix; 
-		glm::mat4 matPitch = glm::mat4(1.0f);//identity matrix
-		glm::mat4 matYaw = glm::mat4(1.0f);//identity matrix
-
-		//roll, pitch and yaw are used to store our angles in our class
-		matRoll = glm::rotate(matRoll, 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matPitch = glm::rotate(matPitch, m_Camera.m_Pitch, glm::vec3(1.0f, 0.0f, 0.0f));
-		matYaw = glm::rotate(matYaw, glm::radians(m_Camera.m_Yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-
-		glm::mat4 rotationMatrix = matRoll * matPitch * matYaw;
-
-		glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_Camera.m_EyeVector);
-
-		m_Camera.m_Transform = rotationMatrix * translate;
-
+		m_Camera.m_ViewMatrix = viewMatrix;
 		m_Camera.RecalculateViewMatrix();
 
-		Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
+
+
+		//Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
 	}
 
 }

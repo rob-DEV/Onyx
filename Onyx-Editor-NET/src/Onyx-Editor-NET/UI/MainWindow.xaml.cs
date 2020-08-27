@@ -15,8 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Diagnostics;
-using Onyx_Editor_NET.Framebuffer;
 using System.Windows.Media.Media3D;
+
+using Onyx_Editor_NET.Framebuffer;
 
 namespace Onyx_Editor_NET
 {
@@ -41,7 +42,9 @@ namespace Onyx_Editor_NET
 
             while (!m_Aborted)
             {
+                m_OnyxEditorCLR.PollInput(Input.GetKeys());
                 m_OnyxEditorCLR.Update();
+                Input.Reset();
 
                 byte[] s = m_OnyxEditorCLR.GetRenderedFrame();
 
@@ -67,7 +70,8 @@ namespace Onyx_Editor_NET
 
                 b.Bitmap.UnlockBits(bitmapData);
                 bitmapSource.Freeze();
-                Dispatcher.Invoke(() => m_Viewport.Source = bitmapSource);
+                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
+                    (Action)(() => { m_Viewport.Source = bitmapSource; } ));
 
                 ++frames;
 
@@ -78,7 +82,7 @@ namespace Onyx_Editor_NET
                     sw.Restart();
                 }
 
-               
+                
             }
 
             //Clean Onyx Engine
@@ -99,11 +103,14 @@ namespace Onyx_Editor_NET
         {
             m_ViewportThread = new Thread(new ThreadStart(EditorThread));
             m_ViewportThread.Start();
+
         }
 
         void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             m_Aborted = true;
+
+            
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -113,7 +120,7 @@ namespace Onyx_Editor_NET
 
         private void m_CreateEntityButton_Click(object sender, RoutedEventArgs e)
         {
-            float x, y, z = 0;
+            float x, y, z;
 
             x = (float)Convert.ToDecimal(m_PositionTextboxX.Text);
             y = (float)Convert.ToDecimal(m_PositionTextboxY.Text);
@@ -125,7 +132,17 @@ namespace Onyx_Editor_NET
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            Console.WriteLine("Key Pressed: {0}", e.Key);
+            //Console.WriteLine("Key Pressed: {0}", e.Key);
+            Input.ProcessKeyEvent(e.Key);
+        }
+
+        private void m_Viewport_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            m_Viewport.Focus();
+            Console.WriteLine("Focused viewport");
+            
+            //capture mouse inside viewport
+           
         }
     }
 }

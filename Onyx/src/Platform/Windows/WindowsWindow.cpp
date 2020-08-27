@@ -10,12 +10,9 @@
 #include <Platform/OpenGL/OpenGLGraphicsContext.h>
 #include <Platform/Vulkan/VulkanGraphicsContext.h>
 
-#include <Onyx/Event/KeyEvent.h>
-
 namespace Onyx {
 
 	static unsigned char s_WindowCount = 0;
-
 
 	WindowsWindow::WindowsWindow()
 	{
@@ -53,6 +50,7 @@ namespace Onyx {
 	{
 		printf("Title : %s\n", m_Data.Title.c_str());
 		
+
 		if (s_WindowCount == 0 && !glfwInit())	printf("Failed to initialize GLFW!");
 
 		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
@@ -126,7 +124,10 @@ namespace Onyx {
 
 		m_Context->Init();
 		
-		glfwSwapInterval(1);
+		if(m_Data.VSync || !m_Data.Hidden)
+			glfwSwapInterval(1);
+		else 
+			glfwSwapInterval(0);
 		
 		if(!m_Data.Hidden)
 			glfwShowWindow(m_Window);
@@ -148,6 +149,11 @@ namespace Onyx {
 	bool WindowsWindow::IsClosed()
 	{
 		return glfwWindowShouldClose(m_Window) == true;
+	}
+
+	bool WindowsWindow::IsHidden()
+	{
+		return m_Data.Hidden;
 	}
 
 }

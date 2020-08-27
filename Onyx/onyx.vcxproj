@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Editor\EditorInput.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Model\Model.cpp" />
@@ -73,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\Robert\Downloads\assimp-5.0.1\build\include\assimp\config.h" />
+    <ClInclude Include="src\Onyx\Editor\EditorInput.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h" />
@@ -93,8 +95,6 @@
     <ClInclude Include="src\Onyx\core\FileIO.h" />
     <ClInclude Include="src\Onyx\Core\Layer.h" />
     <ClInclude Include="src\Onyx\Core\TimeStep.h" />
-    <ClInclude Include="src\Onyx\Event\Event.h" />
-    <ClInclude Include="src\Onyx\Event\KeyEvent.h" />
     <ClInclude Include="src\Onyx\graphics\Buffer.h" />
     <ClInclude Include="src\Onyx\graphics\GraphicsContext.h" />
     <ClInclude Include="src\Onyx\core\Input.h" />

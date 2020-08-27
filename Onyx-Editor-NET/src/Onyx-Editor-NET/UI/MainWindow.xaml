@@ -36,7 +36,7 @@
 
 
 
-        <Image x:Name="m_Viewport" HorizontalAlignment="Left" Height="540" Margin="480,62,0,0" VerticalAlignment="Top" Width="960"/>
+        <Image x:Name="m_Viewport" HorizontalAlignment="Left" Height="540" Margin="480,62,0,0" VerticalAlignment="Top" Width="960" MouseDown="m_Viewport_MouseDown" />
 
     </Grid>
 </Window>

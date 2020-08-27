@@ -5,15 +5,28 @@
 #include <Onyx/core/Application.h>
 #include <GLFW/glfw3.h>
 
+#include <Onyx/Editor/EditorInput.h>
+
 namespace Onyx {
 
 	Input* Input::s_Instance = new WindowsInput();
 
 	bool WindowsInput::IsKeyPressedImplementation(int keycode)
 	{
-		int keyState = glfwGetKey((GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow(), keycode);
+		//Window* window = &Application::Get()->GetOnyxWindow();
 
-		return keyState == GLFW_PRESS || keyState == GLFW_REPEAT;
+		if (false) {
+
+			int keyState = glfwGetKey((GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow(), keycode);
+
+			return keyState == GLFW_PRESS || keyState == GLFW_REPEAT;
+
+		}
+		else {
+			//check if editor is null
+			return EditorInput::Keys[keycode];
+		}
+
 	}
 
 	glm::vec2 WindowsInput::GetMousePositionImplementation()

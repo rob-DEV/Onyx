@@ -27,6 +27,7 @@ namespace OnyxCLR {
 		~OnyxEditor();
 
 		void Update();
+		void PollInput(array<System::Boolean>^ keys);
 		array<System::Byte>^ GetRenderedFrame();
 
 		void OpenScene(System::String^ filePath);
@@ -34,6 +35,7 @@ namespace OnyxCLR {
 
 		//testing
 		void CreateEntity(float x, float y, float z);
+
 
 	private:
 		//Example

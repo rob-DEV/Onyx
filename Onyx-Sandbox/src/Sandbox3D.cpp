@@ -6,6 +6,7 @@
 #include <Onyx/Camera/FirstPersonCameraController.h>
 
 using namespace Onyx;
+
 Model* modelTest = nullptr;
 
 Sandbox3D::Sandbox3D()

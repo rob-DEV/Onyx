@@ -26,9 +26,8 @@ namespace Onyx {
 		inline double GetScroll() { return  m_Data.ScrollY; }
 
 		virtual void SetTitle(const char* title);
-		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-
 		virtual bool IsClosed();
+		virtual bool IsHidden();
 		inline void* GetNativeWindow() { return m_Window; };
 		
 
@@ -44,7 +43,6 @@ namespace Onyx {
 			double ScrollX, ScrollY;
 			bool Hidden;
 
-			EventCallbackFn EventCallback;
 		};
 
 		WindowData m_Data;
