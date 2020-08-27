@@ -3,7 +3,7 @@
 #include "../.../../glfw3/GLFW/glfw3.h"
 #include <Onyx/Entity/Entity.h>
 #include <Onyx/Model/ModelLoader.h>
-#include <Onyx/Graphics/PerspectiveCameraController.h>
+#include <Onyx/Camera/FirstPersonCameraController.h>
 
 using namespace Onyx;
 Model* modelTest = nullptr;
@@ -44,19 +44,14 @@ void Sandbox3D::OnDetach()
 void Sandbox3D::OnUpdate(Timestep timestep)
 {
 	//SCENE & RENDER
-	static PerspectiveCamera cam = PerspectiveCamera(45.0f, 1.777777f, 0.00001f, 100000.0f);
-	static float pos = 0;
-	pos += 0.1f;
-	cam.SetPosition(glm::vec3(0.0f, 10.0f, pos));
-	//cam.SetRotation(pos);
-	Renderer3D::BeginScene(cam);
+	static FirstPersonCameraController cam = FirstPersonCameraController();
+	cam.OnUpdate(timestep);
+	Renderer3D::BeginScene(cam.GetCamera());
 
-	//std::cout << "Num verts " << modelTest->m_Meshes[0]->m_Vertices->size();
 	for (size_t i = 0; i < modelTest->m_Meshes.size(); i++)
 	{
-		Renderer3D::DrawMesh(modelTest->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(3.0f));
-	}
-	
+		Renderer3D::DrawMesh(modelTest->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f));
+	}	
 
 	Renderer3D::EndScene();
 	Renderer3D::Flush();

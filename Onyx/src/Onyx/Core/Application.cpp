@@ -12,7 +12,6 @@
 #include <Onyx/Core/TimeStep.h>
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Graphics/OrthographicCameraController.h>
 
 #include <GLFW/glfw3.h>
 
@@ -75,7 +74,7 @@ namespace Onyx {
 			Timestep timestep(time - m_LastTime);
 			m_LastTime = time;
 
-			printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
+			//printf("FrameTime : %.4f\n", timestep.GetMilliseconds());
 	
 
 			RenderCommand::Clear();

@@ -16,27 +16,46 @@ namespace Onyx {
 		return keyState == GLFW_PRESS || keyState == GLFW_REPEAT;
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePositionImplementation()
+	glm::vec2 WindowsInput::GetMousePositionImplementation()
 	{
 		auto window = (GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow();
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 
-		return std::pair<float, float>((float)xpos, (float)ypos);
+		float xPosF = (float)xpos;
+		float yPosF = (float)ypos;
+
+		return glm::vec2((float)xPosF, (float)yPosF);
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePositionNormalizedImplementation()
+	glm::vec2 WindowsInput::GetMousePositionNormalizedImplementation()
 	{
 		auto window = (GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow();
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 
 		//normalize to viewport between -1 - 1
-		float xposNormalized = (2.0f * xpos) / (float)Application::Get()->GetOnyxWindow().GetWidth() - 1.0f;
-		float yposNormalized = (2.0f * ypos) / (float)Application::Get()->GetOnyxWindow().GetHeight() - 1.0f;
+		float xposNormalized = (2.0f * (float)xpos) / (float)Application::Get()->GetOnyxWindow().GetWidth() - 1.0f;
+		float yposNormalized = (2.0f * (float)ypos) / (float)Application::Get()->GetOnyxWindow().GetHeight() - 1.0f;
 
-		return std::pair<float, float>(xposNormalized, -yposNormalized);
+		return glm::vec2(xposNormalized, -yposNormalized);
 
+	}
+
+	void WindowsInput::SetMousePositionImplementation(glm::vec2 position)
+	{
+		Window* window = &Application::Get()->GetOnyxWindow();
+		glfwSetCursorPos((GLFWwindow*)window->GetNativeWindow(), (double)position.x, (double)position.y);
+	}
+
+	void WindowsInput::SetMousePositionImplementation(Input::MousePosition position)
+	{
+		Window* window = &Application::Get()->GetOnyxWindow();
+
+		float xPos = (float)window->GetWidth() / 2.0f;
+		float yPos = (float)window->GetHeight() / 2.0f;
+
+		glfwSetCursorPos((GLFWwindow*)window->GetNativeWindow(), (double)xPos, (double)yPos);
 	}
 
 	double WindowsInput::GetMouseScrollImplementation()

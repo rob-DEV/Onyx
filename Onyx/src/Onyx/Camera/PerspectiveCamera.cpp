@@ -5,7 +5,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-
 namespace Onyx {
 
 	PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar)
@@ -22,8 +21,8 @@ namespace Onyx {
 
 	Ray PerspectiveCamera::ScreenPointToRay() const
 	{
-		std::pair<float, float> normalizedMouseInput = Input::GetMousePositionNormalized();
-		glm::vec2 normalizedMouse = glm::vec2(normalizedMouseInput.first, normalizedMouseInput.second);
+		glm::vec2 normalizedMouseInput = Input::GetMousePositionNormalized();
+		glm::vec2 normalizedMouse = glm::vec2(normalizedMouseInput.x, normalizedMouseInput.y);
 
 		glm::vec2 ray_nds = normalizedMouse;
 		glm::vec4 ray_clip = glm::vec4(ray_nds.x, ray_nds.y, -1.0f, 1.0f);
@@ -38,8 +37,9 @@ namespace Onyx {
 
 	void PerspectiveCamera::RecalculateViewMatrix()
 	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
-			glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation), glm::vec3(0, 0, 1));
+		
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position)
+			* glm::toMat4(m_Rotation);
 
 		m_ViewMatrix = glm::inverse(transform);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;

@@ -6,9 +6,9 @@
 
 namespace Onyx  {
 
-	PerspectiveCameraController::PerspectiveCameraController() : m_Camera(45.0f, 1280.0f / 720.0f, 0.0001f, 10000000.0f)
+	PerspectiveCameraController::PerspectiveCameraController() : m_Camera(90.0f, 1280.0f / 720.0f, 0.0001f, 10000000.0f)
 	{
-		m_ZoomLevel = 45.0f;
+		m_ZoomLevel = 90.0f;
 		m_Camera.SetPosition(glm::vec3(0, 0, 50.0f));
 	}
 
@@ -49,7 +49,7 @@ namespace Onyx  {
 		}
 
 		auto mouseScroll = Input::GetMouseScroll();
-
+		
 		if (mouseScroll < 0.0f) {
 
 			m_ZoomLevel += testSpeed * (float)timestep;
@@ -65,6 +65,8 @@ namespace Onyx  {
 			m_Camera.SetProjection(m_ZoomLevel, 1280.0f / 720.0f, 0.0001f, 10000000.0f);
 
 		}
+
+		
 
 	}
 

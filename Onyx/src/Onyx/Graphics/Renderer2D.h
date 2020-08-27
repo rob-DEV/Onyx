@@ -1,8 +1,8 @@
 #ifndef _ONYX_GRAPHICS_RENDERER2D_H_
 #define _ONYX_GRAPHICS_RENDERER2D_H_
 
-#include <Onyx/core/Core.h>
-#include <Onyx/Graphics/OrthographicCamera.h>
+#include <Onyx/Core/Core.h>
+#include <Onyx/Camera/OrthographicCamera.h>
 #include <Onyx/Graphics/Texture.h>
 
 namespace Onyx {

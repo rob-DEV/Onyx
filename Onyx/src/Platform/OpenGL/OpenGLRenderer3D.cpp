@@ -64,7 +64,7 @@ namespace Onyx {
 		delete m_MeshVertexArray;
 	}
 
-	void OpenGLRenderer3D::BeginSceneImplementation(const PerspectiveCamera& camera)
+	void OpenGLRenderer3D::BeginSceneImplementation(const Camera& camera)
 	{
 		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
 		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
@@ -80,7 +80,7 @@ namespace Onyx {
 
 		((OpenGLShader*)m_MeshBasicShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
-		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {0.0f, 4.0f, 0.0f});
+		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {0.0f, -4.8f, -15.0f});
 
 
 	}

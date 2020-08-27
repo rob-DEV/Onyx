@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Model\Model.cpp" />
     <ClCompile Include="src\Onyx\Editor\Editor.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
@@ -30,10 +32,10 @@
     <ClCompile Include="src\Onyx\Entity\Registry.cpp" />
     <ClCompile Include="src\Onyx\graphics\Buffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Mesh.cpp" />
-    <ClCompile Include="src\Onyx\Graphics\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Onyx\Graphics\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Onyx\Graphics\OrthographicCameraController.cpp" />
-    <ClCompile Include="src\Onyx\Graphics\PerspectiveCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Onyx\Camera\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Onyx\Camera\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Camera\PerspectiveCameraController.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer2D.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer3D.cpp" />
@@ -71,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D:\Robert\Downloads\assimp-5.0.1\build\include\assimp\config.h" />
+    <ClInclude Include="src\Onyx\Camera\Camera.h" />
+    <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h" />
+    <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h" />
     <ClInclude Include="src\Onyx\Model\Model.h" />
     <ClInclude Include="src\Onyx\Editor\Editor.h" />
     <ClInclude Include="src\Onyx\Entity\Entity.h" />
@@ -95,10 +100,10 @@
     <ClInclude Include="src\Onyx\core\Input.h" />
     <ClInclude Include="src\Onyx\core\Keycodes.h" />
     <ClInclude Include="src\Onyx\Graphics\Mesh.h" />
-    <ClInclude Include="src\Onyx\Graphics\PerspectiveCamera.h" />
-    <ClInclude Include="src\Onyx\Graphics\OrthographicCamera.h" />
-    <ClInclude Include="src\Onyx\Graphics\OrthographicCameraController.h" />
-    <ClInclude Include="src\Onyx\Graphics\PerspectiveCameraController.h" />
+    <ClInclude Include="src\Onyx\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Onyx\Camera\OrthographicCamera.h" />
+    <ClInclude Include="src\Onyx\Camera\OrthographicCameraController.h" />
+    <ClInclude Include="src\Onyx\Camera\PerspectiveCameraController.h" />
     <ClInclude Include="src\Onyx\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Onyx\graphics\Renderer2D.h" />
     <ClInclude Include="src\Onyx\Graphics\Renderer3D.h" />

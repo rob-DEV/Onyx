@@ -10,8 +10,12 @@ namespace Onyx {
 
 	protected:
 		virtual bool IsKeyPressedImplementation(int keycode);
-		virtual std::pair<float, float> GetMousePositionImplementation();
-		virtual std::pair<float, float> GetMousePositionNormalizedImplementation();
+		virtual glm::vec2 GetMousePositionImplementation() override;
+		virtual glm::vec2 GetMousePositionNormalizedImplementation() override;
+
+		virtual void SetMousePositionImplementation(glm::vec2 position);
+		virtual void SetMousePositionImplementation(Input::MousePosition position);
+
 		virtual double GetMouseScrollImplementation();
 	};
 

@@ -23,8 +23,8 @@
 #include <Onyx/Graphics/Renderer2D.h>
 #include <Onyx/Graphics/Renderer3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Graphics/OrthographicCameraController.h>
-#include <Onyx/Graphics/PerspectiveCameraController.h>
+#include <Onyx/Camera/OrthographicCameraController.h>
+#include <Onyx/Camera/PerspectiveCameraController.h>
 
 //Sound
 #include <Onyx/Audio/Sound.h>

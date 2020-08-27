@@ -2,7 +2,7 @@
 #define _ONYX_GRAPHICS_RENDERER3D_H_
 
 #include <Onyx/core/Core.h>
-#include <Onyx/Graphics/PerspectiveCamera.h>
+#include <Onyx/Camera/Camera.h>
 #include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/Mesh.h>
 
@@ -22,7 +22,7 @@ namespace Onyx {
 		static void Init();
 		inline static void Destroy() { s_Instance->DestroyImplementation(); delete s_Instance; };
 
-		inline static void BeginScene(const PerspectiveCamera& camera) { s_Instance->BeginSceneImplementation(camera); };
+		inline static void BeginScene(const Camera& camera) { s_Instance->BeginSceneImplementation(camera); };
 		inline static void EndScene() { s_Instance->EndSceneImplementation(); };
 		inline static void Flush() { s_Instance->FlushImplementation(); };
 
@@ -37,7 +37,7 @@ namespace Onyx {
 		virtual void InitImplementation() = 0;
 		virtual void DestroyImplementation() = 0;
 
-		virtual void BeginSceneImplementation(const PerspectiveCamera& camera) = 0;
+		virtual void BeginSceneImplementation(const Camera& camera) = 0;
 		virtual void EndSceneImplementation() = 0;
 		virtual void FlushImplementation() = 0;
 

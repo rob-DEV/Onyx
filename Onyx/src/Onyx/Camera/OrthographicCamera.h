@@ -1,11 +1,12 @@
 #ifndef _ONYX_ORTHOGRAPHIC_CAMERA_H_
 #define _ONYX_ORTHOGRAPHIC_CAMERA_H_
 
+#include <Onyx/Camera/Camera.h>
 #include <glm/glm.hpp>
 
 namespace Onyx {
 
-	class OrthographicCamera
+	class OrthographicCamera : public Camera
 	{
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
@@ -18,9 +19,10 @@ namespace Onyx {
 		float GetRotation() const { return m_Rotation; }
 		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
 
-		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+		//CAMERA OVERRIDES
+		const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
+		const glm::mat4& GetViewMatrix() const  override { return m_ViewMatrix; }
+		const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
 	private:
 		void RecalculateViewMatrix();
 		glm::mat4 m_ProjectionMatrix;

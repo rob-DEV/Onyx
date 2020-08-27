@@ -3,15 +3,15 @@
 
 #include <Onyx/Core/Core.h>
 #include <Onyx/Core/TimeStep.h>
-#include <Onyx/Graphics/PerspectiveCameraController.h>
+#include <Onyx/Camera/FirstPersonCameraController.h>
 
 #include <Onyx/Entity/Entity.h>
 #include <Onyx/Entity/Registry.h>
 
 namespace Onyx {
 
-	class Mesh;
 	class Entity;
+	class Model;
 
 	class ONYX_API Scene {
 	public:
@@ -25,8 +25,8 @@ namespace Onyx {
 		Registry m_EntityRegistry;
 
 		//TESTING
-		PerspectiveCameraController m_CameraController;
-		Mesh* m_Mesh = nullptr;
+		FirstPersonPerspectiveCamera m_CameraController;
+		Model* m_ModelTest;
 
 		friend class Entity;
 

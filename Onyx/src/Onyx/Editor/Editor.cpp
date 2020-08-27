@@ -22,8 +22,8 @@
 #include <Onyx/Graphics/Renderer2D.h>
 #include <Onyx/Graphics/Renderer3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Graphics/OrthographicCameraController.h>
-#include <Onyx/Graphics/PerspectiveCameraController.h>
+#include <Onyx/Camera/OrthographicCameraController.h>
+#include <Onyx/Camera/PerspectiveCameraController.h>
 
 //Sound
 #include <Onyx/Audio/Sound.h>
@@ -34,8 +34,11 @@
 #include <Platform/OpenGL/OpenGLRenderer3D.h>
 
 
+#include <Onyx/Model/ModelLoader.h>
+
 
 namespace Onyx {
+	
 
 	Editor* Editor::s_EditorInstance = nullptr;
 
@@ -73,14 +76,8 @@ namespace Onyx {
 	void Editor::OnUpdate()
 	{
 
-		RenderCommand::SetClearColour(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
-		RenderCommand::Clear();
-
 		m_EditorScene->OnUpdate(0);
-		
-
 		m_Window->OnUpdate();
-
 	}
 
 	RenderedPixelData Editor::GetRenderedFrame()
@@ -90,19 +87,6 @@ namespace Onyx {
 
 	void Editor::OnDetach()
 	{
-
-	}
-
-	void Editor::RandomSeed(uint32_t seed)
-	{
-		srand(seed);
-
-		int sum = 0;
-		for (int i = seed / 2; i < seed; i++) {
-			sum += rand();
-		}
-
-		srand(sum);
 
 	}
 

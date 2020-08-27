@@ -15,8 +15,6 @@ namespace OnyxCLR {
 	OnyxEditor::OnyxEditor()
 	{
 		m_Editor = new Onyx::Editor();
-		//Add some randomness
-		m_Editor->RandomSeed(System::DateTime::Now.Millisecond + System::DateTime::Now.Minute);
 	}
 
 	OnyxEditor::~OnyxEditor()

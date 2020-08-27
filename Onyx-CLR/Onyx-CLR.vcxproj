@@ -140,11 +140,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Editor\EditorInput.h" />
     <ClInclude Include="src\Editor\EditorWrapper.h" />
     <ClInclude Include="src\Onyx-CLR.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Editor\EditorInput.cpp" />
     <ClCompile Include="src\Editor\EditorWrapper.cpp" />
     <ClCompile Include="src\AssemblyInfo.cpp" />
     <ClCompile Include="src\Onyx-CLR.cpp" />

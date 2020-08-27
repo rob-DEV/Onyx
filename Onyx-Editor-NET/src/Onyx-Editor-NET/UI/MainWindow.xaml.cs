@@ -78,7 +78,7 @@ namespace Onyx_Editor_NET
                     sw.Restart();
                 }
 
-                Thread.Sleep(1000 / 60);
+               
             }
 
             //Clean Onyx Engine
@@ -121,6 +121,11 @@ namespace Onyx_Editor_NET
 
             m_OnyxEditorCLR.CreateEntity(x, y, z);
 
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine("Key Pressed: {0}", e.Key);
         }
     }
 }

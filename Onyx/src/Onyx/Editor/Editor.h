@@ -10,6 +10,7 @@ namespace Onyx {
 
 	class Window;
 	class Scene;
+	class Model;
 
 	class ONYX_API Editor
 	{
@@ -20,16 +21,14 @@ namespace Onyx {
 		void OnUpdate();
 		RenderedPixelData GetRenderedFrame();
 		void OnDetach();
-
-		void RandomSeed(uint32_t seed);
-
 		void CreateEntity(glm::vec3 position);
-
 
 	private:
 		Window* m_Window;
 		Scene* m_EditorScene;
 		static Editor* s_EditorInstance;
+
+		Model* m_ModelTest;
 
 	};
 

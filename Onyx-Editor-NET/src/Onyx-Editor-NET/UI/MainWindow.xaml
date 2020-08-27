@@ -7,7 +7,7 @@
         Closing="MainWindow_Closing"
         mc:Ignorable="d"
         Title="MainWindow" Height="1050" Width="1920" Loaded="Window_Loaded"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown"
         >
 
 

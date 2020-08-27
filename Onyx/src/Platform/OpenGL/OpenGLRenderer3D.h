@@ -20,7 +20,7 @@ namespace Onyx {
 		virtual void InitImplementation() override;
 		virtual void DestroyImplementation() override;
 
-		virtual void BeginSceneImplementation(const PerspectiveCamera& camera) override;
+		virtual void BeginSceneImplementation(const Camera& camera) override;
 		virtual void EndSceneImplementation() override;
 		virtual void FlushImplementation() override;
 
