@@ -16,8 +16,8 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Media.Media3D;
-
-using Onyx_Editor_NET.Framebuffer;
+using System.Windows.Threading;
+using System.Timers;
 
 namespace Onyx_Editor_NET
 {
@@ -26,91 +26,45 @@ namespace Onyx_Editor_NET
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Thread m_ViewportThread;
+        private Thread m_RenderThread;
         private volatile bool m_Aborted = false;
 
-        private void EditorThread()
+        private bool ViewPortInFocus = false;
+
+        private void EngineThread()
         {
-            m_OnyxEditorCLR = new OnyxCLR.OnyxEditor();
-
-            DirectBitmap b = new DirectBitmap(960, 540);
-
+          
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             int frames = 0;
 
+            OnyxEditor.Init();
             while (!m_Aborted)
             {
-                m_OnyxEditorCLR.PollInput(Input.GetKeys());
-                m_OnyxEditorCLR.Update();
+
+                OnyxEditor.UpdateEngine();
+                OnyxEditor.UpdateEngineInput();
+
                 Input.Reset();
-
-                byte[] s = m_OnyxEditorCLR.GetRenderedFrame();
-
-
-
-                int pos = 0;
-                for (int y = 539; y >= 0; y--)
-                {
-                    for (int x = 0; x < 960; x++)
-                    {
-                        b.SetPixel(x, y, System.Drawing.Color.FromArgb(255, s[pos], s[pos + 1], s[pos + 2]));
-                        pos += 3;
-                    }
-                }
-
-                var bitmapData = b.Bitmap.LockBits(
-                new System.Drawing.Rectangle(0, 0, b.Bitmap.Width, b.Bitmap.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, b.Bitmap.PixelFormat);
-
-                var bitmapSource = BitmapSource.Create(
-                   bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Bgra32, null,
-                   bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-
-                b.Bitmap.UnlockBits(bitmapData);
-                bitmapSource.Freeze();
-                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
-                    (Action)(() => { m_Viewport.Source = bitmapSource; } ));
-
                 ++frames;
 
                 if (sw.ElapsedMilliseconds >= 1000)
                 {
-                    Console.WriteLine("Viewport FrameTime {0}",(float)frames);
+                    Console.WriteLine("Editor Thread FrameTime {0}", (float)frames);
                     frames = 0;
                     sw.Restart();
                 }
 
-                
             }
 
-            //Clean Onyx Engine
-            m_OnyxEditorCLR.Dispose();
-
         }
+
+      
 
         public MainWindow()
         {
             InitializeComponent();
-
-        }
-
-
-        private OnyxCLR.OnyxEditor m_OnyxEditorCLR;
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            m_ViewportThread = new Thread(new ThreadStart(EditorThread));
-            m_ViewportThread.Start();
-
-        }
-
-        void MainWindow_Closing(object sender, CancelEventArgs e)
-        {
-            m_Aborted = true;
-
-            
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -122,27 +76,74 @@ namespace Onyx_Editor_NET
         {
             float x, y, z;
 
-            x = (float)Convert.ToDecimal(m_PositionTextboxX.Text);
-            y = (float)Convert.ToDecimal(m_PositionTextboxY.Text);
-            z = (float)Convert.ToDecimal(m_PositionTextboxZ.Text);
+            x = (float)Convert.ToDecimal(PositionTextboxX.Text);
+            y = (float)Convert.ToDecimal(PositionTextboxY.Text);
+            z = (float)Convert.ToDecimal(PositionTextboxZ.Text);
 
-            m_OnyxEditorCLR.CreateEntity(x, y, z);
+            //m_OnyxEditor.CreateEntity(x, y, z);
 
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            //Console.WriteLine("Key Pressed: {0}", e.Key);
             Input.ProcessKeyEvent(e.Key);
+
+            //give user focus back to the window
+            if(e.Key == Key.Escape)
+            {
+                ViewPortInFocus = false;
+            }
+
+
         }
 
-        private void m_Viewport_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            m_Viewport.Focus();
-            Console.WriteLine("Focused viewport");
-            
-            //capture mouse inside viewport
+            m_RenderThread = new Thread(new ThreadStart(EngineThread));
+            m_RenderThread.Start();
+
            
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            Point viewportCenterPoint = ViewportMain.TransformToAncestor(Application.Current.MainWindow)
+                .Transform(new Point(ViewportMain.Width / 2, ViewportMain.Height / 2));
+
+            //set mouse position to viewport center
+
+            if (ViewPortInFocus)
+            {
+                Point s = this.PointToScreen(viewportCenterPoint);
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)s.X, (int)s.Y);
+            }
+
+            Point pos = e.GetPosition(ViewportMain);
+
+            Point mouseRelativeToVPCenter = new Point(pos.X - (960 / 2), -(pos.Y - (540 / 2)));
+
+            //add relative to 640 360
+            float toEngineX = (float)(640 + mouseRelativeToVPCenter.X);
+            float toEngineY = (float)(360 + mouseRelativeToVPCenter.Y);
+
+
+            if(ViewPortInFocus)
+                Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
+            else
+                Input.ProcessMouseMove(new System.Drawing.Point(640, 360));
+
+            if (ViewPortInFocus)
+                this.Cursor = Cursors.None;
+            else
+                this.Cursor = Cursors.Arrow;
+
+            //Console.WriteLine("MOUSE C# {0},{1}", toEngineX, toEngineY);
+        }
+
+        private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ViewPortInFocus = true;
         }
     }
 }

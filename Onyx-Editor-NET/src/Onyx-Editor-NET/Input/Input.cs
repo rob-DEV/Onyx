@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,24 +14,36 @@ namespace Onyx_Editor_NET
     /// </summary>
     public class Input
     {
-        static bool[] Keys = new bool[Keycodes.ONYX_KEYCODE_COUNT];
-        float MouseX = 0.0f;
-        float MouseY = 0.0f;
+
+
+        private static bool[] Keys = new bool[Keycodes.ONYX_KEYCODE_COUNT];
+        private static Point MousePosition = new Point(640,360);
+
+
 
         /// <summary>
-        /// Process a Windows Key and Convert to Onyx Key-code
+        /// Process a windows key event and convert to Onyx key-code
         /// </summary>
         /// <param name="key"></param>
         public static void ProcessKeyEvent(Key key)
         {
-            if (key == Key.W)
-                Keys[Keycodes.ONYX_KEY_W] = true;
-            if (key == Key.A)
-                Keys[Keycodes.ONYX_KEY_A] = true;
-            if (key == Key.S)
-                Keys[Keycodes.ONYX_KEY_S] = true;
-            if (key == Key.D)
-                Keys[Keycodes.ONYX_KEY_D] = true;
+            //Only supporting ASCII in the editor :D
+            //Windows 'A' key  = A = 44 GLFW = 65
+            //ASCII A-Z
+            if ((uint)key >= 44 && (uint)key <= 69)
+            {
+                Keys[(uint)key + 21] = true;
+            }
+
+        }
+
+        /// <summary>
+        /// Process a mouse move event
+        /// </summary>
+        /// <param name="key"></param>
+        public static void ProcessMouseMove(Point position)
+        {
+            MousePosition = position;
         }
 
         public static void Reset()
@@ -39,12 +52,21 @@ namespace Onyx_Editor_NET
             {
                 Keys[i] = false;
             }
+
+            //MousePosition.X = 640;
+            //MousePosition.Y = 320;
+
         }
 
         public static bool[] GetKeys()
         {
 
             return Keys;
+        }
+
+        public static Point GetMousePosition()
+        {
+            return MousePosition;
         }
 
     }

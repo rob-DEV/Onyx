@@ -14,6 +14,11 @@ namespace Onyx {
 
 	static unsigned char s_WindowCount = 0;
 
+	void error_callback(int error, const char* description)
+	{
+		fprintf(stderr, "Error: %s\n", description);
+	}
+
 	WindowsWindow::WindowsWindow()
 	{
 		//initialize window attribute
@@ -50,7 +55,7 @@ namespace Onyx {
 	{
 		printf("Title : %s\n", m_Data.Title.c_str());
 		
-
+		glfwSetErrorCallback(error_callback);
 		if (s_WindowCount == 0 && !glfwInit())	printf("Failed to initialize GLFW!");
 
 		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
@@ -95,13 +100,13 @@ namespace Onyx {
 					{
 						//KeyReleasedEvent event(key);
 						//data.EventCallback(event);
-						//break;
+						break;
 					}
 					case GLFW_REPEAT:
 					{
 						//KeyPressedEvent event(key, 1);
 						//data.EventCallback(event);
-						//break;
+						break;
 					}
 				}
 			});
@@ -124,10 +129,10 @@ namespace Onyx {
 
 		m_Context->Init();
 		
-		if(m_Data.VSync || !m_Data.Hidden)
-			glfwSwapInterval(1);
-		else 
-			glfwSwapInterval(0);
+		//if(!m_Data.VSync)
+			//glfwSwapInterval(0);
+		//else 
+		glfwSwapInterval(1);
 		
 		if(!m_Data.Hidden)
 			glfwShowWindow(m_Window);

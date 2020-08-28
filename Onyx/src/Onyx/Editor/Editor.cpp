@@ -32,6 +32,7 @@
 #include <Platform/OpenGL/OpenGLRenderer2D.h>
 #include <Platform/OpenGL/OpenGLRenderer3D.h>
 
+#include "EditorInput.h"
 
 #include <Onyx/Model/ModelLoader.h>
 
@@ -43,16 +44,22 @@ namespace Onyx {
 
 	Editor::Editor()
 	{
+		
 		s_EditorInstance = this;
 
 		//Window
 		printf("Creating Onyx Editor Instance and Graphics Context!\n");
 		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 960, 540, true));
 
+
+		//Redirect Standard Input from Windows GLFW to C# Editor
+		m_EditorToEngineInput = new EditorInput();
+		Input::RedirectInput(m_EditorToEngineInput);
+
 		//Renderer API
 		RenderCommand::Init();
 		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-		RenderCommand::SetClearColour(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
+		RenderCommand::SetClearColour(glm::vec4(0.8f, 0.5f, 0.2f, 1.0f));
 		RenderCommand::Clear();
 
 		//Sound
@@ -74,7 +81,6 @@ namespace Onyx {
 
 	void Editor::OnUpdate()
 	{
-
 		m_EditorScene->OnUpdate(0);
 		m_Window->OnUpdate();
 	}
@@ -98,6 +104,18 @@ namespace Onyx {
 		//For testing
 		MeshRendererComponent m = MeshRendererComponent(PrimitiveMesh::Create(PrimitiveMeshType::Cone));
 		a->AddComponent<MeshRendererComponent>(m);
+	}
+
+
+	//TODO: move to input
+	bool* Editor::GetInputKeyBuffer()
+	{
+		return m_EditorToEngineInput->m_Keys;
+	}
+
+	void Editor::SetMousePosition(float x, float y)
+	{
+		m_EditorToEngineInput->m_MousePos = glm::vec2(x, y);
 	}
 
 }

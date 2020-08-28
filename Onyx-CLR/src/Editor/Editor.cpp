@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "EditorWrapper.h"
+#include "Editor.h"
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Core/Keycodes.h>
 
@@ -12,16 +12,13 @@ using namespace System::Runtime::InteropServices;
 
 
 #include "../../../Onyx/vendor/glm/glm/glm.hpp"
+#include <fstream>
 
 namespace OnyxCLR {
 
 	OnyxEditor::OnyxEditor()
 	{
 		m_Editor = new Onyx::Editor();
-		for (size_t i = 0; i < 350; i++)
-		{
-			Onyx::EditorInput::Keys[i] = 0;
-		}
 	}
 
 	OnyxEditor::~OnyxEditor()
@@ -35,12 +32,14 @@ namespace OnyxCLR {
 	}
 
 	
-	void OnyxEditor::PollInput(array<System::Boolean>^ keys)
+	void OnyxEditor::UpdateEngineInput(array<System::Boolean>^ keys, System::Drawing::Point mousePosition)
 	{
 		for (size_t i = 0; i < 350; i++)
 		{
-			Onyx::EditorInput::Keys[i] = keys[i];
+			m_Editor->GetInputKeyBuffer()[i] = keys[i];
 		}
+
+		m_Editor->SetMousePosition(mousePosition.X, mousePosition.Y);
 	}
 
 	array<System::Byte>^ OnyxEditor::GetRenderedFrame()

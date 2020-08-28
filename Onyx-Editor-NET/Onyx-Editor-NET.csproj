@@ -62,7 +62,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="src\Onyx-Editor-NET\Debug\Console.cs" />
-    <Compile Include="src\Onyx-Editor-NET\Framebuffer\BitmapDirect.cs" />
+    <Compile Include="src\Onyx-Editor-NET\Engine\OnyxEditor.cs" />
+    <Compile Include="src\Onyx-Editor-NET\Viewport\BitmapDirect.cs" />
+    <Page Include="src\Onyx-Editor-NET\Viewport\Viewport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\Onyx-Editor-NET\UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,6 +78,9 @@
     </Compile>
     <Compile Include="src\Onyx-Editor-NET\Input\Input.cs" />
     <Compile Include="src\Onyx-Editor-NET\Input\Keycodes.cs" />
+    <Compile Include="src\Onyx-Editor-NET\Viewport\Viewport.xaml.cs">
+      <DependentUpon>Viewport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Onyx-Editor-NET\UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -26,7 +26,7 @@ namespace Onyx_Editor_NET
             //Entry point
             //Create debug console
             Debug.Console.Create();
-
+            
 
         }
 

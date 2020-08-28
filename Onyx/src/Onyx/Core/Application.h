@@ -8,6 +8,7 @@
 #include <Onyx/Graphics/Renderer2D.h>
 
 namespace Onyx {
+
 	class ONYX_API Application {
 	public:
 

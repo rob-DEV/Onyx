@@ -20,7 +20,8 @@ namespace Onyx {
 		virtual void SetMousePositionImplementation(glm::vec2 position);
 		virtual void SetMousePositionImplementation(Input::MousePosition position);
 
-		static bool* Keys;
+		bool* m_Keys;
+		glm::vec2 m_MousePos;
 	private:
 		friend class Editor;
 	};

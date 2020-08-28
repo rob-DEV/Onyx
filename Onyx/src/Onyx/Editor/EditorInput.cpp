@@ -3,28 +3,33 @@
 
 
 namespace Onyx {
-	
-	bool* EditorInput::Keys = new bool[350];
+
 
 	EditorInput::EditorInput()
 	{
-			
+		m_Keys = new bool[350];
+
+		for (size_t i = 0; i < 350; i++)
+		{
+			m_Keys[i] = false;
+		}
+
 	}
 
 	EditorInput::~EditorInput()
 	{
-		delete[] Keys;
+		delete[] m_Keys;
 	}
 
 	bool EditorInput::IsKeyPressedImplementation(int keycode)
 	{
-		
-			return false;
+		return m_Keys[keycode];
 	}
 
 	glm::vec2 EditorInput::GetMousePositionImplementation()
 	{
-		return glm::vec2();
+		
+		return m_MousePos;
 	}
 
 	glm::vec2 EditorInput::GetMousePositionNormalizedImplementation()
@@ -39,12 +44,14 @@ namespace Onyx {
 
 	void EditorInput::SetMousePositionImplementation(glm::vec2 position)
 	{
-
+		this->m_MousePos = position;
 	}
 
 	void EditorInput::SetMousePositionImplementation(Input::MousePosition position)
 	{
-
+		if (position == Input::MousePosition::CENTER_SCREEN) {
+			this->m_MousePos = glm::vec2(640.0f, 360.0f);
+		}
 	}
 
 }

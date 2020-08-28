@@ -13,19 +13,10 @@ namespace Onyx {
 
 	bool WindowsInput::IsKeyPressedImplementation(int keycode)
 	{
-		//Window* window = &Application::Get()->GetOnyxWindow();
 
-		if (false) {
+		int keyState = glfwGetKey((GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow(), keycode);
 
-			int keyState = glfwGetKey((GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow(), keycode);
-
-			return keyState == GLFW_PRESS || keyState == GLFW_REPEAT;
-
-		}
-		else {
-			//check if editor is null
-			return EditorInput::Keys[keycode];
-		}
+		return keyState == GLFW_PRESS || keyState == GLFW_REPEAT;
 
 	}
 

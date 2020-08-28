@@ -33,9 +33,20 @@ namespace Onyx {
 		virtual void SetMousePositionImplementation(glm::vec2 position) = 0;
 		virtual void SetMousePositionImplementation(Input::MousePosition position) = 0;
 
-	public:
+	private:
 		static Input* s_Instance;
 
+		//USED BY EDITOR TO REDIRECT EDITOR INPUTS
+		inline static void RedirectInput(Input* editorInputInstance) {
+		
+			if (s_Instance != nullptr) {
+				delete s_Instance;
+				s_Instance = editorInputInstance;
+			}
+		
+		};
+
+		friend class Editor;
 	};
 }
 

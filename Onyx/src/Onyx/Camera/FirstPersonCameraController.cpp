@@ -3,8 +3,6 @@
 
 #include <Platform/Windows/WindowsInput.h>
 
-glm::vec2 mouseCenterPosition = glm::vec2(640, 360);
-
 namespace Onyx  {
 
 	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(90.0f, 1280.0f / 720.0f, 0.0001f, 10000000.0f)
@@ -17,13 +15,18 @@ namespace Onyx  {
 	{
 		float initialFoV = 45.0f;
 
-		float speed = 30.0f; // 3 units / second
-		float mouseSpeed = 0.005f;
+		float speed = 0.3f; // 3 units / second
+		float mouseSpeed = 0.03f;
 
-		glm::vec2 mousePosition = glm::vec2(0.0f);
+		//m_Camera.horizontalAngle = 180; //timestep
+		//m_Camera.verticalAngle  = 0;
+		glm::vec2 pos = Input::GetMousePosition();
 
-		m_Camera.horizontalAngle += mouseSpeed  * float(1280 / 2 - mousePosition.x); //timestep
-		m_Camera.verticalAngle += mouseSpeed  * float(720 / 2 - mousePosition.y);
+		printf("MOUSE %.3f, %.3f\n", pos.x, pos.y);
+		
+		m_Camera.horizontalAngle += mouseSpeed * float(1280 / 2 - (int)pos.x);
+		m_Camera.verticalAngle -= mouseSpeed * float(720 / 2 - (int)pos.y);
+	
 
 		glm::vec3 direction(
 			cos(m_Camera.verticalAngle) * sin(m_Camera.horizontalAngle),
@@ -43,31 +46,29 @@ namespace Onyx  {
 
 
 		if (Input::IsKeyPressed(ONYX_KEY_W)) {
-			m_Camera.m_Position += 0.5;
+			m_Camera.m_Position += direction * speed;
 		}
 		if (Input::IsKeyPressed(ONYX_KEY_S)) {
-			m_Camera.m_Position -= 0.5;
+			m_Camera.m_Position -= direction *  speed;
 		}
 		if (Input::IsKeyPressed(ONYX_KEY_A)) {
-			m_Camera.m_Position -= right * timestep.GetSeconds() * speed;
+			m_Camera.m_Position -= right  * speed;
 		}
 
 		if (Input::IsKeyPressed(ONYX_KEY_D)) {
-			m_Camera.m_Position += right * timestep.GetSeconds() * speed;
+			m_Camera.m_Position += right  * speed;
 		}
 
 		glm::mat4 viewMatrix = glm::lookAt(
 			m_Camera.m_Position,           // Camera is here
-			glm::vec3(0, 0, 0), // and looks here : at the same position, plus "direction"
-			glm::vec3(0,1,0)                  // Head is up (set to 0,-1,0 to look upside-down)
+			m_Camera.m_Position + direction, // and looks here : at the same position, plus "direction"
+			up                  // Head is up (set to 0,-1,0 to look upside-down)
 		);
 
 		m_Camera.m_ViewMatrix = viewMatrix;
 		m_Camera.RecalculateViewMatrix();
 
-
-
-		//Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
+		Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
 	}
 
 }

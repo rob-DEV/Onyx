@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Onyx_Editor_NET"
-        Closing="MainWindow_Closing"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1050" Width="1920" Loaded="Window_Loaded"
-        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown"
+        Title="MainWindow" Height="1050" Width="1920"
+        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove"
         >
 
 
@@ -24,19 +23,20 @@
             </Menu>
             <StackPanel Background="#FF474747">
 
-                <Label Height="23" Content="Position" Margin="0,100,00,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="120" Background="#FF02CCEC"/>
-                <TextBox x:Name="m_PositionTextboxX" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-                <TextBox x:Name="m_PositionTextboxY" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-                <TextBox x:Name="m_PositionTextboxZ" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-                <Button x:Name="m_CreateEntityButton" Click="m_CreateEntityButton_Click" Content="Create Entity" Width="120" HorizontalAlignment="Left" Height="20"/>
+                <Label Height="23" Content="Position" Margin="0,100,00,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="120" Background="#FF0094FB"/>
+                <TextBox x:Name="PositionTextboxX" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
+                <TextBox x:Name="PositionTextboxY" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
+                <TextBox x:Name="PositionTextboxZ" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
+                <Button x:Name="CreateEntityButton" Click="m_CreateEntityButton_Click" Content="Create Entity" Width="120" HorizontalAlignment="Left" Height="20"/>
 
 
             </StackPanel>
         </DockPanel>
 
 
+        <Image x:Name="m_Viewport" HorizontalAlignment="Left" Height="540" Margin="480,62,0,0" VerticalAlignment="Top" Width="960"/>
 
-        <Image x:Name="m_Viewport" HorizontalAlignment="Left" Height="540" Margin="480,62,0,0" VerticalAlignment="Top" Width="960" MouseDown="m_Viewport_MouseDown" />
+        <local:Viewport x:Name="ViewportMain" MouseDown="ViewportMain_MouseDown" HorizontalAlignment="Left" Height="540" Margin="480,100,0,0" VerticalAlignment="Top" Width="960" Background="#FF00992A"/>
 
     </Grid>
 </Window>

@@ -141,13 +141,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Editor\EditorInput.h" />
-    <ClInclude Include="src\Editor\EditorWrapper.h" />
+    <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Onyx-CLR.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Editor\EditorInput.cpp" />
-    <ClCompile Include="src\Editor\EditorWrapper.cpp" />
+    <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\AssemblyInfo.cpp" />
     <ClCompile Include="src\Onyx-CLR.cpp" />
     <ClCompile Include="src\pch.cpp">

@@ -4,13 +4,14 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Core/Window.h>
 
+
 #include <glm/glm.hpp>
 
 namespace Onyx {
 
 	class Window;
 	class Scene;
-	class Model;
+	class EditorInput;
 
 	class ONYX_API Editor
 	{
@@ -23,12 +24,15 @@ namespace Onyx {
 		void OnDetach();
 		void CreateEntity(glm::vec3 position);
 
+		bool* GetInputKeyBuffer();
+		void SetMousePosition(float x, float y);
+
 	private:
 		Window* m_Window;
+		EditorInput* m_EditorToEngineInput;
+
 		Scene* m_EditorScene;
 		static Editor* s_EditorInstance;
-
-		Model* m_ModelTest;
 
 	};
 

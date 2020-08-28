@@ -17,17 +17,16 @@ namespace OnyxCLR {
 
 	public:
 
-		//Initialize Application in an editor context
-		//Initialize GLFW renderer to off-screen
-		//Setup OpenGL bitmap and framing
-		//Initialize command to engine mechanism
+		/// <summary>
+		/// Constructors a Editor CLR Instance
+		/// </summary>
 		OnyxEditor();
 
 		//Cleanup
 		~OnyxEditor();
 
 		void Update();
-		void PollInput(array<System::Boolean>^ keys);
+		void UpdateEngineInput(array<System::Boolean>^ keys, System::Drawing::Point mouseMouse);
 		array<System::Byte>^ GetRenderedFrame();
 
 		void OpenScene(System::String^ filePath);
@@ -37,11 +36,10 @@ namespace OnyxCLR {
 		void CreateEntity(float x, float y, float z);
 
 
+		static int instanceCount = 0;
 	private:
 		//Example
 		Onyx::Editor* m_Editor;
-		System::Drawing::Bitmap^ m_RenderedFrame;
-		//void* m_CurrentScene;
 
 	};
 
