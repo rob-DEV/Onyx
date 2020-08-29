@@ -5,27 +5,30 @@
 
 namespace Onyx  {
 
-	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(90.0f, 1280.0f / 720.0f, 0.0001f, 10000000.0f)
+	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(90.0f, 1280.0f / 720.0f, 0.001f, 10000000.0f)
 	{
 		m_ZoomLevel = 90.0f;
-		m_Camera.SetPosition(glm::vec3(0, 0, 50.0f));
+		m_Camera.SetPosition(glm::vec3(0, 0, 0));
+
+
+		//initial set matrix to face scene
+		m_Camera.horizontalAngle = 90;
+		m_Camera.verticalAngle = -90;
+
+		m_Camera.RecalculateViewMatrix();
+
 	}
 
 	void FirstPersonCameraController::OnUpdate(Timestep timestep)
 	{
-		float initialFoV = 45.0f;
 
 		float speed = 0.3f; // 3 units / second
 		float mouseSpeed = 0.03f;
 
-		//m_Camera.horizontalAngle = 180; //timestep
-		//m_Camera.verticalAngle  = 0;
 		glm::vec2 pos = Input::GetMousePosition();
 
-		printf("MOUSE %.3f, %.3f\n", pos.x, pos.y);
-		
 		m_Camera.horizontalAngle += mouseSpeed * float(1280 / 2 - (int)pos.x);
-		m_Camera.verticalAngle -= mouseSpeed * float(720 / 2 - (int)pos.y);
+		m_Camera.verticalAngle += mouseSpeed * float(720 / 2 - (int)pos.y);
 	
 
 		glm::vec3 direction(
@@ -57,6 +60,14 @@ namespace Onyx  {
 
 		if (Input::IsKeyPressed(ONYX_KEY_D)) {
 			m_Camera.m_Position += right  * speed;
+		}
+
+		if (Input::IsKeyPressed(ONYX_KEY_Q)) {
+			m_Camera.m_Position.y -= speed;
+		}
+
+		if (Input::IsKeyPressed(ONYX_KEY_E)) {
+			m_Camera.m_Position.y += speed;
 		}
 
 		glm::mat4 viewMatrix = glm::lookAt(

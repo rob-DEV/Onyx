@@ -81,4 +81,62 @@ namespace Onyx {
 		glBindTextureUnit(slot, m_RendererID);
 	}
 
+	OpenGLCubemap::OpenGLCubemap(const std::vector<std::string>& paths)
+	{
+		glGenTextures(1, &m_RendererID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID);
+		
+		int width, height, channels;
+		for (size_t i = 0; i < paths.size(); i++)
+		{
+			m_Paths[i] = paths[i];
+			unsigned char* data = stbi_load(paths[i].c_str(), &width, &height, &channels, 0);
+			if (data)
+			{
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+					0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+				);
+				stbi_image_free(data);
+			}
+			else
+			{
+				printf("Failed to load cubemap at %s, check file path\n", paths[i].c_str());
+				stbi_image_free(data);
+			}
+		}
+
+		GLenum internalFormat = 0, dataFormat = 0;
+
+		if (channels == 4)
+		{
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+		}
+		else if (channels == 3)
+		{
+			internalFormat = GL_RGB8;
+			dataFormat = GL_RGB;
+		}
+
+		m_InternalFormat = internalFormat;
+		m_DataFormat = dataFormat;
+
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	}
+
+	OpenGLCubemap::~OpenGLCubemap()
+	{
+
+	}
+
+	void OpenGLCubemap::Bind(uint32_t slot /*= 0*/) const
+	{
+
+	}
+
 }

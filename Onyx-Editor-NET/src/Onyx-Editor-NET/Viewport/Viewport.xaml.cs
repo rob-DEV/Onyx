@@ -38,7 +38,7 @@ namespace Onyx_Editor_NET
 
             int frames = 0;
 
-            while (true)
+            while (!m_ViewportThreadTerminated)
             {
 
                 byte[] s = OnyxEditor.GetRenderedFramea();

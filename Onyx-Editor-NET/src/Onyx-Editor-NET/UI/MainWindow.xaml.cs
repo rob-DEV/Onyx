@@ -46,18 +46,14 @@ namespace Onyx_Editor_NET
                 OnyxEditor.UpdateEngine();
                 OnyxEditor.UpdateEngineInput();
 
-                Input.Reset();
                 ++frames;
-
                 if (sw.ElapsedMilliseconds >= 1000)
                 {
                     Console.WriteLine("Editor Thread FrameTime {0}", (float)frames);
                     frames = 0;
                     sw.Restart();
                 }
-
             }
-
         }
 
       
@@ -75,26 +71,25 @@ namespace Onyx_Editor_NET
         private void m_CreateEntityButton_Click(object sender, RoutedEventArgs e)
         {
             float x, y, z;
-
             x = (float)Convert.ToDecimal(PositionTextboxX.Text);
             y = (float)Convert.ToDecimal(PositionTextboxY.Text);
             z = (float)Convert.ToDecimal(PositionTextboxZ.Text);
-
-            //m_OnyxEditor.CreateEntity(x, y, z);
 
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            Input.ProcessKeyEvent(e.Key);
+            Input.ProcessKeyEvent(e.Key, true);
 
             //give user focus back to the window
             if(e.Key == Key.Escape)
             {
                 ViewPortInFocus = false;
             }
-
-
+        }
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            Input.ProcessKeyEvent(e.Key, false);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -125,7 +120,7 @@ namespace Onyx_Editor_NET
 
             //add relative to 640 360
             float toEngineX = (float)(640 + mouseRelativeToVPCenter.X);
-            float toEngineY = (float)(360 + mouseRelativeToVPCenter.Y);
+            float toEngineY = (float)(360 - mouseRelativeToVPCenter.Y);
 
 
             if(ViewPortInFocus)
@@ -144,6 +139,12 @@ namespace Onyx_Editor_NET
         private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ViewPortInFocus = true;
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            ViewportMain.Dispose();
+            m_Aborted = true;
         }
     }
 }

@@ -26,4 +26,12 @@ namespace Onyx {
 		return nullptr;
 	}
 
+	Cubemap* Cubemap::Create(const std::vector<std::string>& paths)
+	{
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
+			return new OpenGLCubemap(paths);
+
+		return nullptr;
+	}
+
 }

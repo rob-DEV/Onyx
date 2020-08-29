@@ -25,14 +25,14 @@ namespace Onyx_Editor_NET
         /// Process a windows key event and convert to Onyx key-code
         /// </summary>
         /// <param name="key"></param>
-        public static void ProcessKeyEvent(Key key)
+        public static void ProcessKeyEvent(Key key, bool pressed)
         {
             //Only supporting ASCII in the editor :D
             //Windows 'A' key  = A = 44 GLFW = 65
             //ASCII A-Z
             if ((uint)key >= 44 && (uint)key <= 69)
             {
-                Keys[(uint)key + 21] = true;
+                Keys[(uint)key + 21] = pressed;
             }
 
         }
@@ -45,22 +45,9 @@ namespace Onyx_Editor_NET
         {
             MousePosition = position;
         }
-
-        public static void Reset()
-        {
-            for (int i = 0; i < Keys.Length; i++)
-            {
-                Keys[i] = false;
-            }
-
-            //MousePosition.X = 640;
-            //MousePosition.Y = 320;
-
-        }
-
+        
         public static bool[] GetKeys()
         {
-
             return Keys;
         }
 

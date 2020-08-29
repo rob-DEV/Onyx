@@ -42,6 +42,7 @@ namespace Onyx {
 		uint32_t m_VertexCount = 0;
 
 		OpenGLShader* m_MeshBasicShader;
+		OpenGLShader* m_SkyboxShader;
 
 		//CPU mapped storage
 		Vertex3D* m_MeshVertexBufferBase;
@@ -50,6 +51,8 @@ namespace Onyx {
 		uint32_t* m_MeshIndexBufferBase;
 		uint32_t* m_MeshIndexBufferWritePtr;
 		
+
+		Cubemap* m_SkyboxTest;
 
 	};
 

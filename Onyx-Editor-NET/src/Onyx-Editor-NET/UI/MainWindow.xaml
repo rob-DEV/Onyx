@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Onyx_Editor_NET"
         mc:Ignorable="d"
         Title="MainWindow" Height="1050" Width="1920"
-        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove"
+        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove" KeyUp="Window_KeyUp" Closing="Window_Closing"
         >
 
 

@@ -10,9 +10,7 @@ using namespace System::Drawing;
 using namespace System::Runtime::InteropServices;
 
 
-
-#include "../../../Onyx/vendor/glm/glm/glm.hpp"
-#include <fstream>
+#include <glm/glm.hpp>
 
 namespace OnyxCLR {
 

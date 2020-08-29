@@ -1,7 +1,7 @@
 #include "onyxpch.h"
 #include "OpenGLRenderer3D.h"
 #include <Onyx/Graphics/RenderCommand.h>
-
+#include <Platform/OpenGL/OpenGLTexture.h>
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -16,6 +16,50 @@ namespace Onyx {
 
 	};
 
+	std::vector<glm::vec3> skyboxVertices = {
+		// positions          
+		{-1.0f,  1.0f, -1.0f},
+		{-1.0f, -1.0f, -1.0f},
+		{ 1.0f, -1.0f, -1.0f},
+		{ 1.0f, -1.0f, -1.0f},
+		{ 1.0f,  1.0f, -1.0f},
+		{-1.0f,  1.0f, -1.0f},
+	
+		{-1.0f, -1.0f,  1.0f},
+		{-1.0f, -1.0f, -1.0f},
+		{-1.0f,  1.0f, -1.0f},
+		{-1.0f,  1.0f, -1.0f},
+		{-1.0f,  1.0f,  1.0f},
+		{-1.0f, -1.0f,  1.0f},
+
+		{ 1.0f, -1.0f, -1.0f},
+		{ 1.0f, -1.0f,  1.0f},
+		{ 1.0f,  1.0f,  1.0f},
+		{ 1.0f,  1.0f,  1.0f},
+		{ 1.0f,  1.0f, -1.0f},
+		{ 1.0f, -1.0f, -1.0f},
+	
+		{-1.0f, -1.0f,  1.0f},
+		{-1.0f,  1.0f,  1.0f},
+		{ 1.0f,  1.0f,  1.0f},
+		{ 1.0f,  1.0f,  1.0f},
+		{ 1.0f, -1.0f,  1.0f},
+		{-1.0f, -1.0f,  1.0f},
+	
+		{-1.0f,  1.0f, -1.0f},
+		{ 1.0f,  1.0f, -1.0f},
+		{ 1.0f,  1.0f,  1.0f},
+		{ 1.0f,  1.0f,  1.0f},
+		{-1.0f,  1.0f,  1.0f},
+		{-1.0f,  1.0f, -1.0f},
+
+		{-1.0f, -1.0f, -1.0f},
+		{-1.0f, -1.0f,  1.0f},
+		{ 1.0f, -1.0f, -1.0f},
+		{ 1.0f, -1.0f, -1.0f},
+		{-1.0f, -1.0f,  1.0f},
+		{ 1.0f, -1.0f,  1.0f}
+	};
 
 	void OpenGLRenderer3D::InitImplementation()
 	{
@@ -54,6 +98,20 @@ namespace Onyx {
 		m_MeshBasicShader = (OpenGLShader*)Shader::Create("res/shaders/3DTest.glsl");
 		m_MeshBasicShader->Bind();
 
+		std::vector<std::string> paths
+		{
+			"res/textures/skybox/Left.png",
+			"res/textures/skybox/Right.png",
+			"res/textures/skybox/Up.png",
+			"res/textures/skybox/Down.png",
+			"res/textures/skybox/Front.png",
+			"res/textures/skybox/Back.png"
+		};
+
+		m_SkyboxTest = new OpenGLCubemap(paths);
+
+		m_SkyboxShader = new OpenGLShader("res/shaders/Skybox.glsl");
+
 	}
 
 	void OpenGLRenderer3D::DestroyImplementation()
@@ -66,6 +124,33 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::BeginSceneImplementation(const Camera& camera)
 	{
+ 		m_MeshVertexArray->Bind();
+ 		m_MeshVertexBuffer->Bind();
+
+		glDepthMask(GL_FALSE);
+
+		//skybox render test
+		m_SkyboxShader->Bind();
+ 		glm::mat4 view = camera.GetProjectionMatrix() * glm::mat4(glm::mat3(camera.GetViewMatrix()));
+ 		((OpenGLShader*)m_SkyboxShader)->UploadUniformMat4("u_ViewProjection", view);
+ 		for (int i = 0; i < skyboxVertices.size(); i++) {
+ 			m_MeshVertexBufferWritePtr->Position = skyboxVertices[i];
+ 			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+ 			m_MeshVertexBufferWritePtr++;
+ 
+ 			//nice orange
+ 			//glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
+ 		}
+ 
+ 		m_VertexCount += skyboxVertices.size();
+ 		m_SkyboxTest->Bind(0);
+ 		EndScene();
+ 		Flush();
+ 		glDepthMask(GL_TRUE);
+
+	
+
+
 		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
 		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
 		m_IndexCount = 0;
@@ -77,10 +162,9 @@ namespace Onyx {
 		m_MeshBasicShader->Bind();
 
 
-
 		((OpenGLShader*)m_MeshBasicShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
-		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {0.0f, -4.8f, -15.0f});
+		((OpenGLShader*)m_MeshBasicShader)->UploadUniformFloat3("u_LightPosition", {0.0f, -12.8f, 0.0f});
 
 
 	}
@@ -118,6 +202,9 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size)
 	{
+		//skybox test
+
+
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), size);
 
@@ -127,11 +214,11 @@ namespace Onyx {
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.2f, 0.0f, 1.0f);
+			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.50f, 0.75f, 1.0, 1.0f);
 			m_MeshVertexBufferWritePtr++;
 
 			//nice orange
-			//glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
+			//glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
 		}
 		m_VertexCount += vertices.size();
 

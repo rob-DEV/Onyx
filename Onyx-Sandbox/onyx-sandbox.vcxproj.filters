@@ -33,6 +33,7 @@
     <None Include="res\shaders\FlatColor.glsl" />
     <None Include="res\shaders\Texture.glsl" />
     <None Include="res\models\CubeTri.fbx" />
+    <None Include="res\shaders\Skybox.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Sandbox2D.h">

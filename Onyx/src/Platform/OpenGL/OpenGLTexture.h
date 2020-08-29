@@ -1,5 +1,5 @@
-#ifndef _ONYX_PLATFORM_OPENGL_TEXTURE_2D_H_
-#define _ONYX_PLATFORM_OPENGL_TEXTURE_2D_H_
+#ifndef _ONYX_PLATFORM_OPENGL_TEXTURE_H_
+#define _ONYX_PLATFORM_OPENGL_TEXTURE_H_
 
 #include <Onyx/Graphics/Texture.h>
 #include <glad/glad.h>
@@ -30,7 +30,25 @@ namespace Onyx {
 		GLenum m_InternalFormat, m_DataFormat;
 	};
 
+	class OpenGLCubemap : public Cubemap
+	{
+	public:
+		OpenGLCubemap(const std::vector<std::string>& paths);
+		virtual ~OpenGLCubemap();
+
+		virtual void Bind(uint32_t slot = 0) const override;
+		virtual bool operator==(const Texture& other) const override
+		{
+			return m_RendererID == ((OpenGLCubemap&)other).m_RendererID;
+		}
+
+	private:
+		std::string m_Paths[6];
+		uint32_t m_RendererID;
+		GLenum m_InternalFormat, m_DataFormat;
+	};
+
 }
 
 
-#endif // !_ONYX_PLATFORM_OPENGL_TEXTURE_2D_H_
+#endif // !_ONYX_PLATFORM_OPENGL_TEXTURE_H_

@@ -42,7 +42,7 @@ namespace Onyx {
 		Renderer3D::BeginScene(cam.GetCamera());
 
 		for (int i = 0; i < m_ModelTest->m_Meshes.size(); ++i) {
-			Renderer3D::DrawMesh(m_ModelTest->m_Meshes[i], glm::vec3(0.0f, -4.0f, -15.0f), glm::vec3(1.0f));
+			Renderer3D::DrawMesh(m_ModelTest->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f));
 		}
 
 		Renderer3D::EndScene();

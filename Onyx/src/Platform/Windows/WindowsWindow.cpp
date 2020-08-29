@@ -64,8 +64,8 @@ namespace Onyx {
 		//EXPERIMENTAL - used for "off-screen" graphics rendering
 		if (m_Data.Hidden)
 			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
