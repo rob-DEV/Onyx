@@ -14,12 +14,24 @@ namespace Onyx_Editor_NET
     /// </summary>
     public class Input
     {
-
-
         private static bool[] Keys = new bool[Keycodes.ONYX_KEYCODE_COUNT];
+        private static bool[] MouseButtons = new bool[MouseCodes.ONYX_MOUSEBUTTON_COUNT];
+
         private static Point MousePosition = new Point(640,360);
 
+        public static bool[] GetKeys()
+        {
+            return Keys;
+        }
 
+        public static bool[] GetMouseButtons()
+        {
+            return MouseButtons;
+        }
+        public static Point GetMousePosition()
+        {
+            return MousePosition;
+        }
 
         /// <summary>
         /// Process a windows key event and convert to Onyx key-code
@@ -38,6 +50,17 @@ namespace Onyx_Editor_NET
         }
 
         /// <summary>
+        /// Process a windows mouse event and convert to Onyx key-code
+        /// </summary>
+        /// <param name="key"></param>
+        public static void ProcessMouseEvent(MouseEventArgs eventArgs)
+        {
+            MouseButtons[MouseCodes.ONYX_MOUSE_BUTTON_LEFT] = eventArgs.LeftButton == MouseButtonState.Pressed ? true : false;
+            MouseButtons[MouseCodes.ONYX_MOUSE_BUTTON_RIGHT] = eventArgs.RightButton == MouseButtonState.Pressed ? true : false;
+            MouseButtons[MouseCodes.ONYX_MOUSE_BUTTON_MIDDLE] = eventArgs.MiddleButton == MouseButtonState.Pressed ? true : false;
+        }
+
+        /// <summary>
         /// Process a mouse move event
         /// </summary>
         /// <param name="key"></param>
@@ -45,16 +68,5 @@ namespace Onyx_Editor_NET
         {
             MousePosition = position;
         }
-        
-        public static bool[] GetKeys()
-        {
-            return Keys;
-        }
-
-        public static Point GetMousePosition()
-        {
-            return MousePosition;
-        }
-
     }
 }

@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Onyx_Editor_NET"
              mc:Ignorable="d" 
-             d:DesignHeight="540" d:DesignWidth="960" Background="#FF005A99" Loaded="ViewportUC_Loaded" Unloaded="ViewportUC_Unloaded">
-    <Grid>
-        <Image x:Name="m_EngineFrame" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Width="950"/>
-    </Grid>
+             d:DesignHeight="720" d:DesignWidth="1280" Background="#FF005A99" Loaded="ViewportUC_Loaded" Unloaded="ViewportUC_Unloaded">
+   
+        <Image x:Name="m_EngineFrame"  Width="1280" Height="720" Source="viewport_splash.jpg" Stretch="Fill"/>
+ 
 </UserControl>

@@ -11,6 +11,13 @@ namespace Onyx {
 
 	Input* Input::s_Instance = new WindowsInput();
 
+	bool WindowsInput::IsMouseButtonPressedImplementation(int mouseButton)
+	{
+		int mouseState = glfwGetMouseButton((GLFWwindow*)Application::Get()->GetOnyxWindow().GetNativeWindow(), mouseButton);
+
+		return mouseState == GLFW_PRESS || mouseState == GLFW_REPEAT;
+	}
+
 	bool WindowsInput::IsKeyPressedImplementation(int keycode)
 	{
 

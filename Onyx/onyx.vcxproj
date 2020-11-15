@@ -19,9 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Editor\EditorScene.cpp" />
     <ClCompile Include="src\Onyx\Editor\EditorInput.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Gizmo.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\Skybox.cpp" />
     <ClCompile Include="src\Onyx\Model\Model.cpp" />
     <ClCompile Include="src\Onyx\Editor\Editor.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
@@ -73,11 +76,13 @@
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\Robert\Downloads\assimp-5.0.1\build\include\assimp\config.h" />
+    <ClInclude Include="src\Onyx\Editor\EditorScene.h" />
     <ClInclude Include="src\Onyx\Editor\EditorInput.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h" />
+    <ClInclude Include="src\Onyx\Editor\Gizmo.h" />
+    <ClInclude Include="src\Onyx\Graphics\Skybox.h" />
     <ClInclude Include="src\Onyx\Model\Model.h" />
     <ClInclude Include="src\Onyx\Editor\Editor.h" />
     <ClInclude Include="src\Onyx\Entity\Entity.h" />

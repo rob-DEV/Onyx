@@ -18,7 +18,7 @@ namespace Onyx {
 
 		//EXPERIMENTAL
 		////EXPERIMENTAL
-		virtual RenderedPixelData GetRenderedFrameBuffer();
+		virtual RenderedPixelData GetRenderedFrameBuffer(char* dest);
 
 
 	};

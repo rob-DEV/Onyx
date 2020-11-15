@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Onyx/Editor/Editor.h>
+#include "Bitmap/BitmapDirect.h"
 
 namespace OnyxCLR {
 
@@ -26,8 +27,13 @@ namespace OnyxCLR {
 		~OnyxEditor();
 
 		void Update();
-		void UpdateEngineInput(array<System::Boolean>^ keys, System::Drawing::Point mouseMouse);
-		array<System::Byte>^ GetRenderedFrame();
+
+		void UpdateEngineInput(
+			array<System::Boolean>^ keys, 
+			array<System::Boolean>^ mouseButtons, 
+			System::Drawing::Point mousePosition);
+
+		void GetRenderedFrame(int* buffer);
 
 		void OpenScene(System::String^ filePath);
 		void SaveScene(System::String^ filePath);
@@ -36,12 +42,10 @@ namespace OnyxCLR {
 		void CreateEntity(float x, float y, float z);
 
 
-		static int instanceCount = 0;
 	private:
 		//Example
 		Onyx::Editor* m_Editor;
 
 	};
-
 }
 

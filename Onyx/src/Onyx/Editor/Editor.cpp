@@ -36,6 +36,7 @@
 
 #include <Onyx/Model/ModelLoader.h>
 
+#include "GLFW/glfw3.h"
 
 namespace Onyx {
 	
@@ -49,7 +50,7 @@ namespace Onyx {
 
 		//Window
 		printf("Creating Onyx Editor Instance and Graphics Context!\n");
-		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 960, 540, true));
+		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 1280, 720, true));
 
 
 		//Redirect Standard Input from Windows GLFW to C# Editor
@@ -72,22 +73,29 @@ namespace Onyx {
 		//Initalize editor scene
 		m_EditorScene = new Scene();
 
+		m_EditorTimestep = Timestep(glfwGetTime());
+
+		frameBufferDataPointer = new char[3 * 1280 * 720];
 	}
 
 	Editor::~Editor()
 	{
-
+		delete[] frameBufferDataPointer;
 	}
 
 	void Editor::OnUpdate()
 	{
-		m_EditorScene->OnUpdate(0);
+		float time = (float)glfwGetTime();
+		Timestep timestep(time - m_EditorTimestep);
+		m_EditorScene->OnUpdate(timestep);
 		m_Window->OnUpdate();
+		
+		m_EditorTimestep = time;
 	}
 
 	RenderedPixelData Editor::GetRenderedFrame()
 	{
-		return RenderCommand::GetRenderedFrameBuffer();
+		return RenderCommand::GetRenderedFrameBuffer(frameBufferDataPointer);
 	}
 
 	void Editor::OnDetach()
@@ -106,11 +114,14 @@ namespace Onyx {
 		a->AddComponent<MeshRendererComponent>(m);
 	}
 
-
-	//TODO: move to input
 	bool* Editor::GetInputKeyBuffer()
 	{
 		return m_EditorToEngineInput->m_Keys;
+	}
+
+	bool* Editor::GetInputMouseButtonBuffer()
+	{
+		return m_EditorToEngineInput->m_MouseButtons;
 	}
 
 	void Editor::SetMousePosition(float x, float y)

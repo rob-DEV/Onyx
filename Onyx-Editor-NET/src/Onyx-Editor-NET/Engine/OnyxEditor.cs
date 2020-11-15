@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Onyx_Editor_NET
     {
         public static volatile OnyxCLR.OnyxEditor m_Instance = null;
 
-        public static Queue<byte[]> SwapChain = new Queue<byte[]>();
+        public static DirectBitmap DirectBitmap = new DirectBitmap(1280, 720);
 
         public static void Init()
         {
@@ -22,29 +23,16 @@ namespace Onyx_Editor_NET
                 m_Instance = new OnyxCLR.OnyxEditor();
         }
 
-
-        public static byte[] GetRenderedFramea()
-        {
-            if (m_Instance == null)
-                return null;
-
-            if(SwapChain.Count > 0)
-                return SwapChain.Dequeue();
-            else
-                return null;
-        }
-
-
-        public static void UpdateEngine()
+        public unsafe static void UpdateEngine()
         {
             m_Instance.Update();
-            SwapChain.Enqueue(m_Instance.GetRenderedFrame());
+            m_Instance.GetRenderedFrame(DirectBitmap.GetBitmapBuffer());
         }
 
         public static void UpdateEngineInput()
         {
             if (m_Instance != null)
-                m_Instance.UpdateEngineInput(Input.GetKeys(), Input.GetMousePosition());
+                m_Instance.UpdateEngineInput(Input.GetKeys(), Input.GetMouseButtons(), Input.GetMousePosition());
         }
     }
 }

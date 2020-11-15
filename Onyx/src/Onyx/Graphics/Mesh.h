@@ -17,8 +17,8 @@ namespace Onyx {
 
 		//color test
 		glm::vec4 m_Tint = { 1.0f,0.0f,0.85f, 1.0f };
-		glm::vec4 m_BaseColor;
-		glm::vec4 m_Color;
+		glm::vec4 m_BaseColor = { 1.0f,0.0f,0.85f, 1.0f };
+		glm::vec4 m_Color = { 0.5f, 0.6f, 0.85f, 1.0f };
 
 	};
 

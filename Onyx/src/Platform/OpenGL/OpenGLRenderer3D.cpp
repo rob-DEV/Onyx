@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <Onyx/Scene/Scene.h>
+
 #include <array>
 
 namespace Onyx {
@@ -14,51 +16,6 @@ namespace Onyx {
 		glm::vec3 Position;
 		glm::vec4 Color;
 
-	};
-
-	std::vector<glm::vec3> skyboxVertices = {
-		// positions          
-		{-1.0f,  1.0f, -1.0f},
-		{-1.0f, -1.0f, -1.0f},
-		{ 1.0f, -1.0f, -1.0f},
-		{ 1.0f, -1.0f, -1.0f},
-		{ 1.0f,  1.0f, -1.0f},
-		{-1.0f,  1.0f, -1.0f},
-	
-		{-1.0f, -1.0f,  1.0f},
-		{-1.0f, -1.0f, -1.0f},
-		{-1.0f,  1.0f, -1.0f},
-		{-1.0f,  1.0f, -1.0f},
-		{-1.0f,  1.0f,  1.0f},
-		{-1.0f, -1.0f,  1.0f},
-
-		{ 1.0f, -1.0f, -1.0f},
-		{ 1.0f, -1.0f,  1.0f},
-		{ 1.0f,  1.0f,  1.0f},
-		{ 1.0f,  1.0f,  1.0f},
-		{ 1.0f,  1.0f, -1.0f},
-		{ 1.0f, -1.0f, -1.0f},
-	
-		{-1.0f, -1.0f,  1.0f},
-		{-1.0f,  1.0f,  1.0f},
-		{ 1.0f,  1.0f,  1.0f},
-		{ 1.0f,  1.0f,  1.0f},
-		{ 1.0f, -1.0f,  1.0f},
-		{-1.0f, -1.0f,  1.0f},
-	
-		{-1.0f,  1.0f, -1.0f},
-		{ 1.0f,  1.0f, -1.0f},
-		{ 1.0f,  1.0f,  1.0f},
-		{ 1.0f,  1.0f,  1.0f},
-		{-1.0f,  1.0f,  1.0f},
-		{-1.0f,  1.0f, -1.0f},
-
-		{-1.0f, -1.0f, -1.0f},
-		{-1.0f, -1.0f,  1.0f},
-		{ 1.0f, -1.0f, -1.0f},
-		{ 1.0f, -1.0f, -1.0f},
-		{-1.0f, -1.0f,  1.0f},
-		{ 1.0f, -1.0f,  1.0f}
 	};
 
 	void OpenGLRenderer3D::InitImplementation()
@@ -98,19 +55,6 @@ namespace Onyx {
 		m_MeshBasicShader = (OpenGLShader*)Shader::Create("res/shaders/3DTest.glsl");
 		m_MeshBasicShader->Bind();
 
-		std::vector<std::string> paths
-		{
-			"res/textures/skybox/Left.png",
-			"res/textures/skybox/Right.png",
-			"res/textures/skybox/Up.png",
-			"res/textures/skybox/Down.png",
-			"res/textures/skybox/Front.png",
-			"res/textures/skybox/Back.png"
-		};
-
-		m_SkyboxTest = new OpenGLCubemap(paths);
-
-		m_SkyboxShader = new OpenGLShader("res/shaders/Skybox.glsl");
 
 	}
 
@@ -124,33 +68,6 @@ namespace Onyx {
 
 	void OpenGLRenderer3D::BeginSceneImplementation(const Camera& camera)
 	{
- 		m_MeshVertexArray->Bind();
- 		m_MeshVertexBuffer->Bind();
-
-		glDepthMask(GL_FALSE);
-
-		//skybox render test
-		m_SkyboxShader->Bind();
- 		glm::mat4 view = camera.GetProjectionMatrix() * glm::mat4(glm::mat3(camera.GetViewMatrix()));
- 		((OpenGLShader*)m_SkyboxShader)->UploadUniformMat4("u_ViewProjection", view);
- 		for (int i = 0; i < skyboxVertices.size(); i++) {
- 			m_MeshVertexBufferWritePtr->Position = skyboxVertices[i];
- 			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
- 			m_MeshVertexBufferWritePtr++;
- 
- 			//nice orange
- 			//glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
- 		}
- 
- 		m_VertexCount += skyboxVertices.size();
- 		m_SkyboxTest->Bind(0);
- 		EndScene();
- 		Flush();
- 		glDepthMask(GL_TRUE);
-
-	
-
-
 		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
 		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
 		m_IndexCount = 0;
@@ -198,6 +115,38 @@ namespace Onyx {
 		//lighting
 		//PBR
 
+		m_MeshVertexArray->Bind();
+		m_MeshVertexBuffer->Bind();
+
+		glDepthMask(GL_FALSE);
+
+		//skybox render test
+		scene->GetSkybox().GetShader()->Bind();
+		glm::mat4 view = scene->GetCamera().GetProjectionMatrix() * glm::mat4(glm::mat3(scene->GetCamera().GetViewMatrix()));
+		((OpenGLShader*)scene->GetSkybox().GetShader())->UploadUniformMat4("u_ViewProjection", view);
+		for (int i = 0; i < scene->GetSkybox().GetVertices().size(); i++) {
+			m_MeshVertexBufferWritePtr->Position = scene->GetSkybox().GetVertices()[i];
+			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+			m_MeshVertexBufferWritePtr++;
+
+			//nice orange
+			//glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
+		}
+
+		m_VertexCount += scene->GetSkybox().GetVertices().size();
+		EndScene();
+		Flush();
+		glDepthMask(GL_TRUE);
+		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
+		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
+		m_IndexCount = 0;
+		m_VertexCount = 0;
+
+		m_MeshVertexArray->Bind();
+		m_MeshVertexBuffer->Bind();
+		m_MeshIndexBuffer->Bind();
+		m_MeshBasicShader->Bind();
+
 	}
 
 	void OpenGLRenderer3D::DrawMeshImplementation(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size)
@@ -214,7 +163,7 @@ namespace Onyx {
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.50f, 0.75f, 1.0, 1.0f);
+			m_MeshVertexBufferWritePtr->Color = mesh->m_Color;
 			m_MeshVertexBufferWritePtr++;
 
 			//nice orange
@@ -235,7 +184,7 @@ namespace Onyx {
 	void OpenGLRenderer3D::DrawRotatedMeshImplementation(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size)
 	{
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			//* glm::rotate(glm::mat4(1.0f), angle, ax)
+			* glm::rotate(glm::mat4(1.0f), angle, ax)
 			* glm::scale(glm::mat4(1.0f), size);
 
 		const std::vector<glm::vec3>& vertices = *mesh->m_Vertices;
@@ -244,7 +193,7 @@ namespace Onyx {
 		//submit vertices
 		for (int i = 0; i < vertices.size(); i++) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
-			m_MeshVertexBufferWritePtr->Color = glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);
+			m_MeshVertexBufferWritePtr->Color = mesh->m_Color;
 			m_MeshVertexBufferWritePtr++;
 			//nice orange
 			//glm::vec4(1.1f, 0.5f, 0.0f, 1.0f);

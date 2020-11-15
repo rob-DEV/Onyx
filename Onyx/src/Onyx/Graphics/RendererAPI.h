@@ -60,7 +60,7 @@ namespace Onyx {
 		virtual void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount) = 0;
 
 		////EXPERIMENTAL
-		virtual RenderedPixelData GetRenderedFrameBuffer() = 0;
+		virtual RenderedPixelData GetRenderedFrameBuffer(char* dest) = 0;
 
 
 		inline static API GetAPI() { return s_API; }

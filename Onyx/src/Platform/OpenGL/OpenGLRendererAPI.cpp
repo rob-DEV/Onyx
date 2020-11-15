@@ -5,6 +5,8 @@
 #include <Onyx/Core/Application.h>
 #include <glad/glad.h>
 
+#include <fstream>
+
 namespace Onyx {
 
 	void OpenGLRendererAPI::Init()
@@ -53,16 +55,27 @@ namespace Onyx {
 
 	////EXPERIMENTAL
 	//TODO: Abstract to framebuffer class
-	RenderedPixelData OpenGLRendererAPI::GetRenderedFrameBuffer()
+	RenderedPixelData OpenGLRendererAPI::GetRenderedFrameBuffer(char* dest)
 	{
-		constexpr uint32_t width = 960;
-		constexpr uint32_t height = 540;
-		constexpr uint32_t frameBufferSize = 3 * width * height;
 
+		constexpr uint32_t width = 1280;
+		constexpr uint32_t height = 720;
+		constexpr uint32_t frameBufferSize = 3 * width * height;
+		static bool t = false;
 		RenderedPixelData renderedFrame(NULL, 0);
-		char* pixelData = new char[frameBufferSize];
-		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixelData);
-		renderedFrame.Data = pixelData;
+		//char* pixelData = new char[frameBufferSize];
+		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, dest);
+
+		if (!t) {
+
+			std::fstream s("c:\\DEV\\test.bmp", std::ios::out | std::ios::binary);
+			s.write(dest, frameBufferSize);
+
+			s.close();
+			t = true;
+		}
+
+		renderedFrame.Data = dest;
 		renderedFrame.Size = frameBufferSize;
 
 		return renderedFrame;

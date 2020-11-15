@@ -24,11 +24,25 @@ namespace Onyx_Editor_NET
             Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
         }
 
+        public unsafe int* GetBitmapBuffer()
+        {
+            fixed (int* vp = Bits)
+            {
+                return vp;
+            }
+        }
+
         public void SetPixel(int x, int y, Color colour)
         {
             int index = x + (y * Width);
             int col = colour.ToArgb();
 
+            Bits[index] = col;
+        }
+
+        public void SetPixel(int index, Color colour)
+        {
+            int col = colour.ToArgb();
             Bits[index] = col;
         }
 

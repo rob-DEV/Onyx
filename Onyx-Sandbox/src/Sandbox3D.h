@@ -3,7 +3,9 @@
 #include <Onyx/Onyx.h>
 
 using namespace Onyx;
-
+namespace Onyx {
+	class Scene;
+}
 class Sandbox3D : public Layer
 {
 public:
@@ -22,6 +24,6 @@ private:
 	Mesh* m_Cone;
 	Mesh* m_FbxMeshTest;
 
-	Scene* m_Scene;
+	Onyx::Scene* m_Scene;
 
 };

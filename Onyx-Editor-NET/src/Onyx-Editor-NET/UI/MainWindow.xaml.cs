@@ -40,6 +40,7 @@ namespace Onyx_Editor_NET
             int frames = 0;
 
             OnyxEditor.Init();
+
             while (!m_Aborted)
             {
 
@@ -97,6 +98,7 @@ namespace Onyx_Editor_NET
             m_RenderThread = new Thread(new ThreadStart(EngineThread));
             m_RenderThread.Start();
 
+
            
         }
 
@@ -116,11 +118,11 @@ namespace Onyx_Editor_NET
 
             Point pos = e.GetPosition(ViewportMain);
 
-            Point mouseRelativeToVPCenter = new Point(pos.X - (960 / 2), -(pos.Y - (540 / 2)));
+            Point mouseRelativeToVPCenter = new Point(pos.X - (1280 / 2), -(pos.Y - (720 / 2)));
 
             //add relative to 640 360
-            float toEngineX = (float)(640 + mouseRelativeToVPCenter.X);
-            float toEngineY = (float)(360 - mouseRelativeToVPCenter.Y);
+            float toEngineX = (float)(640 - mouseRelativeToVPCenter.X);
+            float toEngineY = (float)(360 + mouseRelativeToVPCenter.Y);
 
 
             if(ViewPortInFocus)
@@ -128,17 +130,24 @@ namespace Onyx_Editor_NET
             else
                 Input.ProcessMouseMove(new System.Drawing.Point(640, 360));
 
-            if (ViewPortInFocus)
-                this.Cursor = Cursors.None;
-            else
-                this.Cursor = Cursors.Arrow;
-
-            //Console.WriteLine("MOUSE C# {0},{1}", toEngineX, toEngineY);
         }
 
         private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ViewPortInFocus = true;
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                this.Cursor = Cursors.None;
+                ViewPortInFocus = true;
+            }
+        }
+
+        private void ViewportMain_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Released)
+            {
+                this.Cursor = Cursors.Arrow;
+                ViewPortInFocus = false;
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -146,5 +155,17 @@ namespace Onyx_Editor_NET
             ViewportMain.Dispose();
             m_Aborted = true;
         }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Input.ProcessMouseEvent(e);
+        }
+
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Input.ProcessMouseEvent(e);
+        }
+
+        
     }
 }

@@ -21,7 +21,7 @@ namespace OnyxCLR {
 
 	OnyxEditor::~OnyxEditor()
 	{
-
+		
 	}
 
 	void OnyxEditor::Update()
@@ -29,32 +29,29 @@ namespace OnyxCLR {
 		m_Editor->OnUpdate();
 	}
 
-	
-	void OnyxEditor::UpdateEngineInput(array<System::Boolean>^ keys, System::Drawing::Point mousePosition)
+
+	void OnyxEditor::UpdateEngineInput(array<System::Boolean>^ keys, array<System::Boolean>^ mouseButtons, System::Drawing::Point mousePosition)
 	{
 		for (size_t i = 0; i < 350; i++)
-		{
 			m_Editor->GetInputKeyBuffer()[i] = keys[i];
-		}
+		
+		for (size_t i = 0; i < 8; i++)
+			m_Editor->GetInputMouseButtonBuffer()[i] = mouseButtons[i];
+
 
 		m_Editor->SetMousePosition(mousePosition.X, mousePosition.Y);
 	}
 
-	array<System::Byte>^ OnyxEditor::GetRenderedFrame()
+	void OnyxEditor::GetRenderedFrame(int* buffer)
 	{
 		Onyx::RenderedPixelData dd = m_Editor->GetRenderedFrame();
 
-		//array<System::Byte> d = gcnew array< Byte >(100);
-		array<System::Byte>^ dc = gcnew array<System::Byte>(dd.Size);
-		// convert native pointer to System::IntPtr with C-Style cast
-		Marshal::Copy((IntPtr)dd.Data, dc, 0, dd.Size);
-
-		
-		
-		delete[] dd.Data;
-		return dc;
-
-
+		int pos = 0;
+		for (int i = 0; i < 1280 * 720; ++i)
+		{
+			buffer[i] = (255 << 24) + ((unsigned char)dd.Data[pos] << 16) + ((unsigned char)dd.Data[pos + 1] << 8) + (unsigned char)dd.Data[pos + 2];
+			pos += 3;
+		}
 	}
 
 	void OnyxEditor::OpenScene(System::String^ filePath)

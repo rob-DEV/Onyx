@@ -5,6 +5,9 @@
 
 #include "Components.h"
 
+#define ADD_COMPONENT(comp) template <> comp& AddComponent<comp>(comp& component)
+
+
 namespace Onyx {
 
 	class Scene;
@@ -19,8 +22,18 @@ namespace Onyx {
 		template<typename T, typename... Args>
 		T& AddComponent(Args& ... args);
 
-		template <> TransformComponent& AddComponent<TransformComponent>(TransformComponent& component);
-		template <> MeshRendererComponent& AddComponent<MeshRendererComponent>(MeshRendererComponent& component);
+		//TEMPLATING MACRO
+		ADD_COMPONENT(TransformComponent);
+		ADD_COMPONENT(MeshRendererComponent);
+
+
+
+
+
+
+
+		//template <> TransformComponent& AddComponent<TransformComponent>(TransformComponent& component);
+		//template <> MeshRendererComponent& AddComponent<MeshRendererComponent>(MeshRendererComponent& component);
 
 
 		template<typename T>

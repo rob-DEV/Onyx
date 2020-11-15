@@ -15,7 +15,7 @@ namespace Onyx {
 			CENTER_SCREEN = 0
 		};
 
-
+		inline static bool IsMouseButtonPressed(int mouseButton) { return s_Instance->IsMouseButtonPressedImplementation(mouseButton); };
 		inline static bool IsKeyPressed(int keycode) {	return s_Instance->IsKeyPressedImplementation(keycode); };
 		inline static glm::vec2 GetMousePosition() { return s_Instance->GetMousePositionImplementation(); };
 		inline static glm::vec2 GetMousePositionNormalized() { return s_Instance->GetMousePositionNormalizedImplementation(); };
@@ -25,6 +25,7 @@ namespace Onyx {
 		inline static void SetMousePosition(Input::MousePosition position) { s_Instance->SetMousePositionImplementation(position); };
 
 	protected:
+		virtual bool IsMouseButtonPressedImplementation(int mouseButton) = 0;
 		virtual bool IsKeyPressedImplementation(int keycode) = 0;
 		virtual glm::vec2 GetMousePositionImplementation() = 0;
 		virtual glm::vec2 GetMousePositionNormalizedImplementation() = 0;

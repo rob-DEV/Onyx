@@ -5,6 +5,8 @@
 #include <Onyx/Core/TimeStep.h>
 #include <Onyx/Camera/FirstPersonCameraController.h>
 
+#include <Onyx/Graphics/Skybox.h>
+
 #include <Onyx/Entity/Entity.h>
 #include <Onyx/Entity/Registry.h>
 
@@ -12,6 +14,8 @@ namespace Onyx {
 
 	class Entity;
 	class Model;
+	class Gizmo;
+	
 
 	class ONYX_API Scene {
 	public:
@@ -21,12 +25,19 @@ namespace Onyx {
 		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
 		
+		const Camera& GetCamera() const { return m_Camera; }
+		const Skybox& GetSkybox() const { return m_Skybox; }
+
 	private:
 		Registry m_EntityRegistry;
 
 		//TESTING
-		FirstPersonPerspectiveCamera m_CameraController;
+		Skybox m_Skybox;
+		FirstPersonPerspectiveCamera m_Camera;
+
+
 		Model* m_ModelTest;
+		Gizmo* m_GizmoTest;
 
 		friend class Entity;
 

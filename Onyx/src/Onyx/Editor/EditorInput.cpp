@@ -7,8 +7,8 @@ namespace Onyx {
 
 	EditorInput::EditorInput()
 	{
+		m_MouseButtons = new bool[8];
 		m_Keys = new bool[350];
-
 		for (size_t i = 0; i < 350; i++)
 		{
 			m_Keys[i] = false;
@@ -19,6 +19,12 @@ namespace Onyx {
 	EditorInput::~EditorInput()
 	{
 		delete[] m_Keys;
+		delete[] m_MouseButtons;
+	}
+
+	bool EditorInput::IsMouseButtonPressedImplementation(int mouseButton)
+	{
+		return m_MouseButtons[mouseButton];
 	}
 
 	bool EditorInput::IsKeyPressedImplementation(int keycode)

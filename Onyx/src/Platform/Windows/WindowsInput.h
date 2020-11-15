@@ -9,6 +9,7 @@ namespace Onyx {
 	class WindowsInput : public Input {
 
 	protected:
+		virtual bool IsMouseButtonPressedImplementation(int mouseButton);
 		virtual bool IsKeyPressedImplementation(int keycode);
 		virtual glm::vec2 GetMousePositionImplementation() override;
 		virtual glm::vec2 GetMousePositionNormalizedImplementation() override;

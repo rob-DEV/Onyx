@@ -27,7 +27,7 @@ namespace Onyx {
 		inline static void Flush() { s_Instance->FlushImplementation(); };
 
 
-		inline static void DrawScene(const Scene* scene);
+		inline static void DrawScene(const Scene* scene) { s_Instance->DrawSceneImplementation(scene); };
 		inline static void DrawMesh(const Mesh* mesh, const glm::vec3& position, const glm::vec3& size) { s_Instance->DrawMeshImplementation(mesh, position, size); };
 		inline static void DrawRotatedMesh(const Mesh* mesh, float angle, const glm::vec3& ax, const glm::vec3& position, const glm::vec3& size) { s_Instance->DrawRotatedMeshImplementation(mesh, angle, ax, position, size); };
 

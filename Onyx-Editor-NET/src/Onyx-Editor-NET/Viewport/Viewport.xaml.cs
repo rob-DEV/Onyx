@@ -25,46 +25,28 @@ namespace Onyx_Editor_NET
         private Thread m_ViewportRenderThread;
         private bool m_ViewportThreadTerminated = false;
 
-        private void ViewportRenderThread_Worker()
+        private unsafe void ViewportRenderThread_Worker()
         {
-
-            //Initialize the Engines Graphics context in viewport
-            //As OpenGL / GLFW must only operate on one thread
-
-            DirectBitmap b = new DirectBitmap(960, 540);
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+
+            System.Drawing.Rectangle renderTarget = new System.Drawing.Rectangle(0, 0, OnyxEditor.DirectBitmap.Bitmap.Width, OnyxEditor.DirectBitmap.Bitmap.Height);
             int frames = 0;
 
             while (!m_ViewportThreadTerminated)
             {
+                while (OnyxEditor.m_Instance == null);
 
-                byte[] s = OnyxEditor.GetRenderedFramea();
-
-                if (s == null)
-                    continue;
-
-                int pos = 0;
-                for (int y = 539; y >= 0; y--)
-                {
-                    for (int x = 0; x < 960; x++)
-                    {
-                        b.SetPixel(x, y, System.Drawing.Color.FromArgb(255, s[pos], s[pos + 1], s[pos + 2]));
-                        pos += 3;
-                    }
-                }
-
-                var bitmapData = b.Bitmap.LockBits(
-                new System.Drawing.Rectangle(0, 0, b.Bitmap.Width, b.Bitmap.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, b.Bitmap.PixelFormat);
+                var bitmapData = OnyxEditor.DirectBitmap.Bitmap.LockBits(renderTarget, System.Drawing.Imaging.ImageLockMode.ReadOnly, OnyxEditor.DirectBitmap.Bitmap.PixelFormat);
 
                 var bitmapSource = BitmapSource.Create(
-                   bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Bgra32, null,
-                   bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
+                    bitmapData.Width, bitmapData.Height, 96, 96, PixelFormats.Bgra32, null,
+                    bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
 
-                b.Bitmap.UnlockBits(bitmapData);
+                OnyxEditor.DirectBitmap.Bitmap.UnlockBits(bitmapData);
+
                 bitmapSource.Freeze();
                 Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
                     (Action)(() => { m_EngineFrame.Source = bitmapSource; }));
@@ -78,7 +60,7 @@ namespace Onyx_Editor_NET
                     sw.Restart();
                 }
 
-
+                Thread.Sleep((int)(1000.0f/60.0f));
             }
         }
 

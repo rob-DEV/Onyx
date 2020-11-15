@@ -14,7 +14,7 @@ namespace Onyx {
 		m_ViewMatrix = glm::lookAt(
 			m_Position,           // Camera is here
 			glm::vec3(0.0f), // and looks here : at the same position, plus "direction"
-			glm::vec3(0.0f, -1.0f, 0.0f)                 // Head is up (set to 0,-1,0 to look upside-down)
+			glm::vec3(0.0f, 1.0f, 0.0f)                 // Head is up (set to 0,-1,0 to look upside-down)
 		);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
