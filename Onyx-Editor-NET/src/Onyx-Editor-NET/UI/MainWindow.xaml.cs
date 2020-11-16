@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using System.Timers;
+using Microsoft.Win32;
 
 namespace Onyx_Editor_NET
 {
@@ -64,10 +65,35 @@ namespace Onyx_Editor_NET
             InitializeComponent();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_New_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Onyx Scene Files (*.osc) | *.osc| XML Files (*.xml)|*.xml";
+
+            if(openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+
+                OnyxEditor.OpenScene(filePath);
+
+            }
+           
+        }
+        private void MenuItem_Save_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MenuItem_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
 
         private void m_CreateEntityButton_Click(object sender, RoutedEventArgs e)
         {

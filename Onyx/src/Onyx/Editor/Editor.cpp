@@ -73,7 +73,7 @@ namespace Onyx {
 		Renderer3D::Init();
 
 		//Initalize editor scene
-		m_EditorScene = new SceneEditor();
+		m_SceneEditor = new SceneEditor();
 
 		m_EditorTimestep = Timestep(glfwGetTime());
 
@@ -89,16 +89,16 @@ namespace Onyx {
 	{
 		if (m_EditorToEngineInput->IsKeyPressed(ONYX_KEY_L)) {
 
-			GizmoState state = m_EditorScene->m_EditorGizmo->GetState();
+			GizmoState state = m_SceneEditor->m_EditorGizmo->GetState();
 
 			state = (GizmoState)(((uint32_t)state + 1) % 2);
 
-			m_EditorScene->m_EditorGizmo->SetState(state);
+			m_SceneEditor->m_EditorGizmo->SetState(state);
 		}
 
 		float time = (float)glfwGetTime();
 		Timestep timestep(time - m_EditorTimestep);
-		m_EditorScene->OnUpdate(timestep);
+		m_SceneEditor->OnUpdate(timestep);
 		m_Window->OnUpdate();
 		
 		m_EditorTimestep = time;
@@ -112,17 +112,6 @@ namespace Onyx {
 	void Editor::OnDetach()
 	{
 
-	}
-
-	void Editor::CreateEntity(glm::vec3 position)
-	{
-		Entity* a = m_EditorScene->m_Scene->CreateEntity();
-		TransformComponent s = TransformComponent(glm::vec3(position));
-		a->AddComponent<TransformComponent>(s);
-
-		//For testing
-		MeshRendererComponent m = MeshRendererComponent(PrimitiveMesh::Create(PrimitiveMeshType::Cone));
-		a->AddComponent<MeshRendererComponent>(m);
 	}
 
 	bool* Editor::GetInputKeyBuffer()

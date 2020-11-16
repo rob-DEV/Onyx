@@ -18,6 +18,9 @@ namespace Onyx {
 
 		void OnUpdate(Timestep ts);
 
+		bool OpenScene(const char* filePath);
+		bool SaveScene(const char* filePath);
+
 	private:
 		Scene* m_Scene;
 

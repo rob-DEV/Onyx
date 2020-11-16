@@ -38,9 +38,6 @@ namespace OnyxCLR {
 		void OpenScene(System::String^ filePath);
 		void SaveScene(System::String^ filePath);
 
-		//testing
-		void CreateEntity(float x, float y, float z);
-
 
 	private:
 		//Example

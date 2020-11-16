@@ -17,19 +17,7 @@ namespace Onyx {
 		m_Scene(new Scene()),
 		m_EditorGizmo(new Gizmo())
 	{
-
-		//Entity Tests
-		Entity* e = m_Scene->CreateEntity();
-
-		TagComponent tag("BaseSceneModel");
-		TransformComponent t(glm::vec3(25.8888f, 50.33333f, 45.5555f));
-		MeshRendererComponent m(ModelLoader::LoadFromFile("res/models/Scene.obj")->m_Meshes[0]);
-
-		e->AddComponent<TagComponent>(tag);
-		e->AddComponent<TransformComponent>(t);
-		e->AddComponent<MeshRendererComponent>(m);
-
-		bool a = SceneSerializer::Serialize(m_Scene, "res/scenes/SceneTest.xml");
+		//MeshRendererComponent m(ModelLoader::LoadFromFile("res/models/Scene.obj")->m_Meshes[0]);
 
 	}
 
@@ -65,14 +53,29 @@ namespace Onyx {
 
 		//EDITOR
 
-		for (int i = 0; i < m_EditorGizmo->m_ActiveModel->m_Meshes.size(); ++i)
-		{
-			Renderer3D::DrawMesh(m_EditorGizmo->m_ActiveModel->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f));
+		if (m_Scene->m_Entities.size() > 0) {
+			for (int i = 0; i < m_EditorGizmo->m_ActiveModel->m_Meshes.size(); ++i)
+			{
+				Renderer3D::DrawMesh(m_EditorGizmo->m_ActiveModel->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f));
+			}
 		}
 
 		Renderer3D::EndScene();
 		Renderer3D::Flush();
 
+	}
+
+	bool SceneEditor::OpenScene(const char* filePath)
+	{
+		delete m_Scene;
+		m_Scene = SceneSerializer::DeSerialize(filePath);
+		return true;
+	}
+
+	bool SceneEditor::SaveScene(const char* filePath)
+	{
+		SceneSerializer::Serialize(m_Scene, filePath);
+		return true;
 	}
 
 }

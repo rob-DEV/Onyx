@@ -17,6 +17,10 @@ namespace Onyx_Editor_NET
 
         public static DirectBitmap DirectBitmap = new DirectBitmap(1280, 720);
 
+        public static string OpenedScene = "";
+
+        public static bool NeedsToOpenScene = false;
+
         public static void Init()
         {
             if (m_Instance == null)
@@ -25,6 +29,14 @@ namespace Onyx_Editor_NET
 
         public unsafe static void UpdateEngine()
         {
+            //open scene test
+            if (NeedsToOpenScene) {
+                m_Instance.OpenScene(OpenedScene);
+                NeedsToOpenScene = false;
+            }
+
+
+
             m_Instance.Update();
             m_Instance.GetRenderedFrame(DirectBitmap.GetBitmapBuffer());
         }
@@ -33,6 +45,13 @@ namespace Onyx_Editor_NET
         {
             if (m_Instance != null)
                 m_Instance.UpdateEngineInput(Input.GetKeys(), Input.GetMouseButtons(), Input.GetMousePosition());
+        }
+
+        internal static void OpenScene(string filePath)
+        {
+            OpenedScene = filePath;
+            NeedsToOpenScene = true;
+
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Onyx_Editor_NET"
         mc:Ignorable="d"
         Title="MainWindow" Height="1050" Width="1920"
-        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove" KeyUp="Window_KeyUp" Closing="Window_Closing" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove" KeyUp="Window_KeyUp" Closing="Window_Closing" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         >
 
 
@@ -24,13 +24,14 @@
             <ColumnDefinition Width="3.3*" />
         </Grid.ColumnDefinitions>
 
-            <Menu DockPanel.Dock="Top"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Close" Click="MenuItem_Click"/>
-                    <MenuItem Header="_Save"/>
-                </MenuItem>
-            </Menu>
+        <Menu DockPanel.Dock="Top"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Click="MenuItem_New_Click"/>
+                <MenuItem Header="_Open" Click="MenuItem_Open_Click"/>
+                <MenuItem Header="_Save" Click="MenuItem_Save_Click"/>
+                <MenuItem Header="_Close" Click="MenuItem_Close_Click"/>
+            </MenuItem>
+        </Menu>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
             <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>

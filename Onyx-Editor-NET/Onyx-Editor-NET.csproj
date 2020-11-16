@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="src\Onyx-Editor-NET\Debug\Console.cs" />
     <Compile Include="src\Onyx-Editor-NET\Engine\OnyxEditor.cs" />
+    <Compile Include="src\Onyx-Editor-NET\Engine\Scene.cs" />
     <Compile Include="src\Onyx-Editor-NET\Input\MouseCodes.cs" />
     <Compile Include="src\Onyx-Editor-NET\Viewport\BitmapDirect.cs" />
     <Page Include="src\Onyx-Editor-NET\Viewport\Viewport.xaml">

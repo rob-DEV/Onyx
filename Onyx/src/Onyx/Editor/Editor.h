@@ -24,18 +24,18 @@ namespace Onyx {
 		RenderedPixelData GetRenderedFrame();
 
 		void OnDetach();
-		void CreateEntity(glm::vec3 position);
 
 		bool* GetInputKeyBuffer();
 		bool* GetInputMouseButtonBuffer();
 		void SetMousePosition(float x, float y);
+
+		SceneEditor* m_SceneEditor;
 
 	private:
 		Window* m_Window;
 		EditorInput* m_EditorToEngineInput;
 		Timestep m_EditorTimestep = 0;
 
-		SceneEditor* m_EditorScene;
 		static Editor* s_EditorInstance;
 
 		//ABSTRACT OUT SOMEWHERE ELSE

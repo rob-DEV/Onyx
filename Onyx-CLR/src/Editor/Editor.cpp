@@ -4,6 +4,7 @@
 #include <Onyx/Core/Keycodes.h>
 
 #include <Onyx/Editor/EditorInput.h>
+#include <Onyx/Editor/SceneEditor.h>
 
 using namespace System;
 using namespace System::Drawing;
@@ -56,17 +57,12 @@ namespace OnyxCLR {
 
 	void OnyxEditor::OpenScene(System::String^ filePath)
 	{
-
+		m_Editor->m_SceneEditor->OpenScene((char*)(void*)Marshal::StringToHGlobalAnsi(filePath));
 	}
 
 	void OnyxEditor::SaveScene(System::String^ filePath)
 	{
 
-	}
-
-	void OnyxEditor::CreateEntity(float x, float y, float z)
-	{
-		m_Editor->CreateEntity(glm::vec3(x,y,z));
 	}
 
 }

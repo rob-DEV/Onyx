@@ -3,6 +3,9 @@
 
 #include <tinyxml2.h>
 
+#include <sstream>
+#include <string>
+
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
 #endif
@@ -71,7 +74,58 @@ namespace Onyx {
 	}
 
 	Scene* SceneSerializer::DeSerialize(const std::string& filePath) {
-		return nullptr;
+		
+		tinyxml2::XMLDocument xmlDoc;
+
+		xmlDoc.LoadFile(filePath.c_str());
+
+		XMLNode* pRoot = xmlDoc.FirstChild();
+
+		if (pRoot == nullptr) {
+			std::cout << "Failed to load scene or bad XML!: " << filePath << "\n";
+			return nullptr;
+		}
+
+		//Iterate through serialized entities
+		XMLElement* pEntityElement = pRoot->FirstChildElement("ONYX-ENTITY");
+
+		Scene* scene = new Scene();
+		
+		while (pEntityElement != nullptr) {
+
+			Entity* entity = scene->CreateEntity();
+
+			XMLElement* pEntityComponentElement = pEntityElement->FirstChildElement();
+
+			while (pEntityComponentElement != nullptr) {
+
+				//Determine component type and De-Serialize
+				if (_stricmp(pEntityComponentElement->Value(), "TagComponent") == 0) {
+					
+					TagComponent t = TagComponent(pEntityComponentElement->GetText());
+					entity->AddComponent<TagComponent>(t);
+					
+				}
+				else if (_stricmp(pEntityComponentElement->Value(), "TransformComponent") == 0) {
+
+					TransformComponent t = TransformComponent();
+					
+					//Position
+					XMLElement* pTransformPositionElement = pEntityComponentElement->FirstChildElement("Position");
+					pTransformPositionElement->FirstChildElement("X")->QueryFloatText(&t.Position.x);
+					pTransformPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
+					pTransformPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
+
+				}
+				pEntityComponentElement = pEntityComponentElement->NextSiblingElement();
+			}
+
+			pEntityElement = pEntityElement->NextSiblingElement("ONYX-ENTITY");
+		}
+
+
+		
+		return scene;
 	}
 
 }

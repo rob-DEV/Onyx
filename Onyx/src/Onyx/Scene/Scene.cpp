@@ -32,6 +32,11 @@ namespace Onyx {
 
 	Scene::~Scene()
 	{
+		for (auto a : m_Entities) {
+			delete a;
+		}
+
+		m_Entities.clear();
 
 	}
 
