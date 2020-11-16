@@ -31,16 +31,18 @@ namespace Onyx {
 	private:
 		Registry m_EntityRegistry;
 
+
+		//ENTITIES
+		std::vector<Entity*> m_Entities;
+
 		//TESTING
 		Skybox m_Skybox;
 		FirstPersonPerspectiveCamera m_Camera;
-
-
 		Model* m_ModelTest;
-		Gizmo* m_GizmoTest;
 
 		friend class Entity;
-
+		friend class SceneEditor;
+		friend class SceneSerializer;
 	};
 }
 

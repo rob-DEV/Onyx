@@ -6,6 +6,10 @@
 #include "Components.h"
 
 #define ADD_COMPONENT(comp) template <> comp& AddComponent<comp>(comp& component)
+#define HAS_COMPONENT(comp) template <> bool HasComponent<comp>()
+#define GET_COMPONENT(comp) template <> comp& GetComponent<comp>()
+
+
 
 
 namespace Onyx {
@@ -23,23 +27,24 @@ namespace Onyx {
 		T& AddComponent(Args& ... args);
 
 		//TEMPLATING MACRO
+		ADD_COMPONENT(TagComponent);
 		ADD_COMPONENT(TransformComponent);
 		ADD_COMPONENT(MeshRendererComponent);
 
 
+		template<typename T>
+		bool HasComponent();
 
-
-
-
-
-		//template <> TransformComponent& AddComponent<TransformComponent>(TransformComponent& component);
-		//template <> MeshRendererComponent& AddComponent<MeshRendererComponent>(MeshRendererComponent& component);
+		HAS_COMPONENT(TagComponent);
+		HAS_COMPONENT(TransformComponent);
+		HAS_COMPONENT(MeshRendererComponent);
 
 
 		template<typename T>
 		T& GetComponent();
-
-
+		GET_COMPONENT(TagComponent);
+		GET_COMPONENT(TransformComponent);
+		GET_COMPONENT(MeshRendererComponent);
 		
 	private:
 		

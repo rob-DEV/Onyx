@@ -11,10 +11,12 @@
 
 //Scene
 #include <Onyx/Scene/Scene.h>
+#include <Onyx/Editor/Gizmo.h>
+#include <Onyx/Editor/SceneEditor.h>
 
 //Graphics
-#include <Onyx/Graphics/Texture.h>
 #include <Onyx/Graphics/Mesh.h>
+#include <Onyx/Graphics/Texture.h>
 
 //Renderer
 #include <Onyx/Graphics/RendererAPI.h>
@@ -27,7 +29,7 @@
 //Sound
 #include <Onyx/Audio/Sound.h>
 
-//PLATFORM
+//Platform
 #include <Platform/Windows/WindowsWindow.h>
 #include <Platform/OpenGL/OpenGLRenderer2D.h>
 #include <Platform/OpenGL/OpenGLRenderer3D.h>
@@ -71,20 +73,29 @@ namespace Onyx {
 		Renderer3D::Init();
 
 		//Initalize editor scene
-		m_EditorScene = new Scene();
+		m_EditorScene = new SceneEditor();
 
 		m_EditorTimestep = Timestep(glfwGetTime());
 
-		frameBufferDataPointer = new char[3 * 1280 * 720];
+		m_FrameBufferDataPointer = new char[3 * 1280 * 720];
 	}
 
 	Editor::~Editor()
 	{
-		delete[] frameBufferDataPointer;
+		delete[] m_FrameBufferDataPointer;
 	}
 
 	void Editor::OnUpdate()
 	{
+		if (m_EditorToEngineInput->IsKeyPressed(ONYX_KEY_L)) {
+
+			GizmoState state = m_EditorScene->m_EditorGizmo->GetState();
+
+			state = (GizmoState)(((uint32_t)state + 1) % 2);
+
+			m_EditorScene->m_EditorGizmo->SetState(state);
+		}
+
 		float time = (float)glfwGetTime();
 		Timestep timestep(time - m_EditorTimestep);
 		m_EditorScene->OnUpdate(timestep);
@@ -95,7 +106,7 @@ namespace Onyx {
 
 	RenderedPixelData Editor::GetRenderedFrame()
 	{
-		return RenderCommand::GetRenderedFrameBuffer(frameBufferDataPointer);
+		return RenderCommand::GetRenderedFrameBuffer(m_FrameBufferDataPointer);
 	}
 
 	void Editor::OnDetach()
@@ -105,7 +116,7 @@ namespace Onyx {
 
 	void Editor::CreateEntity(glm::vec3 position)
 	{
-		Entity* a = m_EditorScene->CreateEntity();
+		Entity* a = m_EditorScene->m_Scene->CreateEntity();
 		TransformComponent s = TransformComponent(glm::vec3(position));
 		a->AddComponent<TransformComponent>(s);
 

@@ -4,6 +4,21 @@
 #include <entt/entt.hpp>
 #include <Onyx/Scene/Scene.h>
 
+#define ADD_COMPONENT_IMPL(comp) template <> comp& Entity::AddComponent<comp>(comp& component) { \
+	void* reg = m_Scene->m_EntityRegistry.m_Registry; \
+	return ((entt::registry*)(reg))->emplace<comp>((entt::entity)m_EntityID, component); \
+} \
+
+#define HAS_COMPONENT_IMPL(comp) template <> bool Entity::HasComponent<comp>() { \
+	void* reg = m_Scene->m_EntityRegistry.m_Registry; \
+	return ((entt::registry*)(reg))->has<comp>((entt::entity)m_EntityID); \
+} \
+
+#define GET_COMPONENT_IMPL(comp) template <> comp& Entity::GetComponent<comp>() { \
+	void* reg = m_Scene->m_EntityRegistry.m_Registry;\
+	return ((entt::registry*)(reg))->get<comp>((entt::entity)m_EntityID);\
+} \
+
 namespace Onyx {
 
 	Entity::Entity(uint32_t entity, Scene* scene) : m_EntityID(entity), m_Scene(scene)
@@ -16,27 +31,20 @@ namespace Onyx {
 
 	}
 
-
-	template <> TransformComponent& Entity::AddComponent<TransformComponent>(TransformComponent& component) {
-		void* reg = m_Scene->m_EntityRegistry.m_Registry;
-		return ((entt::registry*)(reg))->emplace<TransformComponent>((entt::entity)m_EntityID, component);
-	}
-
-	template <> MeshRendererComponent& Entity::AddComponent<MeshRendererComponent>(MeshRendererComponent& component) {
-		void* reg = m_Scene->m_EntityRegistry.m_Registry;
-		return ((entt::registry*)(reg))->emplace<MeshRendererComponent>((entt::entity)m_EntityID, component);
-	}
+	//ADD
+	ADD_COMPONENT_IMPL(TagComponent);
+	ADD_COMPONENT_IMPL(TransformComponent);
+	ADD_COMPONENT_IMPL(MeshRendererComponent);
 
 
+	//HAS
+	HAS_COMPONENT_IMPL(TagComponent);
+	HAS_COMPONENT_IMPL(TransformComponent);
+	HAS_COMPONENT_IMPL(MeshRendererComponent);
 
-	template <> TransformComponent& Entity::GetComponent<TransformComponent>() {
-		void* reg = m_Scene->m_EntityRegistry.m_Registry;
-		return ((entt::registry*)(reg))->get<TransformComponent>((entt::entity)m_EntityID);
-	}
-
-	template <> MeshRendererComponent& Entity::GetComponent<MeshRendererComponent>() {
-		void* reg = m_Scene->m_EntityRegistry.m_Registry;
-		return ((entt::registry*)(reg))->get<MeshRendererComponent>((entt::entity)m_EntityID);
-	}
+	//GET
+	GET_COMPONENT_IMPL(TagComponent);
+	GET_COMPONENT_IMPL(TransformComponent);
+	GET_COMPONENT_IMPL(MeshRendererComponent);
 
 }

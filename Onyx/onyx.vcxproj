@@ -19,11 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Onyx\Editor\EditorScene.cpp" />
+    <ClCompile Include="src\Onyx\Editor\SceneEditor.cpp" />
     <ClCompile Include="src\Onyx\Editor\EditorInput.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Editor\Gizmo.cpp" />
+    <ClCompile Include="src\Onyx\Editor\SceneSerializer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Skybox.cpp" />
     <ClCompile Include="src\Onyx\Model\Model.cpp" />
     <ClCompile Include="src\Onyx\Editor\Editor.cpp" />
@@ -47,7 +48,6 @@
     <ClCompile Include="src\Onyx\graphics\Shader.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
     <ClCompile Include="src\Onyx\graphics\VertexArray.cpp" />
-    <ClCompile Include="src\Onyx\ImGUI\ImGuiBuild.cpp" />
     <ClCompile Include="src\Onyx\Model\ModelLoader.cpp" />
     <ClCompile Include="src\Onyx\Physics\Physics.cpp" />
     <ClCompile Include="src\Onyx\Scene\Scene.cpp" />
@@ -74,14 +74,16 @@
     <ClCompile Include="vendor\glad\src\glad.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
+    <ClCompile Include="vendor\tinyxml2\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Onyx\Editor\EditorScene.h" />
+    <ClInclude Include="src\Onyx\Editor\SceneEditor.h" />
     <ClInclude Include="src\Onyx\Editor\EditorInput.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h" />
     <ClInclude Include="src\Onyx\Editor\Gizmo.h" />
+    <ClInclude Include="src\Onyx\Editor\SceneSerializer.h" />
     <ClInclude Include="src\Onyx\Graphics\Skybox.h" />
     <ClInclude Include="src\Onyx\Model\Model.h" />
     <ClInclude Include="src\Onyx\Editor\Editor.h" />
@@ -227,6 +229,7 @@
     <ClInclude Include="vendor\openal\AL\xram.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\Platform\Vulkan\VulkanSwapchain.h" />
+    <ClInclude Include="vendor\tinyxml2\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig" />
@@ -327,7 +330,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_DEBUG_;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\assimp\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\assimp\;$(ProjectDir)vendor\entt\include\;$(ProjectDir)vendor\tinyxml2\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -368,7 +371,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\assimp\;$(ProjectDir)vendor\entt\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src\Onyx;$(ProjectDir)vendor\glm\;$(ProjectDir)vendor\glfw3\;$(ProjectDir)vendor\glad\include\;$(ProjectDir)vendor\stb_image\;$(ProjectDir)vendor\imgui\;$(ProjectDir)vendor\vulkan\;$(ProjectDir)vendor\openal\;$(ProjectDir)vendor\assimp\;$(ProjectDir)vendor\entt\include\;$(ProjectDir)vendor\tinyxml2\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_ONYX_BUILD_DLL_;_ONYX_BUILD_TARGET_WINDOWS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>

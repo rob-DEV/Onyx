@@ -3,21 +3,32 @@
 
 #include <Onyx/Core/Core.h>
 
+#include <Onyx/Model/Model.h>
 
 
 namespace Onyx {
 
-	class Model;
+	enum class GizmoState {
+		Transform,
+		Rotate,
+		Scale
+	};
 
 	class ONYX_API Gizmo {
 	public:
 		Gizmo();
 		~Gizmo();
+		Model* m_ActiveModel;
+
+		void SetState(GizmoState state);
+		GizmoState GetState();
+	private:
 		Model* m_TransformModel;
 		Model* m_RotateModel;
 		Model* m_ScaleModel;
 
-		Model* m_ActiveModel = m_TransformModel;
+		GizmoState m_GizmoState = GizmoState::Transform;
+
 	};
 
 }

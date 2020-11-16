@@ -11,7 +11,7 @@
 namespace Onyx {
 
 	class Window;
-	class Scene;
+	class SceneEditor;
 	class EditorInput;
 
 	class ONYX_API Editor
@@ -22,6 +22,7 @@ namespace Onyx {
 
 		void OnUpdate();
 		RenderedPixelData GetRenderedFrame();
+
 		void OnDetach();
 		void CreateEntity(glm::vec3 position);
 
@@ -34,11 +35,11 @@ namespace Onyx {
 		EditorInput* m_EditorToEngineInput;
 		Timestep m_EditorTimestep = 0;
 
-		Scene* m_EditorScene;
+		SceneEditor* m_EditorScene;
 		static Editor* s_EditorInstance;
 
 		//ABSTRACT OUT SOMEWHERE ELSE
-		char* frameBufferDataPointer = nullptr;
+		char* m_FrameBufferDataPointer = nullptr;
 
 	};
 
