@@ -1,17 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\AssemblyInfo.cpp" />
-    <ClCompile Include="src\Onyx-CLR.cpp" />
-    <ClCompile Include="src\Editor\Editor.cpp" />
-    <ClCompile Include="src\Bitmap\BitmapDirect.cpp" />
+    <Filter Include="Bitmap">
+      <UniqueIdentifier>{C20381A9-AEA5-AB7F-9760-BFD383A132D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{8C1A20B0-78BC-4A86-6177-5EDA4DB8D1D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Bitmap\BitmapDirect.h">
+      <Filter>Bitmap</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Editor\Editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Vector.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
     <ClInclude Include="src\Onyx-CLR.h" />
-    <ClInclude Include="src\Editor\Editor.h" />
-    <ClInclude Include="src\Bitmap\BitmapDirect.h" />
-    <ClInclude Include="src\Engine\Vector.h" />
+    <ClInclude Include="src\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AssemblyInfo.cpp" />
+    <ClCompile Include="src\Bitmap\BitmapDirect.cpp">
+      <Filter>Bitmap</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\Editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Onyx-CLR.cpp" />
+    <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
 </Project>
