@@ -341,3 +341,6 @@ healthchecksdb
 /Onyx-sandbox/res/audio/borhap.wav
 /Onyx-sandbox/res/audio/theringer1.wav
 /Onyx-sandbox/res/audio/theringer.wav
+
+bin/
+bin-int/
