@@ -93,7 +93,7 @@ namespace Onyx {
 		m_WhiteTexture->SetData(&pureWhiteTexture, sizeof(uint32_t));
 
 		int32_t samplers[MAX_TEXTURE_SLOTS];
-		for (uint32_t i = 0; i < MAX_TEXTURE_SLOTS; i++)
+		for (uint32_t i = 0; i < MAX_TEXTURE_SLOTS; ++i)
 			samplers[i] = i;
 
 		//set 0th to white texture
@@ -161,7 +161,7 @@ namespace Onyx {
 			return;
 
 		//bind textures
-		for (uint32_t i = 0; i < m_TextureSlotIndex; i++)
+		for (uint32_t i = 0; i < m_TextureSlotIndex; ++i)
 			m_TextureSlots[i]->Bind(i);
 
 		RenderCommand::DrawIndexed(m_QuadVertexArray, m_IndexCount);
@@ -210,7 +210,7 @@ namespace Onyx {
 		}
 
 
-		for (size_t i = 0; i < quadVertexCount; i++)
+		for (size_t i = 0; i < quadVertexCount; ++i)
 		{
 			m_QuadVertexBufferWritePtr->Position = transform * m_QuadVertexPositions[i];
 			m_QuadVertexBufferWritePtr->Color = color;
@@ -243,7 +243,7 @@ namespace Onyx {
 		}
 
 		float textureIndex = 0.0f;
-		for (uint32_t i = 1; i < m_TextureSlotIndex; i++)
+		for (uint32_t i = 1; i < m_TextureSlotIndex; ++i)
 		{
 			if (*m_TextureSlots[i] == *texture)
 			{
@@ -260,7 +260,7 @@ namespace Onyx {
 			m_TextureSlotIndex++;
 		}
 
-		for (size_t i = 0; i < quadVertexCount; i++)
+		for (size_t i = 0; i < quadVertexCount; ++i)
 		{
 			m_QuadVertexBufferWritePtr->Position = transform * m_QuadVertexPositions[i];
 			m_QuadVertexBufferWritePtr->Color = glm::vec4(1, 1, 1, 1);

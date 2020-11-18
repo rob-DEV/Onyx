@@ -5,7 +5,10 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include <Onyx/Core/Core.h>
+#include <Onyx/Physics/Ray.h>
 #include "Camera.h"
+
+
 
 namespace Onyx {
 
@@ -24,6 +27,8 @@ namespace Onyx {
 		const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
 		const glm::mat4& GetViewMatrix() const override { return m_ViewMatrix; }
 		const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
+
+		Ray ScreenPointToRay() const;
 
 	private:
 		void RecalculateViewMatrix();

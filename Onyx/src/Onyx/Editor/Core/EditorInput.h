@@ -24,7 +24,7 @@ namespace Onyx {
 		bool* m_Keys;
 		glm::vec2 m_MousePos;
 	private:
-		friend class Editor;
+		friend class EditorCore;
 	};
 
 }

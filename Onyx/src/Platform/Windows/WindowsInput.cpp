@@ -5,7 +5,7 @@
 #include <Onyx/core/Application.h>
 #include <GLFW/glfw3.h>
 
-#include <Onyx/Editor/EditorInput.h>
+#include <Onyx/Editor/Core/EditorInput.h>
 
 namespace Onyx {
 

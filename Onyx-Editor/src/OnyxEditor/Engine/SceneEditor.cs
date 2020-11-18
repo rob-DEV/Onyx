@@ -10,7 +10,14 @@ namespace OnyxEditor
 
     public class SceneEditor
     {
-        public void OpenScene(string filePath)
+        private volatile OnyxCLR.EditorCoreCLR m_Instance;
+
+        public SceneEditor(ref OnyxCLR.EditorCoreCLR instance)
+        {
+            m_Instance = instance;
+        }
+
+        internal void OpenScene(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -23,12 +30,29 @@ namespace OnyxEditor
             }
         }
 
-        public bool IsSceneUpdateRequired { get { return m_SceneUpdateRequired; } set { m_SceneUpdateRequired = value; } }
+        public List<OnyxCLR.Entity> GetAllEntities()
+        {
+            List<OnyxCLR.Entity> e = m_Instance.SceneEditorInstance.GetAllEntitiesTest();
+
+            return e;
+        }
+
+        internal void Update()
+        {
+            if(m_SceneUpdateRequired)
+            {
+                m_Instance.SceneEditorInstance.OpenScene(m_ScenePath);
+                m_SceneUpdateRequired = false;
+            } 
+        }
+
         public string CurrentScenePath { get { return m_ScenePath; } }
 
         private bool m_SceneUpdateRequired = false;
 
         private string m_ScenePath = "";
+
+        
     }
 
 }

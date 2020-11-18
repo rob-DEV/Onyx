@@ -14,11 +14,13 @@ namespace Onyx {
 	class SceneEditor;
 	class EditorInput;
 
-	class ONYX_API Editor
+	class ONYX_API EditorCore
 	{
 	public:
-		Editor();
-		~Editor();
+		EditorCore();
+		~EditorCore();
+
+		void InitEngineComponents(SceneEditor* sceneEditor);
 
 		void OnUpdate();
 		RenderedPixelData GetRenderedFrame();
@@ -29,14 +31,13 @@ namespace Onyx {
 		bool* GetInputMouseButtonBuffer();
 		void SetMousePosition(float x, float y);
 
-		SceneEditor* m_SceneEditor;
 
 	private:
 		Window* m_Window;
 		EditorInput* m_EditorToEngineInput;
 		Timestep m_EditorTimestep = 0;
 
-		static Editor* s_EditorInstance;
+		SceneEditor* m_SceneEditor = nullptr;
 
 		//ABSTRACT OUT SOMEWHERE ELSE
 		char* m_FrameBufferDataPointer = nullptr;

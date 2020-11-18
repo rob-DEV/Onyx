@@ -5,7 +5,7 @@
 #include <Onyx/Graphics/Renderer3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
 
-#include <Onyx/Editor/Gizmo.h>
+#include <Onyx/Editor/Components/Gizmo.h>
 
 #include <entt/entt.hpp>
 

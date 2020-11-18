@@ -89,7 +89,13 @@ namespace OnyxEditor
 
         private void MenuItem_Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            var s = OnyxEditor.EngineCore.SceneEditor.GetAllEntities();
+
+            TreeView1.Items.Clear();
+            foreach (OnyxCLR.Entity item in s)
+            {
+                TreeView1.Items.Add(item.m_Entity);
+            }
         }
 
 
@@ -140,11 +146,8 @@ namespace OnyxEditor
             float toEngineY = (float)(360 + mouseRelativeToVPCenter.Y);
 
 
-            if(ViewPortInFocus)
-                Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
-            else
-                Input.ProcessMouseMove(new System.Drawing.Point(640, 360));
-
+            Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
+        
         }
 
         private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)

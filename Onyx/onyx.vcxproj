@@ -84,7 +84,7 @@ IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_ONYX_BUILD_TARGET_WINDOWS_;_ONYX_BUILD_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_ONYX_BUILD_TARGET_WINDOWS_;_ONYX_BUILD_DLL_;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\glm;vendor\glfw3;vendor\glad\include;vendor\stb_image;vendor\vulkan;vendor\openal;vendor\assimp;vendor\entt\include;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -109,7 +109,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Onyx\Console\Console.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
@@ -119,6 +119,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="src\Onyx\Camera\OrthographicCameraController.h" />
     <ClInclude Include="src\Onyx\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Onyx\Camera\PerspectiveCameraController.h" />
+    <ClInclude Include="src\Onyx\Console\Console.h" />
     <ClInclude Include="src\Onyx\Core\Application.h" />
     <ClInclude Include="src\Onyx\Core\Core.h" />
     <ClInclude Include="src\Onyx\Core\Entrypoint.h" />
@@ -128,11 +129,11 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="src\Onyx\Core\Layer.h" />
     <ClInclude Include="src\Onyx\Core\TimeStep.h" />
     <ClInclude Include="src\Onyx\Core\Window.h" />
-    <ClInclude Include="src\Onyx\Editor\Editor.h" />
-    <ClInclude Include="src\Onyx\Editor\EditorInput.h" />
-    <ClInclude Include="src\Onyx\Editor\Gizmo.h" />
-    <ClInclude Include="src\Onyx\Editor\SceneEditor.h" />
-    <ClInclude Include="src\Onyx\Editor\SceneSerializer.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorCore.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorInput.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\Gizmo.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\SceneEditor.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\SceneSerializer.h" />
     <ClInclude Include="src\Onyx\Entity\Components.h" />
     <ClInclude Include="src\Onyx\Entity\Entity.h" />
     <ClInclude Include="src\Onyx\Entity\Registry.h" />
@@ -413,7 +414,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Onyx\Console\Console.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
     <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
@@ -422,13 +423,14 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\Onyx\Camera\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Onyx\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Camera\PerspectiveCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Console\Console.cpp" />
     <ClCompile Include="src\Onyx\Core\Application.cpp" />
     <ClCompile Include="src\Onyx\Core\Layer.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Editor.cpp" />
-    <ClCompile Include="src\Onyx\Editor\EditorInput.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Gizmo.cpp" />
-    <ClCompile Include="src\Onyx\Editor\SceneEditor.cpp" />
-    <ClCompile Include="src\Onyx\Editor\SceneSerializer.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorCore.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorInput.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\Gizmo.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\SceneEditor.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\SceneSerializer.cpp" />
     <ClCompile Include="src\Onyx\Entity\Entity.cpp" />
     <ClCompile Include="src\Onyx\Entity\Registry.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Buffer.cpp" />

@@ -1,11 +1,41 @@
 <ONYX-SCENE>
     <ONYX-ENTITY>
-        <TagComponent>BaseSceneModel</TagComponent>
+        <TagComponent>BaseSceneModel2</TagComponent>
         <TransformComponent>
             <Position>
-                <X>25.8888</X>
-                <Y>50.333328</Y>
-                <Z>45.5555</Z>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>0</Z>
+            </Position>
+        </TransformComponent>
+    </ONYX-ENTITY>
+	<ONYX-ENTITY>
+        <TagComponent>BaseSceneModel2</TagComponent>
+        <TransformComponent>
+            <Position>
+                <X>10.8888</X>
+                <Y>10.333328</Y>
+                <Z>10.5555</Z>
+            </Position>
+        </TransformComponent>
+    </ONYX-ENTITY>
+	<ONYX-ENTITY>
+        <TagComponent>BaseSceneModeld2</TagComponent>
+        <TransformComponent>
+            <Position>
+                <X>12.8888</X>
+                <Y>2.333328</Y>
+                <Z>2.5555</Z>
+            </Position>
+        </TransformComponent>
+    </ONYX-ENTITY>
+	<ONYX-ENTITY>
+        <TagComponent>BaseSceneModel2</TagComponent>
+        <TransformComponent>
+            <Position>
+                <X>-30</X>
+                <Y>20.011</Y>
+                <Z>-60.5555</Z>
             </Position>
         </TransformComponent>
     </ONYX-ENTITY>
@@ -14,8 +44,8 @@
         <TransformComponent>
             <Position>
                 <X>15.8888</X>
-                <Y>10.333328</Y>
-                <Z>45.5555</Z>
+                <Y>50.333328</Y>
+                <Z>85.5555</Z>
             </Position>
         </TransformComponent>
     </ONYX-ENTITY>

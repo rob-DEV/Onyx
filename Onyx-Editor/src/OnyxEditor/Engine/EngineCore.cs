@@ -14,7 +14,7 @@ namespace OnyxEditor
     public partial class EngineCore
     {
 
-        public static volatile OnyxCLR.OnyxEditor m_Instance = null;
+        public static volatile OnyxCLR.EditorCoreCLR m_Instance = null;
 
         private static EngineInput m_EngineInput = null;
         
@@ -26,20 +26,19 @@ namespace OnyxEditor
 
         public static SceneEditor SceneEditor { get { return m_OynxSceneEditor; } }
 
-        public static void Init()
+        internal static void Init()
         {
             if (m_Instance == null)
             {
-                m_Instance = new OnyxCLR.OnyxEditor();
+                m_Instance = new OnyxCLR.EditorCoreCLR();
                 m_EngineInput = new EngineInput(ref m_Instance);
                 m_OnyxEngineRenderer = new EngineRenderer(ref m_Instance);
-                m_OynxSceneEditor = new SceneEditor();
+                m_OynxSceneEditor = new SceneEditor(ref m_Instance);
             }
         }
 
-        public unsafe static void UpdateEngine()
+        internal unsafe static void UpdateEngine()
         {
-
             //CORE ONYX UPDATES
            
             //Update Onyx engine input
@@ -51,16 +50,8 @@ namespace OnyxEditor
             //Poll rendered data
             m_OnyxEngineRenderer.Update();
 
-
-            //TESTING
-            //open scene test
-            if (m_OynxSceneEditor.IsSceneUpdateRequired)
-            {
-                m_Instance.OpenScene(m_OynxSceneEditor.CurrentScenePath);
-                m_OynxSceneEditor.IsSceneUpdateRequired = false;
-            }
-
-
+            //SCENE EDITOR UPDATES
+            m_OynxSceneEditor.Update();
         }
     }
 }

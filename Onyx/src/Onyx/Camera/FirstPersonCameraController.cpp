@@ -84,7 +84,9 @@ namespace Onyx  {
 		m_Camera.m_ViewMatrix = viewMatrix;
 		m_Camera.RecalculateViewMatrix();
 
-		Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
+		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_MIDDLE)) {
+			Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
+		}
 	}
 
 }

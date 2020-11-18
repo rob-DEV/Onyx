@@ -5,12 +5,15 @@
 
 #include <Onyx/Core/TimeStep.h>
 
+#include <vector>
+
 namespace Onyx {
 
 	class FirstPersonCameraController;
 	class Gizmo;
 	class Scene;
 	class Entity;
+	class SceneEditorSelector;
 
 	class ONYX_API SceneEditor {
 	public:
@@ -22,14 +25,21 @@ namespace Onyx {
 		bool OpenScene(const char* filePath);
 		bool SaveScene(const char* filePath);
 
+		std::vector<Entity*> GetAllEntitiesTest();
 	private:
+		
+		//Initialize First
+		FirstPersonCameraController* m_EditorCameraController;
+		
 		Scene* m_Scene;
 		Entity* m_SelectedEntity;
 
+		SceneEditorSelector* m_SceneSelector;
+
 		Gizmo* m_EditorGizmo;
-		FirstPersonCameraController* m_EditorCameraController;
-	
-		friend class Editor;
+
+		friend class EditorCore;
+		friend class SceneEditorSelector;
 
 	};
 

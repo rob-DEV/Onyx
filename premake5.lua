@@ -78,6 +78,7 @@ project "Onyx"
         symbols "On"
 
     filter "configurations:Release"
+        defines ""
         optimize "On"
 
 

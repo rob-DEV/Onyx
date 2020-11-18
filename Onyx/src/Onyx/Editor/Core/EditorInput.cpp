@@ -8,13 +8,13 @@ namespace Onyx {
 	EditorInput::EditorInput()
 	{
 		m_MouseButtons = new bool[8];
-		for (size_t i = 0; i < 8; i++)
+		for (size_t i = 0; i < 8; ++i)
 		{
 			m_MouseButtons[i] = false;
 		}
 
 		m_Keys = new bool[350];
-		for (size_t i = 0; i < 350; i++)
+		for (size_t i = 0; i < 350; ++i)
 		{
 			m_Keys[i] = false;
 		}
@@ -45,7 +45,11 @@ namespace Onyx {
 
 	glm::vec2 EditorInput::GetMousePositionNormalizedImplementation()
 	{
-		return glm::vec2();
+		//normalize to viewport between -1 - 1
+		float xposNormalized = (2.0f * (float)m_MousePos.x) / (float)1280 - 1.0f;
+		float yposNormalized = (2.0f * (float)m_MousePos.y) / (float)720 - 1.0f;
+
+		return glm::vec2(-xposNormalized, -yposNormalized);
 	}
 
 	double EditorInput::GetMouseScrollImplementation()

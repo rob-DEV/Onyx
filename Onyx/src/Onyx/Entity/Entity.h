@@ -22,6 +22,9 @@ namespace Onyx {
 		Entity(uint32_t entity, Scene* scene);
 		~Entity();
 
+		//TEST
+		uint32_t GetID() const { return m_EntityID; }
+
 		//ADD COMPONENTS CAN'T USE TEMPLATING ATM DUE TO CLR
 		template<typename T, typename... Args>
 		T& AddComponent(Args& ... args);
@@ -47,7 +50,6 @@ namespace Onyx {
 		GET_COMPONENT(MeshRendererComponent);
 		
 	private:
-		
 		uint32_t m_EntityID;
 		Scene* m_Scene = nullptr;
 	};

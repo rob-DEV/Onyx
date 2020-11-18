@@ -15,24 +15,29 @@
     <ClInclude Include="src\Bitmap\BitmapDirect.h">
       <Filter>Bitmap</Filter>
     </ClInclude>
-    <ClInclude Include="src\Editor\Editor.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Vector.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Onyx-CLR.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Entity\Entity.h" />
+    <ClInclude Include="src\Entity\Components.h" />
+    <ClInclude Include="src\Editor\EditorCoreCLR.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Editor\SceneEditorCLR.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
     <ClCompile Include="src\Bitmap\BitmapDirect.cpp">
       <Filter>Bitmap</Filter>
     </ClCompile>
-    <ClCompile Include="src\Editor\Editor.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="src\Onyx-CLR.cpp" />
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Entity\Entity.cpp" />
+    <ClCompile Include="src\Editor\EditorCoreCLR.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\SceneEditorCLR.cpp" />
   </ItemGroup>
 </Project>

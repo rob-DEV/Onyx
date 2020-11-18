@@ -25,6 +25,22 @@ namespace Onyx {
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
+	Ray FirstPersonPerspectiveCamera::ScreenPointToRay() const
+	{
+		auto normalizedMouseInput = Input::GetMousePositionNormalized();
+		glm::vec2 normalizedMouse = glm::vec2(normalizedMouseInput.x, normalizedMouseInput.y);
+
+		glm::vec2 ray_nds = normalizedMouse;
+		glm::vec4 ray_clip = glm::vec4(ray_nds.x, ray_nds.y, -1.0f, 1.0f);
+		glm::mat4 invProjMat = glm::inverse(m_ProjectionMatrix);
+		glm::vec4 eyeCoords = invProjMat * ray_clip;
+		eyeCoords = glm::vec4(eyeCoords.x, eyeCoords.y, -1.0f, 0.0f);
+		glm::mat4 invViewMat = glm::inverse(m_ViewMatrix);
+		glm::vec4 rayWorld = invViewMat * eyeCoords;
+
+		return Ray(m_Position, rayWorld);
+	}
+
 	void FirstPersonPerspectiveCamera::RecalculateViewMatrix()
 	{
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;

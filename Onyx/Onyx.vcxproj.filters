@@ -13,6 +13,9 @@
     <Filter Include="src\Onyx\Camera">
       <UniqueIdentifier>{220E6B7A-8E99-D83E-97AA-5B3303B5343F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Onyx\Console">
+      <UniqueIdentifier>{0CC68EE8-F8BE-AD3A-21F1-92BF0D498D46}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Onyx\Core">
       <UniqueIdentifier>{822B3226-EEEB-AD5C-B726-F7D923A6F238}</UniqueIdentifier>
     </Filter>
@@ -111,6 +114,9 @@
     <ClInclude Include="src\Onyx\Camera\PerspectiveCameraController.h">
       <Filter>src\Onyx\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="src\Onyx\Console\Console.h">
+      <Filter>src\Onyx\Console</Filter>
+    </ClInclude>
     <ClInclude Include="src\Onyx\Core\Application.h">
       <Filter>src\Onyx\Core</Filter>
     </ClInclude>
@@ -137,21 +143,6 @@
     </ClInclude>
     <ClInclude Include="src\Onyx\Core\Window.h">
       <Filter>src\Onyx\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Editor\Editor.h">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Editor\EditorInput.h">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Editor\Gizmo.h">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Editor\SceneEditor.h">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Editor\SceneSerializer.h">
-      <Filter>src\Onyx\Editor</Filter>
     </ClInclude>
     <ClInclude Include="src\Onyx\Entity\Components.h">
       <Filter>src\Onyx\Entity</Filter>
@@ -987,7 +978,22 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Onyx\Console\Console.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorCore.h">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Onyx\Editor\Core\EditorInput.h">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Onyx\Editor\Components\SceneEditor.h">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Onyx\Editor\Components\SceneSerializer.h">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Onyx\Editor\Components\Gizmo.h">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1014,26 +1020,14 @@
     <ClCompile Include="src\Onyx\Camera\PerspectiveCameraController.cpp">
       <Filter>src\Onyx\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="src\Onyx\Console\Console.cpp">
+      <Filter>src\Onyx\Console</Filter>
+    </ClCompile>
     <ClCompile Include="src\Onyx\Core\Application.cpp">
       <Filter>src\Onyx\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Onyx\Core\Layer.cpp">
       <Filter>src\Onyx\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Editor\Editor.cpp">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Editor\EditorInput.cpp">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Editor\Gizmo.cpp">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Editor\SceneEditor.cpp">
-      <Filter>src\Onyx\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Editor\SceneSerializer.cpp">
-      <Filter>src\Onyx\Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\Onyx\Entity\Entity.cpp">
       <Filter>src\Onyx\Entity</Filter>
@@ -1158,6 +1152,21 @@
     <ClCompile Include="vendor\tinyxml2\tinyxml2.cpp">
       <Filter>vendor\tinyxml2</Filter>
     </ClCompile>
-    <ClCompile Include="src\Onyx\Console\Console.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorCore.cpp">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Onyx\Editor\Core\EditorInput.cpp">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Onyx\Editor\Components\SceneEditor.cpp">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Onyx\Editor\Components\SceneSerializer.cpp">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Onyx\Editor\Components\Gizmo.cpp">
+      <Filter>src\Onyx\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
   </ItemGroup>
 </Project>

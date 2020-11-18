@@ -58,7 +58,7 @@ namespace Onyx {
 	{
 		cleanupSwapchain();
 
-		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+		for (size_t i = 0; i < m_SwapChainImages.size(); ++i) {
 			delete uniformBuffers[i];
 		}
 
@@ -69,7 +69,7 @@ namespace Onyx {
 		delete indiceBufferTest;
 		delete vertexBufferTest;
 
-		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
 			vkDestroySemaphore(m_LogicalDeviceReference, m_RenderFinishedSemaphores[i], nullptr);
 			vkDestroySemaphore(m_LogicalDeviceReference, m_ImageAvailableSemaphores[i], nullptr);
 			vkDestroyFence(m_LogicalDeviceReference, m_InFlightFences[i], nullptr);
@@ -145,7 +145,7 @@ namespace Onyx {
 
 	void VulkanSwapchain::cleanupSwapchain()
 	{
-		for (size_t i = 0; i < m_SwapChainFramebuffers.size(); i++)
+		for (size_t i = 0; i < m_SwapChainFramebuffers.size(); ++i)
 			vkDestroyFramebuffer(m_LogicalDeviceReference, m_SwapChainFramebuffers[i], nullptr);
 
 		vkFreeCommandBuffers(m_LogicalDeviceReference, m_CommandPool, static_cast<uint32_t>(m_CommandBuffers.size()), m_CommandBuffers.data());
@@ -154,7 +154,7 @@ namespace Onyx {
 		vkDestroyPipelineLayout(m_LogicalDeviceReference, m_PipelineLayout, nullptr);
 		vkDestroyRenderPass(m_LogicalDeviceReference, m_RenderPass, nullptr);
 
-		for (size_t i = 0; i < m_SwapChainImageViews.size(); i++)
+		for (size_t i = 0; i < m_SwapChainImageViews.size(); ++i)
 			vkDestroyImageView(m_LogicalDeviceReference, m_SwapChainImageViews[i], nullptr);
 
 		vkDestroySwapchainKHR(m_LogicalDeviceReference, m_SwapChain, nullptr);
@@ -249,7 +249,7 @@ namespace Onyx {
 		VkPhysicalDeviceMemoryProperties memProperties;
 		vkGetPhysicalDeviceMemoryProperties(VulkanDevice::Get()->GetPhysicalDevice(), &memProperties);
 		
-		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+		for (uint32_t i = 0; i < memProperties.memoryTypeCount; ++i) {
 			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
 				return i;
 			}
@@ -263,7 +263,7 @@ namespace Onyx {
 	{
 		m_SwapChainImageViews.resize(m_SwapChainImages.size());
 
-		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+		for (size_t i = 0; i < m_SwapChainImages.size(); ++i) {
 			VkImageViewCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 			createInfo.image = m_SwapChainImages[i];
@@ -389,7 +389,7 @@ namespace Onyx {
 			assert(false);
 		}
 
-		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+		for (size_t i = 0; i < m_SwapChainImages.size(); ++i) {
 			VkDescriptorBufferInfo bufferInfo = {};
 			bufferInfo.buffer = uniformBuffers[i]->GetBufferObject();
 			bufferInfo.offset = 0;
@@ -553,7 +553,7 @@ namespace Onyx {
 	void VulkanSwapchain::createFramebuffers()
 	{
 		m_SwapChainFramebuffers.resize(m_SwapChainImageViews.size());
-		for (size_t i = 0; i < m_SwapChainImageViews.size(); i++) {
+		for (size_t i = 0; i < m_SwapChainImageViews.size(); ++i) {
 			VkImageView attachments[] = {
 				m_SwapChainImageViews[i]
 			};
@@ -669,7 +669,7 @@ namespace Onyx {
 
 		uniformBuffers.resize(m_SwapChainImages.size());
 
-		for (size_t i = 0; i < m_SwapChainImages.size(); i++) {
+		for (size_t i = 0; i < m_SwapChainImages.size(); ++i) {
 			uniformBuffers[i] = new VulkanVertexBuffer(NULL, sizeof(UniformBufferObject), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 		}
 		
@@ -715,7 +715,7 @@ namespace Onyx {
 			assert(false);
 		}
 
-		for (size_t i = 0; i < m_CommandBuffers.size(); i++) {
+		for (size_t i = 0; i < m_CommandBuffers.size(); ++i) {
 			VkCommandBufferBeginInfo beginInfo = {};
 			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 
@@ -773,7 +773,7 @@ namespace Onyx {
 		fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; ++i) {
 			if (vkCreateSemaphore(m_LogicalDeviceReference, &semaphoreInfo, nullptr, &m_ImageAvailableSemaphores[i]) != VK_SUCCESS ||
 				vkCreateSemaphore(m_LogicalDeviceReference, &semaphoreInfo, nullptr, &m_RenderFinishedSemaphores[i]) != VK_SUCCESS ||
 				vkCreateFence(m_LogicalDeviceReference, &fenceInfo, nullptr, &m_InFlightFences[i]) != VK_SUCCESS) {

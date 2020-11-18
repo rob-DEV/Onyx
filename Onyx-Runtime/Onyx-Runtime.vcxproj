@@ -94,6 +94,9 @@
       <Project>{73458A7C-5F7C-8B0D-0869-7110F47E070F}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Onyx-Runtime\RuntimeApplication.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

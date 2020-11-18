@@ -87,7 +87,7 @@ namespace Onyx {
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID);
 		stbi_set_flip_vertically_on_load(0);
 		int width, height, channels;
-		for (size_t i = 0; i < paths.size(); i++)
+		for (size_t i = 0; i < paths.size(); ++i)
 		{
 			m_Paths[i] = paths[i];
 			unsigned char* data = stbi_load(paths[i].c_str(), &width, &height, &channels, 0);

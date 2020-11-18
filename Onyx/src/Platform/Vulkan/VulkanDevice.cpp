@@ -180,7 +180,7 @@ namespace Onyx {
 				break;
 			}
 
-			i++;
+			++i;
 		}
 
 		return indices;

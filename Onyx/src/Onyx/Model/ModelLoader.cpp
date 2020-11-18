@@ -53,7 +53,7 @@ namespace Onyx {
 			std::vector<uint32_t> indices;
 
 			const aiVector3D aiZeroVector(0.0f, 0.0f, 0.0f);
-			for (unsigned int i = 0; i < model->mNumVertices; i++)
+			for (unsigned int i = 0; i < model->mNumVertices; ++i)
 			{
 				const aiVector3D* pPos = &(model->mVertices[i]);
 				const aiVector3D* pNormal = &(model->mNormals[i]);
@@ -64,7 +64,7 @@ namespace Onyx {
 				vertices.push_back(vert);
 			}
 
-			for (unsigned int i = 0; i < model->mNumFaces; i++)
+			for (unsigned int i = 0; i < model->mNumFaces; ++i)
 			{
 				const aiFace& face = model->mFaces[i];
 				assert(face.mNumIndices == 3);
@@ -108,7 +108,7 @@ namespace Onyx {
 		std::vector<uint32_t> indices;
 
 		const aiVector3D aiZeroVector(0.0f, 0.0f, 0.0f);
-		for (unsigned int i = 0; i < model->mNumVertices; i++)
+		for (unsigned int i = 0; i < model->mNumVertices; ++i)
 		{
 			const aiVector3D* pPos = &(model->mVertices[i]);
 			const aiVector3D* pNormal = &(model->mNormals[i]);
@@ -119,7 +119,7 @@ namespace Onyx {
 			vertices.push_back(vert);
 		}
 
-		for (unsigned int i = 0; i < model->mNumFaces; i++)
+		for (unsigned int i = 0; i < model->mNumFaces; ++i)
 		{
 			const aiFace& face = model->mFaces[i];
 			assert(face.mNumIndices == 3);

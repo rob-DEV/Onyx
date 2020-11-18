@@ -1,5 +1,5 @@
 #include "onyxpch.h"
-#include "Editor.h"
+#include "EditorCore.h"
 
 
 //Core Onyx
@@ -11,9 +11,8 @@
 #include <Onyx/Console/Console.h>
 
 //Scene
-#include <Onyx/Scene/Scene.h>
-#include <Onyx/Editor/Gizmo.h>
-#include <Onyx/Editor/SceneEditor.h>
+#include <Onyx/Editor/Components/Gizmo.h>
+#include <Onyx/Editor/Components/SceneEditor.h>
 
 //Graphics
 #include <Onyx/Graphics/Mesh.h>
@@ -42,14 +41,9 @@
 #include "GLFW/glfw3.h"
 
 namespace Onyx {
-	
 
-	Editor* Editor::s_EditorInstance = nullptr;
-
-	Editor::Editor()
+	EditorCore::EditorCore()
 	{		
-		s_EditorInstance = this;
-
 		//Redirect stdout to a console managed by Onyx (Debug Only)
 		Console::CreateDebug();
 
@@ -75,20 +69,22 @@ namespace Onyx {
 		Renderer2D::Init();
 		Renderer3D::Init();
 
-		//Initalize editor scene
-		m_SceneEditor = new SceneEditor();
-
 		m_EditorTimestep = Timestep(glfwGetTime());
 
 		m_FrameBufferDataPointer = new char[3 * 1280 * 720];
 	}
 
-	Editor::~Editor()
+	EditorCore::~EditorCore()
 	{
 		delete[] m_FrameBufferDataPointer;
 	}
 
-	void Editor::OnUpdate()
+	void EditorCore::InitEngineComponents(SceneEditor* sceneEditor)
+	{
+		m_SceneEditor = sceneEditor;
+	}
+
+	void EditorCore::OnUpdate()
 	{
 		if (m_EditorToEngineInput->IsKeyPressed(ONYX_KEY_L)) {
 
@@ -103,31 +99,31 @@ namespace Onyx {
 		Timestep timestep(time - m_EditorTimestep);
 		m_SceneEditor->OnUpdate(timestep);
 		m_Window->OnUpdate();
-		
+
 		m_EditorTimestep = time;
 	}
 
-	RenderedPixelData Editor::GetRenderedFrame()
+	RenderedPixelData EditorCore::GetRenderedFrame()
 	{
 		return RenderCommand::GetRenderedFrameBuffer(m_FrameBufferDataPointer);
 	}
 
-	void Editor::OnDetach()
+	void EditorCore::OnDetach()
 	{
 
 	}
 
-	bool* Editor::GetInputKeyBuffer()
+	bool* EditorCore::GetInputKeyBuffer()
 	{
 		return m_EditorToEngineInput->m_Keys;
 	}
 
-	bool* Editor::GetInputMouseButtonBuffer()
+	bool* EditorCore::GetInputMouseButtonBuffer()
 	{
 		return m_EditorToEngineInput->m_MouseButtons;
 	}
 
-	void Editor::SetMousePosition(float x, float y)
+	void EditorCore::SetMousePosition(float x, float y)
 	{
 		m_EditorToEngineInput->m_MousePos = glm::vec2(x, y);
 	}

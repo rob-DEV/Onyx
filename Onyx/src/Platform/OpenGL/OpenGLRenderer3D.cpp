@@ -124,7 +124,7 @@ namespace Onyx {
 // 		scene->GetSkybox().GetShader()->Bind();
 // 		glm::mat4 view = scene->GetCamera().GetProjectionMatrix() * glm::mat4(glm::mat3(scene->GetCamera().GetViewMatrix()));
 // 		((OpenGLShader*)scene->GetSkybox().GetShader())->UploadUniformMat4("u_ViewProjection", view);
-// 		for (int i = 0; i < scene->GetSkybox().GetVertices().size(); i++) {
+// 		for (int i = 0; i < scene->GetSkybox().GetVertices().size(); ++i) {
 // 			m_MeshVertexBufferWritePtr->Position = scene->GetSkybox().GetVertices()[i];
 // 			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 // 			m_MeshVertexBufferWritePtr++;
@@ -161,7 +161,7 @@ namespace Onyx {
 		const std::vector<uint32_t>& indices = *mesh->m_Indices;
 
 		//submit vertices
-		for (int i = 0; i < vertices.size(); i++) {
+		for (int i = 0; i < vertices.size(); ++i) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
 			m_MeshVertexBufferWritePtr->Color = mesh->m_Color;
 			m_MeshVertexBufferWritePtr++;
@@ -173,7 +173,7 @@ namespace Onyx {
 
 		//submit indices
 		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
- 		for (int i = 0; i < indices.size(); i++) {
+ 		for (int i = 0; i < indices.size(); ++i) {
  			*m_MeshIndexBufferWritePtr = indices[i]  + m_VertexCount;
  			m_MeshIndexBufferWritePtr++;
  		}
@@ -191,7 +191,7 @@ namespace Onyx {
 		const std::vector<uint32_t>& indices = *mesh->m_Indices;
 
 		//submit vertices
-		for (int i = 0; i < vertices.size(); i++) {
+		for (int i = 0; i < vertices.size(); ++i) {
 			m_MeshVertexBufferWritePtr->Position = transform * glm::vec4(vertices[i], 1.0f);
 			m_MeshVertexBufferWritePtr->Color = mesh->m_Color;
 			m_MeshVertexBufferWritePtr++;
@@ -201,7 +201,7 @@ namespace Onyx {
  
  		//submit indices
  		//memcpy(m_MeshIndiceBufferWritePtr, &indices[0], indices.size() * sizeof(uint32_t));
- 		for (int i = 0; i < indices.size(); i++) {
+ 		for (int i = 0; i < indices.size(); ++i) {
  			*m_MeshIndexBufferWritePtr = indices[i] + m_VertexCount;
  			m_MeshIndexBufferWritePtr++;
  		}

@@ -1,7 +1,11 @@
 #pragma once
 
-#include <Onyx/Editor/Editor.h>
-#include "Bitmap/BitmapDirect.h"
+#include <Onyx/Editor/Core/EditorCore.h>
+#include <Bitmap/BitmapDirect.h>
+
+#include "SceneEditorCLR.h"
+
+using namespace System::Collections::Generic;
 
 namespace OnyxCLR {
 
@@ -13,18 +17,14 @@ namespace OnyxCLR {
 		System::Drawing::Bitmap^ Bitmap;
 	};
 
-	public ref class OnyxEditor
+	public ref class EditorCoreCLR
 	{
 
 	public:
 
-		/// <summary>
-		/// Constructors a Editor CLR Instance
-		/// </summary>
-		OnyxEditor();
+		EditorCoreCLR();
 
-		//Cleanup
-		~OnyxEditor();
+		~EditorCoreCLR();
 
 		void Update();
 
@@ -35,13 +35,11 @@ namespace OnyxCLR {
 
 		void GetRenderedFrame(int* buffer);
 
-		void OpenScene(System::String^ filePath);
-		void SaveScene(System::String^ filePath);
-
+		SceneEditorCLR^ SceneEditorInstance;
 
 	private:
 		//Example
-		Onyx::Editor* m_Editor;
+		Onyx::EditorCore* OnyxEditorInstance;
 
 	};
 }
