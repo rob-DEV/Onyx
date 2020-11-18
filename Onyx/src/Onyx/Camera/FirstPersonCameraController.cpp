@@ -5,10 +5,10 @@
 
 namespace Onyx  {
 
-	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(90.0f, 1280.0f / 720.0f, 0.001f, 10000000.0f)
+	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(60.0f, 1.77777777f, 0.0001, 1000000.0f)
 	{
 		m_ZoomLevel = 90.0f;
-		m_Camera.SetPosition(glm::vec3(0, 0, 0));
+		m_Camera.SetPosition(glm::vec3(5, 3, -5));
 
 
 		//initial set matrix to face scene
@@ -22,8 +22,10 @@ namespace Onyx  {
 	void FirstPersonCameraController::OnUpdate(Timestep timestep)
 	{
 
+
+
 		float speed = 0.3f; // 3 units / second
-		float mouseSpeed = 0.03f;
+		float mouseSpeed = 0.0010f * timestep.GetMilliseconds();
 
 		glm::vec2 pos = Input::GetMousePosition();
 

@@ -28,10 +28,7 @@ namespace Onyx {
 
 		}
 
-		~RenderedPixelData() { 
-			
-			printf("%x", Data);
-			
+		~RenderedPixelData() { 	
 			//delete[] Data;
 		}
 

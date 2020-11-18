@@ -10,6 +10,7 @@ namespace Onyx {
 	class FirstPersonCameraController;
 	class Gizmo;
 	class Scene;
+	class Entity;
 
 	class ONYX_API SceneEditor {
 	public:
@@ -23,9 +24,10 @@ namespace Onyx {
 
 	private:
 		Scene* m_Scene;
+		Entity* m_SelectedEntity;
 
 		Gizmo* m_EditorGizmo;
-		FirstPersonCameraController* m_EditorCamera;
+		FirstPersonCameraController* m_EditorCameraController;
 	
 		friend class Editor;
 

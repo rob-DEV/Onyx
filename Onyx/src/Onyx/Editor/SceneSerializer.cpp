@@ -116,6 +116,9 @@ namespace Onyx {
 					pTransformPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
 					pTransformPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
 
+
+					entity->AddComponent<TransformComponent>(t);
+
 				}
 				pEntityComponentElement = pEntityComponentElement->NextSiblingElement();
 			}

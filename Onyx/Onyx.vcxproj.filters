@@ -987,6 +987,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Onyx\Console\Console.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1157,5 +1158,6 @@
     <ClCompile Include="vendor\tinyxml2\tinyxml2.cpp">
       <Filter>vendor\tinyxml2</Filter>
     </ClCompile>
+    <ClCompile Include="src\Onyx\Console\Console.cpp" />
   </ItemGroup>
 </Project>

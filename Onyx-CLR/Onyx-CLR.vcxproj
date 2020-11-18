@@ -73,6 +73,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Debug-x86_64\Onyx-Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Debug-x86_64\Onyx-Sandbox &gt; nul)
+IF EXIST ..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Debug-x86_64\Onyx-Editor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Debug-x86_64\Onyx-Editor &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -93,6 +97,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll\ (xcopy /Q /E /Y /I ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Release-x86_64\Onyx-Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Release-x86_64\Onyx-Sandbox &gt; nul)
+IF EXIST ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll\ (xcopy /Q /E /Y /I ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Release-x86_64\Onyx-Editor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll ..\bin\Release-x86_64\Onyx-Editor &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Bitmap\BitmapDirect.h" />
@@ -117,6 +125,9 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

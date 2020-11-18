@@ -58,7 +58,7 @@ namespace Onyx {
 
 	void OpenGLGraphicsContext::DebugGraphicsError(const std::string& error)
 	{
-
+		printf("OpenGL Error: %s\n", error.c_str());
 	}
 
 }

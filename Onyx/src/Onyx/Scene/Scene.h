@@ -24,21 +24,12 @@ namespace Onyx {
 
 		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
-		
-		const Camera& GetCamera() const { return m_Camera; }
-		const Skybox& GetSkybox() const { return m_Skybox; }
 
 	private:
 		Registry m_EntityRegistry;
 
-
 		//ENTITIES
 		std::vector<Entity*> m_Entities;
-
-		//TESTING
-		Skybox m_Skybox;
-		FirstPersonPerspectiveCamera m_Camera;
-		Model* m_ModelTest;
 
 		friend class Entity;
 		friend class SceneEditor;

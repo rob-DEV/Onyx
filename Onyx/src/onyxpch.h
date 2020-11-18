@@ -17,4 +17,4 @@
 
 #include <windows.h>
 
-#endif // _ONYX_
+#endif // _ONYX_BUILD_TARGET_WINDOWS_

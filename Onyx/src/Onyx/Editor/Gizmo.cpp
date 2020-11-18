@@ -34,7 +34,7 @@ namespace Onyx {
 		m_ScaleModel->m_Meshes[1]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
 		m_ScaleModel->m_Meshes[2]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
 
-		m_ActiveModel = m_ScaleModel;
+		m_ActiveModel = m_TransformModel;
 	}
 
 	Gizmo::~Gizmo()

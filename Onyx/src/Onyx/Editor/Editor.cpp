@@ -8,6 +8,7 @@
 #include <Onyx/Core/Layer.h>
 #include <Onyx/Core/Window.h>
 #include <Onyx/Core/Input.h >
+#include <Onyx/Console/Console.h>
 
 //Scene
 #include <Onyx/Scene/Scene.h>
@@ -46,13 +47,15 @@ namespace Onyx {
 	Editor* Editor::s_EditorInstance = nullptr;
 
 	Editor::Editor()
-	{
-		
+	{		
 		s_EditorInstance = this;
 
+		//Redirect stdout to a console managed by Onyx (Debug Only)
+		Console::CreateDebug();
+
 		//Window
-		printf("Creating Onyx Editor Instance and Graphics Context!\n");
-		m_Window = new WindowsWindow(WindowProperties("Onyx Editor", 1280, 720, true));
+		printf("Initializing Onyx Editor\n");
+		m_Window = new WindowsWindow(WindowProperties("Onyx Graphics Context", 1280, 720, true));
 
 
 		//Redirect Standard Input from Windows GLFW to C# Editor

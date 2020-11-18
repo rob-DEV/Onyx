@@ -115,37 +115,37 @@ namespace Onyx {
 		//lighting
 		//PBR
 
-		m_MeshVertexArray->Bind();
-		m_MeshVertexBuffer->Bind();
+		//m_MeshVertexArray->Bind();
+		//m_MeshVertexBuffer->Bind();
 
-		glDepthMask(GL_FALSE);
-
-		//skybox render test
-		scene->GetSkybox().GetShader()->Bind();
-		glm::mat4 view = scene->GetCamera().GetProjectionMatrix() * glm::mat4(glm::mat3(scene->GetCamera().GetViewMatrix()));
-		((OpenGLShader*)scene->GetSkybox().GetShader())->UploadUniformMat4("u_ViewProjection", view);
-		for (int i = 0; i < scene->GetSkybox().GetVertices().size(); i++) {
-			m_MeshVertexBufferWritePtr->Position = scene->GetSkybox().GetVertices()[i];
-			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
-			m_MeshVertexBufferWritePtr++;
-
-			//nice orange
-			//glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
-		}
-
-		m_VertexCount += scene->GetSkybox().GetVertices().size();
-		EndScene();
-		Flush();
-		glDepthMask(GL_TRUE);
-		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
-		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
-		m_IndexCount = 0;
-		m_VertexCount = 0;
-
-		m_MeshVertexArray->Bind();
-		m_MeshVertexBuffer->Bind();
-		m_MeshIndexBuffer->Bind();
-		m_MeshBasicShader->Bind();
+// 		glDepthMask(GL_FALSE);
+// // 
+// 		//skybox render test
+// 		scene->GetSkybox().GetShader()->Bind();
+// 		glm::mat4 view = scene->GetCamera().GetProjectionMatrix() * glm::mat4(glm::mat3(scene->GetCamera().GetViewMatrix()));
+// 		((OpenGLShader*)scene->GetSkybox().GetShader())->UploadUniformMat4("u_ViewProjection", view);
+// 		for (int i = 0; i < scene->GetSkybox().GetVertices().size(); i++) {
+// 			m_MeshVertexBufferWritePtr->Position = scene->GetSkybox().GetVertices()[i];
+// 			m_MeshVertexBufferWritePtr->Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+// 			m_MeshVertexBufferWritePtr++;
+// 
+// 			//nice orange
+// 			//glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
+// 		}
+// 
+// 		m_VertexCount += scene->GetSkybox().GetVertices().size();
+// 		EndScene();
+// 		Flush();
+// 		glDepthMask(GL_TRUE);
+// 		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
+// 		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
+// 		m_IndexCount = 0;
+// 		m_VertexCount = 0;
+// 
+// 		m_MeshVertexArray->Bind();
+// 		m_MeshVertexBuffer->Bind();
+// 		m_MeshIndexBuffer->Bind();
+// 		m_MeshBasicShader->Bind();
 
 	}
 

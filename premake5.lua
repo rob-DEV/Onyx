@@ -16,6 +16,9 @@ project "Onyx"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "onyxpch.h"
+    pchsource "%{prj.name}/src/onyxpch.cpp"
+
     files {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
@@ -67,7 +70,7 @@ project "Onyx"
         postbuildcommands {
             ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Onyx-Sandbox"),
             ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Onyx-CLR"),
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Onyx-Editor-NET")
+            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Onyx-Editor")
         }
 
     filter "configurations:Debug"
@@ -108,6 +111,11 @@ project "Onyx-CLR"
         staticruntime "Off"
         systemversion "latest"
 
+        postbuildcommands {
+            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Onyx-Sandbox"),
+            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Onyx-Editor")
+        }
+
     filter "configurations:Debug"
         defines "_ONYX_DEBUG_"
         symbols "On"
@@ -115,9 +123,9 @@ project "Onyx-CLR"
     filter "configurations:Release"
         optimize "On"
 
-project "Onyx-Editor-NET"
-    location "Onyx-Editor-NET"
-    namespace ("Onyx_Editor_NET")
+project "Onyx-Editor"
+    location "Onyx-Editor"
+    namespace ("OnyxEditor")
     kind "WindowedApp"
     language "C#"
     clr "Unsafe"
@@ -149,10 +157,33 @@ project "Onyx-Editor-NET"
         "PresentationCore",
         "PresentationFramework"
     }
-    
+
+project "Onyx-Sandbox"
+    location "Onyx-Sandbox"
+    kind "ConsoleApp"
+    language "C++"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    files  {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp"
+    }
+
+    includedirs {
+        "Onyx/src",
+        "Onyx/vendor/glm",
+        "Onyx/vendor/entt/include"
+    }
+
+    links {
+        "Onyx"
+    }
+
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "Off"
+        staticruntime "On"
         systemversion "latest"
 
     filter "configurations:Debug"
@@ -162,8 +193,9 @@ project "Onyx-Editor-NET"
     filter "configurations:Release"
         optimize "On"
 
-project "Onyx-Sandbox"
-    location "Onyx-Sandbox"
+
+project "Onyx-Runtime"
+    location "Onyx-Runtime"
     kind "ConsoleApp"
     language "C++"
 

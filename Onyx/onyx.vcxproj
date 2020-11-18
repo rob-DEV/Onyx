@@ -56,7 +56,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_ONYX_BUILD_TARGET_WINDOWS_;_ONYX_BUILD_DLL_;_ONYX_DEBUG_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\glm;vendor\glfw3;vendor\glad\include;vendor\stb_image;vendor\vulkan;vendor\openal;vendor\assimp;vendor\entt\include;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -75,12 +76,13 @@
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-Sandbox &gt; nul)
 IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-CLR &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-CLR &gt; nul)
-IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-Editor-NET &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-Editor-NET &gt; nul)</Command>
+IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-Editor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-x86_64\Onyx\Onyx.dll ..\bin\Debug-x86_64\Onyx-Editor &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_ONYX_BUILD_TARGET_WINDOWS_;_ONYX_BUILD_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\glm;vendor\glfw3;vendor\glad\include;vendor\stb_image;vendor\vulkan;vendor\openal;vendor\assimp;vendor\entt\include;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -103,10 +105,11 @@ IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-Sandbox &gt; nul)
 IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-CLR &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-CLR &gt; nul)
-IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-Editor-NET &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-Editor-NET &gt; nul)</Command>
+IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-Editor &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-x86_64\Onyx\Onyx.dll ..\bin\Release-x86_64\Onyx-Editor &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\Console\Console.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
@@ -410,6 +413,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Console\Console.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
     <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
@@ -462,7 +466,9 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\Platform\Windows\WindowsFileIO.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
-    <ClCompile Include="src\onyxpch.cpp" />
+    <ClCompile Include="src\onyxpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="vendor\glad\src\glad.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="vendor\tinyxml2\tinyxml2.cpp" />

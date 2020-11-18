@@ -8,6 +8,11 @@ namespace Onyx {
 	EditorInput::EditorInput()
 	{
 		m_MouseButtons = new bool[8];
+		for (size_t i = 0; i < 8; i++)
+		{
+			m_MouseButtons[i] = false;
+		}
+
 		m_Keys = new bool[350];
 		for (size_t i = 0; i < 350; i++)
 		{
