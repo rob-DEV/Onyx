@@ -27,8 +27,7 @@ namespace Onyx {
 
 	Ray FirstPersonPerspectiveCamera::ScreenPointToRay() const
 	{
-		auto normalizedMouseInput = Input::GetMousePositionNormalized();
-		glm::vec2 normalizedMouse = glm::vec2(normalizedMouseInput.x, normalizedMouseInput.y);
+		glm::vec2 normalizedMouse = Input::GetMousePositionNormalized();
 
 		glm::vec2 ray_nds = normalizedMouse;
 		glm::vec4 ray_clip = glm::vec4(ray_nds.x, ray_nds.y, -1.0f, 1.0f);

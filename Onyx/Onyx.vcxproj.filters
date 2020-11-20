@@ -994,6 +994,10 @@
       <Filter>src\Onyx\Editor</Filter>
     </ClInclude>
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
+    <ClInclude Include="src\Onyx\Graphics\Framebuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
+    <ClInclude Include="src\Onyx\Core\ApplicationContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1168,5 +1172,8 @@
       <Filter>src\Onyx\Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\Framebuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
   </ItemGroup>
 </Project>

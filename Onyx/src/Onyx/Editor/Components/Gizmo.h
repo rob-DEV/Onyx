@@ -18,7 +18,6 @@ namespace Onyx {
 	public:
 		Gizmo();
 		~Gizmo();
-		Model* m_ActiveModel;
 
 		void SetState(GizmoState state);
 		GizmoState GetState();
@@ -26,9 +25,13 @@ namespace Onyx {
 		Model* m_TransformModel;
 		Model* m_RotateModel;
 		Model* m_ScaleModel;
+		
+		Model* m_ActiveModel;
 
 		GizmoState m_GizmoState = GizmoState::Transform;
 
+		friend class EditorRenderer;
+		friend class Scene;
 	};
 
 }

@@ -20,7 +20,7 @@ Sandbox3D::Sandbox3D()
 void Sandbox3D::OnAttach()
 {
 
-	RenderCommand::SetClearColour(glm::vec4(.2f, .2f, .2f, 1.0f));
+	RenderCommand::SetClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
 	RenderCommand::Clear();
 
 	Renderer3D::Init();

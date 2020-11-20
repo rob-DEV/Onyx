@@ -344,3 +344,4 @@ healthchecksdb
 
 bin/
 bin-int/
+res/audio/

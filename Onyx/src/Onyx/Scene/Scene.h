@@ -34,6 +34,8 @@ namespace Onyx {
 		friend class Entity;
 		friend class SceneEditor;
 		friend class SceneSerializer;
+		friend class EditorRenderer;
+		friend class OpenGLRenderer3D;
 	};
 }
 

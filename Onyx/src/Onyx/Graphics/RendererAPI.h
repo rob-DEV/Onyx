@@ -45,7 +45,7 @@ namespace Onyx {
 	class ONYX_API RendererAPI
 	{
 	public:
-		enum class API	{	None = 0, OpenGL = 1, Vulkan = 2	};
+		enum class API	{	None = 0, OpenGL, Vulkan };
 
 		virtual ~RendererAPI() = default;
 		virtual void Init() = 0;
@@ -59,10 +59,9 @@ namespace Onyx {
 		////EXPERIMENTAL
 		virtual RenderedPixelData GetRenderedFrameBuffer(char* dest) = 0;
 
-
 		inline static API GetAPI() { return s_API; }
 		inline static bool VsyncEnabled() { return s_Vsync; };
-		inline static RendererAPI* Create();
+		static RendererAPI* Create();
 
 	private:
 		static API s_API;

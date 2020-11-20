@@ -38,12 +38,18 @@
 
 #include <Onyx/Model/ModelLoader.h>
 
+#include <glad\glad.h>
 #include "GLFW/glfw3.h"
+
+#include <Platform/OpenGL/OpenGLFramebuffer.h>
 
 namespace Onyx {
 
 	EditorCore::EditorCore()
 	{		
+		//Set the context of the engine
+		Application::SetContext(ApplicationContext::Editor);
+
 		//Redirect stdout to a console managed by Onyx (Debug Only)
 		Console::CreateDebug();
 
@@ -59,7 +65,7 @@ namespace Onyx {
 		//Renderer API
 		RenderCommand::Init();
 		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
-		RenderCommand::SetClearColour(glm::vec4(0.8f, 0.5f, 0.2f, 1.0f));
+		RenderCommand::SetClearColor(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 		RenderCommand::Clear();
 
 		//Sound
@@ -72,6 +78,7 @@ namespace Onyx {
 		m_EditorTimestep = Timestep(glfwGetTime());
 
 		m_FrameBufferDataPointer = new char[3 * 1280 * 720];
+
 	}
 
 	EditorCore::~EditorCore()
@@ -86,13 +93,15 @@ namespace Onyx {
 
 	void EditorCore::OnUpdate()
 	{
-		if (m_EditorToEngineInput->IsKeyPressed(ONYX_KEY_L)) {
-
-			GizmoState state = m_SceneEditor->m_EditorGizmo->GetState();
-
-			state = (GizmoState)(((uint32_t)state + 1) % 2);
-
-			m_SceneEditor->m_EditorGizmo->SetState(state);
+		if (Input::IsKeyPressed(ONYX_KEY_L)) {
+			if (!swapbuff) {
+				swapbuff = true;
+				glReadBuffer(GL_COLOR_ATTACHMENT0);
+			}
+			else {
+				swapbuff = false;
+				glReadBuffer(GL_COLOR_ATTACHMENT1);
+			}
 		}
 
 		float time = (float)glfwGetTime();

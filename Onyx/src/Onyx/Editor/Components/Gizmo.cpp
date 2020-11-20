@@ -9,9 +9,9 @@ namespace Onyx {
 		m_RotateModel(ModelLoader::LoadFromFile("res/models/transform/Rotation.obj")),
 		m_ScaleModel(ModelLoader::LoadFromFile("res/models/transform/Scale.obj"))
 	{
-		m_TransformModel->m_Meshes[0]->m_Color = { 1.0f,0.0f,0.0f,1.0f };
+		m_TransformModel->m_Meshes[0]->m_Color = { 0.0f,0.0f,1.0f,1.0f };
 		m_TransformModel->m_Meshes[1]->m_Color = { 0.0f,1.0f,0.0f,1.0f };
-		m_TransformModel->m_Meshes[2]->m_Color = { 0.0f,0.0f,1.0f,1.0f };
+		m_TransformModel->m_Meshes[2]->m_Color = { 1.0f,0.0f,0.0f,1.0f };
 
 		m_RotateModel->m_Meshes[3]->m_Color = { 1.0f,0.0f,0.0f,1.0f };
 		m_RotateModel->m_Meshes[4]->m_Color = { 0.0f,0.0f,1.0f,1.0f };

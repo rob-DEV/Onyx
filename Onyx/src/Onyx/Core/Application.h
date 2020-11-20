@@ -7,6 +7,8 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/Renderer2D.h>
 
+#include "ApplicationContext.h"
+
 namespace Onyx {
 
 	class ONYX_API Application {
@@ -21,12 +23,15 @@ namespace Onyx {
 		void Run();
 		void SetWindowTitle(const char* name) { m_Window->SetTitle(name); }
 
+		//TODO: REFACTOR ENTIRE APPLICATION CLASS
+		static void SetContext(ApplicationContext context) { s_ApplicationContext = context; }
+		static ApplicationContext GetContext() { return s_ApplicationContext; }
 
 	private:
 		Window* m_Window = nullptr;
 		static Application* s_Instance;
 		float m_LastTime;
-
+		static ApplicationContext s_ApplicationContext;
 	protected:
 		//TODO : redo
 		std::vector<Layer*> m_LayerStack;

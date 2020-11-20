@@ -10,30 +10,20 @@
 
 namespace Onyx {
 
-	SceneEditorSelector::SceneEditorSelector(FirstPersonCameraController* editorCamera)
-		:
+	SceneEditorSelector::SceneEditorSelector(FirstPersonCameraController* editorCamera) :
 		m_EditorCamera(editorCamera)
 	{
-		m_MeshTest = ModelLoader::LoadFromFile("res/models/Scene.obj")->m_Meshes[1];
+
 	}
 
 	void SceneEditorSelector::OnUpdate()
 	{
-		Ray ray = m_EditorCamera->GetCamera().ScreenPointToRay();
+		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
 
-		glm::vec3 pointOnRay = ray.GetPoint(10.0f);
-
-		glm::vec2 pos = Input::GetMousePositionNormalized();
-
-		printf("MOUSE: %.3f,%.3f\n", pos.x, pos.y);
-
-		for (int i = 0; i < 20; ++i)
-		{
-			//Render cubes along the line
-			Renderer3D::DrawMesh(m_MeshTest, pointOnRay, glm::vec3(0.1f));
-
+			glm::vec2 pos = Input::GetMousePosition();
+			printf("Mouse pos %.3f,%.3f\n", pos.x, pos.y);
 		}
 
-	}
 
+	}
 }

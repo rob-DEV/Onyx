@@ -5,7 +5,7 @@
 
 namespace Onyx  {
 
-	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(60.0f, 1.77777777f, 0.0001, 1000000.0f)
+	FirstPersonCameraController::FirstPersonCameraController() : m_Camera(45.0f, 1.77777777f, 0.0001, 1000000.0f)
 	{
 		m_ZoomLevel = 90.0f;
 		m_Camera.SetPosition(glm::vec3(5, 3, -5));

@@ -8,12 +8,11 @@
 #include <Onyx/Graphics/Renderer3D.h>
 #include <Platform/OpenGL/OpenGLBuffer.h>
 #include <Platform/OpenGL/OpenGLShader.h>
+#include <Platform/OpenGL/OpenGLFramebuffer.h>
 #include <Platform/OpenGL/OpenGLVertexArray.h>
 
 
 namespace Onyx {
-
-	struct Vertex3D;
 
 	class OpenGLRenderer3D : public Renderer3D {
 	private:
@@ -41,12 +40,12 @@ namespace Onyx {
 		uint32_t m_IndexCount = 0;
 		uint32_t m_VertexCount = 0;
 
-		OpenGLShader* m_MeshBasicShader;
-		OpenGLShader* m_SkyboxShader;
+		OpenGLShader* m_MeshShader;
+		OpenGLFramebuffer* m_Framebuffer;
 
 		//CPU mapped storage
-		Vertex3D* m_MeshVertexBufferBase;
-		Vertex3D* m_MeshVertexBufferWritePtr;
+		void* m_MeshVertexBufferBase;
+		void* m_MeshVertexBufferWritePtr;
 
 		uint32_t* m_MeshIndexBufferBase;
 		uint32_t* m_MeshIndexBufferWritePtr;

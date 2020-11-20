@@ -17,7 +17,6 @@ namespace Onyx {
 
 	private:
 		FirstPersonCameraController* m_EditorCamera;
-		Mesh* m_MeshTest;
 	};
 }
 

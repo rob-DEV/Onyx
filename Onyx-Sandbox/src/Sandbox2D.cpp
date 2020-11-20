@@ -14,7 +14,7 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
-	RenderCommand::SetClearColour(glm::vec4(.2f, .2f, .2f, 1.0f));
+	RenderCommand::SetClearColor(glm::vec4(.2f, .2f, .2f, 1.0f));
 	RenderCommand::Clear();
 
 	Renderer2D::Init();

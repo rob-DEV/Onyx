@@ -8,7 +8,7 @@
 #include <Windows.h>
 
 
-extern Onyx::Application* CreateApplication();
+//extern Onyx::Application* CreateApplication();
 
 int main(int argc, char** argv);
 

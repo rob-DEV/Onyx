@@ -18,6 +18,7 @@
 namespace Onyx {
 	
 	Application* Application::s_Instance = nullptr;
+	ApplicationContext Application::s_ApplicationContext = ApplicationContext::Runtime;
 
 	Application::Application(void)
 	{

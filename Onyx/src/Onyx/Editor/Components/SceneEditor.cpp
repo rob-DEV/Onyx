@@ -10,6 +10,10 @@
 #include <Onyx/Editor/Components/SceneSerializer.h>
 #include <Onyx/Editor/Components/SceneEditorSelector.h>
 
+#include <Platform/OpenGL/OpenGLFramebuffer.h>
+
+#include <Onyx/Editor/Core/EditorRenderer.h>
+
 namespace Onyx {
 
 	SceneEditor::SceneEditor() : 
@@ -33,35 +37,16 @@ namespace Onyx {
 	{
 		m_EditorCameraController->OnUpdate(ts);
 
-		//SCENE & RENDERING
+		EditorRenderer::BeginScene(m_EditorCameraController->GetCamera());
 
-		RenderCommand::SetClearColour(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
-		RenderCommand::Clear();
-
-		Renderer3D::BeginScene(m_EditorCameraController->GetCamera());
-
-		for (auto e : m_Scene->m_Entities)
-		{
-			if (e->HasComponent<TransformComponent>() && e->HasComponent<MeshRendererComponent>()) {
-				TransformComponent& t = e->GetComponent<TransformComponent>();
-				MeshRendererComponent& m = e->GetComponent<MeshRendererComponent>();
-
-				Renderer3D::DrawMesh(m.GetMesh(), t.Position, t.Scale);
-			}
-		}
-
-		//EDITOR
-		for (int i = 0; i < m_EditorGizmo->m_ActiveModel->m_Meshes.size(); ++i)
-		{
-			Renderer3D::DrawMesh(m_EditorGizmo->m_ActiveModel->m_Meshes[i], glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f));
-		}
-		
-		//EDITOR UPDATES
-		m_SceneSelector->OnUpdate();
+		EditorRenderer::DrawScene(m_Scene);
 
 
-		Renderer3D::EndScene();
-		Renderer3D::Flush();
+		EditorRenderer::DrawGizmo(m_EditorGizmo);
+
+		EditorRenderer::EndScene();
+
+		EditorRenderer::Flush();
 
 	}
 

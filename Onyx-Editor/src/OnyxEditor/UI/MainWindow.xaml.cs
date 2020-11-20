@@ -145,8 +145,8 @@ namespace OnyxEditor
             float toEngineX = (float)(640 - mouseRelativeToVPCenter.X);
             float toEngineY = (float)(360 + mouseRelativeToVPCenter.Y);
 
-
-            Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
+            if(e.MiddleButton == MouseButtonState.Pressed)
+                Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
         
         }
 

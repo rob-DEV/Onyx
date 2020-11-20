@@ -25,6 +25,10 @@ namespace Onyx {
 			glm::vec3 scaledRay = glm::vec3(m_Ray.x * distance, m_Ray.y * distance, m_Ray.z * distance);
 			glm::vec3 point = m_Origin + scaledRay;
 
+			#if defined(_ONYX_DEBUG_)
+			//printf("Scaled Ray : %.3f, %.3f, %.3f\n", point.x, point.y, point.z);
+			#endif
+
 			return point;
 		}
 	

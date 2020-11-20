@@ -39,6 +39,8 @@ namespace Onyx {
 
 		SceneEditor* m_SceneEditor = nullptr;
 
+		bool swapbuff = true;
+
 		//ABSTRACT OUT SOMEWHERE ELSE
 		char* m_FrameBufferDataPointer = nullptr;
 
