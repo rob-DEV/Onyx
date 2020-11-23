@@ -8,10 +8,10 @@ namespace OnyxEditor
 {
     public class EngineInput
     {
-        private volatile OnyxCLR.EditorCoreCLR m_Instance;
+        private volatile OnyxCLR.EditorApplicationCLR m_Instance;
 
 
-        internal EngineInput(ref OnyxCLR.EditorCoreCLR instanceRef)
+        internal EngineInput(ref OnyxCLR.EditorApplicationCLR instanceRef)
         {
             m_Instance = instanceRef;
         }

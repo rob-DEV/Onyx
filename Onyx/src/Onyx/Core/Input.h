@@ -47,7 +47,7 @@ namespace Onyx {
 		
 		};
 
-		friend class EditorCore;
+		friend class EditorApplication;
 	};
 }
 

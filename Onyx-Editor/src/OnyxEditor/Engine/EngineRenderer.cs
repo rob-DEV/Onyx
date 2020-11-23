@@ -8,13 +8,13 @@ namespace OnyxEditor
 {
     public class EngineRenderer
     {
-        private volatile OnyxCLR.EditorCoreCLR m_Instance;
+        private volatile OnyxCLR.EditorApplicationCLR m_Instance;
 
         private RendererSurface m_DirectBitmap = new RendererSurface(1280, 720);
 
         public RendererSurface RenderSurface { get { return m_DirectBitmap; } }
 
-        internal EngineRenderer(ref OnyxCLR.EditorCoreCLR instanceRef)
+        internal EngineRenderer(ref OnyxCLR.EditorApplicationCLR instanceRef)
         {
             m_Instance = instanceRef;
         }

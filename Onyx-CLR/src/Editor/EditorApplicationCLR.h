@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Onyx/Editor/Core/EditorCore.h>
+#include <Onyx/Editor/Core/EditorApplication.h>
 #include <Bitmap/BitmapDirect.h>
 
 #include "SceneEditorCLR.h"
@@ -17,14 +17,14 @@ namespace OnyxCLR {
 		System::Drawing::Bitmap^ Bitmap;
 	};
 
-	public ref class EditorCoreCLR
+	public ref class EditorApplicationCLR
 	{
 
 	public:
 
-		EditorCoreCLR();
+		EditorApplicationCLR();
 
-		~EditorCoreCLR();
+		~EditorApplicationCLR();
 
 		void Update();
 
@@ -39,7 +39,7 @@ namespace OnyxCLR {
 
 	private:
 		//Example
-		Onyx::EditorCore* OnyxEditorInstance;
+		Onyx::EditorApplication* OnyxEditorInstance;
 
 	};
 }

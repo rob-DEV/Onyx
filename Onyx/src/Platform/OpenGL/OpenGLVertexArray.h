@@ -3,8 +3,6 @@
 
 #include <Onyx/graphics/VertexArray.h>
 
-
-
 namespace Onyx {
 
 
@@ -25,6 +23,7 @@ namespace Onyx {
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_VertexBufferIndex = 0;
+
 		std::vector<VertexBuffer*> m_VertexBuffers;
 		IndexBuffer* m_IndexBuffer;
 

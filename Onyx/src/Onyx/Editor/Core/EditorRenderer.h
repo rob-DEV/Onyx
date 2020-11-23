@@ -14,13 +14,8 @@ namespace Onyx {
 	class ONYX_API EditorRenderer {
 	public:	
 
-		static void BeginScene(const Camera& camera);
-		static void EndScene();
-		static void Flush();
-
-
-		static void DrawScene(const Scene* scene);
-		static void DrawGizmo(const Gizmo* gizmo);
+		static void DrawScene(const Scene* scene, const Camera& editorCamera);
+		static void DrawGizmo(const Gizmo* gizmo, const Camera& editorCamera);
 
 	};
 

@@ -34,7 +34,7 @@ namespace OnyxEditor
 
         private void EngineThread()
         {
-          
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
@@ -43,7 +43,7 @@ namespace OnyxEditor
             EngineCore.Init();
 
             while (!m_Aborted)
-            { 
+            {
                 EngineCore.UpdateEngine();
 
                 ++frames;
@@ -55,8 +55,6 @@ namespace OnyxEditor
                 }
             }
         }
-
-      
 
         public MainWindow()
         {
@@ -98,19 +96,10 @@ namespace OnyxEditor
             }
         }
 
-
-        private void m_CreateEntityButton_Click(object sender, RoutedEventArgs e)
-        {
-            float x, y, z;
-            x = (float)Convert.ToDecimal(PositionTextboxX.Text);
-            y = (float)Convert.ToDecimal(PositionTextboxY.Text);
-            z = (float)Convert.ToDecimal(PositionTextboxZ.Text);
-
-        }
-
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            Input.ProcessKeyEvent(e.Key, true);
+            if(ViewPortInFocus)
+                Input.ProcessKeyEvent(e.Key, true);
         }
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
@@ -131,41 +120,47 @@ namespace OnyxEditor
 
             //set mouse position to viewport center
 
-            if (ViewPortInFocus)
+            if (e.MiddleButton == MouseButtonState.Pressed)
             {
                 Point s = this.PointToScreen(viewportCenterPoint);
                 System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)s.X, (int)s.Y);
+                this.Cursor = Cursors.None;
+            }else
+            {
+                this.Cursor = Cursors.Arrow;
             }
 
             Point pos = e.GetPosition(ViewportMain);
 
-            Point mouseRelativeToVPCenter = new Point(pos.X - (1280 / 2), -(pos.Y - (720 / 2)));
+            Point mouseViewportPos = new Point((1280 - pos.X) - (1280 / 2), -((720 - pos.Y) - (720 / 2)));
 
             //add relative to 640 360
-            float toEngineX = (float)(640 - mouseRelativeToVPCenter.X);
-            float toEngineY = (float)(360 + mouseRelativeToVPCenter.Y);
+            float toEngineX = (float)(640 - mouseViewportPos.X);
+            float toEngineY = (float)(360 + mouseViewportPos.Y);
 
-            if(e.MiddleButton == MouseButtonState.Pressed)
+            bool a;
+            if (toEngineX >= 0 && toEngineX <= 1280 && toEngineY >= 0 && toEngineY <= 720)
+            {
+                ViewPortInFocus = true;
+                a = true;
+            }
+            else
+            {
+                ViewPortInFocus = false;
+            }
+            if(ViewPortInFocus)
                 Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
-        
+
         }
 
         private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.MiddleButton == MouseButtonState.Pressed)
-            {
-                this.Cursor = Cursors.None;
-                ViewPortInFocus = true;
-            }
+
         }
 
         private void ViewportMain_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.MiddleButton == MouseButtonState.Released)
-            {
-                this.Cursor = Cursors.Arrow;
-                ViewPortInFocus = false;
-            }
+            
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -176,7 +171,24 @@ namespace OnyxEditor
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Input.ProcessMouseEvent(e);
+            Point viewportCenterPoint = ViewportMain.TransformToAncestor(Application.Current.MainWindow)
+            .Transform(new Point(ViewportMain.Width / 2, ViewportMain.Height / 2));
+
+            //set mouse position to viewport center
+
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                Point s = this.PointToScreen(viewportCenterPoint);
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)s.X, (int)s.Y);
+                this.Cursor = Cursors.None;
+            }
+            else
+            {
+                this.Cursor = Cursors.Arrow;
+            }
+
+            if (ViewPortInFocus)
+                Input.ProcessMouseEvent(e);
         }
 
         private void Window_MouseUp(object sender, MouseButtonEventArgs e)

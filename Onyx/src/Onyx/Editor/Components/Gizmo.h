@@ -3,8 +3,8 @@
 
 #include <Onyx/Core/Core.h>
 
-#include <Onyx/Model/Model.h>
-
+#include <Onyx/Graphics/Model.h>
+#include <Onyx/Entity/Components.h>
 
 namespace Onyx {
 
@@ -30,8 +30,10 @@ namespace Onyx {
 
 		GizmoState m_GizmoState = GizmoState::Transform;
 
+		TransformComponent m_Transform;
+
 		friend class EditorRenderer;
-		friend class Scene;
+		friend class SceneEditor;
 	};
 
 }

@@ -22,10 +22,10 @@
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Entity\Entity.h" />
     <ClInclude Include="src\Entity\Components.h" />
-    <ClInclude Include="src\Editor\EditorCoreCLR.h">
+    <ClInclude Include="src\Editor\SceneEditorCLR.h" />
+    <ClInclude Include="src\Editor\EditorApplicationCLR.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="src\Editor\SceneEditorCLR.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
@@ -35,9 +35,9 @@
     <ClCompile Include="src\Onyx-CLR.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
-    <ClCompile Include="src\Editor\EditorCoreCLR.cpp">
+    <ClCompile Include="src\Editor\SceneEditorCLR.cpp" />
+    <ClCompile Include="src\Editor\EditorApplicationCLR.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="src\Editor\SceneEditorCLR.cpp" />
   </ItemGroup>
 </Project>

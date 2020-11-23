@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Onyx/Editor/Core/EditorCore.h>
+#include <Onyx/Editor/Core/EditorApplication.h>
 #include <Onyx/Editor/Components/SceneEditor.h>
 
 #include <Entity/Entity.h>
@@ -13,7 +13,7 @@ namespace OnyxCLR {
 	{
 
 	public:
-		SceneEditorCLR(Onyx::EditorCore* editor);
+		SceneEditorCLR(Onyx::EditorApplication* editor);
 		~SceneEditorCLR();
 
 		void OpenScene(System::String^ filePath);

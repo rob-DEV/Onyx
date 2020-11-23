@@ -1,10 +1,10 @@
 #include "onyxpch.h"
-#include "EditorCore.h"
+#include "EditorApplication.h"
 
 
 //Core Onyx
 #include <Onyx/Core/Core.h>
-#include <Onyx/Core/Application.h>
+
 #include <Onyx/Core/Layer.h>
 #include <Onyx/Core/Window.h>
 #include <Onyx/Core/Input.h >
@@ -21,7 +21,6 @@
 //Renderer
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/Renderer2D.h>
-#include <Onyx/Graphics/Renderer3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Camera/OrthographicCameraController.h>
 #include <Onyx/Camera/PerspectiveCameraController.h>
@@ -29,14 +28,16 @@
 //Sound
 #include <Onyx/Audio/Sound.h>
 
-//Platform
+#include <Onyx/Graphics/Renderer2D.h>
+#include <Onyx/Renderer/Renderer3D.h>
+
+#include <Onyx/Graphics/ModelLoader.h>
+
 #include <Platform/Windows/WindowsWindow.h>
-#include <Platform/OpenGL/OpenGLRenderer2D.h>
-#include <Platform/OpenGL/OpenGLRenderer3D.h>
+
 
 #include "EditorInput.h"
 
-#include <Onyx/Model/ModelLoader.h>
 
 #include <glad\glad.h>
 #include "GLFW/glfw3.h"
@@ -45,10 +46,11 @@
 
 namespace Onyx {
 
-	EditorCore::EditorCore()
+	EditorApplication::EditorApplication()
 	{		
 		//Set the context of the engine
-		Application::SetContext(ApplicationContext::Editor);
+		s_Instance = this;
+		s_ApplicationContext = ApplicationContext::Editor;
 
 		//Redirect stdout to a console managed by Onyx (Debug Only)
 		Console::CreateDebug();
@@ -78,32 +80,21 @@ namespace Onyx {
 		m_EditorTimestep = Timestep(glfwGetTime());
 
 		m_FrameBufferDataPointer = new char[3 * 1280 * 720];
-
 	}
 
-	EditorCore::~EditorCore()
+	EditorApplication::~EditorApplication()
 	{
 		delete[] m_FrameBufferDataPointer;
+		delete m_Window;
 	}
 
-	void EditorCore::InitEngineComponents(SceneEditor* sceneEditor)
+	void EditorApplication::InitEngineComponents(SceneEditor* sceneEditor)
 	{
 		m_SceneEditor = sceneEditor;
 	}
 
-	void EditorCore::OnUpdate()
+	void EditorApplication::OnUpdate()
 	{
-		if (Input::IsKeyPressed(ONYX_KEY_L)) {
-			if (!swapbuff) {
-				swapbuff = true;
-				glReadBuffer(GL_COLOR_ATTACHMENT0);
-			}
-			else {
-				swapbuff = false;
-				glReadBuffer(GL_COLOR_ATTACHMENT1);
-			}
-		}
-
 		float time = (float)glfwGetTime();
 		Timestep timestep(time - m_EditorTimestep);
 		m_SceneEditor->OnUpdate(timestep);
@@ -112,27 +103,22 @@ namespace Onyx {
 		m_EditorTimestep = time;
 	}
 
-	RenderedPixelData EditorCore::GetRenderedFrame()
+	RenderedPixelData EditorApplication::GetRenderedFrame()
 	{
 		return RenderCommand::GetRenderedFrameBuffer(m_FrameBufferDataPointer);
 	}
 
-	void EditorCore::OnDetach()
-	{
-
-	}
-
-	bool* EditorCore::GetInputKeyBuffer()
+	bool* EditorApplication::GetInputKeyBuffer()
 	{
 		return m_EditorToEngineInput->m_Keys;
 	}
 
-	bool* EditorCore::GetInputMouseButtonBuffer()
+	bool* EditorApplication::GetInputMouseButtonBuffer()
 	{
 		return m_EditorToEngineInput->m_MouseButtons;
 	}
 
-	void EditorCore::SetMousePosition(float x, float y)
+	void EditorApplication::SetMousePosition(float x, float y)
 	{
 		m_EditorToEngineInput->m_MousePos = glm::vec2(x, y);
 	}

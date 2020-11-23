@@ -1,10 +1,13 @@
-
 #type vertex
-#version 330 core
+#version 450 core
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec4 a_VertColor;
+layout(location = 2) in vec2 a_TexCoord;
+layout(location = 3) in vec3 a_Normal;
+layout(location = 4) in vec3 a_Tangent;
 
 uniform mat4 u_ViewProjection;
+uniform vec3 u_LightPosition;
 
 out DATA
 {
@@ -16,6 +19,7 @@ void main() {
 	
 	vs_out.v_Color = a_VertColor;	
 	vs_out.v_Position =  a_Position;
+	
 	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 
 }
@@ -35,7 +39,7 @@ in DATA
 
 void main() {
 
-	float intensity = 10.0f / length(fs_in.v_Position.xyz - u_LightPosition.xyz);
-	color = fs_in.v_Color * vec4(intensity, intensity, intensity, 1.0);
+	float intensity = 3.0f / length(fs_in.v_Position.xyz - u_LightPosition.xyz);
+	color = vec4(1.0,0.0,0.0,1.0) * vec4(intensity, intensity, intensity, 1.0f);
 	
 }

@@ -29,7 +29,6 @@ namespace Onyx {
 		float m_Gain = 1.0;
 		bool m_IsPlaying = false;
 
-
 	};
 
 	class SoundDevice {

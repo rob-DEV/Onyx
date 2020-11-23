@@ -12,7 +12,7 @@ namespace Onyx {
 
 	struct Vertex2D {
 
-		#define Vertex2D_NO_TEXTURE 0.0f
+		#define VERTEX_NO_TEXTURE 0.0f
 
 		glm::vec3 Position;
 		glm::vec4 Color;
@@ -31,7 +31,7 @@ namespace Onyx {
 
 		m_QuadVertexArray = (OpenGLVertexArray*)VertexArray::Create();
 
-		m_QuadVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::Create(VB_SIZE);
+		m_QuadVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::Create();
 
 		m_QuadVertexArray->AddVertexBuffer(m_QuadVertexBuffer);
 		
@@ -102,7 +102,7 @@ namespace Onyx {
 		//set samplers in shader
 		m_QuadShader = (OpenGLShader*)Shader::Create("res/shaders/2DQuad.glsl");
 		m_QuadShader->Bind();
-		m_QuadShader->UploadIntArray("u_Textures", samplers, MAX_TEXTURE_SLOTS);
+		m_QuadShader->SetIntArray("u_Textures", samplers, MAX_TEXTURE_SLOTS);
 
 		m_QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
 		m_QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
@@ -119,7 +119,7 @@ namespace Onyx {
 		delete m_QuadVertexArray;
 	}
 
-	void OpenGLRenderer2D::BeginSceneImplementation(const OrthographicCamera& camera)
+	void OpenGLRenderer2D::BeginSceneImplementation(const Camera& camera)
 	{	
 
 		m_QuadVertexBufferWritePtr = m_QuadVertexBufferData;
@@ -131,13 +131,9 @@ namespace Onyx {
 		m_QuadShader->Bind();
 
 
-		((OpenGLShader*)m_QuadShader)->UploadUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+		((OpenGLShader*)m_QuadShader)->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
 		m_TextureSlotIndex = 1;
-
-		//Print stats
-		//printf("DrawCalls %d\n", m_DrawCalls);
-		//printf("Quads Drawn %d\n", m_DrawnQuads);
 
 		m_DrawnQuads = 0;
 		m_DrawCalls = 0;
@@ -214,7 +210,7 @@ namespace Onyx {
 		{
 			m_QuadVertexBufferWritePtr->Position = transform * m_QuadVertexPositions[i];
 			m_QuadVertexBufferWritePtr->Color = color;
-			m_QuadVertexBufferWritePtr->TexID = Vertex2D_NO_TEXTURE;
+			m_QuadVertexBufferWritePtr->TexID = VERTEX_NO_TEXTURE;
 			m_QuadVertexBufferWritePtr->TexCoord = textureCoords[i];
 			m_QuadVertexBufferWritePtr++;
 		}

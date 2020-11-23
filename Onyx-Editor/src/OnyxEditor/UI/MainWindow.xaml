@@ -94,7 +94,6 @@
             <TextBox x:Name="PositionTextboxX" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
             <TextBox x:Name="PositionTextboxY" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
             <TextBox x:Name="PositionTextboxZ" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-            <Button x:Name="CreateEntityButton" Click="m_CreateEntityButton_Click" Content="Create Entity" Width="120" HorizontalAlignment="Left" Height="20"/>
 
 
         </StackPanel>

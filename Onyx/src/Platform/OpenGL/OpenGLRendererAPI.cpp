@@ -15,8 +15,8 @@ namespace Onyx {
 		glEnable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDepthFunc(GL_LEQUAL);
@@ -65,6 +65,8 @@ namespace Onyx {
 		constexpr uint32_t frameBufferSize = 3 * width * height;
 
 		RenderedPixelData renderedFrame(NULL, 0);
+
+		//glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, dest);
 
 		renderedFrame.Data = dest;

@@ -1,17 +1,17 @@
 #include "onyxpch.h"
 #include "SceneEditorSelector.h"
 
-//EDITOR RAY TESTING
 #include <Onyx/Core/Input.h>
-#include <Onyx/Physics/Ray.h>
 
-#include <Onyx/Model/ModelLoader.h>
-#include <Onyx/Graphics/Renderer3D.h>
+#include <Onyx/Graphics/ModelLoader.h>
+#include <Onyx/Editor/Components/SceneEditor.h>
+
+#include <glad/glad.h>
 
 namespace Onyx {
 
-	SceneEditorSelector::SceneEditorSelector(FirstPersonCameraController* editorCamera) :
-		m_EditorCamera(editorCamera)
+	SceneEditorSelector::SceneEditorSelector(SceneEditor* sceneEditor) :
+		m_SceneEditor(sceneEditor)
 	{
 
 	}
@@ -20,8 +20,21 @@ namespace Onyx {
 	{
 		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
 
-			glm::vec2 pos = Input::GetMousePosition();
-			printf("Mouse pos %.3f,%.3f\n", pos.x, pos.y);
+// 			glm::vec2 pos = Input::GetMousePosition();
+// 			
+// 
+// 			uint32_t a = 0x00FFFFFF;
+// 
+// 			//Read from the selection buffer
+// 			glReadBuffer(GL_COLOR_ATTACHMENT1);
+// 			glReadPixels(pos.x, pos.y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, &a);
+// 
+// 			printf("Selected Entity at pos %.3f,%.3f - %u\n", pos.x, pos.y, a);
+// 
+// 			m_SceneEditor->SetSelectedEntity(a);
+
+
+
 		}
 
 

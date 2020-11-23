@@ -109,13 +109,15 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\Graphics\Material.h" />
+    <ClInclude Include="src\Onyx\Graphics\Vertex.h" />
+    <ClInclude Include="src\Onyx\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Onyx\Core\ApplicationContext.h" />
     <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\Onyx\Graphics\Framebuffer.h" />
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
-    <ClInclude Include="src\Onyx\Audio\SoundManager.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h" />
     <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h" />
@@ -133,7 +135,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="src\Onyx\Core\Layer.h" />
     <ClInclude Include="src\Onyx\Core\TimeStep.h" />
     <ClInclude Include="src\Onyx\Core\Window.h" />
-    <ClInclude Include="src\Onyx\Editor\Core\EditorCore.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorApplication.h" />
     <ClInclude Include="src\Onyx\Editor\Core\EditorInput.h" />
     <ClInclude Include="src\Onyx\Editor\Components\Gizmo.h" />
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditor.h" />
@@ -146,14 +148,13 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="src\Onyx\Graphics\Mesh.h" />
     <ClInclude Include="src\Onyx\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Onyx\Graphics\Renderer2D.h" />
-    <ClInclude Include="src\Onyx\Graphics\Renderer3D.h" />
     <ClInclude Include="src\Onyx\Graphics\RendererAPI.h" />
     <ClInclude Include="src\Onyx\Graphics\Shader.h" />
     <ClInclude Include="src\Onyx\Graphics\Skybox.h" />
     <ClInclude Include="src\Onyx\Graphics\Texture.h" />
     <ClInclude Include="src\Onyx\Graphics\VertexArray.h" />
-    <ClInclude Include="src\Onyx\Model\Model.h" />
-    <ClInclude Include="src\Onyx\Model\ModelLoader.h" />
+    <ClInclude Include="src\Onyx\Graphics\Model.h" />
+    <ClInclude Include="src\Onyx\Graphics\ModelLoader.h" />
     <ClInclude Include="src\Onyx\Onyx.h" />
     <ClInclude Include="src\Onyx\OnyxEditor.h" />
     <ClInclude Include="src\Onyx\Physics\Physics.h" />
@@ -164,20 +165,10 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLGraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer3D.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanBuffer.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanDevice.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanGraphicsContext.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanInstance.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanRenderer2D.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanRendererAPI.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanShader.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanSurface.h" />
-    <ClInclude Include="src\Platform\Vulkan\VulkanSwapchain.h" />
     <ClInclude Include="src\Platform\Windows\WindowsFileIO.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -418,12 +409,13 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Graphics\Material.cpp" />
+    <ClCompile Include="src\Onyx\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Framebuffer.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
-    <ClCompile Include="src\Onyx\Audio\SoundManager.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
     <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Camera\OrthographicCamera.cpp" />
@@ -431,9 +423,8 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\Onyx\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Camera\PerspectiveCameraController.cpp" />
     <ClCompile Include="src\Onyx\Console\Console.cpp" />
-    <ClCompile Include="src\Onyx\Core\Application.cpp" />
     <ClCompile Include="src\Onyx\Core\Layer.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Core\EditorCore.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorApplication.cpp" />
     <ClCompile Include="src\Onyx\Editor\Core\EditorInput.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\Gizmo.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditor.cpp" />
@@ -444,14 +435,12 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\Onyx\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Renderer2D.cpp" />
-    <ClCompile Include="src\Onyx\Graphics\Renderer3D.cpp" />
     <ClCompile Include="src\Onyx\Graphics\RendererAPI.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Shader.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Skybox.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Texture.cpp" />
     <ClCompile Include="src\Onyx\Graphics\VertexArray.cpp" />
-    <ClCompile Include="src\Onyx\Model\Model.cpp" />
-    <ClCompile Include="src\Onyx\Model\ModelLoader.cpp" />
+    <ClCompile Include="src\Onyx\Graphics\ModelLoader.cpp" />
     <ClCompile Include="src\Onyx\Physics\Physics.cpp" />
     <ClCompile Include="src\Onyx\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenAL\OpenALDevice.cpp" />
@@ -459,19 +448,10 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLGraphicsContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanBuffer.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanDevice.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanGraphicsContext.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanInstance.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanRenderer2D.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanRendererAPI.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanSurface.cpp" />
-    <ClCompile Include="src\Platform\Vulkan\VulkanSwapchain.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsFileIO.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />

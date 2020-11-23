@@ -29,10 +29,11 @@ namespace Onyx  {
 
 		glm::vec2 pos = Input::GetMousePosition();
 
+
 		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_MIDDLE)) {
 
-			m_Camera.horizontalAngle += mouseSpeed * float(1280 / 2 - (int)pos.x);
-			m_Camera.verticalAngle += mouseSpeed * float(720 / 2 - (int)pos.y);
+			m_Camera.horizontalAngle -= mouseSpeed * float(1280 / 2 - (int)pos.x);
+			m_Camera.verticalAngle -= mouseSpeed * float(720 / 2 - (int)pos.y);
 
 		}
 

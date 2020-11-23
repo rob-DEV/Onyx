@@ -38,7 +38,7 @@ namespace OnyxEditor
 
             while (!m_ViewportThreadTerminated)
             {
-                while (EngineCore.m_Instance == null);
+                while (EngineCore.Instance == null);
 
                 var bitmapData = EngineCore.Renderer.RenderSurface.Bitmap.LockBits(renderTarget, System.Drawing.Imaging.ImageLockMode.ReadOnly, EngineCore.Renderer.RenderSurface.Bitmap.PixelFormat);
 

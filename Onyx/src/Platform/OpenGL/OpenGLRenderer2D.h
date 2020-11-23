@@ -20,7 +20,7 @@ namespace Onyx {
 		virtual void InitImplementation();
 		virtual void DestroyImplementation();
 
-		virtual void BeginSceneImplementation(const OrthographicCamera& camera);
+		virtual void BeginSceneImplementation(const Camera& camera);
 		virtual void EndSceneImplementation();
 		virtual void FlushImplementation();
 

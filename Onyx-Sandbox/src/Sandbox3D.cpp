@@ -27,7 +27,7 @@ void Sandbox3D::OnAttach()
 
 	m_Texture1 = Texture2D::Create("res/textures/mario2.png");
 	
-	modelTest = ModelLoader::LoadFromFile("res/models/Scene.obj");
+	modelTest = ModelLoader::Load("res/models/Scene.obj");
 
 	m_Scene = new Onyx::Scene();
 

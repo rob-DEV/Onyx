@@ -26,6 +26,8 @@ namespace Onyx {
 		bool SaveScene(const char* filePath);
 
 		std::vector<Entity*> GetAllEntitiesTest();
+		void SetSelectedEntity(uint32_t id);
+
 	private:
 		
 		//Initialize First

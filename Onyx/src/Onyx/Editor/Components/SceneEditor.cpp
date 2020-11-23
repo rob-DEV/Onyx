@@ -2,10 +2,8 @@
 #include "SceneEditor.h"
 
 #include <Onyx/Scene/Scene.h>
-#include <Onyx/Camera/FirstPersonCameraController.h>
-#include <Onyx/Graphics/Renderer3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Model/ModelLoader.h>
+#include <Onyx/Graphics/ModelLoader.h>
 #include <Onyx/Editor/Components/Gizmo.h>
 #include <Onyx/Editor/Components/SceneSerializer.h>
 #include <Onyx/Editor/Components/SceneEditorSelector.h>
@@ -21,7 +19,7 @@ namespace Onyx {
 		m_Scene(new Scene()),
 		m_EditorGizmo(new Gizmo()),
 		m_SelectedEntity(nullptr),
-		m_SceneSelector(new SceneEditorSelector(m_EditorCameraController))
+		m_SceneSelector(new SceneEditorSelector(this))
 	{
 
 	}
@@ -36,17 +34,14 @@ namespace Onyx {
 	void SceneEditor::OnUpdate(Timestep ts)
 	{
 		m_EditorCameraController->OnUpdate(ts);
+		m_SceneSelector->OnUpdate();
 
-		EditorRenderer::BeginScene(m_EditorCameraController->GetCamera());
+		RenderCommand::Clear();
+		
+		EditorRenderer::DrawScene(m_Scene, m_EditorCameraController->GetCamera());
 
-		EditorRenderer::DrawScene(m_Scene);
+		EditorRenderer::DrawGizmo(m_EditorGizmo, m_EditorCameraController->GetCamera());
 
-
-		EditorRenderer::DrawGizmo(m_EditorGizmo);
-
-		EditorRenderer::EndScene();
-
-		EditorRenderer::Flush();
 
 	}
 
@@ -56,12 +51,12 @@ namespace Onyx {
 		m_Scene = SceneSerializer::DeSerialize(filePath);
 
 		
-		Model* cube = ModelLoader::LoadFromFile("res/models/Scene.obj");
+		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Scene.obj");
 
-		for (Entity* e : m_Scene->m_Entities) {
-			MeshRendererComponent a = MeshRendererComponent(cube->m_Meshes[1]);
-			e->AddComponent<MeshRendererComponent>(a);
-		}
+// 		for (Entity* e : m_Scene->m_Entities) {
+// 			MeshRendererComponent a = MeshRendererComponent(cube->GetMeshes().at(0));
+// 			e->AddComponent<MeshRendererComponent>(a);
+// 		}
 		return true;
 	}
 
@@ -74,6 +69,19 @@ namespace Onyx {
 	std::vector<Entity*> SceneEditor::GetAllEntitiesTest()
 	{
 		return m_Scene->m_Entities;
+	}
+
+	void SceneEditor::SetSelectedEntity(uint32_t id)
+	{
+		for (auto e : GetAllEntitiesTest())
+		{
+			if (e->GetID() == id) {
+				m_SelectedEntity = e;
+				TransformComponent& t = e->GetComponent<TransformComponent>();
+				m_EditorGizmo->m_Transform.Position = t.Position;
+			}
+
+		}
 	}
 
 }

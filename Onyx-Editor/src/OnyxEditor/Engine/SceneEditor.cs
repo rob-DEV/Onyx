@@ -10,9 +10,9 @@ namespace OnyxEditor
 
     public class SceneEditor
     {
-        private volatile OnyxCLR.EditorCoreCLR m_Instance;
+        private volatile OnyxCLR.EditorApplicationCLR m_Instance;
 
-        public SceneEditor(ref OnyxCLR.EditorCoreCLR instance)
+        public SceneEditor(ref OnyxCLR.EditorApplicationCLR instance)
         {
             m_Instance = instance;
         }

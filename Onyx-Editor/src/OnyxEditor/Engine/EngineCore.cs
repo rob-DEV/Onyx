@@ -14,7 +14,7 @@ namespace OnyxEditor
     public partial class EngineCore
     {
 
-        public static volatile OnyxCLR.EditorCoreCLR m_Instance = null;
+        public static volatile OnyxCLR.EditorApplicationCLR Instance = null;
 
         private static EngineInput m_EngineInput = null;
         
@@ -28,12 +28,12 @@ namespace OnyxEditor
 
         internal static void Init()
         {
-            if (m_Instance == null)
+            if (Instance == null)
             {
-                m_Instance = new OnyxCLR.EditorCoreCLR();
-                m_EngineInput = new EngineInput(ref m_Instance);
-                m_OnyxEngineRenderer = new EngineRenderer(ref m_Instance);
-                m_OynxSceneEditor = new SceneEditor(ref m_Instance);
+                Instance = new OnyxCLR.EditorApplicationCLR();
+                m_EngineInput = new EngineInput(ref Instance);
+                m_OnyxEngineRenderer = new EngineRenderer(ref Instance);
+                m_OynxSceneEditor = new SceneEditor(ref Instance);
             }
         }
 
@@ -45,7 +45,7 @@ namespace OnyxEditor
             m_EngineInput.Update();
             
             //Update Onyx engine state
-            m_Instance.Update();
+            Instance.Update();
 
             //Poll rendered data
             m_OnyxEngineRenderer.Update();

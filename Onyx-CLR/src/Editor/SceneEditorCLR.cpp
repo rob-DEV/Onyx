@@ -6,7 +6,7 @@ namespace OnyxCLR {
 
 
 
-	SceneEditorCLR::SceneEditorCLR(Onyx::EditorCore* editor)
+	SceneEditorCLR::SceneEditorCLR(Onyx::EditorApplication* editor)
 	{
 		m_NativeSceneEditor = new Onyx::SceneEditor();
 

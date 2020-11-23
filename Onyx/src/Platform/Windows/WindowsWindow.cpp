@@ -53,17 +53,15 @@ namespace Onyx {
 
 	void WindowsWindow::Init()
 	{
-		printf("Title : %s\n", m_Data.Title.c_str());
-		
 		glfwSetErrorCallback(error_callback);
 		if (s_WindowCount == 0 && !glfwInit())	printf("Failed to initialize GLFW!");
 
 		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-		//EXPERIMENTAL - used for "off-screen" graphics rendering
 		if (m_Data.Hidden)
 			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		
@@ -87,28 +85,6 @@ namespace Onyx {
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-				switch (action)
-				{
-					case GLFW_PRESS:
-					{
-						//KeyPressedEvent event(key, 0);
-						//data.EventCallback(event);
-						break;
-					}
-					case GLFW_RELEASE:
-					{
-						//KeyReleasedEvent event(key);
-						//data.EventCallback(event);
-						break;
-					}
-					case GLFW_REPEAT:
-					{
-						//KeyPressedEvent event(key, 1);
-						//data.EventCallback(event);
-						break;
-					}
-				}
 			});
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
@@ -124,14 +100,8 @@ namespace Onyx {
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			m_Context = new Onyx::OpenGLGraphicsContext(m_Window);
 
-		if(RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
-			m_Context = new Onyx::VulkanGraphicsContext(m_Window);
-
 		m_Context->Init();
-		
-		//if(!m_Data.VSync)
-			//glfwSwapInterval(0);
-		//else 
+
 		glfwSwapInterval(1);
 		
 		if(!m_Data.Hidden)

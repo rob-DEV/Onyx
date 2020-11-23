@@ -6,6 +6,14 @@
 
 namespace Onyx {
 
+	VertexBuffer* VertexBuffer::Create()
+	{
+		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
+			return new OpenGLVertexBuffer();
+
+		return nullptr;
+	}
+	
 	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
@@ -14,15 +22,6 @@ namespace Onyx {
 		return nullptr;
 
 	}
-
-	VertexBuffer* VertexBuffer::Create(uint32_t size)
-	{
-		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
-			return new OpenGLVertexBuffer(size);
-
-		return nullptr;
-	}
-
 
 	IndexBuffer* IndexBuffer::Create(uint32_t count)
 	{

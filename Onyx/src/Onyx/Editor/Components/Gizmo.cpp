@@ -1,39 +1,14 @@
 #include "onyxpch.h"
 #include "Gizmo.h"
-#include <Onyx/Model/ModelLoader.h>
+#include <Onyx/Graphics/ModelLoader.h>
 
 namespace Onyx {
 
 	Gizmo::Gizmo() : 
-		m_TransformModel(ModelLoader::LoadFromFile("res/models/transform/Transform.obj")),
-		m_RotateModel(ModelLoader::LoadFromFile("res/models/transform/Rotation.obj")),
-		m_ScaleModel(ModelLoader::LoadFromFile("res/models/transform/Scale.obj"))
+		m_TransformModel(ModelLoader::Load("TransformModel", "res/models/transform/Transform.obj")),
+		m_RotateModel(ModelLoader::Load("RotateModel", "res/models/transform/Rotation.obj")),
+		m_ScaleModel(ModelLoader::Load("ScaleModel", "res/models/transform/Scale.obj"))
 	{
-		m_TransformModel->m_Meshes[0]->m_Color = { 0.0f,0.0f,1.0f,1.0f };
-		m_TransformModel->m_Meshes[1]->m_Color = { 0.0f,1.0f,0.0f,1.0f };
-		m_TransformModel->m_Meshes[2]->m_Color = { 1.0f,0.0f,0.0f,1.0f };
-
-		m_RotateModel->m_Meshes[3]->m_Color = { 1.0f,0.0f,0.0f,1.0f };
-		m_RotateModel->m_Meshes[4]->m_Color = { 0.0f,0.0f,1.0f,1.0f };
-		m_RotateModel->m_Meshes[5]->m_Color = { 0.0f,1.0f,0.0f,1.0f };
-
-		m_ScaleModel->m_Meshes[3]->m_Color = { 1.0f,0.0f,0.0f,1.0f };
-		m_ScaleModel->m_Meshes[4]->m_Color = { 0.0f,0.0f,1.0f,1.0f };
-		m_ScaleModel->m_Meshes[5]->m_Color = { 0.0f,1.0f,0.0f,1.0f };
-
-		//PANELS
- 		m_TransformModel->m_Meshes[3]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
- 		m_TransformModel->m_Meshes[4]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
- 		m_TransformModel->m_Meshes[5]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
-
-		m_RotateModel->m_Meshes[0]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
-		m_RotateModel->m_Meshes[1]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
-		m_RotateModel->m_Meshes[2]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
- 
-		m_ScaleModel->m_Meshes[0]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
-		m_ScaleModel->m_Meshes[1]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
-		m_ScaleModel->m_Meshes[2]->m_Color = { 0.5f,0.0f,0.0f,1.0f };
-
 		m_ActiveModel = m_TransformModel;
 	}
 

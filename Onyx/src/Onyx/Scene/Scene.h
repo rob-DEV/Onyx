@@ -31,11 +31,15 @@ namespace Onyx {
 		//ENTITIES
 		std::vector<Entity*> m_Entities;
 
+		Skybox* m_SkyBox;
+
+
 		friend class Entity;
 		friend class SceneEditor;
 		friend class SceneSerializer;
-		friend class EditorRenderer;
-		friend class OpenGLRenderer3D;
+
+		friend class Renderer3D;
+
 	};
 }
 

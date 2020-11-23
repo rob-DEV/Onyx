@@ -15,8 +15,8 @@ namespace Onyx {
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			s_Instance = new OpenGLRenderer2D();
 
-		if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
-			s_Instance = new VulkanRenderer2D();
+		//if (RendererAPI::GetAPI() == RendererAPI::API::Vulkan)
+			//s_Instance = new VulkanRenderer2D();
 
 		s_Instance->InitImplementation();
 

@@ -1,8 +1,7 @@
 #include "onyxpch.h"
 #include "Scene.h"
 
-#include <Onyx/Model/ModelLoader.h>
-#include <Onyx/Graphics/Renderer3D.h>
+#include <Onyx/Graphics/ModelLoader.h>
 #include <Onyx/Graphics/RenderCommand.h>
 
 #include <Onyx/Editor/Components/Gizmo.h>
@@ -13,7 +12,15 @@
 
 namespace Onyx {
 
-	Scene::Scene()
+	Scene::Scene() :
+		m_SkyBox(new Skybox(std::vector<std::string> {
+			"res/textures/skybox/Left.png",
+			"res/textures/skybox/Right.png",
+			"res/textures/skybox/Up.png",
+			"res/textures/skybox/Down.png",
+			"res/textures/skybox/Front.png",
+			"res/textures/skybox/Back.png"
+		}))
 	{
 
 

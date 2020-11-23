@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 	printf("--------------------------------------------------- Onyx Game Engine ---------------------------------------------------\n");
 
 	Onyx::Application* onyxApplication = CreateApplication();
-	onyxApplication->SetWindowTitle("Onyx : Sandbox3D");
+	//onyxApplication->SetWindowTitle("Onyx : Sandbox3D");
 	onyxApplication->Run();
 	delete onyxApplication;
 

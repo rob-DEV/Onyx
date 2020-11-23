@@ -16,11 +16,11 @@
 #include <Onyx/Graphics/Mesh.h>
 
 //Model
-#include <Onyx/Model/ModelLoader.h>
+#include <Onyx/Graphics/ModelLoader.h>
 
 //Renderer
 #include <Onyx/Graphics/Renderer2D.h>
-#include <Onyx/Graphics/Renderer3D.h>
+#include <Onyx/Graphics/RendererOld3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Camera/OrthographicCameraController.h>
 #include <Onyx/Camera/PerspectiveCameraController.h>

@@ -5,37 +5,27 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Editor/Components/Gizmo.h>
-#include <Platform/OpenGL/OpenGLRenderer3D.h>
+
+#include <Onyx/Renderer/Renderer3D.h>
 
 namespace Onyx {
 
-	void EditorRenderer::BeginScene(const Camera& camera)
+	void EditorRenderer::DrawScene(const Scene* scene, const Camera& editorCamera)
 	{
-		RenderCommand::Clear();
-		Renderer3D::BeginScene(camera);
-	}
+		
+		Renderer3D::BeginScene(editorCamera);
 
-	void EditorRenderer::EndScene()
-	{
-		Renderer3D::EndScene();
-	}
-
-	void EditorRenderer::Flush()
-	{
-		Renderer3D::Flush();
-	}
-
-	void EditorRenderer::DrawScene(const Scene* scene)
-	{
 		Renderer3D::DrawScene(scene);
+
+		Renderer3D::EndScene();
+		Renderer3D::Flush();
+
+
 	}
 
-	void EditorRenderer::DrawGizmo(const Gizmo* gizmo)
+	void EditorRenderer::DrawGizmo(const Gizmo* gizmo, const Camera& editorCamera)
 	{
-		//Draw Gizmo
-		for (auto mesh : gizmo->m_ActiveModel->m_Meshes) {
-			Renderer3D::DrawMesh(mesh, glm::vec3(0.0f), glm::vec3(1.0f));
-		}
+
 	}
 
 }

@@ -5,7 +5,7 @@
 #include <Onyx/Editor/Core/EditorInput.h>
 #include <Onyx/Editor/Components/SceneEditor.h>
 
-#include "EditorCoreCLR.h"
+#include "EditorApplicationCLR.h"
 
 using namespace System;
 using namespace System::Drawing;
@@ -16,25 +16,25 @@ using namespace System::Runtime::InteropServices;
 
 namespace OnyxCLR {
 
-	EditorCoreCLR::EditorCoreCLR()
+	EditorApplicationCLR::EditorApplicationCLR()
 	{
-		OnyxEditorInstance = new Onyx::EditorCore();
+		OnyxEditorInstance = new Onyx::EditorApplication();
 		
 		SceneEditorInstance = gcnew OnyxCLR::SceneEditorCLR(OnyxEditorInstance);
 	}
 
-	EditorCoreCLR::~EditorCoreCLR()
+	EditorApplicationCLR::~EditorApplicationCLR()
 	{
 		
 	}
 
-	void EditorCoreCLR::Update()
+	void EditorApplicationCLR::Update()
 	{
 		OnyxEditorInstance->OnUpdate();
 	}
 
 
-	void EditorCoreCLR::UpdateEngineInput(array<System::Boolean>^ keys, array<System::Boolean>^ mouseButtons, System::Drawing::Point mousePosition)
+	void EditorApplicationCLR::UpdateEngineInput(array<System::Boolean>^ keys, array<System::Boolean>^ mouseButtons, System::Drawing::Point mousePosition)
 	{
 		for (size_t i = 0; i < 350; ++i)
 			OnyxEditorInstance->GetInputKeyBuffer()[i] = keys[i];
@@ -45,7 +45,7 @@ namespace OnyxCLR {
 		OnyxEditorInstance->SetMousePosition(mousePosition.X, mousePosition.Y);
 	}
 
-	void EditorCoreCLR::GetRenderedFrame(int* buffer)
+	void EditorApplicationCLR::GetRenderedFrame(int* buffer)
 	{
 		Onyx::RenderedPixelData dd = OnyxEditorInstance->GetRenderedFrame();
 

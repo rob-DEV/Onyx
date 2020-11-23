@@ -15,7 +15,7 @@ namespace Onyx {
 		static void Init();
 		inline static void Destroy() { s_Instance->DestroyImplementation(); delete s_Instance; };
 
-		inline static void BeginScene(const OrthographicCamera& camera) { s_Instance->BeginSceneImplementation(camera); };
+		inline static void BeginScene(const Camera& camera) { s_Instance->BeginSceneImplementation(camera); };
 		inline static void EndScene() { s_Instance->EndSceneImplementation(); };
 
 		inline static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) { s_Instance->DrawQuadImplementation(position, size, color); };
@@ -32,7 +32,7 @@ namespace Onyx {
 		virtual void InitImplementation() = 0;
 		virtual void DestroyImplementation() = 0;
 
-		virtual void BeginSceneImplementation(const OrthographicCamera& camera) = 0;
+		virtual void BeginSceneImplementation(const Camera& camera) = 0;
 		virtual void EndSceneImplementation() = 0;
 
 		virtual void DrawQuadImplementation(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) = 0;
