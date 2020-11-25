@@ -35,6 +35,7 @@ namespace Onyx {
 
 		void AddTexture(TextureParameterType type, const std::string& path);
 		void SetColor(ColorParameterType type, const glm::vec4& color);
+		void SetTilingFactor(float tilingFactor) { m_TilingFactor = tilingFactor; };
 
 	private:
 		std::string m_Name;
@@ -50,6 +51,9 @@ namespace Onyx {
 		//DIFFUSE,
 		//SPECULAR,
 		std::array<glm::vec4, 3> m_Colors;
+
+		float m_TilingFactor;
+
 	};
 
 }

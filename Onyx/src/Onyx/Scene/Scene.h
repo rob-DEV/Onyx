@@ -3,7 +3,6 @@
 
 #include <Onyx/Core/Core.h>
 #include <Onyx/Core/TimeStep.h>
-#include <Onyx/Camera/FirstPersonCameraController.h>
 
 #include <Onyx/Graphics/Skybox.h>
 
@@ -39,6 +38,7 @@ namespace Onyx {
 		friend class SceneSerializer;
 
 		friend class Renderer3D;
+		friend class EditorRenderer;
 
 	};
 }

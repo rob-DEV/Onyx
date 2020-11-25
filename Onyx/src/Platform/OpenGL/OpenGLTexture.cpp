@@ -24,7 +24,7 @@ namespace Onyx {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 	{
 		int width, height, channels;
-		stbi_set_flip_vertically_on_load(0);
+		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		if(!data)
 			printf("Failed to load texture, check file path\n");

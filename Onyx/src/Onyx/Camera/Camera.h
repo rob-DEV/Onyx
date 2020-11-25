@@ -7,8 +7,7 @@
 
 namespace Onyx {
 
-
-	class ONYX_API Camera
+	class Camera
 	{
 	public:
 		virtual const glm::mat4& GetProjectionMatrix() const = 0;
@@ -16,10 +15,6 @@ namespace Onyx {
 		virtual const glm::mat4& GetViewProjectionMatrix() const = 0;
 
 		virtual ~Camera() {}
-	
-	private:
-
-
 	};
 
 }

@@ -2,6 +2,7 @@
 #define _ONYX_SCENE_EDITOR_SELECTOR_H_
 
 #include <Onyx/Core/Core.h>
+#include <Onyx/Graphics/Framebuffer.h>
 
 namespace Onyx {
 	
@@ -16,6 +17,7 @@ namespace Onyx {
 
 	private:
 		SceneEditor* m_SceneEditor;
+		void DrawScene();
 	};
 }
 

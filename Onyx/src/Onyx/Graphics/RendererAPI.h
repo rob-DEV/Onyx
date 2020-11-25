@@ -13,7 +13,6 @@ namespace Onyx {
 
 		char* Data;
 		uint32_t Size;
-		//NumberOfChannels?
 
 		RenderedPixelData(void* data, uint32_t size) {
 			Data = (char*)data;
@@ -29,7 +28,6 @@ namespace Onyx {
 		}
 
 		~RenderedPixelData() { 	
-			//delete[] Data;
 		}
 
 		RenderedPixelData operator=(RenderedPixelData other) {
@@ -45,7 +43,7 @@ namespace Onyx {
 	class ONYX_API RendererAPI
 	{
 	public:
-		enum class API	{	None = 0, OpenGL, Vulkan };
+		enum class API	{ None = 0, OpenGL, Vulkan };
 
 		virtual ~RendererAPI() = default;
 		virtual void Init() = 0;

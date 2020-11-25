@@ -7,15 +7,14 @@
 #include <Onyx/Editor/Components/Gizmo.h>
 #include <Onyx/Editor/Components/SceneSerializer.h>
 #include <Onyx/Editor/Components/SceneEditorSelector.h>
+#include <Onyx/Editor/Components/EditorCameraController.h>
 
-#include <Platform/OpenGL/OpenGLFramebuffer.h>
-
-#include <Onyx/Editor/Core/EditorRenderer.h>
+#include <Onyx/Renderer/Renderer3D.h>
 
 namespace Onyx {
 
 	SceneEditor::SceneEditor() : 
-		m_EditorCameraController(new FirstPersonCameraController()),
+		m_EditorCameraController(new EditorCameraController()),
 		m_Scene(new Scene()),
 		m_EditorGizmo(new Gizmo()),
 		m_SelectedEntity(nullptr),
@@ -38,9 +37,22 @@ namespace Onyx {
 
 		RenderCommand::Clear();
 		
-		EditorRenderer::DrawScene(m_Scene, m_EditorCameraController->GetCamera());
+		Renderer3D::BeginScene(m_EditorCameraController->GetCamera());
 
-		EditorRenderer::DrawGizmo(m_EditorGizmo, m_EditorCameraController->GetCamera());
+		Renderer3D::DrawScene(m_Scene);
+
+		Renderer3D::EndScene();
+		Renderer3D::Flush();
+
+		//Selection Render
+// 		RenderCommand::Clear();
+// 
+// 		Renderer3D::BeginScene(m_EditorCameraController->GetCamera());
+// 
+// 		m_SceneSelector->OnUpdate();
+// 
+// 		Renderer3D::EndScene();
+// 		Renderer3D::Flush();
 
 
 	}
@@ -51,12 +63,17 @@ namespace Onyx {
 		m_Scene = SceneSerializer::DeSerialize(filePath);
 
 		
-		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Scene.obj");
+		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Sponza/Sponza.obj");
 
-// 		for (Entity* e : m_Scene->m_Entities) {
-// 			MeshRendererComponent a = MeshRendererComponent(cube->GetMeshes().at(0));
-// 			e->AddComponent<MeshRendererComponent>(a);
-// 		}
+		for (Entity* e : m_Scene->m_Entities) {
+
+			TransformComponent& t = e->GetComponent<TransformComponent>();
+			t.Scale = glm::vec3(0.01f);
+
+
+			MeshRendererComponent a = MeshRendererComponent(cube->GetMeshes());
+			e->AddComponent<MeshRendererComponent>(a);
+		}
 		return true;
 	}
 

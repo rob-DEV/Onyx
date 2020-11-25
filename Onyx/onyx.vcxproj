@@ -84,7 +84,7 @@ IF EXIST ..\bin\Debug-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-x86_
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>onyxpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_ONYX_BUILD_TARGET_WINDOWS_;_ONYX_BUILD_DLL_;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_ONYX_BUILD_TARGET_WINDOWS_;_ONYX_BUILD_DLL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\glm;vendor\glfw3;vendor\glad\include;vendor\stb_image;vendor\vulkan;vendor\openal;vendor\assimp;vendor\entt\include;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -109,22 +109,19 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\Editor\Components\EditorCameraController.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
     <ClInclude Include="src\Onyx\Graphics\Material.h" />
     <ClInclude Include="src\Onyx\Graphics\Vertex.h" />
     <ClInclude Include="src\Onyx\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Onyx\Core\ApplicationContext.h" />
-    <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\Onyx\Graphics\Framebuffer.h" />
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
-    <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h" />
-    <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h" />
     <ClInclude Include="src\Onyx\Camera\OrthographicCamera.h" />
-    <ClInclude Include="src\Onyx\Camera\OrthographicCameraController.h" />
     <ClInclude Include="src\Onyx\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="src\Onyx\Camera\PerspectiveCameraController.h" />
     <ClInclude Include="src\Onyx\Console\Console.h" />
     <ClInclude Include="src\Onyx\Core\Application.h" />
     <ClInclude Include="src\Onyx\Core\Core.h" />
@@ -409,19 +406,16 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Editor\Components\EditorCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Material.cpp" />
     <ClCompile Include="src\Onyx\Renderer\Renderer3D.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Framebuffer.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
-    <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp" />
-    <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp" />
     <ClCompile Include="src\Onyx\Camera\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Onyx\Camera\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Onyx\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Onyx\Camera\PerspectiveCameraController.cpp" />
     <ClCompile Include="src\Onyx\Console\Console.cpp" />
     <ClCompile Include="src\Onyx\Core\Layer.cpp" />
     <ClCompile Include="src\Onyx\Editor\Core\EditorApplication.cpp" />

@@ -22,8 +22,6 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/Renderer2D.h>
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Camera/OrthographicCameraController.h>
-#include <Onyx/Camera/PerspectiveCameraController.h>
 
 //Sound
 #include <Onyx/Audio/Sound.h>
@@ -43,6 +41,8 @@
 #include "GLFW/glfw3.h"
 
 #include <Platform/OpenGL/OpenGLFramebuffer.h>
+
+#include <Onyx/Editor/Core/EditorRenderer.h>
 
 namespace Onyx {
 
@@ -76,6 +76,7 @@ namespace Onyx {
 		//Renderers
 		Renderer2D::Init();
 		Renderer3D::Init();
+		EditorRenderer::Init();
 
 		m_EditorTimestep = Timestep(glfwGetTime());
 

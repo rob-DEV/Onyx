@@ -15,7 +15,7 @@ namespace Onyx {
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		virtual const FramebufferSpecification& GetProperties() const override { return m_Specification; }
+		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 	private:
 		uint32_t m_RendererID = 0;
 		uint32_t m_ColorAttachments[2] = { 0,0 };

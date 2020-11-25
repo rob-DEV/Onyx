@@ -9,7 +9,7 @@
 
 namespace Onyx {
 
-	class FirstPersonCameraController;
+	class EditorCameraController;
 	class Gizmo;
 	class Scene;
 	class Entity;
@@ -31,7 +31,7 @@ namespace Onyx {
 	private:
 		
 		//Initialize First
-		FirstPersonCameraController* m_EditorCameraController;
+		EditorCameraController* m_EditorCameraController;
 		
 		Scene* m_Scene;
 		Entity* m_SelectedEntity;

@@ -13,6 +13,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 namespace Onyx {
 
@@ -21,17 +22,15 @@ namespace Onyx {
 	Model* Renderer3D::s_TestModel = nullptr;
 	Material* Renderer3D::s_TestMaterial = nullptr;
 
+	std::array<Texture2D*, 32> Renderer3D::m_TextureSlots = std::array<Texture2D*, 32>();
+
 	void Renderer3D::Init()
 	{
 		//Add standard Shaders
 		ShaderLibrary::Add("Skybox", Shader::Create("res/shaders/Skybox.glsl"));
 		ShaderLibrary::Add("3DRuntime", Shader::Create("res/shaders/3DRuntime.glsl"));
 
-		if (Application::Get()->GetContext() == ApplicationContext::Editor) {
-			ShaderLibrary::Add("3DEditor", Shader::Create("res/shaders/3DEditor.glsl"));
-		}
-
-		s_TestModel = ModelLoader::Load("Scene", "res/models/Sponza/sponza.obj");
+		s_TestModel = ModelLoader::Load("Scene", "res/models/Sphere.fbx");
 
 		m_MeshVertexArray = VertexArray::Create();
 		m_MeshVertexBuffer = VertexBuffer::Create();
@@ -48,12 +47,6 @@ namespace Onyx {
 		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
 
 		//Buffer layout to be abstracted
-
-// 		glm::vec3 Position;
-// 		glm::vec3 Color;
-// 		glm::vec2 TexCoords;
-// 		glm::vec3 Normal;
-// 		glm::vec3 Tangent;
 
 		//Position
 		glEnableVertexAttribArray(0);
@@ -75,7 +68,8 @@ namespace Onyx {
 		glEnableVertexAttribArray(4);
 		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Tangent));
 
-		s_TestMaterial = new Material();
+		s_TestMaterial = new Material("res/textures/sphere/diffuse.jpg", "res/textures/sphere/roughness.jpg", "res/textures/sphere/normal.jpg");
+
 	}
 
 	void Renderer3D::Shutdown()
@@ -85,7 +79,8 @@ namespace Onyx {
 
 	void Renderer3D::BeginScene(const Camera& camera)
 	{
-		m_View = m_View = camera.GetProjectionMatrix() * glm::mat4(glm::mat3(camera.GetViewMatrix()));
+		//NOTE: Casted to mat3 to wipe out position data for cube map
+		m_View = camera.GetProjectionMatrix() * glm::mat4(glm::mat3(camera.GetViewMatrix()));
 		m_WorldViewProjection = camera.GetViewProjectionMatrix();
 
 		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
@@ -104,47 +99,57 @@ namespace Onyx {
 
 		scene->m_SkyBox->Draw();
 
-
 		Shader* meshShader = ShaderLibrary::Get("3DRuntime");
 		meshShader->Bind();
 		meshShader->SetMat4("u_ViewProjection", m_WorldViewProjection);
-		meshShader->SetFloat3("u_LightPosition", glm::vec3(0.0f, 4.0f, 0.0f));
+		meshShader->SetFloat3("u_LightPosition", glm::vec3(0.0f, 12.0f, 0.0f));
 
 		m_MeshVertexArray->Bind();
 		m_MeshVertexBuffer->Bind();
 		m_MeshIndexBuffer->Bind();
 
-		s_TestMaterial->Bind(meshShader);
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f))
-			* glm::scale(glm::mat4(1.0f), glm::vec3(0.01f));
-
-		for (auto mesh : s_TestModel->GetMeshes())
+		for (auto entity : scene->m_Entities)
 		{
-			for (size_t i = 0; i < mesh.m_Vertices.size(); ++i) {
+			if (entity->HasComponent<TransformComponent>() && entity->HasComponent<MeshRendererComponent>()) {
 
-				memcpy(m_MeshVertexBufferWritePtr, &mesh.m_Vertices[i], sizeof(Vertex3D));
-				((Vertex3D*)m_MeshVertexBufferWritePtr)->Position = transform * glm::vec4(mesh.m_Vertices[i].Position, 1.0f);
-				m_MeshVertexBufferWritePtr = (char*)m_MeshVertexBufferWritePtr + sizeof(Vertex3D);
+				TransformComponent& t = entity->GetComponent<TransformComponent>();
 
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), t.Position)
+					* glm::scale(glm::mat4(1.0f), t.Scale);
+
+				MeshRendererComponent& mr = entity->GetComponent <MeshRendererComponent>();
+
+				for (auto mesh : mr.GetMeshes())
+				{
+					mesh.m_Material.Bind(meshShader);
+
+					for (size_t i = 0; i < mesh.m_Vertices.size(); ++i) {
+
+						memcpy(m_MeshVertexBufferWritePtr, &mesh.m_Vertices[i], sizeof(Vertex3D));
+						((Vertex3D*)m_MeshVertexBufferWritePtr)->Position = transform * glm::vec4(mesh.m_Vertices[i].Position, 1.0f);
+						m_MeshVertexBufferWritePtr = (char*)m_MeshVertexBufferWritePtr + sizeof(Vertex3D);
+					}
+
+					for (size_t i = 0; i < mesh.m_Indices.size(); ++i) {
+
+						*m_MeshIndexBufferWritePtr = mesh.m_Indices[i] + m_VertexCount;
+						m_MeshIndexBufferWritePtr++;
+
+					}
+
+					m_IndexCount += mesh.m_Indices.size();
+					m_VertexCount += mesh.m_Vertices.size();
+
+					/*if (m_TextureSlots[0]) {*/
+						ResetAndFlush();
+					/*}*/
+				}
 			}
 
-			for (size_t i = 0; i < mesh.m_Indices.size(); ++i) {
-
-				*m_MeshIndexBufferWritePtr = mesh.m_Indices[i] + m_VertexCount;
-				m_MeshIndexBufferWritePtr++;
-
-			}
-		
-			m_IndexCount += mesh.m_Indices.size();
-			//BUG
-			m_VertexCount += mesh.m_Vertices.size();
-		}
-
-		
+		}	
 	}
 
-	void Renderer3D::DrawModel(const Model* scene)
+	void Renderer3D::DrawModel(const Model* scene, const glm::mat4& transform)
 	{
 
 	}
@@ -164,7 +169,20 @@ namespace Onyx {
 	{
 		if (m_IndexCount > 0)
 			RenderCommand::DrawIndexed(m_MeshVertexArray, m_IndexCount);
-		return;
 	}
+
+	void Renderer3D::ResetAndFlush()
+	{
+		EndScene();
+		Flush();
+
+		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
+		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
+
+		m_IndexCount = 0;
+		m_VertexCount = 0;
+
+	}
+
 
 }

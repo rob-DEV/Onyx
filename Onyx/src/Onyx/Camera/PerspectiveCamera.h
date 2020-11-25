@@ -14,29 +14,52 @@ namespace Onyx {
 	public:
 		PerspectiveCamera(float fov, float aspect, float zNear, float zFar);
 
-		void SetProjection(float fov, float aspect, float zNear, float zFar);
+		void SetProjectionMatrix(float fov, float aspect, float zNear, float zFar);
 
-		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
+		virtual const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
+		virtual const glm::mat4& GetViewMatrix() const override { return m_ViewMatrix; }
+		virtual const glm::mat4& GetViewProjectionMatrix() const override { return m_ProjectionMatrix * m_ViewMatrix; }
 
-		const glm::quat& GetRotation() const { return m_Rotation; }
-		void SetRotation(const glm::quat& rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
+		const glm::vec3& GetPositon() const { return m_Position; };
+		const glm::vec3& GetDirection() const { return m_Direction; };
+		const glm::vec3& GetRight() const { return m_Right; };
+		const float GetPitch() const { return m_Pitch; };
+		const float GetYaw() const { return m_Yaw; };
+		const glm::vec2 GetPitchAndYaw() const { return { m_Pitch, m_Yaw }; };
 
-		Ray ScreenPointToRay() const;
+		void SetPositon(const glm::vec3& positon) {
+			m_Position = positon; 
+			RecalculateDirection();
+		};
 
-		//CAMERA OVERRIDES
-		const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix() const override { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
+		void SetPitch(float pitchAngle) {
+			m_Pitch = pitchAngle;
+			RecalculateDirection();
+		};
+		void SetYaw(float yawAngle) {
+			m_Yaw = yawAngle; 
+			RecalculateDirection();
+		};
+
+		//Minimize Recalculation Calls
+		void SetPitchAndYaw(float pitch, float yaw);
+
 
 	private:
-		void RecalculateViewMatrix();
+		void RecalculateDirection();
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ViewProjectionMatrix;
 
-		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-		glm::quat m_Rotation;
+		glm::vec3 m_Position = glm::vec3(0.0f);
+		glm::vec3 m_Direction = glm::vec3(0.0f);
+		//glm::vec3 m_Up = glm::vec3(0.0f);
+		glm::vec3 m_Right = glm::vec3(0.0f);
+
+		//+Y is world up
+		glm::vec3 m_Up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		float m_Yaw = 0.0f;
+		float m_Pitch = 0.0f;
 
 	};
 

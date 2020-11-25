@@ -17,25 +17,27 @@ namespace Onyx {
 		m_Colors[0] = glm::vec4(0.1f);
 		m_Colors[1] = glm::vec4(0.8f,0.0f,0.5f,1.0f);
 		m_Colors[2] = glm::vec4(1.0f);
+
+		m_TilingFactor = 1.0;
 	}
 	
 	Material::Material(const std::string& diffuse, const std::string& specular, const std::string& normal)
 	{
 		m_Textures[0] = Texture2D::Create(diffuse);
-		m_Textures[2] = Texture2D::Create(specular);
-		m_Textures[1] = Texture2D::Create(normal);
+		m_Textures[1] = Texture2D::Create(specular);
+		m_Textures[2] = Texture2D::Create(normal);
 
 		m_Colors[0] = glm::vec4(1.0f);
 		m_Colors[1] = glm::vec4(1.0f);
 		m_Colors[2] = glm::vec4(1.0f);
+
+		m_TilingFactor = 1.0;
 	}
 
 
 	Material::~Material()
 	{
-		//TODO: Consider texture cache
-		//for (auto t : m_Textures)
-			//delete t;
+		
 	}
 
 	void Material::Bind(Shader* shader)
@@ -48,6 +50,20 @@ namespace Onyx {
 		shader->SetFloat4("u_Material.ambient", m_Colors[0]);
 		shader->SetFloat4("u_Material.diffuse", m_Colors[1]);
 		shader->SetFloat4("u_Material.specular", m_Colors[2]);
+
+
+		uint32_t diffuse = 0;
+		uint32_t spec = 1;
+		uint32_t normal = 2;
+
+		m_Textures.at(0)->Bind(diffuse);
+		m_Textures.at(2)->Bind(normal);
+
+		shader->SetInt("u_Material.diffuseTex", diffuse);
+		shader->SetInt("u_Material.normalTex", normal);
+
+		//shader->SetFloat("u_Material.tilingFactor", 1.0f);
+
 
 	}
 

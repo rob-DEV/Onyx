@@ -10,40 +10,45 @@ namespace Onyx {
 	PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar)
 		: m_ProjectionMatrix(glm::perspective(glm::radians(fov), aspect, zNear, zFar)), m_ViewMatrix(glm::mat4(1.0f))
 	{
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+
 	}
 
-	void PerspectiveCamera::SetProjection(float fov, float aspect, float zNear, float zFar)
+	void PerspectiveCamera::SetProjectionMatrix(float fov, float aspect, float zNear, float zFar)
 	{
 		m_ProjectionMatrix = glm::perspective(glm::radians(fov), aspect, zNear, zFar);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	Ray PerspectiveCamera::ScreenPointToRay() const
+	void PerspectiveCamera::SetPitchAndYaw(float pitch, float yaw)
 	{
-		glm::vec2 normalizedMouseInput = Input::GetMousePositionNormalized();
-		glm::vec2 normalizedMouse = glm::vec2(normalizedMouseInput.x, normalizedMouseInput.y);
+		m_Pitch = pitch;
+		m_Yaw = yaw;
 
-		glm::vec2 ray_nds = normalizedMouse;
-		glm::vec4 ray_clip = glm::vec4(ray_nds.x, ray_nds.y, -1.0f, 1.0f);
-		glm::mat4 invProjMat = glm::inverse(m_ProjectionMatrix);
-		glm::vec4 eyeCoords = invProjMat * ray_clip;
-		eyeCoords = glm::vec4(eyeCoords.x, eyeCoords.y, -1.0f, 0.0f);
-		glm::mat4 invViewMat = glm::inverse(m_ViewMatrix);
-		glm::vec4 rayWorld = invViewMat * eyeCoords;
-
-		return Ray(m_Position, rayWorld);
+		RecalculateDirection();
 	}
 
-	void PerspectiveCamera::RecalculateViewMatrix()
+	void PerspectiveCamera::RecalculateDirection()
 	{
-		
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position)
-			* glm::toMat4(m_Rotation);
+		m_Direction = glm::vec3(
+			cos(m_Yaw) * sin(m_Pitch),
+			sin(m_Yaw),
+			cos(m_Yaw) * cos(m_Pitch)
+		);
 
-		m_ViewMatrix = glm::inverse(transform);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		// Right vector
+		m_Right = glm::vec3(
+			sin(m_Pitch - 3.14f / 2.0f),
+			0,
+			cos(m_Pitch - 3.14f / 2.0f)
+		);
+
+		// Up vector : perpendicular to both direction and right
+		m_Up = glm::cross(m_Right, m_Direction);
+
+		m_ViewMatrix = glm::lookAt(
+			m_Position,           // Camera is here
+			m_Position + m_Direction, // and looks here : at the same position, plus "direction"
+			m_Up                  // Head is up (set to 0,-1,0 to look upside-down)
+		);
 	}
-
 
 }

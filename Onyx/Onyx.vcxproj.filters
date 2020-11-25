@@ -93,22 +93,10 @@
     <ClInclude Include="src\Onyx\Camera\Camera.h">
       <Filter>src\Onyx\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\Onyx\Camera\FirstPersonCameraController.h">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.h">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="src\Onyx\Camera\OrthographicCamera.h">
       <Filter>src\Onyx\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\Onyx\Camera\OrthographicCameraController.h">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="src\Onyx\Camera\PerspectiveCamera.h">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Onyx\Camera\PerspectiveCameraController.h">
       <Filter>src\Onyx\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Onyx\Console\Console.h">
@@ -951,7 +939,6 @@
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Graphics\Framebuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
-    <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
     <ClInclude Include="src\Onyx\Core\ApplicationContext.h" />
     <ClInclude Include="src\Onyx\Graphics\Model.h">
       <Filter>src\Onyx\Model</Filter>
@@ -965,27 +952,17 @@
     </ClInclude>
     <ClInclude Include="src\Onyx\Graphics\Material.h" />
     <ClInclude Include="src\Onyx\Graphics\Vertex.h" />
+    <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\EditorCameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
       <Filter>src\Onyx\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\Onyx\Camera\FirstPersonCameraController.cpp">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Camera\FirstPersonPerspectiveCamera.cpp">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="src\Onyx\Camera\OrthographicCamera.cpp">
       <Filter>src\Onyx\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\Onyx\Camera\OrthographicCameraController.cpp">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="src\Onyx\Camera\PerspectiveCamera.cpp">
-      <Filter>src\Onyx\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Onyx\Camera\PerspectiveCameraController.cpp">
       <Filter>src\Onyx\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Onyx\Console\Console.cpp">
@@ -1096,7 +1073,6 @@
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Framebuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\ModelLoader.cpp">
       <Filter>src\Onyx\Model</Filter>
     </ClCompile>
@@ -1105,5 +1081,7 @@
       <Filter>src\Onyx\Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\Onyx\Graphics\Material.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\EditorCameraController.cpp" />
   </ItemGroup>
 </Project>

@@ -44,7 +44,8 @@ namespace Onyx {
 			aiProcess_GenSmoothNormals |
 			aiProcess_ImproveCacheLocality |
 			aiProcess_OptimizeMeshes |
-			aiProcess_SplitLargeMeshes);
+			aiProcess_SplitLargeMeshes
+			);
 
 
 		// Check if scene is not null and model is done loading
@@ -124,8 +125,6 @@ namespace Onyx {
 			vertices.push_back(vertex);
 		}
 
-	
-
 		// Get indices from each face
 		std::vector<uint32_t> indices;
 		for (auto i = 0; i < mesh->mNumFaces; ++i) {
@@ -134,9 +133,45 @@ namespace Onyx {
 				indices.emplace_back(face.mIndices[j]);
 			}
 		}
-
 		
-		return Mesh(vertices, indices);
+		Material material;
+		//Material test
+		if (true /*REFACTOR TO LOAD MATERIAL*/) {
+			if (mesh->mMaterialIndex >= 0) {
+
+				const auto* mat = scene->mMaterials[mesh->mMaterialIndex];
+
+				if (mat->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+					aiString name;
+					mat->Get(AI_MATKEY_NAME, name);
+					std::cout << "Loading texture file: " << name.C_Str() << std::endl;
+
+
+					aiString diffusePath;
+					mat->GetTexture(aiTextureType_AMBIENT, 0, &diffusePath);
+
+					std::string fullPath = std::string("res/models/Sponza/") + std::string(diffusePath.C_Str());
+					//std::string psthh = "C:\\DEV\\Onyx\\bin\\Debug-x86_64\\Onyx-Editor\\res\\models\\MetalBlock\\metal_1.jpg";
+					std::cout << "Loading texture file: " << fullPath << std::endl;
+
+					material.AddTexture(TextureParameterType::DIFFUSE, fullPath);
+
+				}
+				else {
+					std::cout << "No texture image being imported " << std::endl;
+				}
+				
+
+				
+			}
+		}
+
+		//Acts as a default material
+		//std::string psthh = "C:\\DEV\\Onyx\\bin\\Debug-x86_64\\Onyx-Editor\\res\\models\\MetalBlock\\metal_1.jpg";
+		//material.AddTexture(TextureParameterType::DIFFUSE, psthh);
+		material.SetTilingFactor(3.0f);
+
+		return Mesh(vertices, indices, material);
 	}
 
 }

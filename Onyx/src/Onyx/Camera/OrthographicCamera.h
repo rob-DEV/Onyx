@@ -3,6 +3,7 @@
 
 #include <Onyx/Camera/Camera.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Onyx {
 
@@ -19,10 +20,17 @@ namespace Onyx {
 		float GetRotation() const { return m_Rotation; }
 		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
 
+
 		//CAMERA OVERRIDES
-		const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix() const  override { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
+		virtual const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
+		virtual const glm::mat4& GetViewMatrix() const  override { return m_ViewMatrix; }
+		virtual const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
+		
+		virtual const glm::mat4& GetTransform() const { 
+			return glm::translate(glm::mat4(1.0f), m_Position)
+				* glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation), glm::vec3(0, 0, 1));
+		}
+
 	private:
 		void RecalculateViewMatrix();
 		glm::mat4 m_ProjectionMatrix;

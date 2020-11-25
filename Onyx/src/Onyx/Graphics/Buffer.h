@@ -7,8 +7,6 @@
 #include <iterator>
 #include <initializer_list>
 
-typedef unsigned int uint32_t;
-
 namespace Onyx {
 
 	class BufferLayout {};

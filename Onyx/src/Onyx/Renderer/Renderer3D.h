@@ -1,11 +1,12 @@
-#pragma once
+#ifndef _ONYX_RENDERER3D_H_
+#define _ONYX_RENDERER3D_H_
 
 #include <Onyx/Camera/Camera.h>
 #include <Onyx/Graphics/Shader.h>
 
 #include <Onyx/Graphics/Material.h>
 #include <Onyx/Graphics/VertexArray.h>
-
+#include <Onyx/Graphics/Framebuffer.h>
 
 namespace Onyx {
 
@@ -20,12 +21,18 @@ namespace Onyx {
 
 		static void BeginScene(const Camera& camera);
 		static void DrawScene(const Scene* scene);
-		static void DrawModel(const Model* scene);
+		static void DrawModel(const Model* scene, const glm::mat4& transform);
 		static void EndScene();
 
 		static void Flush();
 
 	private:
+
+		static void ResetAndFlush();
+
+		static const uint32_t MAX_TEXTURE_SLOTS = 32;
+		static std::array<Texture2D*, MAX_TEXTURE_SLOTS> m_TextureSlots;
+
 		static glm::mat4 m_View;
 		static glm::mat4 m_WorldViewProjection;
 
@@ -49,3 +56,5 @@ namespace Onyx {
 	};
 
 }
+
+#endif // !_ONYX_RENDERER3D_H_

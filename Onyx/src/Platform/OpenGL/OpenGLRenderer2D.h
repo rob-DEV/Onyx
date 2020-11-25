@@ -10,7 +10,6 @@
 #include <Platform/OpenGL/OpenGLShader.h>
 #include <Platform/OpenGL/OpenGLVertexArray.h>
 
-
 namespace Onyx {
 
 	struct Vertex2D;
