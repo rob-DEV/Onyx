@@ -27,8 +27,9 @@
         <Menu DockPanel.Dock="Top"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="_New" Click="MenuItem_New_Click"/>
-                <MenuItem Header="_Open" Click="MenuItem_Open_Click"/>
+                <MenuItem Header="_Open..." Click="MenuItem_Open_Click"/>
                 <MenuItem Header="_Save" Click="MenuItem_Save_Click"/>
+                <MenuItem Header="_Save As..." Click="MenuItem_SaveAs_Click"/>
                 <MenuItem Header="_Close" Click="MenuItem_Close_Click"/>
             </MenuItem>
         </Menu>
@@ -47,12 +48,9 @@
 
         <StackPanel Background="#FF474747" Grid.Row="3" Grid.Column="0">
 
-
-
-           
             <!-- LTRB-->
             <TreeView Background="#FF474747" Margin="10,10,0,13" Name="TreeView1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="295" Height="487">
-                <TreeViewItem Foreground="#FFCDCDCD" Header="Cold Drinks">
+                <TreeViewItem Foreground="#FFCDCDCD" Header="Entities">
                     <TreeViewItem Foreground="#FFCDCDCD" Header="Coke">
                         <TreeViewItem Foreground="#FFCDCDCD" Header="Pepsi"></TreeViewItem>
                         <TreeViewItem Foreground="#FFCDCDCD" Header="Orange Juice"></TreeViewItem>
@@ -73,19 +71,7 @@
                     <TreeViewItem Foreground="#FFCDCDCD" Header="Mango Shake"></TreeViewItem>
                 </TreeViewItem>
             </TreeView>
-
-            <TreeView Background="#FF474747" Margin="10,10,0,13" Name="TreeView2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="295" Height="426">
-                <TreeViewItem Foreground="#FFCDCDCD" Header="Cold Drinks">
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Coke"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Pepsi"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Orange Juice"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Milk"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Iced Tea"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Mango Shake"></TreeViewItem>
-                </TreeViewItem>
-            </TreeView>
-
-
+            
         </StackPanel>
 
         <StackPanel Background="#FF474747" Grid.Row="3" Grid.Column="3">

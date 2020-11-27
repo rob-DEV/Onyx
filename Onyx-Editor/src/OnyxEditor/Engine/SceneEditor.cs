@@ -7,52 +7,100 @@ using System.IO;
 
 namespace OnyxEditor
 {
+    public enum SceneEditorCommandType
+    {
+        NO_COMMAND,
+        OPEN_SCENE,
+        SAVE_SCENE,
+        NEW_SCENE
+    }
+
+    public class SceneCommand
+    {
+        public SceneEditorCommandType CommandType;
+        public String ScenePath;
+        public bool Executed = true;
+    }
 
     public class SceneEditor
     {
-        private volatile OnyxCLR.EditorApplicationCLR m_Instance;
+        private volatile OnyxCLR.EditorApplicationCLR instance;
+
+        private SceneCommand sceneCommand = new SceneCommand();
 
         public SceneEditor(ref OnyxCLR.EditorApplicationCLR instance)
         {
-            m_Instance = instance;
+            this.instance = instance;
         }
 
         internal void OpenScene(string filePath)
         {
             if (File.Exists(filePath))
             {
-                m_SceneUpdateRequired = true;
-                m_ScenePath = filePath;
-            }
-            else
-            {
-                //TODO: handle
+                sceneCommand.CommandType = SceneEditorCommandType.OPEN_SCENE;
+                sceneCommand.ScenePath = filePath;
+                sceneCommand.Executed = false;
             }
         }
 
-        public List<OnyxCLR.Entity> GetAllEntities()
+        internal void NewScene()
         {
-            List<OnyxCLR.Entity> e = m_Instance.SceneEditorInstance.GetAllEntitiesTest();
+            sceneCommand.CommandType = SceneEditorCommandType.NEW_SCENE;
+            sceneCommand.ScenePath = "";
+            sceneCommand.Executed = false;
+        }
+        internal void SaveScene()
+        {
+            sceneCommand.CommandType = SceneEditorCommandType.SAVE_SCENE;
+            sceneCommand.ScenePath = "";
+            sceneCommand.Executed = false;
+        }
 
-            return e;
+        internal void SaveScene(string path)
+        {
+            sceneCommand.CommandType = SceneEditorCommandType.SAVE_SCENE;
+            sceneCommand.ScenePath = path;
+            sceneCommand.Executed = false;
+        }
+
+        public List<OnyxCLR.Entity> GetAllEntities()
+        { 
+            return instance.SceneEditorInstance.GetAllEntitiesTest();
         }
 
         internal void Update()
         {
-            if(m_SceneUpdateRequired)
+            if(!sceneCommand.Executed)
             {
-                m_Instance.SceneEditorInstance.OpenScene(m_ScenePath);
-                m_SceneUpdateRequired = false;
-            } 
+                switch(sceneCommand.CommandType)
+                {
+                    case SceneEditorCommandType.NO_COMMAND:
+                        break;
+                    case SceneEditorCommandType.NEW_SCENE:
+                        instance.SceneEditorInstance.NewScene();
+                        break;
+                    case SceneEditorCommandType.OPEN_SCENE:
+                        instance.SceneEditorInstance.OpenScene(sceneCommand.ScenePath);
+                        break;
+                    case SceneEditorCommandType.SAVE_SCENE:
+                        instance.SceneEditorInstance.SaveScene(sceneCommand.ScenePath);
+                        break;
+                    default:
+                        Console.WriteLine("WARN: Invalid SceneCommandType");
+                        break;
+
+                }
+
+                sceneCommand.Executed = true;
+            }
         }
 
-        public string CurrentScenePath { get { return m_ScenePath; } }
+        public string CurrentScenePath { get { return scenePath; } }
 
-        private bool m_SceneUpdateRequired = false;
 
-        private string m_ScenePath = "";
+        private string scenePath = "";
 
-        
+
     }
 
 }

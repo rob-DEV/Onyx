@@ -1,15 +1,13 @@
 
 #include <Onyx/Onyx.h>
-
+#include <Onyx/Runtime/RuntimeApplication.h>
 
 int main(int argc, char** argv) {
 
 	printf("--------------------------------------------------- RUNTIME ---------------------------------------------------\n");
-
-// 	Onyx::Application* onyxApplication = CreateApplication();
-// 	onyxApplication->SetWindowTitle("Onyx : Sandbox3D");
-// 	onyxApplication->Run();
-// 	delete onyxApplication;
+	Onyx::RuntimeApplication* appliation = new Onyx::RuntimeApplication();
+	appliation->Run();
+	delete appliation;
 
 	return 0;
 }

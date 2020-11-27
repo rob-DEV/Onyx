@@ -24,6 +24,7 @@ namespace Onyx {
 
 		//TEST
 		uint32_t GetID() const { return m_EntityID; }
+		bool IsStatic() const { return m_Static; }
 
 		//ADD COMPONENTS CAN'T USE TEMPLATING ATM DUE TO CLR
 		template<typename T, typename... Args>
@@ -50,8 +51,11 @@ namespace Onyx {
 		GET_COMPONENT(MeshRendererComponent);
 		
 	private:
-		uint32_t m_EntityID;
 		Scene* m_Scene = nullptr;
+		uint32_t m_EntityID;
+		bool m_Static = false;
+
+		friend class SceneEditor;
 	};
 
 }

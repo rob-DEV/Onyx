@@ -16,13 +16,13 @@ namespace Onyx {
 	public:
 		
 		Mesh(const std::vector<Vertex3D>& vertices, const std::vector<uint32_t>& indices);
-		Mesh(const std::vector<Vertex3D>& vertices, const std::vector<uint32_t>& indices, const Material& material);
-
+		Mesh(const std::vector<Vertex3D>& vertices, const std::vector<uint32_t>& indices, Material* material);
+		~Mesh();
 
 		std::vector<Vertex3D> m_Vertices;
 		std::vector<uint32_t> m_Indices;
 
-		Material m_Material;
+		Material* m_Material;
 
 	};
 

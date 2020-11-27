@@ -37,13 +37,9 @@ namespace Onyx {
 		MeshRendererComponent() = default;
 		MeshRendererComponent(const MeshRendererComponent& other) = default;
 		~MeshRendererComponent() = default;
-		MeshRendererComponent(const std::vector<Mesh>& mesh) : m_Meshes(mesh) {}
+		MeshRendererComponent(const std::vector<Mesh>& mesh) : Meshes(mesh) {}
 
-		const std::vector<Mesh>& GetMeshes() const { return m_Meshes; }
-
-	private:
-		std::vector<Mesh> m_Meshes;
-
+		std::vector<Mesh> Meshes;
 	};
 
 

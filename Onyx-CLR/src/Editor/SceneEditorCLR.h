@@ -16,6 +16,7 @@ namespace OnyxCLR {
 		SceneEditorCLR(Onyx::EditorApplication* editor);
 		~SceneEditorCLR();
 
+		void NewScene();
 		void OpenScene(System::String^ filePath);
 		void SaveScene(System::String^ filePath);
 

@@ -23,34 +23,43 @@ namespace Onyx {
 		NORMAL
 	};
 
+	struct MaterialTextures {
+		Texture2D* Diffuse;
+		Texture2D* Specular;
+		Texture2D* Normal;
+	};
+
+	struct MaterialColors {
+		glm::vec4 Ambient;
+		glm::vec4 Diffuse;
+		glm::vec4 Specular;
+	};
+
 	class Material
 	{
 
 	public:
 		Material();
-		Material(const std::string& diffuse, const std::string& specular, const std::string& normal);
+		Material(const std::string& name);
+		Material(const std::string& name, const std::string& diffuse, const std::string& specular, const std::string& normal);
 		~Material();
 
-		void Bind(Shader* shader);
+		void Bind();
 
 		void AddTexture(TextureParameterType type, const std::string& path);
 		void SetColor(ColorParameterType type, const glm::vec4& color);
 		void SetTilingFactor(float tilingFactor) { m_TilingFactor = tilingFactor; };
+		const std::string& GetName() const { return m_Name; };
+		void SetName(const std::string& name) { m_Name = name; };
+
 
 	private:
 		std::string m_Name;
-		
-		//Texture order
-		//AMBIENT = 0,
-		//DIFFUSE,
-		//SPECULAR,
-		std::array<Texture2D*, 3> m_Textures;
+		Shader* m_Shader;
+		void CreateDefaultNamedMaterial();
 
-		//Color order order
-		//AMBIENT = 0,
-		//DIFFUSE,
-		//SPECULAR,
-		std::array<glm::vec4, 3> m_Colors;
+		MaterialTextures m_Textures;
+		MaterialColors m_Colors;
 
 		float m_TilingFactor;
 

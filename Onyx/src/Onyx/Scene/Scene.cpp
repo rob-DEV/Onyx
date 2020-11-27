@@ -6,13 +6,17 @@
 
 #include <Onyx/Editor/Components/Gizmo.h>
 
+#include <Onyx/Resources/Hasher.h>
+
 #include <entt/entt.hpp>
 
 #include <glad/glad.h>
+#include <inttypes.h>
 
 namespace Onyx {
 
 	Scene::Scene() :
+		m_SceneIdentifier(Hasher::GenerateUniqueID()),
 		m_SkyBox(new Skybox(std::vector<std::string> {
 			"res/textures/skybox/Left.png",
 			"res/textures/skybox/Right.png",
@@ -23,8 +27,22 @@ namespace Onyx {
 		}))
 	{
 
+	}
+
+	Scene::Scene(const std::string& identifier) :
+		m_SceneIdentifier(identifier),
+		m_SkyBox(new Skybox(std::vector<std::string> {
+		"res/textures/skybox/Left.png",
+		"res/textures/skybox/Right.png",
+		"res/textures/skybox/Up.png",
+		"res/textures/skybox/Down.png",
+		"res/textures/skybox/Front.png",
+		"res/textures/skybox/Back.png"
+	}))
+	{
 
 	}
+
 
 	Scene::~Scene()
 	{

@@ -6,7 +6,7 @@
 
 namespace Onyx {
 
-	std::unordered_map<std::string, Shader*> ShaderLibrary::m_ShaderCache = std::unordered_map<std::string, Shader*>();
+	std::unordered_map<std::string, Shader*> ShaderCache::m_ShaderCache = std::unordered_map<std::string, Shader*>();
 
 	Shader* Shader::Create(const std::string& filepath)
 	{
@@ -27,26 +27,26 @@ namespace Onyx {
 
 	}
 
-	void ShaderLibrary::Add(const std::string& name, Shader* shader)
+	void ShaderCache::Add(const std::string& name, Shader* shader)
 	{
 		m_ShaderCache[name] = shader;
 	}
 
-	Onyx::Shader* ShaderLibrary::Load(const std::string& name, const std::string& filepath)
+	Onyx::Shader* ShaderCache::Load(const std::string& name, const std::string& filepath)
 	{
 		Shader* shader = Shader::Create(filepath);
 		Add(name, shader);
 		return shader;
 	}
 
-	Onyx::Shader* ShaderLibrary::Get(const std::string& name)
+	Onyx::Shader* ShaderCache::Get(const std::string& name)
 	{
 		if (!Exists(name))
 			printf("Can't find shader!\n");
 		return m_ShaderCache[name];
 	}
 
-	bool ShaderLibrary::Exists(const std::string& name)
+	bool ShaderCache::Exists(const std::string& name)
 	{
 		return m_ShaderCache.find(name) != m_ShaderCache.end();
 	}

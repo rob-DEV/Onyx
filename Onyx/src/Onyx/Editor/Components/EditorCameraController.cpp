@@ -56,6 +56,7 @@ namespace Onyx {
 		}
 		m_Camera.SetPositon(camPos);
 
+		Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
 	}
 
 }

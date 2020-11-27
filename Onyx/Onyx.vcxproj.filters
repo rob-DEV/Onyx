@@ -952,8 +952,11 @@
     </ClInclude>
     <ClInclude Include="src\Onyx\Graphics\Material.h" />
     <ClInclude Include="src\Onyx\Graphics\Vertex.h" />
-    <ClInclude Include="src\Onyx\Editor\Core\EditorRenderer.h" />
     <ClInclude Include="src\Onyx\Editor\Components\EditorCameraController.h" />
+    <ClInclude Include="src\Onyx\Resources\MaterialCache.h" />
+    <ClInclude Include="src\Onyx\Resources\TextureCache.h" />
+    <ClInclude Include="src\Onyx\Runtime\RuntimeApplication.h" />
+    <ClInclude Include="src\Onyx\Resources\Hasher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1081,7 +1084,9 @@
       <Filter>src\Onyx\Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\Onyx\Graphics\Material.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Core\EditorRenderer.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\EditorCameraController.cpp" />
+    <ClCompile Include="src\Onyx\Resources\MaterialCache.cpp" />
+    <ClCompile Include="src\Onyx\Resources\TextureCache.cpp" />
+    <ClCompile Include="src\Onyx\Runtime\RuntimeApplication.cpp" />
   </ItemGroup>
 </Project>

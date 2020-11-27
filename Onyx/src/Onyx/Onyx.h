@@ -20,11 +20,7 @@
 
 //Renderer
 #include <Onyx/Graphics/Renderer2D.h>
-#include <Onyx/Graphics/RendererOld3D.h>
 #include <Onyx/Graphics/RenderCommand.h>
-#include <Onyx/Camera/OrthographicCameraController.h>
-#include <Onyx/Camera/PerspectiveCameraController.h>
-
 //Sound
 #include <Onyx/Audio/Sound.h>
 

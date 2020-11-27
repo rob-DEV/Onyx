@@ -28,7 +28,8 @@ namespace Onyx {
 
 	Entity::~Entity()
 	{
-
+		void* reg = m_Scene->m_EntityRegistry.m_Registry;
+		((entt::registry*)(reg))->destroy((entt::entity)m_EntityID); \
 	}
 
 	//ADD

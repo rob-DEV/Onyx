@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OnyxEditor
 {
@@ -31,7 +22,6 @@ namespace OnyxEditor
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
 
             System.Drawing.Rectangle renderTarget = new System.Drawing.Rectangle(0, 0, EngineCore.Renderer.RenderSurface.Bitmap.Width, EngineCore.Renderer.RenderSurface.Bitmap.Height);
             int frames = 0;

@@ -16,8 +16,10 @@ namespace Onyx {
 		void OnUpdate();
 
 	private:
-		SceneEditor* m_SceneEditor;
 		void DrawScene();
+		SceneEditor* m_SceneEditor;
+
+
 	};
 }
 

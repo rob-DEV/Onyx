@@ -2,6 +2,7 @@
 #include "ModelLoader.h"
 
 #include <Onyx/Core/FileIO.h>
+#include <Onyx/Resources/MaterialCache.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -68,9 +69,9 @@ namespace Onyx {
 
 	void ModelLoader::processNode(aiNode* node, const aiScene* scene, Model* result)
 	{
-		int nmesh = scene->mNumMeshes;
+		int nMeshes = scene->mNumMeshes;
 
-		for (size_t i = 0; i < nmesh; ++i) {
+		for (size_t i = 0; i < nMeshes; ++i) {
 			result->AddMesh(processMesh(scene->mMeshes[i], scene));
 		}
 	}
@@ -133,8 +134,10 @@ namespace Onyx {
 				indices.emplace_back(face.mIndices[j]);
 			}
 		}
-		
+
+		Material* materialResult = nullptr;
 		Material material;
+
 		//Material test
 		if (true /*REFACTOR TO LOAD MATERIAL*/) {
 			if (mesh->mMaterialIndex >= 0) {
@@ -144,18 +147,25 @@ namespace Onyx {
 				if (mat->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 					aiString name;
 					mat->Get(AI_MATKEY_NAME, name);
-					std::cout << "Loading texture file: " << name.C_Str() << std::endl;
+					
+					//Check if material already exists in the cache
+					if (MaterialCache::Get().Exists(name.C_Str())) {
+						materialResult = MaterialCache::Get().GetMaterial(name.C_Str());
+					}
+					else {
+						//Not already loaded, load and cache
+						aiString diffusePath;
+						mat->GetTexture(aiTextureType_AMBIENT, 0, &diffusePath);
 
+						std::string fullPath = std::string("res/models/Sponza/") + std::string(diffusePath.C_Str());
 
-					aiString diffusePath;
-					mat->GetTexture(aiTextureType_AMBIENT, 0, &diffusePath);
+						material.AddTexture(TextureParameterType::DIFFUSE, fullPath);
+						material.AddTexture(TextureParameterType::SPECULAR, fullPath);
+						material.SetName(name.C_Str());
+						//Add to MaterialCache
+						materialResult = MaterialCache::Get().CacheMaterial(name.C_Str(), material);
 
-					std::string fullPath = std::string("res/models/Sponza/") + std::string(diffusePath.C_Str());
-					//std::string psthh = "C:\\DEV\\Onyx\\bin\\Debug-x86_64\\Onyx-Editor\\res\\models\\MetalBlock\\metal_1.jpg";
-					std::cout << "Loading texture file: " << fullPath << std::endl;
-
-					material.AddTexture(TextureParameterType::DIFFUSE, fullPath);
-
+					}
 				}
 				else {
 					std::cout << "No texture image being imported " << std::endl;
@@ -166,12 +176,13 @@ namespace Onyx {
 			}
 		}
 
-		//Acts as a default material
-		//std::string psthh = "C:\\DEV\\Onyx\\bin\\Debug-x86_64\\Onyx-Editor\\res\\models\\MetalBlock\\metal_1.jpg";
-		//material.AddTexture(TextureParameterType::DIFFUSE, psthh);
-		material.SetTilingFactor(3.0f);
+		if(materialResult == nullptr)
+		{
+			material = Material("NOT_SPECIFIED");
+			materialResult = MaterialCache::Get().CacheMaterial("NOT_SPECIFIED", material);
+		}
 
-		return Mesh(vertices, indices, material);
+		return Mesh(vertices, indices, materialResult);
 	}
 
 }

@@ -24,7 +24,7 @@ namespace Onyx {
 		//CAMERA OVERRIDES
 		virtual const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
 		virtual const glm::mat4& GetViewMatrix() const  override { return m_ViewMatrix; }
-		virtual const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
+		virtual const glm::mat4 GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
 		
 		virtual const glm::mat4& GetTransform() const { 
 			return glm::translate(glm::mat4(1.0f), m_Position)

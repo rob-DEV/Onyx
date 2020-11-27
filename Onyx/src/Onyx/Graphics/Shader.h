@@ -35,14 +35,13 @@ namespace Onyx {
 
 	};
 
-	class ONYX_API ShaderLibrary {
+	class ONYX_API ShaderCache {
 	public:
 		static void Add(const std::string& name, Shader* shader);
-		static Shader* Load(const std::string& name, const std::string& filepath);
-
-		static Shader* Get(const std::string& name);
-
 		static bool Exists(const std::string& name);
+
+		static Shader* Load(const std::string& name, const std::string& filepath);
+		static Shader* Get(const std::string& name);
 	private:
 		static std::unordered_map<std::string, Shader*> m_ShaderCache;
 	};

@@ -18,7 +18,7 @@ namespace Onyx {
 
 		virtual const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
 		virtual const glm::mat4& GetViewMatrix() const override { return m_ViewMatrix; }
-		virtual const glm::mat4& GetViewProjectionMatrix() const override { return m_ProjectionMatrix * m_ViewMatrix; }
+		virtual const glm::mat4 GetViewProjectionMatrix() const override { return m_ProjectionMatrix * m_ViewMatrix; }
 
 		const glm::vec3& GetPositon() const { return m_Position; };
 		const glm::vec3& GetDirection() const { return m_Direction; };

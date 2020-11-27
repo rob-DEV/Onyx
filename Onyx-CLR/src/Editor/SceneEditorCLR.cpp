@@ -20,6 +20,11 @@ namespace OnyxCLR {
 
 	}
 
+	void SceneEditorCLR::NewScene()
+	{
+		m_NativeSceneEditor->NewScene();
+	}
+
 	void SceneEditorCLR::OpenScene(System::String^ filePath)
 	{
 		m_NativeSceneEditor->OpenScene((char*)Marshal::StringToHGlobalAnsi(filePath).ToPointer());
@@ -27,7 +32,7 @@ namespace OnyxCLR {
 
 	void SceneEditorCLR::SaveScene(System::String^ filePath)
 	{
-
+		m_NativeSceneEditor->SaveScene((char*)Marshal::StringToHGlobalAnsi(filePath).ToPointer());
 	}
 
 	List<OnyxCLR::Entity^>^ SceneEditorCLR::GetAllEntitiesTest()

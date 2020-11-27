@@ -26,6 +26,7 @@
     <ClInclude Include="src\Editor\EditorApplicationCLR.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="src\Editor\SceneCLR.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
@@ -39,5 +40,6 @@
     <ClCompile Include="src\Editor\EditorApplicationCLR.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="src\Editor\SceneCLR.cpp" />
   </ItemGroup>
 </Project>

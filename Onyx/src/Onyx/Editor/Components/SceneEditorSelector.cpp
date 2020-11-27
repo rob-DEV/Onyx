@@ -25,7 +25,7 @@ namespace Onyx {
 		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
 
 			glm::vec2 pos = Input::GetMousePosition();
-			
+
 
 			uint32_t a = 0x00FFFFFF;
 

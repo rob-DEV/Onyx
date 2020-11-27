@@ -20,7 +20,7 @@
     <OutputPath>..\bin\Debug-x86_64\Onyx-Editor\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Debug-x86_64\Onyx-Editor\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -32,7 +32,8 @@
     <OutputPath>..\bin\Release-x86_64\Onyx-Editor\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Release-x86_64\Onyx-Editor\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -78,16 +79,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\OnyxEditor\Viewport\RendererSurface.cs" />
-    <Page Include="src\OnyxEditor\Viewport\Viewport.xaml">
+    <Compile Include="src\OnyxEditor\UI\Viewport\RendererSurface.cs" />
+    <Page Include="src\OnyxEditor\UI\Viewport\Viewport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="src\OnyxEditor\Viewport\Viewport.xaml.cs">
+    <Compile Include="src\OnyxEditor\UI\Viewport\Viewport.xaml.cs">
       <DependentUpon>Viewport.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <None Include="src\OnyxEditor\Viewport\viewport_splash.jpg" />
+    <None Include="src\OnyxEditor\UI\Viewport\viewport_splash.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Onyx-CLR\Onyx-CLR.vcxproj">

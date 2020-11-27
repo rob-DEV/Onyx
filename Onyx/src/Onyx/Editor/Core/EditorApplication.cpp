@@ -42,8 +42,6 @@
 
 #include <Platform/OpenGL/OpenGLFramebuffer.h>
 
-#include <Onyx/Editor/Core/EditorRenderer.h>
-
 namespace Onyx {
 
 	EditorApplication::EditorApplication()
@@ -76,7 +74,6 @@ namespace Onyx {
 		//Renderers
 		Renderer2D::Init();
 		Renderer3D::Init();
-		EditorRenderer::Init();
 
 		m_EditorTimestep = Timestep(glfwGetTime());
 

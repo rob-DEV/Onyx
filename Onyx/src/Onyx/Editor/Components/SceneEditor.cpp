@@ -25,6 +25,8 @@ namespace Onyx {
 
 	SceneEditor::~SceneEditor()
 	{
+		InvalidateScene();
+
 		delete m_EditorGizmo;
 		delete m_Scene;
 		delete m_EditorCameraController;
@@ -44,34 +46,34 @@ namespace Onyx {
 		Renderer3D::EndScene();
 		Renderer3D::Flush();
 
-		//Selection Render
-// 		RenderCommand::Clear();
-// 
-// 		Renderer3D::BeginScene(m_EditorCameraController->GetCamera());
-// 
-// 		m_SceneSelector->OnUpdate();
-// 
-// 		Renderer3D::EndScene();
-// 		Renderer3D::Flush();
+	}
 
-
+	bool SceneEditor::NewScene()
+	{
+		InvalidateScene();
+		m_Scene = new Scene();
+		return true;
 	}
 
 	bool SceneEditor::OpenScene(const char* filePath)
 	{
-		delete m_Scene;
+		InvalidateScene();
+		
 		m_Scene = SceneSerializer::DeSerialize(filePath);
 
 		
-		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Sponza/Sponza.obj");
+		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Sponza/sponza.obj");
 
 		for (Entity* e : m_Scene->m_Entities) {
 
 			TransformComponent& t = e->GetComponent<TransformComponent>();
 			t.Scale = glm::vec3(0.01f);
 
-
 			MeshRendererComponent a = MeshRendererComponent(cube->GetMeshes());
+
+			//Static mesh testing, static batch if Entity is marked as static
+			e->m_Static = true;
+
 			e->AddComponent<MeshRendererComponent>(a);
 		}
 		return true;
@@ -99,6 +101,19 @@ namespace Onyx {
 			}
 
 		}
+	}
+
+	void SceneEditor::InvalidateScene()
+	{
+		//TODO: Cleanup all entities and scene data
+		//Cleanup Entt data
+		for (auto e : m_Scene->m_Entities)
+		{
+			delete e;
+		}
+		m_Scene->m_Entities.clear();
+
+		delete m_Scene;
 	}
 
 }

@@ -22,6 +22,7 @@ namespace Onyx {
 
 		void OnUpdate(Timestep ts);
 
+		bool NewScene();
 		bool OpenScene(const char* filePath);
 		bool SaveScene(const char* filePath);
 
@@ -29,7 +30,8 @@ namespace Onyx {
 		void SetSelectedEntity(uint32_t id);
 
 	private:
-		
+		void InvalidateScene();
+
 		//Initialize First
 		EditorCameraController* m_EditorCameraController;
 		

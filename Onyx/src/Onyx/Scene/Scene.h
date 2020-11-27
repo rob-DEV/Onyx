@@ -19,15 +19,18 @@ namespace Onyx {
 	class ONYX_API Scene {
 	public:
 		Scene();
+		Scene(const std::string& identifier);
 		~Scene();
 
 		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
 
 	private:
+
+		std::string m_SceneIdentifier;
+
 		Registry m_EntityRegistry;
 
-		//ENTITIES
 		std::vector<Entity*> m_Entities;
 
 		Skybox* m_SkyBox;
@@ -38,7 +41,6 @@ namespace Onyx {
 		friend class SceneSerializer;
 
 		friend class Renderer3D;
-		friend class EditorRenderer;
 
 	};
 }

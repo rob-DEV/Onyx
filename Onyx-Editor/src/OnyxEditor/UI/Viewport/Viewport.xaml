@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Onyx_Editor_NET"
+             xmlns:local="clr-namespace:OnyxEditor"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280" Background="#FF005A99" Loaded="ViewportUC_Loaded" Unloaded="ViewportUC_Unloaded">
    
