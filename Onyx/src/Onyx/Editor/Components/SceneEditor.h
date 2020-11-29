@@ -3,6 +3,7 @@
 
 #include <Onyx/Core/Core.h>
 
+#include <Onyx/Scene/Scene.h>
 #include <Onyx/Core/TimeStep.h>
 
 #include <vector>
@@ -22,8 +23,8 @@ namespace Onyx {
 
 		void OnUpdate(Timestep ts);
 
-		bool NewScene();
-		bool OpenScene(const char* filePath);
+		SceneData NewScene();
+		SceneData OpenScene(const char* filePath);
 		bool SaveScene(const char* filePath);
 
 		std::vector<Entity*> GetAllEntitiesTest();

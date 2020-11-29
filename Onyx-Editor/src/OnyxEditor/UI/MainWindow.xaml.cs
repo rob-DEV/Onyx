@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Windows.Controls;
 
 namespace OnyxEditor
 {
@@ -45,17 +46,12 @@ namespace OnyxEditor
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.Title = "Onyx Editor x64 - Debug Build";
-#else
-            this.Title = "Onyx Editor x64 - Release Build";
-#endif
-
+            this.Title = OnyxMenuHeader.GetHeaderText();
         }
 
         private void MenuItem_New_Click(object sender, RoutedEventArgs e)
         {
-            if (EngineCore.SceneEditor.CurrentScenePath != "")
+            if (EngineCore.SceneEditor.CurrentScene.FilePath != "")
             {
                 MessageBoxResult mbResult = MessageBox.Show("Do you want to save changes to this Scene?", "Onyx Editor", MessageBoxButton.YesNoCancel);
 
@@ -68,10 +64,7 @@ namespace OnyxEditor
                 {
                     EngineCore.SceneEditor.NewScene();
                 }
-
-
             }
-           
         }
 
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
@@ -150,11 +143,9 @@ namespace OnyxEditor
             float toEngineX = (float)(640 - mouseViewportPos.X);
             float toEngineY = (float)(360 + mouseViewportPos.Y);
 
-            bool a;
             if (toEngineX >= 0 && toEngineX <= 1280 && toEngineY >= 0 && toEngineY <= 720)
             {
                 ViewPortInFocus = true;
-                a = true;
             }
             else
             {
@@ -167,7 +158,6 @@ namespace OnyxEditor
 
         private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
         }
 
         private void ViewportMain_MouseUp(object sender, MouseButtonEventArgs e)

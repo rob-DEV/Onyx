@@ -5,6 +5,8 @@
 
 #include <Entity/Entity.h>
 
+#include "SceneCLR.h"
+
 using namespace System::Collections::Generic;
 
 namespace OnyxCLR {
@@ -16,9 +18,9 @@ namespace OnyxCLR {
 		SceneEditorCLR(Onyx::EditorApplication* editor);
 		~SceneEditorCLR();
 
-		void NewScene();
-		void OpenScene(System::String^ filePath);
-		void SaveScene(System::String^ filePath);
+		SceneCLR^ NewScene();
+		SceneCLR^ OpenScene(System::String^ filePath);
+		bool SaveScene(System::String^ filePath);
 
 		List<OnyxCLR::Entity^>^ GetAllEntitiesTest();
 

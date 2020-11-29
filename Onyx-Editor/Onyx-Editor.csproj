@@ -79,6 +79,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="src\OnyxEditor\UI\OnyxMenuHeader.cs" />
     <Compile Include="src\OnyxEditor\UI\Viewport\RendererSurface.cs" />
     <Page Include="src\OnyxEditor\UI\Viewport\Viewport.xaml">
       <Generator>MSBuild:Compile</Generator>

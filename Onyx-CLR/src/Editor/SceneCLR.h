@@ -1,11 +1,12 @@
 #pragma once
 
 namespace OnyxCLR {
-	public ref class Scene
+	public ref class SceneCLR
 	{
-		System::String^ Name;
-		System::String^ FilePath;
-		System::String^ Guid;
+	public:
+		System::String^ Name = "";
+		System::String^ FilePath = "";
+		System::String^ Indentifier = "";
 	};
 
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows;
 
 namespace OnyxEditor
 {
@@ -70,6 +71,7 @@ namespace OnyxEditor
 
         internal void Update()
         {
+            bool updateUI = false;
             if(!sceneCommand.Executed)
             {
                 switch(sceneCommand.CommandType)
@@ -77,13 +79,16 @@ namespace OnyxEditor
                     case SceneEditorCommandType.NO_COMMAND:
                         break;
                     case SceneEditorCommandType.NEW_SCENE:
-                        instance.SceneEditorInstance.NewScene();
+                        currentScene = instance.SceneEditorInstance.NewScene();
+                        updateUI = true;
                         break;
                     case SceneEditorCommandType.OPEN_SCENE:
-                        instance.SceneEditorInstance.OpenScene(sceneCommand.ScenePath);
+                        currentScene = instance.SceneEditorInstance.OpenScene(sceneCommand.ScenePath);
+                        updateUI = true;
                         break;
                     case SceneEditorCommandType.SAVE_SCENE:
                         instance.SceneEditorInstance.SaveScene(sceneCommand.ScenePath);
+                        updateUI = true;
                         break;
                     default:
                         Console.WriteLine("WARN: Invalid SceneCommandType");
@@ -93,12 +98,25 @@ namespace OnyxEditor
 
                 sceneCommand.Executed = true;
             }
+
+            if(updateUI)
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.GetType() == typeof(MainWindow))
+                    {
+                        //TODO: Cross-thread UI Update
+                        /*(window as MainWindow).;*/
+                    }
+                }
+            }
+
         }
 
-        public string CurrentScenePath { get { return scenePath; } }
+        public OnyxCLR.SceneCLR CurrentScene { get { return currentScene; } }
 
 
-        private string scenePath = "";
+        private OnyxCLR.SceneCLR currentScene = new OnyxCLR.SceneCLR();
 
 
     }

@@ -15,6 +15,11 @@ namespace Onyx {
 	class Model;
 	class Gizmo;
 	
+	struct SceneData {
+		std::string Name;
+		std::string FilePath;
+		std::string Identifier;
+	};
 
 	class ONYX_API Scene {
 	public:

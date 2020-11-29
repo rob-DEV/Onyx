@@ -48,14 +48,20 @@ namespace Onyx {
 
 	}
 
-	bool SceneEditor::NewScene()
+	SceneData SceneEditor::NewScene()
 	{
 		InvalidateScene();
 		m_Scene = new Scene();
-		return true;
+		
+		SceneData result;
+		result.Name = "Untitled";
+		result.FilePath = "";
+		result.Identifier = m_Scene->m_SceneIdentifier;
+		
+		return result;
 	}
 
-	bool SceneEditor::OpenScene(const char* filePath)
+	SceneData SceneEditor::OpenScene(const char* filePath)
 	{
 		InvalidateScene();
 		
@@ -76,7 +82,16 @@ namespace Onyx {
 
 			e->AddComponent<MeshRendererComponent>(a);
 		}
-		return true;
+
+		if (m_Scene == nullptr) {
+			ONYX_ERROR("SceneEditor ERROR: Scene was nullptr");
+		}
+		SceneData result;
+		result.Name = "Untitled";
+		result.FilePath = filePath;
+		result.Identifier = m_Scene->m_SceneIdentifier;
+
+		return result;
 	}
 
 	bool SceneEditor::SaveScene(const char* filePath)

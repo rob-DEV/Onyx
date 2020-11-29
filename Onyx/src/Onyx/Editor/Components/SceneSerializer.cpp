@@ -64,7 +64,6 @@ namespace Onyx {
 				
 			}
 
-
 			pRoot->InsertEndChild(pEntityElement);
 		}
 
@@ -86,6 +85,7 @@ namespace Onyx {
 			ONYX_ERROR("Scene Serializer ERROR: XML is Invalid!");
 			return nullptr;
 		}
+
 		const char* sceneIdentifer = ((XMLElement*)pRoot)->Attribute("UniqueIdentifier");
 		
 		if (sceneIdentifer == nullptr || strlen(sceneIdentifer) < 10) {
@@ -96,8 +96,6 @@ namespace Onyx {
 		//Iterate through serialized entities
 		XMLElement* pEntityElement = pRoot->FirstChildElement("ONYX-ENTITY");
 		
-
-
 		Scene* scene = new Scene(sceneIdentifer);
 		
 		while (pEntityElement != nullptr) {
@@ -125,7 +123,6 @@ namespace Onyx {
 					pTransformPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
 					pTransformPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
 
-
 					entity->AddComponent<TransformComponent>(t);
 
 				}
@@ -135,8 +132,6 @@ namespace Onyx {
 			pEntityElement = pEntityElement->NextSiblingElement("ONYX-ENTITY");
 		}
 
-
-		
 		return scene;
 	}
 

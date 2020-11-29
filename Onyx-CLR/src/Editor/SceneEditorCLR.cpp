@@ -1,4 +1,5 @@
 #include "SceneEditorCLR.h"
+#include <Onyx/Scene/Scene.h>
 
 using namespace System::Runtime::InteropServices;
 
@@ -20,19 +21,33 @@ namespace OnyxCLR {
 
 	}
 
-	void SceneEditorCLR::NewScene()
+	SceneCLR^ SceneEditorCLR::NewScene()
 	{
-		m_NativeSceneEditor->NewScene();
+		Onyx::SceneData sceneData = m_NativeSceneEditor->NewScene();
+
+		SceneCLR^ result = gcnew SceneCLR();
+		result->Name = gcnew System::String(sceneData.Name.c_str());
+		result->FilePath = gcnew System::String(sceneData.FilePath.c_str());
+		result->Indentifier = gcnew System::String(sceneData.Identifier.c_str());
+
+		return result;
 	}
 
-	void SceneEditorCLR::OpenScene(System::String^ filePath)
+	SceneCLR^ SceneEditorCLR::OpenScene(System::String^ filePath)
 	{
-		m_NativeSceneEditor->OpenScene((char*)Marshal::StringToHGlobalAnsi(filePath).ToPointer());
+		Onyx::SceneData sceneData = m_NativeSceneEditor->OpenScene((char*)Marshal::StringToHGlobalAnsi(filePath).ToPointer());
+
+		SceneCLR^ result = gcnew SceneCLR();
+		result->Name = gcnew System::String(sceneData.Name.c_str());
+		result->FilePath = gcnew System::String(sceneData.FilePath.c_str());
+		result->Indentifier = gcnew System::String(sceneData.Identifier.c_str());
+
+		return result;
 	}
 
-	void SceneEditorCLR::SaveScene(System::String^ filePath)
+	bool SceneEditorCLR::SaveScene(System::String^ filePath)
 	{
-		m_NativeSceneEditor->SaveScene((char*)Marshal::StringToHGlobalAnsi(filePath).ToPointer());
+		return m_NativeSceneEditor->SaveScene((char*)Marshal::StringToHGlobalAnsi(filePath).ToPointer());
 	}
 
 	List<OnyxCLR::Entity^>^ SceneEditorCLR::GetAllEntitiesTest()
