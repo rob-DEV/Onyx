@@ -60,7 +60,7 @@ namespace OnyxEditor
                     EngineCore.SceneEditor.SaveScene();
                     EngineCore.SceneEditor.NewScene();
                 }
-                else if(mbResult == MessageBoxResult.No)
+                else if (mbResult == MessageBoxResult.No)
                 {
                     EngineCore.SceneEditor.NewScene();
                 }
@@ -72,7 +72,7 @@ namespace OnyxEditor
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Onyx Scene Files (*.osc) | *.osc| XML Files (*.xml)|*.xml";
 
-            if(openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
                 EngineCore.SceneEditor.OpenScene(filePath);
@@ -103,7 +103,7 @@ namespace OnyxEditor
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(ViewPortInFocus)
+            if (ViewPortInFocus)
                 Input.ProcessKeyEvent(e.Key, true);
         }
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -130,7 +130,8 @@ namespace OnyxEditor
                 Point s = this.PointToScreen(viewportCenterPoint);
                 System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)s.X, (int)s.Y);
                 this.Cursor = Cursors.None;
-            }else
+            }
+            else
             {
                 this.Cursor = Cursors.Arrow;
             }
@@ -151,7 +152,7 @@ namespace OnyxEditor
             {
                 ViewPortInFocus = false;
             }
-            if(ViewPortInFocus)
+            if (ViewPortInFocus)
                 Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
 
         }
@@ -162,7 +163,7 @@ namespace OnyxEditor
 
         private void ViewportMain_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            
+
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -198,6 +199,6 @@ namespace OnyxEditor
             Input.ProcessMouseEvent(e);
         }
 
-        
+
     }
 }

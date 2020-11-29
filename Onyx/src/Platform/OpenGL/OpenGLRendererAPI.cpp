@@ -57,7 +57,7 @@ namespace Onyx {
 
 	////EXPERIMENTAL
 	//TODO: Abstract to framebuffer class
-	RenderedPixelData OpenGLRendererAPI::GetRenderedFrameBuffer(char* dest)
+	void OpenGLRendererAPI::GetRenderedFrameBuffer(char* dest)
 	{
 
 		constexpr uint32_t width = 1280;
@@ -72,7 +72,7 @@ namespace Onyx {
 		renderedFrame.Data = dest;
 		renderedFrame.Size = frameBufferSize;
 
-		return renderedFrame;
+		//return renderedFrame;
 
 	}
 

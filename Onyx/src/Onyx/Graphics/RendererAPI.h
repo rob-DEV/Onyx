@@ -55,7 +55,7 @@ namespace Onyx {
 		virtual void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount) = 0;
 
 		////EXPERIMENTAL
-		virtual RenderedPixelData GetRenderedFrameBuffer(char* dest) = 0;
+		virtual void GetRenderedFrameBuffer(char* dest) = 0;
 
 		inline static API GetAPI() { return s_API; }
 		inline static bool VsyncEnabled() { return s_Vsync; };

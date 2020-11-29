@@ -47,12 +47,13 @@ namespace OnyxCLR {
 
 	void EditorApplicationCLR::GetRenderedFrame(int* buffer)
 	{
-		Onyx::RenderedPixelData dd = OnyxEditorInstance->GetRenderedFrame();
+		if(OnyxPixelBuffer == nullptr)
+			OnyxPixelBuffer = OnyxEditorInstance->GetRenderedFrame();
 
 		int pos = 0;
 		for (int i = 0; i < 1280 * 720; ++i)
 		{
-			buffer[i] = (255 << 24) + ((unsigned char)dd.Data[pos] << 16) + ((unsigned char)dd.Data[pos + 1] << 8) + (unsigned char)dd.Data[pos + 2];
+			buffer[i] = (255 << 24) + ((unsigned char)OnyxPixelBuffer[pos] << 16) + ((unsigned char)OnyxPixelBuffer[pos + 1] << 8) + (unsigned char)OnyxPixelBuffer[pos + 2];
 			pos += 3;
 		}
 	}

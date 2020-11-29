@@ -16,7 +16,7 @@
 namespace Onyx {
 
 	Scene::Scene() :
-		m_SceneIdentifier(Hasher::GenerateUniqueID()),
+		m_SceneData(SceneData("Untitled", "UNSAVED", Hasher::GenerateUniqueID())),
 		m_SkyBox(new Skybox(std::vector<std::string> {
 			"res/textures/skybox/Left.png",
 			"res/textures/skybox/Right.png",
@@ -29,8 +29,8 @@ namespace Onyx {
 
 	}
 
-	Scene::Scene(const std::string& identifier) :
-		m_SceneIdentifier(identifier),
+	Scene::Scene(const SceneData& sceneData) :
+		m_SceneData(sceneData),
 		m_SkyBox(new Skybox(std::vector<std::string> {
 		"res/textures/skybox/Left.png",
 		"res/textures/skybox/Right.png",

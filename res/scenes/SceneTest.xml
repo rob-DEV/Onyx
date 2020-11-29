@@ -1,21 +1,11 @@
-<ONYX-SCENE>
+<ONYX-SCENE UniqueIdentifier="6426398844532"  Name="SceneTest">
     <ONYX-ENTITY>
         <TagComponent>BaseSceneModel</TagComponent>
         <TransformComponent>
             <Position>
-                <X>25.8888</X>
-                <Y>50.333328</Y>
-                <Z>45.5555</Z>
-            </Position>
-        </TransformComponent>
-    </ONYX-ENTITY>
-	<ONYX-ENTITY>
-        <TagComponent>BaseSceneModel2</TagComponent>
-        <TransformComponent>
-            <Position>
-                <X>15.8888</X>
-                <Y>10.333328</Y>
-                <Z>45.5555</Z>
+                <X>0.0</X>
+                <Y>0.0</Y>
+                <Z>0.0</Z>
             </Position>
         </TransformComponent>
     </ONYX-ENTITY>

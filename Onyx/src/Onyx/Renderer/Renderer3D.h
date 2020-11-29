@@ -25,14 +25,15 @@ namespace Onyx {
 
 		CommonMaterialBuffer() = default;
 		CommonMaterialBuffer(Material* material);
+		~CommonMaterialBuffer();
 
 		inline void Begin() {
 			m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
 			m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
 
-			m_IndexCount = 0;
-			m_VertexCount = 0;
+			
 		}
+
 		inline void Submit(const Mesh& mesh, glm::mat4 transform) {
 			for (size_t i = 0; i < mesh.m_Vertices.size(); ++i) {
 
@@ -100,7 +101,7 @@ namespace Onyx {
 		inline void Begin() {
 			for (auto buffer : m_CommonMaterialBuffers)
 			{
-				buffer.second.Begin();
+				buffer.second->Begin();
 			}
 		}
 
@@ -113,12 +114,12 @@ namespace Onyx {
 				if (m_CommonMaterialBuffers.find(mesh.m_Material->GetName()) != m_CommonMaterialBuffers.end()) {
 					//found buffer
 					//submit vertices
-					m_CommonMaterialBuffers[mesh.m_Material->GetName()].Submit(mesh, transform);
+					m_CommonMaterialBuffers[mesh.m_Material->GetName()]->Submit(mesh, transform);
 
 				}
 				else {
-					m_CommonMaterialBuffers[mesh.m_Material->GetName()] = CommonMaterialBuffer(mesh.m_Material);
-					m_CommonMaterialBuffers[mesh.m_Material->GetName()].Submit(mesh, transform);
+					m_CommonMaterialBuffers[mesh.m_Material->GetName()] = new CommonMaterialBuffer(mesh.m_Material);
+					m_CommonMaterialBuffers[mesh.m_Material->GetName()]->Submit(mesh, transform);
 				}
 			}
 
@@ -128,13 +129,13 @@ namespace Onyx {
 		inline void End() {
 			for (auto buffer : m_CommonMaterialBuffers)
 			{
-				buffer.second.End();
+				buffer.second->End();
 			}
 		}
 
 	private:
 
-		std::unordered_map <std::string, CommonMaterialBuffer> m_CommonMaterialBuffers;
+		std::unordered_map <std::string, CommonMaterialBuffer*> m_CommonMaterialBuffers;
 		
 	};
 

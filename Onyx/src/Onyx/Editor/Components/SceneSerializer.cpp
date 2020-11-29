@@ -19,7 +19,8 @@ namespace Onyx {
 		tinyxml2::XMLDocument xmlDoc;
 		
 		XMLNode* pRoot = xmlDoc.NewElement("ONYX-SCENE");
-		((XMLElement*)pRoot)->SetAttribute("UniqueIdentifier", scene->m_SceneIdentifier.c_str());
+		((XMLElement*)pRoot)->SetAttribute("UniqueIdentifier", scene->m_SceneData.Identifier.c_str());
+		((XMLElement*)pRoot)->SetAttribute("Name", scene->m_SceneData.Name.c_str());
 		xmlDoc.InsertFirstChild(pRoot);
 
 		//Process each entity in the scene along with it's components
@@ -87,6 +88,8 @@ namespace Onyx {
 		}
 
 		const char* sceneIdentifer = ((XMLElement*)pRoot)->Attribute("UniqueIdentifier");
+		const char* sceneName = ((XMLElement*)pRoot)->Attribute("Name");
+
 		
 		if (sceneIdentifer == nullptr || strlen(sceneIdentifer) < 10) {
 			ONYX_ERROR("Scene Serializer ERROR: Failed to find a valid Scene!");
@@ -96,7 +99,7 @@ namespace Onyx {
 		//Iterate through serialized entities
 		XMLElement* pEntityElement = pRoot->FirstChildElement("ONYX-ENTITY");
 		
-		Scene* scene = new Scene(sceneIdentifer);
+		Scene* scene = new Scene(SceneData(sceneName, filePath.c_str(), sceneIdentifer));
 		
 		while (pEntityElement != nullptr) {
 

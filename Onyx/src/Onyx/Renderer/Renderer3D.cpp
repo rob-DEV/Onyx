@@ -116,6 +116,8 @@ namespace Onyx {
 
 	CommonMaterialBuffer::CommonMaterialBuffer(Material* material)
 	{
+		m_IndexCount = 0;
+		m_VertexCount = 0;
 		m_Material = material;
 
 
@@ -155,6 +157,16 @@ namespace Onyx {
 		glEnableVertexAttribArray(4);
 		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Tangent));
 
+	}
+
+	CommonMaterialBuffer::~CommonMaterialBuffer()
+	{
+		delete m_MeshVertexArray;
+		delete m_MeshVertexBuffer;
+		delete m_MeshIndexBuffer;
+
+		delete[] m_MeshVertexBufferBase;
+		delete[] m_MeshIndexBufferBase;
 	}
 
 }

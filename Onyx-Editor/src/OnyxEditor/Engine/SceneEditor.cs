@@ -101,14 +101,16 @@ namespace OnyxEditor
 
             if(updateUI)
             {
-                foreach (Window window in Application.Current.Windows)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    if (window.GetType() == typeof(MainWindow))
+                    foreach (Window window in Application.Current.Windows)
                     {
-                        //TODO: Cross-thread UI Update
-                        /*(window as MainWindow).;*/
+                        if (window.GetType() == typeof(MainWindow))
+                        {
+                            window.Title = OnyxMenuHeader.GetHeaderText();
+                        }
                     }
-                }
+                });
             }
 
         }

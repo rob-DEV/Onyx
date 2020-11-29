@@ -16,6 +16,14 @@ namespace Onyx {
 	class Gizmo;
 	
 	struct SceneData {
+		SceneData() = default;
+		SceneData(const std::string& name, const std::string& filePath, const std::string& identifier) :
+			Name(name),
+			FilePath(filePath),
+			Identifier(identifier)
+		{
+
+		}
 		std::string Name;
 		std::string FilePath;
 		std::string Identifier;
@@ -24,22 +32,19 @@ namespace Onyx {
 	class ONYX_API Scene {
 	public:
 		Scene();
-		Scene(const std::string& identifier);
+		Scene(const SceneData& sceneData);
 		~Scene();
 
 		Entity* CreateEntity();
 		void OnUpdate(Timestep timestep);
 
 	private:
-
-		std::string m_SceneIdentifier;
+		SceneData m_SceneData;
 
 		Registry m_EntityRegistry;
-
 		std::vector<Entity*> m_Entities;
 
 		Skybox* m_SkyBox;
-
 
 		friend class Entity;
 		friend class SceneEditor;

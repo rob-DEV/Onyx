@@ -19,7 +19,7 @@ namespace Onyx {
 
 		void OnUpdate();
 
-		RenderedPixelData GetRenderedFrame();
+		char* GetRenderedFrame();
 		bool* GetInputKeyBuffer();
 		bool* GetInputMouseButtonBuffer();
 		void SetMousePosition(float x, float y);

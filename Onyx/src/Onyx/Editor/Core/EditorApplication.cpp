@@ -101,9 +101,10 @@ namespace Onyx {
 		m_EditorTimestep = time;
 	}
 
-	RenderedPixelData EditorApplication::GetRenderedFrame()
+	char* EditorApplication::GetRenderedFrame()
 	{
-		return RenderCommand::GetRenderedFrameBuffer(m_FrameBufferDataPointer);
+		RenderCommand::GetRenderedFrameBuffer(m_FrameBufferDataPointer);
+		return m_FrameBufferDataPointer;
 	}
 
 	bool* EditorApplication::GetInputKeyBuffer()

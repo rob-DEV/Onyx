@@ -52,13 +52,7 @@ namespace Onyx {
 	{
 		InvalidateScene();
 		m_Scene = new Scene();
-		
-		SceneData result;
-		result.Name = "Untitled";
-		result.FilePath = "";
-		result.Identifier = m_Scene->m_SceneIdentifier;
-		
-		return result;
+		return m_Scene->m_SceneData;
 	}
 
 	SceneData SceneEditor::OpenScene(const char* filePath)
@@ -86,12 +80,8 @@ namespace Onyx {
 		if (m_Scene == nullptr) {
 			ONYX_ERROR("SceneEditor ERROR: Scene was nullptr");
 		}
-		SceneData result;
-		result.Name = "Untitled";
-		result.FilePath = filePath;
-		result.Identifier = m_Scene->m_SceneIdentifier;
 
-		return result;
+		return m_Scene->m_SceneData;
 	}
 
 	bool SceneEditor::SaveScene(const char* filePath)
