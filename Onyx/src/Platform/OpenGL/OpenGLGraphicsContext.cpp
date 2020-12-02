@@ -56,9 +56,9 @@ namespace Onyx {
 		glfwSwapBuffers(m_WindowHandle);
 	}
 
-	void OpenGLGraphicsContext::DebugGraphicsError(const std::string& error)
+	void OpenGLGraphicsContext::DebugGraphicsError(std::string_view error)
 	{
-		printf("OpenGL Error: %s\n", error.c_str());
+		printf("OpenGL Error: %s\n", error.data());
 	}
 
 }

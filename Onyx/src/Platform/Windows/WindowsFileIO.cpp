@@ -7,11 +7,11 @@ namespace Onyx {
 
 	FileIO* FileIO::s_Instance = new WindowsFileIO();
 
-	const std::string WindowsFileIO::ReadFileStringImplementation(const std::string& filepath)
+	const std::string WindowsFileIO::ReadFileStringImplementation(std::string_view filepath)
 	{
 		
 		FILE* file;
-		fopen_s(&file, filepath.c_str(), "rt");
+		fopen_s(&file, filepath.data(), "rt");
 
 		if (!file) {
 			printf("Can not open file, invalid file path!\n");
@@ -21,10 +21,10 @@ namespace Onyx {
 		}
 
 		fseek(file, 0, SEEK_END);
-		unsigned long length = (unsigned long)ftell(file);
+		uint64_t length = (unsigned long)ftell(file);
 		
-		char* data = new char[length + 1];
-		memset(data, 0, length + 1);
+		char* data = new char[uint64_t(length) + uint64_t(1)];
+		memset(data, 0, length + uint64_t(1));
 		
 		fseek(file, 0, SEEK_SET);
 		fread(data, 1, length, file);
@@ -35,9 +35,9 @@ namespace Onyx {
 		return result;
 	}
 
-	const std::vector<char> WindowsFileIO::ReadFileByteImplementation(const std::string& filepath)
+	const std::vector<char> WindowsFileIO::ReadFileByteImplementation(std::string_view filepath)
 	{
-		std::ifstream file(filepath, std::ios::ate | std::ios::binary);
+		std::ifstream file(filepath.data(), std::ios::ate | std::ios::binary);
 
 		if (!file.is_open()) {
 			std::cout << "Error opening file readFileByteImplementation()\n";
@@ -68,9 +68,9 @@ namespace Onyx {
 			filepath.erase(period_idx);
 	}
 
-	const std::string WindowsFileIO::GetFileExtensionImplementation(const std::string& filePath)
+	const std::string WindowsFileIO::GetFileExtensionImplementation(std::string_view filePath)
 	{
-		return filePath.substr(filePath.find_last_of(".") + 1);
+		return filePath.substr(filePath.find_last_of(".") + 1).data();
 	}
 
 }

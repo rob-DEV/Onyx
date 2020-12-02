@@ -11,11 +11,11 @@
 namespace Onyx {
 
 
-	Model* ModelLoader::Load(const std::string& name, const std::string& path)
+	Model* ModelLoader::Load(std::string_view name, std::string_view path)
 	{
 		//Determine model type to load
 
-		std::string ext = FileIO::GetFileExtension(path);
+		std::string ext = FileIO::GetFileExtension(path.data());
 
 		if (ext != "obj" && ext != "fbx") {
 			assert(false, "Unsupported model format!");
@@ -29,12 +29,12 @@ namespace Onyx {
 	}
 
 
-	Model* ModelLoader::LoadModelFromFile(const std::string& path)
+	Model* ModelLoader::LoadModelFromFile(std::string_view path)
 	{
-		printf("Loading model from : %s\n", path.c_str());
+		printf("Loading model from : %s\n", path.data());
 
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate |
+		const aiScene* scene = importer.ReadFile(path.data(), aiProcess_Triangulate |
 			aiProcess_JoinIdenticalVertices |
 			aiProcess_GenUVCoords |
 			aiProcess_SortByPType |
@@ -51,7 +51,7 @@ namespace Onyx {
 
 		// Check if scene is not null and model is done loading
 		if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-			std::cerr << "Assimp Error for " << path.c_str() << ": " << importer.GetErrorString() << '\n';
+			std::cerr << "Assimp Error for " << path.data() << ": " << importer.GetErrorString() << '\n';
 			importer.FreeScene();
 
 			return false;
@@ -82,7 +82,7 @@ namespace Onyx {
 		glm::vec3 min(0.001);
 		glm::vec3 max(0.001);
 
-		for (auto i = 0; i < mesh->mNumVertices; ++i) {
+		for (size_t i = 0; i < mesh->mNumVertices; ++i) {
 			Vertex3D vertex;
 
 			if (mesh->HasPositions()) {
@@ -128,9 +128,9 @@ namespace Onyx {
 
 		// Get indices from each face
 		std::vector<uint32_t> indices;
-		for (auto i = 0; i < mesh->mNumFaces; ++i) {
+		for (size_t i = 0; i < mesh->mNumFaces; ++i) {
 			const auto face = mesh->mFaces[i];
-			for (auto j = 0; j < face.mNumIndices; ++j) {
+			for (size_t j = 0; j < face.mNumIndices; ++j) {
 				indices.emplace_back(face.mIndices[j]);
 			}
 		}

@@ -17,21 +17,14 @@ namespace Onyx {
 
 	Scene::Scene() :
 		m_SceneData(SceneData("Untitled", "UNSAVED", Hasher::GenerateUniqueID())),
-		m_SkyBox(new Skybox(std::vector<std::string> {
-			"res/textures/skybox/Left.png",
-			"res/textures/skybox/Right.png",
-			"res/textures/skybox/Up.png",
-			"res/textures/skybox/Down.png",
-			"res/textures/skybox/Front.png",
-			"res/textures/skybox/Back.png"
-		}))
+		m_SkyBox(new Skybox())
 	{
 
 	}
 
 	Scene::Scene(const SceneData& sceneData) :
 		m_SceneData(sceneData),
-		m_SkyBox(new Skybox(std::vector<std::string> {
+		m_SkyBox(new Skybox( {
 		"res/textures/skybox/Left.png",
 		"res/textures/skybox/Right.png",
 		"res/textures/skybox/Up.png",

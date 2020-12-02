@@ -16,11 +16,6 @@ namespace Onyx {
 		void DrawIndexed(VertexArray* vertexArray);
 		void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount);
 
-		//EXPERIMENTAL
-		////EXPERIMENTAL
-		virtual void GetRenderedFrameBuffer(char* dest);
-
-
 	};
 }
 

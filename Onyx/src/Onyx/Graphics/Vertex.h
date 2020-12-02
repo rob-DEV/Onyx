@@ -11,10 +11,12 @@ namespace Onyx {
 	{
 		Vertex3D() = default;
 
-		Vertex3D(const glm::vec3 & position, const glm::vec2 & texcoords) : 
+		Vertex3D(const glm::vec3& position, const glm::vec2& texcoords) :
 			Position(position),
 			TexCoords(texcoords),
-			Color(glm::vec4(1.0f))
+			Color(glm::vec4(1.0f)),
+			Normal(),
+			Tangent()
 		{
 		}
 
@@ -22,7 +24,9 @@ namespace Onyx {
 			Position(position),
 			TexCoords(texcoords),
 			Color(glm::vec4(1.0f)),
-			Normal(normal) {
+			Normal(normal),
+			Tangent() 
+		{
 		}
 
 		Vertex3D(const glm::vec3 & position, const glm::vec2 & texcoords, const glm::vec3 & normal, const glm::vec3 & tangent) :
@@ -30,7 +34,8 @@ namespace Onyx {
 			TexCoords(texcoords),
 			Normal(normal),
 			Color(glm::vec4(1.0f)),
-			Tangent(tangent) {
+			Tangent(tangent)
+		{
 		}
 
 		glm::vec3 Position;
@@ -38,6 +43,7 @@ namespace Onyx {
 		glm::vec2 TexCoords;
 		glm::vec3 Normal;
 		glm::vec3 Tangent;
+		uint32_t EntityIdentifier;
 	};
 
 

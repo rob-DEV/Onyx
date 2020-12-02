@@ -51,7 +51,7 @@ namespace OnyxEditor
                     sw.Restart();
                 }
 
-                Thread.Sleep((int)(1000.0f/60.0f));
+                Thread.Sleep(16);
             }
         }
 

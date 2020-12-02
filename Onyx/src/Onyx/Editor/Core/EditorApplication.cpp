@@ -27,20 +27,15 @@
 #include <Onyx/Audio/Sound.h>
 
 #include <Onyx/Graphics/Renderer2D.h>
-#include <Onyx/Renderer/Renderer3D.h>
+#include <Onyx/Editor/Renderer/EditorRenderer3D.h>
 
 #include <Onyx/Graphics/ModelLoader.h>
-
 #include <Platform/Windows/WindowsWindow.h>
 
+#include <GLFW/glfw3.h>
 
 #include "EditorInput.h"
-
-
-#include <glad\glad.h>
-#include "GLFW/glfw3.h"
-
-#include <Platform/OpenGL/OpenGLFramebuffer.h>
+#include "../Components/SceneEditorViewport.h"
 
 namespace Onyx {
 
@@ -73,16 +68,15 @@ namespace Onyx {
 
 		//Renderers
 		Renderer2D::Init();
-		Renderer3D::Init();
+		EditorRenderer3D::Init();
 
-		m_EditorTimestep = Timestep(glfwGetTime());
-
-		m_FrameBufferDataPointer = new char[3 * 1280 * 720];
+		m_EditorRenderer = new SceneEditorViewport();
+		m_SceneEditor = new SceneEditor();
+		m_EditorTimestep = Timestep((float)glfwGetTime());
 	}
 
 	EditorApplication::~EditorApplication()
 	{
-		delete[] m_FrameBufferDataPointer;
 		delete m_Window;
 	}
 
@@ -101,10 +95,9 @@ namespace Onyx {
 		m_EditorTimestep = time;
 	}
 
-	char* EditorApplication::GetRenderedFrame()
+	void EditorApplication::GetRenderedFrame(int* buffer)
 	{
-		RenderCommand::GetRenderedFrameBuffer(m_FrameBufferDataPointer);
-		return m_FrameBufferDataPointer;
+		m_EditorRenderer->RenderFrameToBuffer((uint32_t*)buffer);
 	}
 
 	bool* EditorApplication::GetInputKeyBuffer()
@@ -119,6 +112,11 @@ namespace Onyx {
 
 	void EditorApplication::SetMousePosition(float x, float y)
 	{
+// 		float scaledX, scaledY;
+// 		//1130 / 1.7777777;
+// 		scaledX = (x / 1130.0f) * 1280.0f;
+// 		scaledY = (y / (1130.0f / 1.777777f)) * 720.0f;
+
 		m_EditorToEngineInput->m_MousePos = glm::vec2(x, y);
 	}
 

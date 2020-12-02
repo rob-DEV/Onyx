@@ -8,38 +8,6 @@
 
 namespace Onyx {
 
-	//EXPERIMENTAL
-	struct ONYX_API RenderedPixelData {
-
-		char* Data;
-		uint32_t Size;
-
-		RenderedPixelData(void* data, uint32_t size) {
-			Data = (char*)data;
-			Size = 0;
-		}
-		RenderedPixelData(RenderedPixelData& other) {
-
-			//Avoid multiple deletions on assignment
-			Data = other.Data;
-			other.Data = nullptr;
-			Size = other.Size;
-
-		}
-
-		~RenderedPixelData() { 	
-		}
-
-		RenderedPixelData operator=(RenderedPixelData other) {
-			Data = other.Data;
-			other.Data = nullptr;
-			Size = other.Size;
-			return *this;
-		}
-
-	};
-
-
 	class ONYX_API RendererAPI
 	{
 	public:
@@ -53,9 +21,6 @@ namespace Onyx {
 		virtual void DrawArrays(VertexArray* vertexArray, uint32_t count) = 0;
 		virtual void DrawIndexed(VertexArray* vertexArray) = 0;
 		virtual void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount) = 0;
-
-		////EXPERIMENTAL
-		virtual void GetRenderedFrameBuffer(char* dest) = 0;
 
 		inline static API GetAPI() { return s_API; }
 		inline static bool VsyncEnabled() { return s_Vsync; };

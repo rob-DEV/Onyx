@@ -9,7 +9,7 @@ namespace Onyx {
 	public:
 		virtual void Init() = 0;
 		virtual void SwapBuffers() = 0;
-		//virtual void DebugGraphicsError(const std::string& error) = 0;
+		//virtual void DebugGraphicsError(std::string_view error) = 0;
 		virtual ~GraphicsContext() = default;
 	};
 

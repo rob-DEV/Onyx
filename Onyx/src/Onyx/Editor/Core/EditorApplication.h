@@ -8,6 +8,7 @@ namespace Onyx {
 	class Window;
 	class SceneEditor;
 	class EditorInput;
+	class SceneEditorViewport;
 
 	class ONYX_API EditorApplication : public Application
 	{
@@ -19,7 +20,7 @@ namespace Onyx {
 
 		void OnUpdate();
 
-		char* GetRenderedFrame();
+		void GetRenderedFrame(int* buffer);
 		bool* GetInputKeyBuffer();
 		bool* GetInputMouseButtonBuffer();
 		void SetMousePosition(float x, float y);
@@ -27,11 +28,8 @@ namespace Onyx {
 	private:
 
 		EditorInput* m_EditorToEngineInput;
-		SceneEditor* m_SceneEditor = nullptr;
-
-		//ABSTRACT OUT SOMEWHERE ELSE
-		char* m_FrameBufferDataPointer = nullptr;
-
+		SceneEditorViewport* m_EditorRenderer;
+		SceneEditor* m_SceneEditor;
 	};
 
 }

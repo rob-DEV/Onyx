@@ -6,10 +6,11 @@
 #include <Onyx/Graphics/ModelLoader.h>
 #include <Onyx/Editor/Components/Gizmo.h>
 #include <Onyx/Editor/Components/SceneSerializer.h>
-#include <Onyx/Editor/Components/SceneEditorSelector.h>
 #include <Onyx/Editor/Components/EditorCameraController.h>
 
-#include <Onyx/Renderer/Renderer3D.h>
+#include <Onyx/Editor/Renderer/EditorRenderer3D.h>
+
+#include <Onyx/Core/Input.h>
 
 namespace Onyx {
 
@@ -17,8 +18,7 @@ namespace Onyx {
 		m_EditorCameraController(new EditorCameraController()),
 		m_Scene(new Scene()),
 		m_EditorGizmo(new Gizmo()),
-		m_SelectedEntity(nullptr),
-		m_SceneSelector(new SceneEditorSelector(this))
+		m_SelectedEntity(nullptr)
 	{
 
 	}
@@ -35,17 +35,14 @@ namespace Onyx {
 	void SceneEditor::OnUpdate(Timestep ts)
 	{
 		m_EditorCameraController->OnUpdate(ts);
-		m_SceneSelector->OnUpdate();
 
 		RenderCommand::Clear();
 		
-		Renderer3D::BeginScene(m_EditorCameraController->GetCamera());
+		EditorRenderer3D::BeginScene(m_EditorCameraController->GetCamera());
 
-		Renderer3D::DrawScene(m_Scene);
+		EditorRenderer3D::DrawScene(m_Scene);
 
-		Renderer3D::EndScene();
-		Renderer3D::Flush();
-
+		EditorRenderer3D::EndScene();
 	}
 
 	SceneData SceneEditor::NewScene()

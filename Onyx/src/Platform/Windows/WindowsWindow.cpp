@@ -102,7 +102,7 @@ namespace Onyx {
 
 		m_Context->Init();
 
-		glfwSwapInterval(0);
+		glfwSwapInterval(1);
 		
 		if(!m_Data.Hidden)
 			glfwShowWindow(m_Window);

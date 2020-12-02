@@ -5,7 +5,7 @@
 
 namespace Onyx {
 
-	OpenALSound::OpenALSound(const std::string& filePath)
+	OpenALSound::OpenALSound(std::string_view filePath)
 	{
 
 		m_FilePath = filePath;
@@ -14,7 +14,7 @@ namespace Onyx {
 		FileIO::GetFileNameWithoutExtension(m_Name);
 
 		FILE* fp = NULL;
-		fopen_s(&fp, filePath.c_str(), "rb");
+		fopen_s(&fp, filePath.data(), "rb");
 
 		if (fp == NULL) {
 			printf("OpenALDevice.cpp 55 : fp is NULL\n");

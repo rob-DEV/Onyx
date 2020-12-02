@@ -6,23 +6,24 @@
         xmlns:local="clr-namespace:OnyxEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="1050" Width="1920"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove" KeyUp="Window_KeyUp" Closing="Window_Closing" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove" KeyUp="Window_KeyUp" Closing="Window_Closing" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp" SizeChanged="Window_SizeChanged"
         >
-    
-    <Grid  Background="#FF474747">
 
+
+    <Grid x:Name="EditorGrid" Background="#333333">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="1130" />
+            <ColumnDefinition Width="62*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="18" />
-            <RowDefinition Height="9*" />
-            <RowDefinition Height="1000" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="653" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3.3*" />
-            <ColumnDefinition Width="16*" />
-            <ColumnDefinition Width="3.3*" />
-        </Grid.ColumnDefinitions>
 
-        <Menu DockPanel.Dock="Top"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+        <Menu DockPanel.Dock="Top"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="_File">
                 <MenuItem Header="_New" Click="MenuItem_New_Click"/>
                 <MenuItem Header="_Open..." Click="MenuItem_Open_Click"/>
@@ -32,62 +33,102 @@
             </MenuItem>
         </Menu>
 
+        <Border Grid.Row="2" Grid.Column="1" Background="#33333333" BorderBrush="#FF1B1B1B" BorderThickness="1"/>
+        <local:Viewport Grid.Row="2" Grid.Column="1" x:Name="ViewportMain" Margin="0,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="True" Background="#33333333"/>
+
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
             <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Rotate" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Scale" Width="65"/>
-  
+
         </WrapPanel>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-            <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="40"/>
-            <Button Style="{DynamicResource Round}" Margin="5" Content="Stop" Width="40"/>
+            <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="65"/>
+            <Button Style="{DynamicResource Round}" Margin="5" Content="Stop" Width="65"/>
         </WrapPanel>
 
-        <StackPanel Background="#FF474747" Grid.Row="3" Grid.Column="0">
+        <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left">
+            <Label Foreground="White" Content="Inspector"/>
+        </WrapPanel>
 
-            <!-- LTRB-->
-            <TreeView Background="#FF474747" Name="TreeView1" VerticalAlignment="Top" Margin="5" HorizontalAlignment="Stretch" Height="487">
-                <TreeViewItem Foreground="#FFCDCDCD" Header="Entities">
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Coke">
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Pepsi"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Orange Juice"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Milk"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Iced Tea"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Mango Shake"></TreeViewItem>
-                    </TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Pepsi"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Orange Juice"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Milk">
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Pepsi"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Orange Juice"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Milk"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Iced Tea"></TreeViewItem>
-                        <TreeViewItem Foreground="#FFCDCDCD" Header="Mango Shake"></TreeViewItem>
-                    </TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Iced Tea"></TreeViewItem>
-                    <TreeViewItem Foreground="#FFCDCDCD" Header="Mango Shake"></TreeViewItem>
-                </TreeViewItem>
-            </TreeView>
-            
-        </StackPanel>
+        <UniformGrid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <DockPanel>
+                    <Label Foreground="White" Content="Entity ID:"/>
+                    <TextBox VerticalContentAlignment="Center" Text="0" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label Foreground="White" Content="Name:    "/>
+                    <TextBox VerticalContentAlignment="Center" Text="Base Scene"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                </DockPanel>
+                <DockPanel>
+                    <ItemsControl>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Items>
+                            <Label Foreground="White" Content="Transform:"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        </ItemsControl.Items>
+                    </ItemsControl>
+                </DockPanel>
+                <DockPanel>
+                    <ItemsControl>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Items>
+                            <Label Foreground="White" Content="Rotation:"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        </ItemsControl.Items>
+                    </ItemsControl>
+                </DockPanel>
+                <DockPanel>
+                    <ItemsControl>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Items>
+                            <Label Foreground="White" Content="Scale"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        </ItemsControl.Items>
+                    </ItemsControl>
+                </DockPanel>
+                <Label Foreground="White" Content="Components" Padding="5,25,0,0"/>
+            </StackPanel>
 
-        <StackPanel Background="#FF474747" Grid.Row="3" Grid.Column="3">
+        </UniformGrid>
 
-            <Label Height="23" Content="Position" Margin="0,0,00,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="120" Background="#FF0094FB"/>
-            <TextBox x:Name="PositionTextboxX" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-            <TextBox x:Name="PositionTextboxY" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-            <TextBox x:Name="PositionTextboxZ" TextAlignment="Center" Height="23" TextWrapping="Wrap" Margin="0,0,0,0" HorizontalAlignment="Left" Text="0.0" Width="120"/>
-
-
-        </StackPanel>
-
-
-
-        <local:Viewport Grid.Row="3" Grid.Column="1" x:Name="ViewportMain" MouseDown="ViewportMain_MouseDown" HorizontalAlignment="Left" Height="720" VerticalAlignment="Top" Width="1280" ClipToBounds="True" Background="#FF5F5F5F" MouseUp="ViewportMain_MouseUp"/>
-
-        
-        
     </Grid>
+
+
 </Window>
     

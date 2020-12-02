@@ -13,14 +13,14 @@ namespace Onyx {
 	class ONYX_API Layer {
 
 	public:
-		Layer(const std::string& name = "Layer");
+		Layer(std::string_view name = "Layer");
 		virtual ~Layer() = default;
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(Timestep timestep) {}
 
-		const std::string& GetName() const { return m_LayerName; }
+		std::string_view GetName() const { return m_LayerName; }
 
 	protected:
 		std::string m_LayerName;

@@ -52,28 +52,6 @@ namespace Onyx {
 	{
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0);
-
-	}
-
-	////EXPERIMENTAL
-	//TODO: Abstract to framebuffer class
-	void OpenGLRendererAPI::GetRenderedFrameBuffer(char* dest)
-	{
-
-		constexpr uint32_t width = 1280;
-		constexpr uint32_t height = 720;
-		constexpr uint32_t frameBufferSize = 3 * width * height;
-
-		RenderedPixelData renderedFrame(NULL, 0);
-
-		//glReadBuffer(GL_COLOR_ATTACHMENT0);
-		glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, dest);
-
-		renderedFrame.Data = dest;
-		renderedFrame.Size = frameBufferSize;
-
-		//return renderedFrame;
-
 	}
 
 }

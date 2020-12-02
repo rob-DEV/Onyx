@@ -24,7 +24,7 @@ namespace Onyx {
 	class ONYX_API Texture2D : public Texture {
 	public:
 		static Texture2D* Create(uint32_t width, uint32_t height);
-		static Texture2D* Create(const std::string& path);
+		static Texture2D* Create(std::string_view path);
 		inline static int count = 0;
 	};
 
@@ -34,7 +34,7 @@ namespace Onyx {
 		virtual ~Cubemap() = default;
 		virtual void Bind(uint32_t slot = 0) const = 0;
 
-		static Cubemap* Create(const std::vector<std::string>& paths);
+		static Cubemap* Create(const std::vector<std::string_view>& paths);
 
 		virtual bool operator==(const Texture& other) const = 0;
 	};

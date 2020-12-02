@@ -8,9 +8,9 @@ namespace Onyx {
 
 	class ONYX_API SceneSerializer {
 	public:
-		static bool Serialize(Scene* scene, const std::string& filePath);
+		static bool Serialize(Scene* scene, std::string_view filePath);
 
-		static Scene* DeSerialize(const std::string& filePath);
+		static Scene* DeSerialize(std::string_view filePath);
 
 	};
 

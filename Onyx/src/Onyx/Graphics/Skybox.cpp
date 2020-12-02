@@ -54,7 +54,7 @@ namespace Onyx {
 		{ 1.0f, -1.0f,  1.0f}
 	};
 
-	Skybox::Skybox(std::vector<std::string> paths)
+	Skybox::Skybox(std::vector<std::string_view> paths)
 	{
 		m_SkyboxTexture = Cubemap::Create(paths);
 
@@ -62,27 +62,33 @@ namespace Onyx {
 
 		m_SkyboxVBO = VertexBuffer::Create(reinterpret_cast<float*>(SkyboxVertices.data()), SkyboxVertices.size() * sizeof(glm::vec3));
 		
+		m_SkyboxVBO->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" }
+		});
 		m_SkyboxVAO->AddVertexBuffer(m_SkyboxVBO);
 
 		m_SkyboxVBO->Bind();
 		m_SkyboxVAO->Bind();
 
-		//setup layout
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		
+	}
 
+	Skybox::Skybox() :
+		m_SkyboxVAO(nullptr),
+		m_SkyboxVBO(nullptr),
+		m_SkyboxTexture(nullptr)
+	{
 	}
 
 	void Skybox::Draw()
 	{
+		if (m_SkyboxTexture == nullptr)
+			return;
+
 		m_SkyboxVBO->Bind();
 		m_SkyboxVAO->Bind();
 		m_SkyboxTexture->Bind();
 
-
 		RenderCommand::DrawArrays(m_SkyboxVAO, 36);
-
 	}
 
 

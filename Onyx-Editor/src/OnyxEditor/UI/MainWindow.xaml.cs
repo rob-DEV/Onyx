@@ -14,39 +14,37 @@ namespace OnyxEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Thread m_RenderThread;
-        private volatile bool m_Aborted = false;
-
         private bool ViewPortInFocus = false;
 
-        private void EngineThread()
-        {
-
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            int frames = 0;
-
-            EngineCore.Init();
-
-            while (!m_Aborted)
-            {
-                EngineCore.UpdateEngine();
-
-                ++frames;
-                if (sw.ElapsedMilliseconds >= 1000)
-                {
-                    Console.WriteLine("Editor Thread FrameTime {0}", (float)frames);
-                    frames = 0;
-                    sw.Restart();
-                }
-            }
-        }
+        private double ViewportWidth = 1130;
+        private double ViewportHeight = 1130 / 1.7777777;
 
         public MainWindow()
         {
             InitializeComponent();
             this.Title = OnyxMenuHeader.GetHeaderText();
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            //Set viewport size proportional to the window in 16:9 proportion
+            double windowWidth = this.Width;
+
+            double windowSlack = 1920 - windowWidth;
+            double viewportWidth = 1130 - windowSlack;
+
+            EditorGrid.ColumnDefinitions[1].Width = new GridLength(viewportWidth);
+
+            EditorGrid.RowDefinitions[2].Height = new GridLength(viewportWidth / 1.77777777);
+
+            ViewportWidth = viewportWidth;
+            ViewportHeight = viewportWidth / 1.77777777;
+
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            EngineCore.Start();
         }
 
         private void MenuItem_New_Click(object sender, RoutedEventArgs e)
@@ -111,19 +109,10 @@ namespace OnyxEditor
             Input.ProcessKeyEvent(e.Key, false);
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            m_RenderThread = new Thread(new ThreadStart(EngineThread));
-            m_RenderThread.Start();
-        }
-
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-
             Point viewportCenterPoint = ViewportMain.TransformToAncestor(Application.Current.MainWindow)
-                .Transform(new Point(ViewportMain.Width / 2, ViewportMain.Height / 2));
-
-            //set mouse position to viewport center
+                .Transform(new Point(ViewportWidth / 2, ViewportHeight / 2));
 
             if (e.MiddleButton == MouseButtonState.Pressed)
             {
@@ -138,13 +127,12 @@ namespace OnyxEditor
 
             Point pos = e.GetPosition(ViewportMain);
 
-            Point mouseViewportPos = new Point((1280 - pos.X) - (1280 / 2), -((720 - pos.Y) - (720 / 2)));
+            Point mouseViewportPos = new Point((ViewportWidth - pos.X) - (ViewportWidth / 2), -((ViewportHeight - pos.Y) - (ViewportHeight / 2)));
 
-            //add relative to 640 360
-            float toEngineX = (float)(640 - mouseViewportPos.X);
-            float toEngineY = (float)(360 + mouseViewportPos.Y);
+            float toEngineX = (float)((ViewportWidth / 2) - mouseViewportPos.X);
+            float toEngineY = (float)((ViewportHeight / 2) + mouseViewportPos.Y);
 
-            if (toEngineX >= 0 && toEngineX <= 1280 && toEngineY >= 0 && toEngineY <= 720)
+            if (toEngineX >= 0 && toEngineX <= ViewportWidth && toEngineY >= 0 && toEngineY <= ViewportHeight)
             {
                 ViewPortInFocus = true;
             }
@@ -152,30 +140,20 @@ namespace OnyxEditor
             {
                 ViewPortInFocus = false;
             }
-            if (ViewPortInFocus)
-                Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
 
-        }
-
-        private void ViewportMain_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-        private void ViewportMain_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-
+            Input.ProcessMouseMove(new System.Drawing.Point((int)toEngineX, (int)toEngineY));
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             ViewportMain.Dispose();
-            m_Aborted = true;
+            EngineCore.Stop();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point viewportCenterPoint = ViewportMain.TransformToAncestor(Application.Current.MainWindow)
-            .Transform(new Point(ViewportMain.Width / 2, ViewportMain.Height / 2));
+                .Transform(new Point(ViewportWidth / 2, ViewportHeight / 2));
 
             //set mouse position to viewport center
 
@@ -199,6 +177,14 @@ namespace OnyxEditor
             Input.ProcessMouseEvent(e);
         }
 
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateUI();
+        }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            UpdateUI();
+        }
     }
 }

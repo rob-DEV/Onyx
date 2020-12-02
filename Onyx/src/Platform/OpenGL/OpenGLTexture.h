@@ -10,7 +10,7 @@ namespace Onyx {
 	{
 	public:
 		OpenGLTexture2D(uint32_t width, uint32_t height);
-		OpenGLTexture2D(const std::string& path);
+		OpenGLTexture2D(std::string_view path);
 		virtual ~OpenGLTexture2D();
 
 		virtual uint32_t GetWidth() const override { return m_Width; }
@@ -33,7 +33,7 @@ namespace Onyx {
 	class OpenGLCubemap : public Cubemap
 	{
 	public:
-		OpenGLCubemap(const std::vector<std::string>& paths);
+		OpenGLCubemap(const std::vector<std::string_view>& paths);
 		virtual ~OpenGLCubemap();
 
 		virtual void Bind(uint32_t slot = 0) const override;
@@ -43,7 +43,7 @@ namespace Onyx {
 		}
 
 	private:
-		std::string m_Paths[6];
+		std::string_view m_Paths[6];
 		uint32_t m_RendererID;
 		GLenum m_InternalFormat, m_DataFormat;
 	};

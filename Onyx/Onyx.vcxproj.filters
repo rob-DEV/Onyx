@@ -936,10 +936,8 @@
     <ClInclude Include="src\Onyx\Editor\Components\Gizmo.h">
       <Filter>src\Onyx\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Graphics\Framebuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
-    <ClInclude Include="src\Onyx\Core\ApplicationContext.h" />
     <ClInclude Include="src\Onyx\Graphics\Model.h">
       <Filter>src\Onyx\Model</Filter>
     </ClInclude>
@@ -957,6 +955,10 @@
     <ClInclude Include="src\Onyx\Resources\TextureCache.h" />
     <ClInclude Include="src\Onyx\Runtime\RuntimeApplication.h" />
     <ClInclude Include="src\Onyx\Resources\Hasher.h" />
+    <ClInclude Include="src\Onyx\Renderer\CommonMaterialBuffer.h" />
+    <ClInclude Include="src\Onyx\Renderer\StaticBatch.h" />
+    <ClInclude Include="src\Onyx\Editor\Renderer\EditorRenderer3D.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorViewport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1073,7 +1075,6 @@
     <ClCompile Include="src\Onyx\Editor\Components\Gizmo.cpp">
       <Filter>src\Onyx\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Framebuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\ModelLoader.cpp">
@@ -1088,5 +1089,9 @@
     <ClCompile Include="src\Onyx\Resources\MaterialCache.cpp" />
     <ClCompile Include="src\Onyx\Resources\TextureCache.cpp" />
     <ClCompile Include="src\Onyx\Runtime\RuntimeApplication.cpp" />
+    <ClCompile Include="src\Onyx\Renderer\CommonMaterialBuffer.cpp" />
+    <ClCompile Include="src\Onyx\Renderer\StaticBatch.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Renderer\EditorRenderer3D.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorViewport.cpp" />
   </ItemGroup>
 </Project>

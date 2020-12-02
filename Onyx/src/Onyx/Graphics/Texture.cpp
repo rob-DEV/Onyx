@@ -7,7 +7,7 @@
 namespace Onyx {
 
 
-	Texture2D* Texture2D::Create(const std::string& path) {
+	Texture2D* Texture2D::Create(std::string_view path) {
 
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL) {
 			++count;
@@ -32,7 +32,7 @@ namespace Onyx {
 		return nullptr;
 	}
 
-	Cubemap* Cubemap::Create(const std::vector<std::string>& paths)
+	Cubemap* Cubemap::Create(const std::vector<std::string_view>& paths)
 	{
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLCubemap(paths);

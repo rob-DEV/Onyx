@@ -25,7 +25,7 @@ namespace OnyxCLR {
 
 	EditorApplicationCLR::~EditorApplicationCLR()
 	{
-		
+		delete OnyxEditorInstance;
 	}
 
 	void EditorApplicationCLR::Update()
@@ -42,19 +42,11 @@ namespace OnyxCLR {
 		for (size_t i = 0; i < 8; ++i)
 			OnyxEditorInstance->GetInputMouseButtonBuffer()[i] = mouseButtons[i];
 
-		OnyxEditorInstance->SetMousePosition(mousePosition.X, mousePosition.Y);
+		OnyxEditorInstance->SetMousePosition((float)mousePosition.X, (float)mousePosition.Y);
 	}
 
 	void EditorApplicationCLR::GetRenderedFrame(int* buffer)
 	{
-		if(OnyxPixelBuffer == nullptr)
-			OnyxPixelBuffer = OnyxEditorInstance->GetRenderedFrame();
-
-		int pos = 0;
-		for (int i = 0; i < 1280 * 720; ++i)
-		{
-			buffer[i] = (255 << 24) + ((unsigned char)OnyxPixelBuffer[pos] << 16) + ((unsigned char)OnyxPixelBuffer[pos + 1] << 8) + (unsigned char)OnyxPixelBuffer[pos + 2];
-			pos += 3;
-		}
+		OnyxEditorInstance->GetRenderedFrame(buffer);
 	}
 }

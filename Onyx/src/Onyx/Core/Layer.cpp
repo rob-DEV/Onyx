@@ -4,7 +4,7 @@
 
 namespace Onyx {
 
-	Layer::Layer(const std::string& name /*= "Layer"*/)
+	Layer::Layer(std::string_view name /*= "Layer"*/)
 		: m_LayerName(name)
 	{
 

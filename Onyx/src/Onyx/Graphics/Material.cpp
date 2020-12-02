@@ -3,25 +3,33 @@
 #include "Shader.h"
 
 #include <Onyx/Resources/Hasher.h>
+#include <Onyx/Core/Application.h>
 #include <Onyx/Resources/TextureCache.h>
 
 namespace Onyx {
 
 	Material::Material() :
-		m_Name("DEFAULT"),
-		m_Shader(ShaderCache::Get("3DRuntime"))
+		m_Name("DEFAULT")
 	{
+		if (Application::Get()->GetContext() == ApplicationContext::Runtime)
+			m_Shader = ShaderCache::Get("3DRuntime");
+		else
+			m_Shader = ShaderCache::Get("3DEditor");
+
 		CreateDefaultNamedMaterial();
 	}
 
-	Material::Material(const std::string& name) :
-		m_Name(name),
-		m_Shader(ShaderCache::Get("3DRuntime"))
+	Material::Material(std::string_view name) :
+		m_Name(name)
 	{
+		if (Application::Get()->GetContext() == ApplicationContext::Runtime)
+			m_Shader = ShaderCache::Get("3DRuntime");
+		else
+			m_Shader = ShaderCache::Get("3DEditor");
 		CreateDefaultNamedMaterial();
 	}
 
-	Material::Material(const std::string& name, const std::string& diffuse, const std::string& specular, const std::string& normal)
+	Material::Material(std::string_view name, std::string_view diffuse, std::string_view specular, std::string_view normal)
 	{
 		m_Name = name;
 
@@ -60,7 +68,7 @@ namespace Onyx {
 
 	}
 
-	void Material::AddTexture(TextureParameterType type, const std::string& path)
+	void Material::AddTexture(TextureParameterType type, std::string_view path)
 	{
 		//Grab/Add the texture from/to the cache
 		Texture2D* texture = nullptr;

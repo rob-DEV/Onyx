@@ -10,7 +10,7 @@ namespace Onyx {
 	//Internal hashing class for file paths & strings
 	class Hasher {
 	public:
-		inline static uint64_t HashString(const std::string& str) {
+		inline static uint64_t HashString(std::string_view str) {
 
 			uint64_t hash = 0x811c9dc5;
 			uint64_t prime = 0x1000193;

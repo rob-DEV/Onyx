@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OnyxEditor
@@ -14,40 +16,83 @@ namespace OnyxEditor
     public partial class EngineCore
     {
 
-        public static volatile OnyxCLR.EditorApplicationCLR Instance = null;
+        public static void Start()
+        {
+            engineThread = new Thread(new ThreadStart(EngineThreadWorker));
+            engineThread.Priority = ThreadPriority.Highest;
+            engineThread.Start();
+        }
 
-        private static EngineInput m_EngineInput = null;
+        public static void Stop()
+        {
+            aborted = true;
+            Thread.Sleep(200);
+            engineThread.Abort();
+        }
+
+        public static volatile OnyxCLR.EditorApplicationCLR Instance = null;
 
         public static EngineRenderer Renderer { get; private set; } = null;
 
         public static SceneEditor SceneEditor { get; private set; } = null;
 
-        internal static void Init()
+
+        private static void EngineThreadWorker()
+        {
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            int frames = 0;
+
+            InitEngine();
+
+            while (!aborted)
+            {
+                UpdateEngine();
+
+                ++frames;
+                if (sw.ElapsedMilliseconds >= 1000)
+                {
+                    Console.WriteLine("Editor Thread FrameTime {0}", (float)frames);
+                    frames = 0;
+                    sw.Restart();
+                }
+            }
+        }
+
+        private static void InitEngine()
         {
             if (Instance == null)
             {
                 Instance = new OnyxCLR.EditorApplicationCLR();
-                m_EngineInput = new EngineInput(ref Instance);
+                Input = new EngineInput(ref Instance);
                 Renderer = new EngineRenderer(ref Instance);
                 SceneEditor = new SceneEditor(ref Instance);
             }
         }
 
-        internal unsafe static void UpdateEngine()
+        private unsafe static void UpdateEngine()
         {
             //CORE ONYX UPDATES
            
             //Update Onyx engine input
-            m_EngineInput.Update();
+            Input.Update();
             
+            //Poll rendered data
+            Renderer.Update();
+           
             //Update Onyx engine state
             Instance.Update();
 
-            //Poll rendered data
-            Renderer.Update();
-
             //SCENE EDITOR UPDATES
             SceneEditor.Update();
+
         }
+
+        private static Thread engineThread;
+        private static volatile bool aborted = false;
+        private static EngineInput Input = null;
+
     }
 }

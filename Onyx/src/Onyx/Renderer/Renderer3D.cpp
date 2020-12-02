@@ -4,9 +4,9 @@
 #include <Onyx/Core/Application.h>
 
 #include <Onyx/Scene/Scene.h>
+#include <Onyx/Graphics/Shader.h>
 #include <Onyx/Graphics/Skybox.h>
 #include <Onyx/Graphics/VertexArray.h>
-
 
 #include <Onyx/Graphics/ModelLoader.h>
 
@@ -23,14 +23,19 @@ namespace Onyx {
 	glm::mat4 Renderer3D::m_View = glm::mat4();
 	glm::mat4 Renderer3D::m_WorldViewProjection = glm::mat4();
 
-	std::array<Texture2D*, 32> Renderer3D::m_TextureSlots = std::array<Texture2D*, 32>();
-
 	void Renderer3D::Init()
 	{
 		//Add standard Shaders
 		ShaderCache::Add("Skybox", Shader::Create("res/shaders/Skybox.glsl"));
 		ShaderCache::Add("3DRuntime", Shader::Create("res/shaders/3DRuntime.glsl"));
 
+		m_StaticBatch.SetBufferLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_VertColor" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
+			{ ShaderDataType::Float3, "a_Normal" },
+			{ ShaderDataType::Float3, "a_Tangent" }
+		});
 	}
 
 	void Renderer3D::Shutdown()
@@ -71,8 +76,7 @@ namespace Onyx {
 		{
 			if (entity->IsStatic()) {
 				//Check if not in static batch
-
-				if (std::find(m_StaticBatch.EntitiesInBatch.begin(), m_StaticBatch.EntitiesInBatch.end(), entity->GetID()) == m_StaticBatch.EntitiesInBatch.end()) {
+				if (!m_StaticBatch.IsInBatch(entity->GetID())) {
 					if (entity->HasComponent<TransformComponent>() && entity->HasComponent<MeshRendererComponent>()) {
 						TransformComponent& t = entity->GetComponent<TransformComponent>();
 						MeshRendererComponent& mr = entity->GetComponent<MeshRendererComponent>();
@@ -92,81 +96,4 @@ namespace Onyx {
 	{
 		m_StaticBatch.End();
 	}
-
-	void Renderer3D::Flush()
-	{
-		//m_StaticBatch.Flush();
-	}
-
-	void Renderer3D::ResetAndFlush()
-	{
-
-	}
-
-
-	void Renderer3D::RecreateStaticBatchBuffer()
-	{
-
-	}
-
-	void Renderer3D::RenderStaticBatch()
-	{
-
-	}
-
-	CommonMaterialBuffer::CommonMaterialBuffer(Material* material)
-	{
-		m_IndexCount = 0;
-		m_VertexCount = 0;
-		m_Material = material;
-
-
-		m_MeshVertexArray = VertexArray::Create();
-		m_MeshVertexBuffer = VertexBuffer::Create();
-
-		m_MeshVertexArray->AddVertexBuffer(m_MeshVertexBuffer);
-
-		m_MeshIndexBuffer = IndexBuffer::Create(100000);
-		m_MeshVertexArray->SetIndexBuffer(m_MeshIndexBuffer);
-
-		m_MeshVertexBufferBase = new uint32_t[sizeof(Vertex3D) * 50000];
-		m_MeshVertexBufferWritePtr = m_MeshVertexBufferBase;
-
-		m_MeshIndexBufferBase = new uint32_t[100000];
-		m_MeshIndexBufferWritePtr = m_MeshIndexBufferBase;
-
-		//Buffer layout to be abstracted
-
-		//Position
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Position));
-
-		//Color
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Color));
-
-		//Tex-Coords
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::TexCoords));
-
-		//Normal
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Normal));
-
-		//Tangent
-		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3D), (void*)offsetof(Vertex3D, Vertex3D::Tangent));
-
-	}
-
-	CommonMaterialBuffer::~CommonMaterialBuffer()
-	{
-		delete m_MeshVertexArray;
-		delete m_MeshVertexBuffer;
-		delete m_MeshIndexBuffer;
-
-		delete[] m_MeshVertexBufferBase;
-		delete[] m_MeshIndexBufferBase;
-	}
-
 }

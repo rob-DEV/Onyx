@@ -32,7 +32,7 @@ namespace Onyx {
 
 		TransformComponent m_Transform;
 
-		friend class EditorRenderer;
+		friend class SceneEditorViewport;
 		friend class SceneEditor;
 	};
 

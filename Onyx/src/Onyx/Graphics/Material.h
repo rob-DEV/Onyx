@@ -40,17 +40,17 @@ namespace Onyx {
 
 	public:
 		Material();
-		Material(const std::string& name);
-		Material(const std::string& name, const std::string& diffuse, const std::string& specular, const std::string& normal);
+		Material(std::string_view name);
+		Material(std::string_view name, std::string_view diffuse, std::string_view specular, std::string_view normal);
 		~Material();
 
 		void Bind();
 
-		void AddTexture(TextureParameterType type, const std::string& path);
+		void AddTexture(TextureParameterType type, std::string_view path);
 		void SetColor(ColorParameterType type, const glm::vec4& color);
 		void SetTilingFactor(float tilingFactor) { m_TilingFactor = tilingFactor; };
-		const std::string& GetName() const { return m_Name; };
-		void SetName(const std::string& name) { m_Name = name; };
+		std::string_view GetName() const { return m_Name; };
+		void SetName(std::string_view name) { m_Name = name; };
 
 
 	private:

@@ -22,14 +22,14 @@ namespace Onyx {
 	void EditorCameraController::OnUpdate(Timestep ts)
 	{
 		float moveSpeed = 15.0f * ts;
-		float mouseSpeed = 1.0f * ts;
+		float mouseSpeed = 0.5f * ts;
 
 		glm::vec2 pos = Input::GetMousePosition();
 
 		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_MIDDLE)) {
 
 			glm::vec2 pitchYaw = m_Camera.GetPitchAndYaw();
-			m_Camera.SetPitchAndYaw(pitchYaw.x - mouseSpeed * float(1280 / 2 - (int)pos.x), pitchYaw.y - mouseSpeed * float(720 / 2 - (int)pos.y));
+			m_Camera.SetPitchAndYaw(pitchYaw.x - mouseSpeed * float(1130 / 2 - (int)pos.x), pitchYaw.y - mouseSpeed * float(636 / 2 - (int)pos.y));
 		}
 
 		glm::vec3 camPos = m_Camera.GetPositon();

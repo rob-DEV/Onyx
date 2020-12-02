@@ -5,7 +5,7 @@
 
 namespace Onyx {
 
-	Sound* Sound::Create(const std::string& filePath)
+	Sound* Sound::Create(std::string_view filePath)
 	{
 		//currently only supporting OpenAL 
 		return new OpenALSound(filePath);

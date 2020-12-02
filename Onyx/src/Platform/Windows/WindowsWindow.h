@@ -22,7 +22,7 @@ namespace Onyx {
 
 		inline uint32_t GetWidth() { return m_Data.Width; };
 		inline uint32_t GetHeight() { return m_Data.Height; };
-		inline const std::string& GetTitle() { return m_Data.Title; };
+		inline std::string_view GetTitle() { return m_Data.Title; };
 		inline double GetScroll() { return  m_Data.ScrollY; }
 
 		virtual void SetTitle(const char* title);

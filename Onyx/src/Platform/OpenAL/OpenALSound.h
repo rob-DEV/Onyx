@@ -9,7 +9,7 @@ namespace Onyx {
 	class OpenALSound : public Sound {
 
 	public:
-		OpenALSound(const std::string& filePath);
+		OpenALSound(std::string_view filePath);
 		~OpenALSound();
 
 		virtual void Play();

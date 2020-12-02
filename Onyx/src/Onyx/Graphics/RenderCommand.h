@@ -16,9 +16,6 @@ namespace Onyx {
 		inline static void DrawIndexed(VertexArray* vertexArray) { m_RendererAPI->DrawIndexed(vertexArray); };
 		inline static void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount) { m_RendererAPI->DrawIndexed(vertexArray, indexCount); };
 
-		//EXPERIMENTAL
-		inline static void GetRenderedFrameBuffer(char* dest) { return m_RendererAPI->GetRenderedFrameBuffer(dest); };
-
 	private:
 		static RendererAPI* m_RendererAPI;
 	};

@@ -109,18 +109,19 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Onyx\Editor\Renderer\EditorRenderer3D.h" />
+    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorViewport.h" />
+    <ClInclude Include="src\Onyx\Renderer\CommonMaterialBuffer.h" />
     <ClInclude Include="src\Onyx\Resources\Hasher.h" />
     <ClInclude Include="src\Onyx\Resources\MaterialCache.h" />
     <ClInclude Include="src\Onyx\Editor\Components\EditorCameraController.h" />
     <ClInclude Include="src\Onyx\Graphics\Material.h" />
     <ClInclude Include="src\Onyx\Graphics\Vertex.h" />
     <ClInclude Include="src\Onyx\Renderer\Renderer3D.h" />
-    <ClInclude Include="src\Onyx\Core\ApplicationContext.h" />
     <ClInclude Include="src\Onyx\Resources\TextureCache.h" />
     <ClInclude Include="src\Onyx\Runtime\RuntimeApplication.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\Onyx\Graphics\Framebuffer.h" />
-    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Audio\Sound.h" />
     <ClInclude Include="src\Onyx\Camera\Camera.h" />
     <ClInclude Include="src\Onyx\Camera\OrthographicCamera.h" />
@@ -173,6 +174,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\onyxpch.h" />
+    <ClInclude Include="src\Onyx\Renderer\StaticBatch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -409,6 +411,9 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Onyx\Editor\Renderer\EditorRenderer3D.cpp" />
+    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorViewport.cpp" />
+    <ClCompile Include="src\Onyx\Renderer\CommonMaterialBuffer.cpp" />
     <ClCompile Include="src\Onyx\Resources\MaterialCache.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\EditorCameraController.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Material.cpp" />
@@ -417,7 +422,6 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\Onyx\Runtime\RuntimeApplication.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\Onyx\Graphics\Framebuffer.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Audio\Sound.cpp" />
     <ClCompile Include="src\Onyx\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Onyx\Camera\PerspectiveCamera.cpp" />
@@ -457,6 +461,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
     <ClCompile Include="src\onyxpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Onyx\Renderer\StaticBatch.cpp" />
     <ClCompile Include="vendor\glad\src\glad.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="vendor\tinyxml2\tinyxml2.cpp" />

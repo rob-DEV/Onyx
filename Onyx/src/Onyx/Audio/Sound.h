@@ -19,9 +19,9 @@ namespace Onyx {
 		virtual void SetGain(float gain) = 0;
 		inline float GetGain() const { return m_Gain; };
 		inline bool IsPlaying() const { return m_IsPlaying; };
-		inline const std::string& GetName() const { return m_Name; };
+		inline std::string_view GetName() const { return m_Name; };
 
-		static Sound* Create(const std::string& filePath);
+		static Sound* Create(std::string_view filePath);
 
 	protected:
 		std::string m_Name;

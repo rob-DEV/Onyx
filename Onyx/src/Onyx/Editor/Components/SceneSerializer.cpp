@@ -14,7 +14,7 @@ namespace Onyx {
 
 	using namespace tinyxml2;
 
-	bool SceneSerializer::Serialize(Scene* scene, const std::string& filePath) {
+	bool SceneSerializer::Serialize(Scene* scene, std::string_view filePath) {
 
 		tinyxml2::XMLDocument xmlDoc;
 		
@@ -68,17 +68,17 @@ namespace Onyx {
 			pRoot->InsertEndChild(pEntityElement);
 		}
 
-		if (xmlDoc.SaveFile(filePath.c_str()) == 0)
+		if (xmlDoc.SaveFile(filePath.data()) == 0)
 			return true;
 		
 		return false;
 	}
 
-	Scene* SceneSerializer::DeSerialize(const std::string& filePath) {
+	Scene* SceneSerializer::DeSerialize(std::string_view filePath) {
 		
 		tinyxml2::XMLDocument xmlDoc;
 
-		xmlDoc.LoadFile(filePath.c_str());
+		xmlDoc.LoadFile(filePath.data());
 
 		XMLNode* pRoot = xmlDoc.FirstChild();
 
@@ -99,7 +99,7 @@ namespace Onyx {
 		//Iterate through serialized entities
 		XMLElement* pEntityElement = pRoot->FirstChildElement("ONYX-ENTITY");
 		
-		Scene* scene = new Scene(SceneData(sceneName, filePath.c_str(), sceneIdentifer));
+		Scene* scene = new Scene(SceneData(sceneName, filePath.data(), sceneIdentifer));
 		
 		while (pEntityElement != nullptr) {
 

@@ -8,7 +8,7 @@
 
 namespace Onyx {
 
-	static GLenum ShaderTypeFromString(const std::string& type)
+	static GLenum ShaderTypeFromString(std::string_view type)
 	{
 		if (type == "vertex")
 			return GL_VERTEX_SHADER;
@@ -20,7 +20,7 @@ namespace Onyx {
 	}
 
 
-	OpenGLShader::OpenGLShader(const std::string& filepath)
+	OpenGLShader::OpenGLShader(std::string_view filepath)
 	{
 		std::string source = FileIO::ReadFileString(filepath);
 		auto shaderSources = PreProcess(source);
@@ -36,7 +36,7 @@ namespace Onyx {
 
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+	OpenGLShader::OpenGLShader(std::string_view name, std::string_view vertexSrc, std::string_view fragmentSrc)
 	{
 
 		std::unordered_map<GLenum, std::string> shaderSources;
@@ -63,56 +63,56 @@ namespace Onyx {
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetInt(const std::string& name, int value)
+	void OpenGLShader::SetInt(std::string_view name, int value)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniform1i(location, value);
 	}
 
-	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	void OpenGLShader::SetIntArray(std::string_view name, int* values, uint32_t count)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniform1iv(location, count, values);
 	}
 
-	void OpenGLShader::SetFloat(const std::string& name, float value)
+	void OpenGLShader::SetFloat(std::string_view name, float value)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& value)
+	void OpenGLShader::SetFloat2(std::string_view name, const glm::vec2& value)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniform2f(location, value.x, value.y);
 	}
 
-	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
+	void OpenGLShader::SetFloat3(std::string_view name, const glm::vec3& value)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniform3f(location, value.x, value.y, value.z);
 	}
 
-	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
+	void OpenGLShader::SetFloat4(std::string_view name, const glm::vec4& value)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniform4f(location, value.x, value.y, value.z, value.w);
 	}
 
-	void OpenGLShader::SetMat3(const std::string& name, const glm::mat3& matrix)
+	void OpenGLShader::SetMat3(std::string_view name, const glm::mat3& matrix)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
-	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& matrix)
+	void OpenGLShader::SetMat4(std::string_view name, const glm::mat4& matrix)
 	{
-		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		GLint location = glGetUniformLocation(m_RendererID, name.data());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 
-	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
+	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(std::string_view source)
 	{
 		std::unordered_map<GLenum, std::string> shaderSources;
 
@@ -124,7 +124,7 @@ namespace Onyx {
 			size_t eol = source.find_first_of("\r\n", pos); //End of shader type declaration line
 			if(eol == std::string::npos) printf("Syntax error\n");
 			size_t begin = pos + typeTokenLength + 1; //Start of shader type name (after "#type " keyword)
-			std::string type = source.substr(begin, eol - begin);
+			std::string_view type = source.substr(begin, eol - begin);
 			if(!ShaderTypeFromString(type)) printf("Invalid shader type specified\n");
 
 			size_t nextLinePos = source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
@@ -147,11 +147,11 @@ namespace Onyx {
 		for (auto& kv : shaderSources)
 		{
 			GLenum type = kv.first;
-			const std::string& source = kv.second;
+			std::string_view source = kv.second;
 
 			GLuint shader = glCreateShader(type);
 
-			const GLchar* sourceCStr = source.c_str();
+			const GLchar* sourceCStr = source.data();
 			glShaderSource(shader, 1, &sourceCStr, 0);
 
 			glCompileShader(shader);

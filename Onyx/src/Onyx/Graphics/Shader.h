@@ -18,30 +18,30 @@ namespace Onyx {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		virtual void SetInt(const std::string& name, int value) = 0;
-		virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;
-		virtual void SetFloat(const std::string& name, float value) = 0;
-		virtual void SetFloat2(const std::string& name, const glm::vec2& value) = 0;
-		virtual void SetFloat3(const std::string& name, const glm::vec3& value) = 0;
-		virtual void SetFloat4(const std::string& name, const glm::vec4& value) = 0;
+		virtual void SetInt(std::string_view name, int value) = 0;
+		virtual void SetIntArray(std::string_view name, int* values, uint32_t count) = 0;
+		virtual void SetFloat(std::string_view name, float value) = 0;
+		virtual void SetFloat2(std::string_view name, const glm::vec2& value) = 0;
+		virtual void SetFloat3(std::string_view name, const glm::vec3& value) = 0;
+		virtual void SetFloat4(std::string_view name, const glm::vec4& value) = 0;
 
-		virtual void SetMat3(const std::string& name, const glm::mat3& value) = 0;
-		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
+		virtual void SetMat3(std::string_view name, const glm::mat3& value) = 0;
+		virtual void SetMat4(std::string_view name, const glm::mat4& value) = 0;
 
-		virtual const std::string& GetName() const = 0;
+		virtual std::string_view GetName() const = 0;
 
-		static Shader* Create(const std::string& filepath);
-		static Shader* Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+		static Shader* Create(std::string_view filepath);
+		static Shader* Create(std::string_view name, std::string_view vertexSrc, std::string_view fragmentSrc);
 
 	};
 
 	class ONYX_API ShaderCache {
 	public:
-		static void Add(const std::string& name, Shader* shader);
-		static bool Exists(const std::string& name);
+		static void Add(std::string_view name, Shader* shader);
+		static bool Exists(std::string_view name);
 
-		static Shader* Load(const std::string& name, const std::string& filepath);
-		static Shader* Get(const std::string& name);
+		static Shader* Load(std::string_view name, std::string_view filepath);
+		static Shader* Get(std::string_view name);
 	private:
 		static std::unordered_map<std::string, Shader*> m_ShaderCache;
 	};

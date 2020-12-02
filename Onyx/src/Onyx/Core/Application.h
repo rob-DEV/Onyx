@@ -7,9 +7,12 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/Renderer2D.h>
 
-#include "ApplicationContext.h"
-
 namespace Onyx {
+
+	enum class ApplicationContext {
+		Runtime = 0,
+		Editor
+	};
 
 	class Application {
 	public:
@@ -24,7 +27,7 @@ namespace Onyx {
 		inline static Application* s_Instance = nullptr;
 		
 		Window* m_Window = nullptr;
-		ApplicationContext s_ApplicationContext;
+		ApplicationContext s_ApplicationContext = ApplicationContext::Runtime;
 		Timestep m_EditorTimestep = 0;
 	};
 

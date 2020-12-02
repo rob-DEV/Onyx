@@ -6,7 +6,6 @@ namespace Onyx {
 	RuntimeApplication::RuntimeApplication()
 	{
 		s_ApplicationContext = ApplicationContext::Runtime;
-
 		//Load Game Assets and run the Game
 
 

@@ -12,7 +12,7 @@ namespace Onyx {
 		uint32_t Width, Height;
 		bool Hidden;
 
-		WindowProperties(const std::string& title = "Onyx Engine",
+		WindowProperties(std::string_view title = "Onyx Engine",
 			unsigned int width = 1280,
 			unsigned int height = 720,
 			bool isHidden = false)
@@ -34,7 +34,7 @@ namespace Onyx {
 
 		virtual uint32_t GetWidth() = 0;
 		virtual uint32_t GetHeight() = 0;
-		virtual const std::string& GetTitle() = 0;
+		virtual std::string_view GetTitle() = 0;
 		virtual double GetScroll() = 0;
 		virtual void SetTitle(const char* title) = 0;
 		       

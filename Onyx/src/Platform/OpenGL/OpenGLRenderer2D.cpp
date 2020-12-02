@@ -33,34 +33,19 @@ namespace Onyx {
 
 		m_QuadVertexBuffer = (OpenGLVertexBuffer*)VertexBuffer::Create();
 
+		m_QuadVertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_VertColor" },
+			{ ShaderDataType::Float2, "a_TextID" },
+			{ ShaderDataType::Float, "a_TextureCoord" }
+		});
+
 		m_QuadVertexArray->AddVertexBuffer(m_QuadVertexBuffer);
 		
 		m_QuadVertexBuffer->Bind();
 
 		//TODO: buffer layout needs work
 		m_QuadVertexArray->Bind();
-
-		//Index, size of each vertex, type, normalized?, byte size of each vertex packet, offset into packet for data
-		
-		//Position
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::Position));
-
-
-		//Color
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::Color));
-
-		//texture_id 0 = no texture
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::TexID));
-
-
-		//Tex-Co-Ord
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (void*)offsetof(Vertex2D, Vertex2D::TexCoord));
-		
-
 
 		uint32_t* indices = new uint32_t[IB_COUNT];
 		int offset = 0;

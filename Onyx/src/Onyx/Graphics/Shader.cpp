@@ -8,7 +8,7 @@ namespace Onyx {
 
 	std::unordered_map<std::string, Shader*> ShaderCache::m_ShaderCache = std::unordered_map<std::string, Shader*>();
 
-	Shader* Shader::Create(const std::string& filepath)
+	Shader* Shader::Create(std::string_view filepath)
 	{
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLShader(filepath);
@@ -18,7 +18,7 @@ namespace Onyx {
 	}
 
 
-	Shader* Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+	Shader* Shader::Create(std::string_view name, std::string_view vertexSrc, std::string_view fragmentSrc)
 	{
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			return new OpenGLShader(name, vertexSrc, fragmentSrc);
@@ -27,28 +27,28 @@ namespace Onyx {
 
 	}
 
-	void ShaderCache::Add(const std::string& name, Shader* shader)
+	void ShaderCache::Add(std::string_view name, Shader* shader)
 	{
-		m_ShaderCache[name] = shader;
+		m_ShaderCache[name.data()] = shader;
 	}
 
-	Onyx::Shader* ShaderCache::Load(const std::string& name, const std::string& filepath)
+	Shader* ShaderCache::Load(std::string_view name, std::string_view filepath)
 	{
 		Shader* shader = Shader::Create(filepath);
 		Add(name, shader);
 		return shader;
 	}
 
-	Onyx::Shader* ShaderCache::Get(const std::string& name)
+	Shader* ShaderCache::Get(std::string_view name)
 	{
 		if (!Exists(name))
 			printf("Can't find shader!\n");
-		return m_ShaderCache[name];
+		return m_ShaderCache[name.data()];
 	}
 
-	bool ShaderCache::Exists(const std::string& name)
+	bool ShaderCache::Exists(std::string_view name)
 	{
-		return m_ShaderCache.find(name) != m_ShaderCache.end();
+		return m_ShaderCache.find(name.data()) != m_ShaderCache.end();
 	}
 
 }

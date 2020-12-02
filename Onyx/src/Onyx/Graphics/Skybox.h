@@ -13,7 +13,8 @@ namespace Onyx {
 
 	class ONYX_API Skybox {
 	public:
-		Skybox(std::vector<std::string> paths);
+		Skybox();
+		Skybox(std::vector<std::string_view> paths);
 		void Draw();
 
 	private:

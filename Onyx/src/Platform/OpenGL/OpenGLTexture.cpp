@@ -21,11 +21,11 @@ namespace Onyx {
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
+	OpenGLTexture2D::OpenGLTexture2D(std::string_view path)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(0);
-		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		stbi_uc* data = stbi_load(path.data(), &width, &height, &channels, 0);
 		if(!data)
 			printf("Failed to load texture, check file path\n");
 		m_Width = width;
@@ -81,16 +81,16 @@ namespace Onyx {
 		glBindTextureUnit(slot, m_RendererID);
 	}
 
-	OpenGLCubemap::OpenGLCubemap(const std::vector<std::string>& paths)
+	OpenGLCubemap::OpenGLCubemap(const std::vector<std::string_view>& paths)
 	{
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID);
 		stbi_set_flip_vertically_on_load(0);
-		int width, height, channels;
+		int width = 0, height = 0, channels = 0;
 		for (size_t i = 0; i < paths.size(); ++i)
 		{
 			m_Paths[i] = paths[i];
-			unsigned char* data = stbi_load(paths[i].c_str(), &width, &height, &channels, 0);
+			unsigned char* data = stbi_load(paths[i].data(), &width, &height, &channels, 0);
 			if (data)
 			{
 				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
@@ -100,7 +100,7 @@ namespace Onyx {
 			}
 			else
 			{
-				printf("Failed to load cubemap at %s, check file path\n", paths[i].c_str());
+				printf("Failed to load cube map at %s, check file path\n", paths[i].data());
 				stbi_image_free(data);
 			}
 		}

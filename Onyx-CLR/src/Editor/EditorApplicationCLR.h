@@ -40,7 +40,7 @@ namespace OnyxCLR {
 	private:
 		//Example
 		Onyx::EditorApplication* OnyxEditorInstance;
-		char* OnyxPixelBuffer = nullptr;
+		unsigned char* OnyxPixelBuffer = nullptr;
 
 	};
 }

@@ -13,10 +13,10 @@ namespace Onyx {
 
 	class ONYX_API ModelLoader {
 	public:
-		static Model* Load(const std::string& name, const std::string& path);
+		static Model* Load(std::string_view name, std::string_view path);
 
 	private:
-		static Model* LoadModelFromFile(const std::string& path);
+		static Model* LoadModelFromFile(std::string_view path);
 
 		static void processNode(aiNode* node, const aiScene* scene, Model* result);
 		static Mesh processMesh(aiMesh* mesh, const aiScene* scene);

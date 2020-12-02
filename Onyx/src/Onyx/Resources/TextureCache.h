@@ -17,11 +17,11 @@ namespace Onyx {
 			return instance;
 		}
 
-		bool Exists(const std::string& path) const;
+		bool Exists(std::string_view path) const;
 
-		Texture* GetTexture(const std::string& path) const;
-		Texture* CacheTexture(const std::string& path, bool overrideExisting = false);
-		Texture* CacheTexture(const std::string& path, uint32_t width, uint32_t height, bool overrideExisting = false);
+		Texture* GetTexture(std::string_view path) const;
+		Texture* CacheTexture(std::string_view path, bool overrideExisting = false);
+		Texture* CacheTexture(std::string_view path, uint32_t width, uint32_t height, bool overrideExisting = false);
 
 		uint32_t GetTextureCount() const { return m_TextureCache.size(); }
 

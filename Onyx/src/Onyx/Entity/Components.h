@@ -14,7 +14,7 @@ namespace Onyx {
 	{
 		TagComponent() = default;
 		TagComponent(const TagComponent& other) = default;
-		TagComponent(const std::string& tag) : Tag(tag) {}
+		TagComponent(std::string_view tag) : Tag(tag) {}
 		std::string Tag;
 	};
 

@@ -17,7 +17,7 @@ namespace Onyx {
 	
 	struct SceneData {
 		SceneData() = default;
-		SceneData(const std::string& name, const std::string& filePath, const std::string& identifier) :
+		SceneData(std::string_view name, std::string_view filePath, std::string_view identifier) :
 			Name(name),
 			FilePath(filePath),
 			Identifier(identifier)
@@ -51,7 +51,7 @@ namespace Onyx {
 		friend class SceneSerializer;
 
 		friend class Renderer3D;
-
+		friend class EditorRenderer3D;
 	};
 }
 

@@ -17,10 +17,10 @@ namespace Onyx {
 			return instance;
 		}
 
-		bool Exists(const std::string& name) const;
+		bool Exists(std::string_view name) const;
 
-		Material* GetMaterial(const std::string& name) const;
-		Material* CacheMaterial(const std::string& name, Material material, bool overrideExisting = false);
+		Material* GetMaterial(std::string_view name) const;
+		Material* CacheMaterial(std::string_view name, Material material, bool overrideExisting = false);
 
 		uint32_t GetMaterialCount() const { return m_MaterialCache.size(); }
 
