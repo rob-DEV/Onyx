@@ -10,7 +10,7 @@
         >
 
 
-    <Grid x:Name="EditorGrid" Background="#333333">
+    <Grid x:Name="EditorGrid" Background="#FF333333">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*" />
             <ColumnDefinition Width="1130" />
@@ -33,8 +33,11 @@
             </MenuItem>
         </Menu>
 
-        <Border Grid.Row="2" Grid.Column="1" Background="#33333333" BorderBrush="#FF1B1B1B" BorderThickness="1"/>
-        <local:Viewport Grid.Row="2" Grid.Column="1" x:Name="ViewportMain" Margin="0,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="True" Background="#33333333"/>
+        <!--<Border Grid.Row="2" Grid.Column="1" Background="#33333333" BorderBrush="#FF1B1B1B" BorderThickness="1"/>-->
+       
+        <!--Embedded window test-->
+        <local:EmbeddedWindow x:Name="EmbededWindow" Grid.Row="2" Grid.Column="1"></local:EmbeddedWindow>
+        <local:Viewport Grid.Row="3" Grid.Column="3" x:Name="ViewportMain" Margin="0,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="True" Background="#33333333"/>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
             <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>
@@ -44,7 +47,7 @@
         </WrapPanel>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-            <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="65"/>
+            <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="65" Click="Button_Click_1"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Stop" Width="65"/>
         </WrapPanel>
 

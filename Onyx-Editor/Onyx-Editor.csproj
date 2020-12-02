@@ -83,7 +83,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\OnyxEditor\UI\OnyxMenuHeader.cs" />
+    <Compile Include="src\OnyxEditor\UI\RenderSurfaceTest\EmbeddedWindow.xaml.cs" />
     <Compile Include="src\OnyxEditor\UI\Viewport\RendererSurface.cs" />
+    <Page Include="src\OnyxEditor\UI\RenderSurfaceTest\EmbeddedWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="src\OnyxEditor\UI\Viewport\Viewport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +108,7 @@
   <ItemGroup>
     <Content Include="logo.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

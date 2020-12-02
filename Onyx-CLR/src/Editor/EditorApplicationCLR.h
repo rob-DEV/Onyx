@@ -35,6 +35,8 @@ namespace OnyxCLR {
 
 		void GetRenderedFrame(int* buffer);
 
+		System::IntPtr^ GetNativeWindowHandle();
+
 		SceneEditorCLR^ SceneEditorInstance;
 
 	private:

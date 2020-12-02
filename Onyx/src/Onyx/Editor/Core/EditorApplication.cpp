@@ -47,8 +47,8 @@ namespace Onyx {
 
 
 		//Redirect Standard Input from Windows GLFW to C# Editor
-		m_EditorToEngineInput = new EditorInput();
-		Input::RedirectInput(m_EditorToEngineInput);
+		//m_EditorToEngineInput = new EditorInput();
+		//Input::RedirectInput(m_EditorToEngineInput);
 
 		//Renderer API
 		RenderCommand::Init();
@@ -85,7 +85,7 @@ namespace Onyx {
 		m_SceneEditor->OnUpdate(timestep);
 		m_Window->OnUpdate();
 
-		m_EditorTimestep = time;
+		//m_EditorTimestep = time;
 	}
 
 	void EditorApplication::GetRenderedFrame(int* buffer)
@@ -106,6 +106,11 @@ namespace Onyx {
 	void EditorApplication::SetMousePosition(float x, float y)
 	{
 		m_EditorToEngineInput->m_MousePos = glm::vec2(x, y);
+	}
+
+	void* EditorApplication::GetNativeWindowHandle() const
+	{
+		return s_Instance->GetOnyxWindow().GetNativeWindowHandle();
 	}
 
 }

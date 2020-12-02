@@ -49,4 +49,10 @@ namespace OnyxCLR {
 	{
 		OnyxEditorInstance->GetRenderedFrame(buffer);
 	}
+
+	System::IntPtr^ EditorApplicationCLR::GetNativeWindowHandle()
+	{
+		return gcnew System::IntPtr(OnyxEditorInstance->GetNativeWindowHandle());
+	}
+
 }

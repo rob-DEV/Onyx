@@ -41,6 +41,7 @@ namespace Onyx {
 		virtual bool IsClosed() = 0;
 		virtual bool IsHidden() = 0;
 		virtual void* GetNativeWindow() = 0;
+		virtual void* GetNativeWindowHandle() = 0;
 	};
 
 }

@@ -38,14 +38,14 @@ namespace Onyx {
 			{ ShaderDataType::Float4, "a_EntityIdentifier" }
 			});
 
-		FramebufferSpecification fbSpec(1130,636);
-
-		Framebuffer* d = Framebuffer::Create(fbSpec);
-		
-		d->Bind();
-		
-		GLuint buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-		glDrawBuffers(2, buffers);
+// 		FramebufferSpecification fbSpec(1130,636);
+// 
+// 		Framebuffer* d = Framebuffer::Create(fbSpec);
+// 		
+// 		d->Bind();
+// 		
+// 		GLuint buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+// 		glDrawBuffers(2, buffers);
 	}
 
 	void EditorRenderer3D::Shutdown()

@@ -25,6 +25,8 @@ namespace Onyx {
 		bool* GetInputMouseButtonBuffer();
 		void SetMousePosition(float x, float y);
 
+		void* GetNativeWindowHandle() const;
+
 	private:
 
 		EditorInput* m_EditorToEngineInput;

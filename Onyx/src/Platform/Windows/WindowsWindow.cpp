@@ -5,10 +5,12 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/GraphicsContext.h>
-
-#include <GLFW/glfw3.h>
 #include <Platform/OpenGL/OpenGLGraphicsContext.h>
 #include <Platform/Vulkan/VulkanGraphicsContext.h>
+
+#include <GLFW/glfw3.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
 
 namespace Onyx {
 
@@ -110,7 +112,6 @@ namespace Onyx {
 
 	void WindowsWindow::OnUpdate()
 	{
-		m_Data.ScrollX = 0; m_Data.ScrollY = 0;
 		m_Context->SwapBuffers();
 		glfwPollEvents();
 	}
@@ -129,6 +130,11 @@ namespace Onyx {
 	bool WindowsWindow::IsHidden()
 	{
 		return m_Data.Hidden;
+	}
+
+	void* WindowsWindow::GetNativeWindowHandle()
+	{
+		return glfwGetWin32Window(m_Window);
 	}
 
 }

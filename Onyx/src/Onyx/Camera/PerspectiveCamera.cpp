@@ -7,8 +7,9 @@
 
 namespace Onyx {
 
-	PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar)
-		: m_ProjectionMatrix(glm::perspective(glm::radians(fov), aspect, zNear, zFar)), m_ViewMatrix(glm::mat4(1.0f))
+	PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar) : 
+		m_ProjectionMatrix(glm::perspective(glm::radians(fov), aspect, zNear, zFar)), 
+		m_ViewMatrix(glm::mat4(1.0f))
 	{
 
 	}
@@ -42,7 +43,8 @@ namespace Onyx {
 		);
 
 		// Up vector : perpendicular to both direction and right
-		m_Up = glm::cross(m_Right, m_Direction);
+		//m_Up = glm::cross(m_Right, m_Direction);
+
 
 		m_ViewMatrix = glm::lookAt(
 			m_Position,           // Camera is here

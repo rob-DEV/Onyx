@@ -28,7 +28,8 @@ namespace Onyx {
 		virtual void SetTitle(const char* title);
 		virtual bool IsClosed();
 		virtual bool IsHidden();
-		inline void* GetNativeWindow() { return m_Window; };
+		inline virtual void* GetNativeWindow() { return m_Window; };
+		virtual void* GetNativeWindowHandle();
 		
 
 	private:

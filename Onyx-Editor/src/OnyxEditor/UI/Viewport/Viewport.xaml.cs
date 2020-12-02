@@ -68,8 +68,8 @@ namespace OnyxEditor
 
         private void ViewportUC_Loaded(object sender, RoutedEventArgs e)
         {
-            m_ViewportRenderThread = new Thread(new ThreadStart(ViewportRenderThread_Worker));
-            m_ViewportRenderThread.Start();
+            //m_ViewportRenderThread = new Thread(new ThreadStart(ViewportRenderThread_Worker));
+            //m_ViewportRenderThread.Start();
         }
 
         private void ViewportUC_Unloaded(object sender, RoutedEventArgs e)

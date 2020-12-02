@@ -47,12 +47,13 @@ namespace Onyx {
 
 	private:
 		void RecalculateDirection();
+		
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 
 		glm::vec3 m_Position = glm::vec3(0.0f);
 		glm::vec3 m_Direction = glm::vec3(0.0f);
-		//glm::vec3 m_Up = glm::vec3(0.0f);
+
 		glm::vec3 m_Right = glm::vec3(0.0f);
 
 		//+Y is world up

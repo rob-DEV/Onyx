@@ -45,6 +45,18 @@ namespace OnyxEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             EngineCore.Start();
+
+            //set onyx window
+            while(EngineCore.NativeEngineWindowPtr == IntPtr.Zero) { }
+
+            IntPtr ptr = EngineCore.NativeEngineWindowPtr;
+            if (ptr.ToInt32() != 0)
+            {
+                Point windowAnchorPosition = EmbededWindow.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
+
+                EmbededWindow.SetWindowAndUpdate(ptr, windowAnchorPosition);
+            }
+
         }
 
         private void MenuItem_New_Click(object sender, RoutedEventArgs e)
@@ -185,6 +197,12 @@ namespace OnyxEditor
         private void Window_StateChanged(object sender, EventArgs e)
         {
             UpdateUI();
+        }
+
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
