@@ -7,13 +7,22 @@
 
 namespace Onyx {
 
+#define RESOLUTION 1130 * 636
+#define BUFFER_DEMENSIONS RESOLUTION * 3
 	SceneEditorViewport::SceneEditorViewport()
 	{
 		glGenBuffers(2, pboIds);
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[0]);
-		glBufferData(GL_PIXEL_PACK_BUFFER, 1280 * 720 * 3, 0, GL_STREAM_READ);
+		glBufferData(GL_PIXEL_PACK_BUFFER, RESOLUTION * 4, 0, GL_STREAM_READ);
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[1]);
-		glBufferData(GL_PIXEL_PACK_BUFFER, 1280 * 720 * 3, 0, GL_STREAM_READ);
+		glBufferData(GL_PIXEL_PACK_BUFFER, RESOLUTION * 4, 0, GL_STREAM_READ);
+
+		//selection buffer
+		glGenBuffers(2, selectionPboIds);
+		glBindBuffer(GL_PIXEL_PACK_BUFFER, selectionPboIds[0]);
+		glBufferData(GL_PIXEL_PACK_BUFFER, 1 * 1 * 4, 0, GL_STREAM_READ);
+		glBindBuffer(GL_PIXEL_PACK_BUFFER, selectionPboIds[1]);
+		glBufferData(GL_PIXEL_PACK_BUFFER, 1 * 1 * 4, 0, GL_STREAM_READ);
 
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 	}
@@ -29,37 +38,47 @@ namespace Onyx {
 		index = (index + 1) % 2;
 		nextIndex = (index + 1) % 2;
 		// 
-		glReadBuffer(GL_FRONT);
+		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[index]);
-		glReadPixels(0, 0, 1280, 720, GL_RGB, GL_UNSIGNED_BYTE, 0);
+		glReadPixels(0, 0, 1130, 636, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 		// map the PBO to process its data by CPU
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[nextIndex]);
 		GLubyte* ptr = (GLubyte*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
 
 		uint64_t pos = 0;
-		for (uint64_t i = 0; i < 1280 * 720; ++i)
+		for (uint64_t i = 0; i < RESOLUTION; ++i)
 		{
 			buffer[i] = (255 << 24) + (ptr[pos] << 16) + (ptr[pos + 1] << 8) + ptr[pos + 2];
-			pos = 3 * i;
-		}
-		
-		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
-			glm::vec2 mousePos = Input::GetMousePosition();
-			uint32_t x = (uint32_t)mousePos.x;
-			uint32_t y = (uint32_t)mousePos.y;
-			uint32_t a = 0x00FFFFFF;
-			if (ptr) {
-				uint32_t* p = (uint32_t*)ptr;
-				if (x < 1280 && y < 720) {
-					a = (uint32_t)(p[x + (1280 * y)]);
-				}
-			}
-
-			printf("Selected Entity at pos %d,%d - 0x%08x\n", x, y, a);
+			pos = 4 * i;
 		}
 
 		glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
+		
+		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
+			glm::vec2 mousePos = Input::GetMousePosition();
+
+			//switch to selection buffer
+			glReadBuffer(GL_COLOR_ATTACHMENT1);
+			glBindBuffer(GL_PIXEL_PACK_BUFFER, selectionPboIds[index]);
+
+			uint32_t x = (uint32_t)mousePos.x;
+			uint32_t y = (uint32_t)mousePos.y;
+			glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+			glBindBuffer(GL_PIXEL_PACK_BUFFER, selectionPboIds[nextIndex]);
+			GLubyte* selectionBufferPtr = (GLubyte*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
+
+			if (ptr) {
+				uint32_t* p = (uint32_t*)selectionBufferPtr;
+					SelectedPixel = (uint32_t)(p[0]);
+			}
+			printf("0x%8x\n", SelectedPixel);
+
+			glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
+		}
+
+		
 	}
 
 }

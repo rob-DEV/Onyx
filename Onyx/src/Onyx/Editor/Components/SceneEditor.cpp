@@ -2,15 +2,14 @@
 #include "SceneEditor.h"
 
 #include <Onyx/Scene/Scene.h>
-#include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/ModelLoader.h>
+#include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Editor/Components/Gizmo.h>
+#include <Onyx/Editor/Renderer/EditorRenderer3D.h>
 #include <Onyx/Editor/Components/SceneSerializer.h>
 #include <Onyx/Editor/Components/EditorCameraController.h>
 
-#include <Onyx/Editor/Renderer/EditorRenderer3D.h>
-
-#include <Onyx/Core/Input.h>
+#include "SceneEditorViewport.h"
 
 namespace Onyx {
 
@@ -43,6 +42,8 @@ namespace Onyx {
 		EditorRenderer3D::DrawScene(m_Scene);
 
 		EditorRenderer3D::EndScene();
+
+		//printf("Selected Entity - 0x%08x\n", SceneEditorViewport::GetSelectedPixel());
 	}
 
 	SceneData SceneEditor::NewScene()

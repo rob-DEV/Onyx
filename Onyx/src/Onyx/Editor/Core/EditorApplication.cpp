@@ -14,28 +14,21 @@
 #include <Onyx/Editor/Components/Gizmo.h>
 #include <Onyx/Editor/Components/SceneEditor.h>
 
-//Graphics
-#include <Onyx/Graphics/Mesh.h>
-#include <Onyx/Graphics/Texture.h>
-
 //Renderer
 #include <Onyx/Graphics/RendererAPI.h>
-#include <Onyx/Graphics/Renderer2D.h>
 #include <Onyx/Graphics/RenderCommand.h>
 
 //Sound
 #include <Onyx/Audio/Sound.h>
 
-#include <Onyx/Graphics/Renderer2D.h>
 #include <Onyx/Editor/Renderer/EditorRenderer3D.h>
-
 #include <Onyx/Graphics/ModelLoader.h>
 #include <Platform/Windows/WindowsWindow.h>
 
 #include <GLFW/glfw3.h>
 
 #include "EditorInput.h"
-#include "../Components/SceneEditorViewport.h"
+#include <Onyx/Editor/Components/SceneEditorViewport.h>
 
 namespace Onyx {
 
@@ -50,7 +43,7 @@ namespace Onyx {
 
 		//Window
 		printf("Initializing Onyx Editor\n");
-		m_Window = new WindowsWindow(WindowProperties("Onyx Graphics Context", 1280, 720, true));
+		m_Window = new WindowsWindow(WindowProperties("Onyx Graphics Context", 1130, 636, true));
 
 
 		//Redirect Standard Input from Windows GLFW to C# Editor
@@ -112,11 +105,6 @@ namespace Onyx {
 
 	void EditorApplication::SetMousePosition(float x, float y)
 	{
-// 		float scaledX, scaledY;
-// 		//1130 / 1.7777777;
-// 		scaledX = (x / 1130.0f) * 1280.0f;
-// 		scaledY = (y / (1130.0f / 1.777777f)) * 720.0f;
-
 		m_EditorToEngineInput->m_MousePos = glm::vec2(x, y);
 	}
 

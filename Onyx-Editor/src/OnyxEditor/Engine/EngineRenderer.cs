@@ -10,7 +10,7 @@ namespace OnyxEditor
     {
         private volatile OnyxCLR.EditorApplicationCLR m_Instance;
 
-        private RendererSurface m_DirectBitmap = new RendererSurface(1280, 720);
+        private RendererSurface m_DirectBitmap = new RendererSurface(1130, 636);
 
         public RendererSurface RenderSurface { get { return m_DirectBitmap; } }
 

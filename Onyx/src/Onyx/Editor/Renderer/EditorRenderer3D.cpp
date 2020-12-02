@@ -9,6 +9,7 @@
 #include <Onyx/Graphics/VertexArray.h>
 
 #include <Onyx/Graphics/ModelLoader.h>
+#include <Onyx/Graphics/Framebuffer.h>
 
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -36,6 +37,15 @@ namespace Onyx {
 			{ ShaderDataType::Float3, "a_Tangent" },
 			{ ShaderDataType::Float4, "a_EntityIdentifier" }
 			});
+
+		FramebufferSpecification fbSpec(1130,636);
+
+		Framebuffer* d = Framebuffer::Create(fbSpec);
+		
+		d->Bind();
+		
+		GLuint buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		glDrawBuffers(2, buffers);
 	}
 
 	void EditorRenderer3D::Shutdown()

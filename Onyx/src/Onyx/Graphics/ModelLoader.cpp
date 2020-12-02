@@ -170,9 +170,6 @@ namespace Onyx {
 				else {
 					std::cout << "No texture image being imported " << std::endl;
 				}
-				
-
-				
 			}
 		}
 

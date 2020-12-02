@@ -23,7 +23,7 @@ namespace Onyx {
 
 	private:
 		std::vector<uint32_t> m_EnititiesInBatch;
-		std::unordered_map <std::string, CommonMaterialBuffer*> m_CommonMaterialBuffers;
+		std::unordered_map <std::string_view, CommonMaterialBuffer*> m_CommonMaterialBuffers;
 		BufferLayout m_BufferLayout;
 		static const uint32_t MAX_ENTITIES_IN_BATCH = 1000;
 

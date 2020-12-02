@@ -22,7 +22,7 @@ namespace Onyx {
 	void EditorCameraController::OnUpdate(Timestep ts)
 	{
 		float moveSpeed = 15.0f * ts;
-		float mouseSpeed = 0.5f * ts;
+		float mouseSpeed = 0.75f * ts;
 
 		glm::vec2 pos = Input::GetMousePosition();
 
@@ -56,7 +56,6 @@ namespace Onyx {
 		}
 		m_Camera.SetPositon(camPos);
 
-		Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
 	}
 
 }

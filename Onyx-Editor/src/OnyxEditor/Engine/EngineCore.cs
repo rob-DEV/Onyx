@@ -79,12 +79,12 @@ namespace OnyxEditor
             //Update Onyx engine input
             Input.Update();
             
-            //Poll rendered data
-            Renderer.Update();
-           
             //Update Onyx engine state
             Instance.Update();
 
+            //Poll rendered data
+            Renderer.Update();
+           
             //SCENE EDITOR UPDATES
             SceneEditor.Update();
 
