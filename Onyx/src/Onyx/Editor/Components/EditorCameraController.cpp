@@ -2,7 +2,7 @@
 #include "EditorCameraController.h"
 
 #include <Onyx/Core/Input.h>
-
+#include <Onyx/Core/Application.h>
 
 namespace Onyx {
 
@@ -22,18 +22,21 @@ namespace Onyx {
 
 	void EditorCameraController::OnUpdate(Timestep ts)
 	{
-		float moveSpeed = 0.002f * ts;
-		float mouseSpeed = 0.00002f * ts;
+		float moveSpeed = 10.0f * ts.GetSeconds();
+		float mouseSpeed = 0.06f * ts.GetSeconds();
 
 		glm::vec2 pos = Input::GetMousePosition();
 
 		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_MIDDLE)) {
 
+			Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
+			Application::Get()->GetOnyxWindow().SetCursor(false);
 			glm::vec2 pitchYaw = m_Camera.GetPitchAndYaw();
 			m_Camera.SetPitchAndYaw(pitchYaw.x + mouseSpeed * float(1130.0f / 2.0f - pos.x), pitchYaw.y - mouseSpeed * float(636.0f / 2.0f - pos.y));
 		}
-
-		//m_Camera.SetYaw(m_Camera.GetYaw() + 0.001);
+		else {
+			Application::Get()->GetOnyxWindow().SetCursor(true);
+		}
 
 		glm::vec3 camPos = m_Camera.GetPositon();
 
@@ -58,9 +61,6 @@ namespace Onyx {
 			camPos.y += moveSpeed;
 		}
 		m_Camera.SetPositon(camPos);
-
-
-		Input::SetMousePosition(Input::MousePosition::CENTER_SCREEN);
 	}
 
 }

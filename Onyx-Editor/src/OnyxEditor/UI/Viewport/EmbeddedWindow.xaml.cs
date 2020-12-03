@@ -24,13 +24,13 @@ namespace OnyxEditor
             InitializeComponent();
             this.SizeChanged += new SizeChangedEventHandler(OnSizeChanged);
             this.SizeChanged += new SizeChangedEventHandler(OnResize);
+
         }
 
         ~EmbeddedWindow()
         {
             this.Dispose();
         }
-
 
         public void SetWindowAndUpdate(IntPtr ptr, Point position)
         {
@@ -40,11 +40,12 @@ namespace OnyxEditor
             var helper = new WindowInteropHelper(Window.GetWindow(this.AppContainer));
             SetParent(nativeWindowHandle, helper.Handle);
 
-            // Remove border and whatnot
-            SetWindowLongA(nativeWindowHandle, GWL_STYLE, WS_VISIBLE);
-
             // Move the window to overlay it on this window
             MoveWindow(nativeWindowHandle, (int)position.X, (int)position.Y, (int)this.ActualWidth, (int)this.ActualHeight, true);
+            
+            // Remove border
+            SetWindowLongA(nativeWindowHandle, GWL_STYLE, WS_VISIBLE);
+
         }
 
         protected void OnSizeChanged(object s, SizeChangedEventArgs e)
@@ -62,6 +63,7 @@ namespace OnyxEditor
 
         public void Dispose()
         {
+            CloseWindow(nativeWindowHandle);
             GC.SuppressFinalize(this);
         }
 
@@ -87,6 +89,9 @@ namespace OnyxEditor
         
         [DllImport("user32.dll", SetLastError=true)]
         private static extern bool MoveWindow(IntPtr hwnd, int x, int y, int cx, int cy, bool repaint);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool CloseWindow(IntPtr hwnd);
 
         private const int SWP_NOOWNERZORDER = 0x200;
         private const int SWP_NOREDRAW = 0x8;

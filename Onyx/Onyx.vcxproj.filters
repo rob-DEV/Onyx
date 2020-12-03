@@ -958,7 +958,6 @@
     <ClInclude Include="src\Onyx\Renderer\CommonMaterialBuffer.h" />
     <ClInclude Include="src\Onyx\Renderer\StaticBatch.h" />
     <ClInclude Include="src\Onyx\Editor\Renderer\EditorRenderer3D.h" />
-    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorViewport.h" />
     <ClInclude Include="src\Onyx\Core\Memory.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1093,7 +1092,6 @@
     <ClCompile Include="src\Onyx\Renderer\CommonMaterialBuffer.cpp" />
     <ClCompile Include="src\Onyx\Renderer\StaticBatch.cpp" />
     <ClCompile Include="src\Onyx\Editor\Renderer\EditorRenderer3D.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorViewport.cpp" />
     <ClCompile Include="src\Onyx\Core\Memory.cpp" />
   </ItemGroup>
 </Project>

@@ -32,7 +32,6 @@ namespace OnyxEditor
 
         public static volatile OnyxCLR.EditorApplicationCLR Instance = null;
 
-        public static EngineRenderer Renderer { get; private set; } = null;
 
         public static SceneEditor SceneEditor { get; private set; } = null;
 
@@ -71,8 +70,6 @@ namespace OnyxEditor
 
                 //Get engine window pointer
                 NativeEngineWindowPtr = (IntPtr)Instance.GetNativeWindowHandle();
-                Input = new EngineInput(ref Instance);
-                Renderer = new EngineRenderer(ref Instance);
                 SceneEditor = new SceneEditor(ref Instance);
             }
         }
@@ -93,7 +90,6 @@ namespace OnyxEditor
 
         private static Thread engineThread;
         private static volatile bool aborted = false;
-        private static EngineInput Input = null;
 
     }
 }

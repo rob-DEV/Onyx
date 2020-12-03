@@ -33,8 +33,6 @@ namespace OnyxCLR {
 			array<System::Boolean>^ mouseButtons, 
 			System::Drawing::Point mousePosition);
 
-		void GetRenderedFrame(int* buffer);
-
 		System::IntPtr^ GetNativeWindowHandle();
 
 		SceneEditorCLR^ SceneEditorInstance;

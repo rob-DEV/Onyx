@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:OnyxEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="1050" Width="1920"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown" Loaded="Window_Loaded" MouseMove="Window_MouseMove" KeyUp="Window_KeyUp" Closing="Window_Closing" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp" SizeChanged="Window_SizeChanged"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" Closing="Window_Closing"
         >
 
 
@@ -33,11 +33,8 @@
             </MenuItem>
         </Menu>
 
-        <!--<Border Grid.Row="2" Grid.Column="1" Background="#33333333" BorderBrush="#FF1B1B1B" BorderThickness="1"/>-->
-       
         <!--Embedded window test-->
         <local:EmbeddedWindow x:Name="EmbededWindow" Grid.Row="2" Grid.Column="1"></local:EmbeddedWindow>
-        <local:Viewport Grid.Row="3" Grid.Column="3" x:Name="ViewportMain" Margin="0,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ClipToBounds="True" Background="#33333333"/>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
             <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>
@@ -47,7 +44,7 @@
         </WrapPanel>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-            <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="65" Click="Button_Click_1"/>
+            <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Stop" Width="65"/>
         </WrapPanel>
 

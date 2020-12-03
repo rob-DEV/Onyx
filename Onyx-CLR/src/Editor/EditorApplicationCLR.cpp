@@ -45,11 +45,6 @@ namespace OnyxCLR {
 		OnyxEditorInstance->SetMousePosition((float)mousePosition.X, (float)mousePosition.Y);
 	}
 
-	void EditorApplicationCLR::GetRenderedFrame(int* buffer)
-	{
-		OnyxEditorInstance->GetRenderedFrame(buffer);
-	}
-
 	System::IntPtr^ EditorApplicationCLR::GetNativeWindowHandle()
 	{
 		return gcnew System::IntPtr(OnyxEditorInstance->GetNativeWindowHandle());

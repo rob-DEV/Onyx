@@ -23,6 +23,7 @@ namespace Onyx {
 
 	glm::mat4 EditorRenderer3D::m_View = glm::mat4();
 	glm::mat4 EditorRenderer3D::m_WorldViewProjection = glm::mat4();
+	Framebuffer* EditorRenderer3D::m_Framebuffer = nullptr;
 
 	void EditorRenderer3D::Init()
 	{
@@ -37,15 +38,7 @@ namespace Onyx {
 			{ ShaderDataType::Float3, "a_Tangent" },
 			{ ShaderDataType::Float4, "a_EntityIdentifier" }
 			});
-
-// 		FramebufferSpecification fbSpec(1130,636);
-// 
-// 		Framebuffer* d = Framebuffer::Create(fbSpec);
-// 		
-// 		d->Bind();
-// 		
-// 		GLuint buffers[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-// 		glDrawBuffers(2, buffers);
+		
 	}
 
 	void EditorRenderer3D::Shutdown()
@@ -59,11 +52,17 @@ namespace Onyx {
 		m_View = camera.GetProjectionMatrix() * glm::mat4(glm::mat3(camera.GetViewMatrix()));
 		m_WorldViewProjection = camera.GetViewProjectionMatrix();
 
+
 		m_StaticBatch.Begin();
 	}
 
 	void EditorRenderer3D::DrawScene(const Scene* scene)
 	{
+		Shader* skyboxShader = ShaderCache::Get("Skybox");
+		skyboxShader->Bind();
+		skyboxShader->SetMat4("u_ViewProjection", m_View);
+		scene->m_SkyBox->Draw();
+
 		Shader* meshShader = ShaderCache::Get("3DEditor");
 		meshShader->Bind();
 		meshShader->SetMat4("u_ViewProjection", m_WorldViewProjection);

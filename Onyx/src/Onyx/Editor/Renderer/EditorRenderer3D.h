@@ -8,6 +8,7 @@ namespace Onyx {
 	
 	class Scene;
 	class Model;
+	class Framebuffer;
 
 	class EditorRenderer3D {
 	public:
@@ -22,8 +23,11 @@ namespace Onyx {
 
 		static glm::mat4 m_View;
 		static glm::mat4 m_WorldViewProjection;
+		static Framebuffer* m_Framebuffer;
 
 		inline static StaticBatch m_StaticBatch;
+
+
 	};
 }
 

@@ -28,7 +28,6 @@
 #include <GLFW/glfw3.h>
 
 #include "EditorInput.h"
-#include <Onyx/Editor/Components/SceneEditorViewport.h>
 
 namespace Onyx {
 
@@ -63,7 +62,6 @@ namespace Onyx {
 		Renderer2D::Init();
 		EditorRenderer3D::Init();
 
-		m_EditorRenderer = new SceneEditorViewport();
 		m_SceneEditor = new SceneEditor();
 		m_EditorTimestep = Timestep((float)glfwGetTime());
 	}
@@ -84,13 +82,7 @@ namespace Onyx {
 		Timestep timestep(time - m_EditorTimestep);
 		m_SceneEditor->OnUpdate(timestep);
 		m_Window->OnUpdate();
-
-		//m_EditorTimestep = time;
-	}
-
-	void EditorApplication::GetRenderedFrame(int* buffer)
-	{
-		m_EditorRenderer->RenderFrameToBuffer((uint32_t*)buffer);
+		m_EditorTimestep = time;
 	}
 
 	bool* EditorApplication::GetInputKeyBuffer()
