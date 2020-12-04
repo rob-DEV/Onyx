@@ -111,7 +111,6 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
   <ItemGroup>
     <ClInclude Include="src\Onyx\Core\Memory.h" />
     <ClInclude Include="src\Onyx\Editor\Renderer\EditorRenderer3D.h" />
-    <ClInclude Include="src\Onyx\Editor\Components\SceneEditorViewport.h" />
     <ClInclude Include="src\Onyx\Renderer\CommonMaterialBuffer.h" />
     <ClInclude Include="src\Onyx\Resources\Hasher.h" />
     <ClInclude Include="src\Onyx\Resources\MaterialCache.h" />
@@ -414,7 +413,6 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
   <ItemGroup>
     <ClCompile Include="src\Onyx\Core\Memory.cpp" />
     <ClCompile Include="src\Onyx\Editor\Renderer\EditorRenderer3D.cpp" />
-    <ClCompile Include="src\Onyx\Editor\Components\SceneEditorViewport.cpp" />
     <ClCompile Include="src\Onyx\Renderer\CommonMaterialBuffer.cpp" />
     <ClCompile Include="src\Onyx\Resources\MaterialCache.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\EditorCameraController.cpp" />

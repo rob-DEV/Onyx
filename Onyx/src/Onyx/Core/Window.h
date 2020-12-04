@@ -36,11 +36,14 @@ namespace Onyx {
 		virtual uint32_t GetHeight() = 0;
 		virtual std::string_view GetTitle() = 0;
 		virtual double GetScroll() = 0;
+
 		virtual void SetTitle(const char* title) = 0;
+		virtual void SetCursor(bool enabled) = 0;
 		       
 		virtual bool IsClosed() = 0;
 		virtual bool IsHidden() = 0;
 		virtual void* GetNativeWindow() = 0;
+		virtual void* GetNativeWindowHandle() = 0;
 	};
 
 }

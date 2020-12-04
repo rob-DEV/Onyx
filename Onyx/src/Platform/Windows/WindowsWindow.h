@@ -26,9 +26,12 @@ namespace Onyx {
 		inline double GetScroll() { return  m_Data.ScrollY; }
 
 		virtual void SetTitle(const char* title);
+		virtual void SetCursor(bool enabled);
+
 		virtual bool IsClosed();
 		virtual bool IsHidden();
-		inline void* GetNativeWindow() { return m_Window; };
+		inline virtual void* GetNativeWindow() { return m_Window; };
+		virtual void* GetNativeWindowHandle();
 		
 
 	private:

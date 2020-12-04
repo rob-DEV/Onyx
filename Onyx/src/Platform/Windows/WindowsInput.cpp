@@ -33,10 +33,7 @@ namespace Onyx {
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 
-		float xPosF = (float)xpos;
-		float yPosF = (float)ypos;
-
-		return glm::vec2((float)xPosF, (float)yPosF);
+		return glm::vec2((float)xpos, (float)ypos);
 	}
 
 	glm::vec2 WindowsInput::GetMousePositionNormalizedImplementation()
@@ -64,7 +61,7 @@ namespace Onyx {
 		Window* window = &Application::Get()->GetOnyxWindow();
 
 		float xPos = (float)window->GetWidth() / 2.0f;
-		float yPos = (float)window->GetHeight() / 2.0f;
+		float yPos = (float)636 / 2.0f;
 
 		glfwSetCursorPos((GLFWwindow*)window->GetNativeWindow(), (double)xPos, (double)yPos);
 	}

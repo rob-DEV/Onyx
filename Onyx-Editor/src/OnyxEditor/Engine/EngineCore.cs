@@ -32,9 +32,10 @@ namespace OnyxEditor
 
         public static volatile OnyxCLR.EditorApplicationCLR Instance = null;
 
-        public static EngineRenderer Renderer { get; private set; } = null;
 
         public static SceneEditor SceneEditor { get; private set; } = null;
+
+        public static IntPtr NativeEngineWindowPtr { get; private set; } = IntPtr.Zero;
 
 
         private static void EngineThreadWorker()
@@ -66,8 +67,9 @@ namespace OnyxEditor
             if (Instance == null)
             {
                 Instance = new OnyxCLR.EditorApplicationCLR();
-                Input = new EngineInput(ref Instance);
-                Renderer = new EngineRenderer(ref Instance);
+
+                //Get engine window pointer
+                NativeEngineWindowPtr = (IntPtr)Instance.GetNativeWindowHandle();
                 SceneEditor = new SceneEditor(ref Instance);
             }
         }
@@ -77,22 +79,17 @@ namespace OnyxEditor
             //CORE ONYX UPDATES
            
             //Update Onyx engine input
-            Input.Update();
+            //Input.Update();
             
+            SceneEditor.Update();
             //Update Onyx engine state
             Instance.Update();
-
-            //Poll rendered data
-            Renderer.Update();
-           
-            //SCENE EDITOR UPDATES
-            SceneEditor.Update();
+            
 
         }
 
         private static Thread engineThread;
         private static volatile bool aborted = false;
-        private static EngineInput Input = null;
 
     }
 }

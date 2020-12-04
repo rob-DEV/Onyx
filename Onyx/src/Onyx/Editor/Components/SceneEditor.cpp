@@ -9,8 +9,6 @@
 #include <Onyx/Editor/Components/SceneSerializer.h>
 #include <Onyx/Editor/Components/EditorCameraController.h>
 
-#include "SceneEditorViewport.h"
-
 namespace Onyx {
 
 	SceneEditor::SceneEditor() : 
@@ -42,8 +40,6 @@ namespace Onyx {
 		EditorRenderer3D::DrawScene(m_Scene);
 
 		EditorRenderer3D::EndScene();
-
-		//printf("Selected Entity - 0x%08x\n", SceneEditorViewport::GetSelectedPixel());
 	}
 
 	SceneData SceneEditor::NewScene()
@@ -58,6 +54,7 @@ namespace Onyx {
 		InvalidateScene();
 		
 		m_Scene = SceneSerializer::DeSerialize(filePath);
+
 
 		
 		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Sponza/sponza.obj");

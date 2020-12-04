@@ -9,7 +9,7 @@ namespace Onyx {
 
 	public:
 
-		Timestep(float time) 
+		Timestep(float time)
 			: m_Time(time)
 		{
 
@@ -23,10 +23,6 @@ namespace Onyx {
 	private:
 		float m_Time;
 	};
-
-
-
 }
-
 
 #endif

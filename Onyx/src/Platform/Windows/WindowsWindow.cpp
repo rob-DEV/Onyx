@@ -5,10 +5,12 @@
 #include <Onyx/Graphics/RendererAPI.h>
 #include <Onyx/Graphics/RenderCommand.h>
 #include <Onyx/Graphics/GraphicsContext.h>
-
-#include <GLFW/glfw3.h>
 #include <Platform/OpenGL/OpenGLGraphicsContext.h>
 #include <Platform/Vulkan/VulkanGraphicsContext.h>
+
+#include <GLFW/glfw3.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
 
 namespace Onyx {
 
@@ -63,8 +65,8 @@ namespace Onyx {
 			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-		
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
@@ -79,7 +81,7 @@ namespace Onyx {
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-				
+
 			});
 
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -94,7 +96,7 @@ namespace Onyx {
 			data.ScrollX = xOffset;
 			data.ScrollY = yOffset;
 
-		});
+			});
 
 
 		if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
@@ -102,15 +104,14 @@ namespace Onyx {
 
 		m_Context->Init();
 
-		glfwSwapInterval(0);
-		
-		if(!m_Data.Hidden)
+		glfwSwapInterval(1);
+
+		if (!m_Data.Hidden)
 			glfwShowWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
-		m_Data.ScrollX = 0; m_Data.ScrollY = 0;
 		m_Context->SwapBuffers();
 		glfwPollEvents();
 	}
@@ -121,6 +122,14 @@ namespace Onyx {
 		glfwSetWindowTitle(m_Window, title);
 	}
 
+	void WindowsWindow::SetCursor(bool enabled)
+	{
+		if (enabled)
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		else
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+
 	bool WindowsWindow::IsClosed()
 	{
 		return glfwWindowShouldClose(m_Window) == true;
@@ -129,6 +138,11 @@ namespace Onyx {
 	bool WindowsWindow::IsHidden()
 	{
 		return m_Data.Hidden;
+	}
+
+	void* WindowsWindow::GetNativeWindowHandle()
+	{
+		return glfwGetWin32Window(m_Window);
 	}
 
 }
