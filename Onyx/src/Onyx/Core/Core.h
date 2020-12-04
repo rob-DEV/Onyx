@@ -10,7 +10,7 @@
 #define ONYX_API __declspec(dllimport)
 #endif
 
-#define ONYX_LOG(log_msg) printf("%s", log_msg)
-#define ONYX_ERROR(error_msg) {printf("%s", error_msg); assert(false); }
+#define ONYX_LOG(log_msg) printf("%s\n", log_msg)
+#define ONYX_ERROR(error_msg) {printf("%s\n", error_msg); assert(false); }
 
 #endif // !_ONYX_CORE_H_
