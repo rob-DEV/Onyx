@@ -26,7 +26,7 @@ namespace OnyxEditor
         public static void Stop()
         {
             aborted = true;
-            Thread.Sleep(200);
+            Thread.Sleep(500);
             engineThread.Abort();
         }
 

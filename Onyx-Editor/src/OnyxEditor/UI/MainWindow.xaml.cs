@@ -122,7 +122,23 @@ namespace OnyxEditor
 
             AssetTag tag = (AssetTag)item.Tag;
 
-            if(item.Items.Count == 1 && item.Items[0] == null)
+
+            if (tag.Type != AssetType.DRIVE)
+            {
+                AssetType type;
+
+                if (item.IsExpanded)
+                    type = AssetType.FOLDER_EXPANDED;
+                else
+                    type = AssetType.FOLDER;
+                
+                //update element accordingly
+                //Already searched recursively, just set tag
+                item.Tag = new AssetTag(type, ((AssetTag)item.Tag).Path);
+                ((UIElement)item).Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.Render);
+            }
+            
+            if (item.Items.Count == 1 && item.Items[0] == null)
             {
                 item.Items.Clear();
 
@@ -133,7 +149,7 @@ namespace OnyxEditor
                         //Folder (sub-directories)
                         TreeViewItem subItem = new TreeViewItem();
                         subItem.Header = s.Substring(s.LastIndexOf("\\") + 1);
-                        subItem.Tag = new AssetTag(AssetType.FOLDER_EXPANDED, s);
+                        subItem.Tag = new AssetTag(AssetType.FOLDER, s);
                         subItem.Items.Add(null);
                         subItem.Expanded += new RoutedEventHandler(FolderExpanded);
                         subItem.Collapsed += new RoutedEventHandler(FolderCollapsed);
@@ -149,6 +165,10 @@ namespace OnyxEditor
                         subItem.Header = s.Substring(s.LastIndexOf("\\") + 1);
                         subItem.Tag = new AssetTag(AssetType.FILE, s);
                         item.Items.Add(subItem);
+
+                        //Add handler for opening files
+                        subItem.MouseDoubleClick += SubItem_MouseDoubleClick;
+
                     }
                     
                 }
@@ -156,28 +176,45 @@ namespace OnyxEditor
                 {
 
                 }
-            }else
-            {
-               if(tag.Type != AssetType.DRIVE)
-                {
-                    //Already searched recursively, just set tag
-                    item.Tag = new AssetTag(AssetType.FOLDER_EXPANDED, ((AssetTag)item.Tag).Path);
-                    //update element accordingly
-                    ((UIElement)item).Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.Render);
-                }
             }
 
         }
 
+        private void SubItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem item = (TreeViewItem)sender;
+            AssetTag tag = (AssetTag)item.Tag;
+
+            if (System.IO.File.Exists(tag.Path))
+            {
+                Process fileopener = new Process();
+                fileopener.StartInfo.FileName = "explorer";
+                fileopener.StartInfo.Arguments = "\"" + tag.Path + "\"";
+                fileopener.Start();
+            }
+
+        }
 
         private void FolderCollapsed(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = (TreeViewItem)sender;
 
-            item.Tag = new AssetTag(AssetType.FOLDER, ((AssetTag)item.Tag).Path);
+            AssetTag tag = (AssetTag)item.Tag;
 
-            //update element accordingly
-            ((UIElement)item).Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.Render);
+            if (tag.Type != AssetType.DRIVE)
+            {
+                AssetType type;
+
+                if (item.IsExpanded)
+                    type = AssetType.FOLDER_EXPANDED;
+                else
+                    type = AssetType.FOLDER;
+
+                //update element accordingly
+                //Already searched recursively, just set tag
+                item.Tag = new AssetTag(type, ((AssetTag)item.Tag).Path);
+                ((UIElement)item).Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.Render);
+            }
         }
 
 

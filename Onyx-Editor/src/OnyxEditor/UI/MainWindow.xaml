@@ -52,7 +52,7 @@
             <Label Foreground="White" Content="Inspector"/>
         </WrapPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" >
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="3">
             <TreeView x:Name="SceneHierarchy" Height="500" Background="#FF333333">
                 <TreeView.Resources>
                     <Style TargetType="{x:Type TreeViewItem}">
@@ -122,6 +122,50 @@
                         <Setter Property="Foreground" Value ="White"/>
                     </Style>
                 </TreeView.Resources>
+            </TreeView>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Grid.Column="1">
+            <TreeView x:Name="SceneHierarcmhy" Background="#FF333333">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="Foreground" Value ="White"/>
+                    </Style>
+                </TreeView.Resources>
+                <TreeViewItem Header="Entity 1" IsSelected="False">
+                    <TreeViewItem Header="Jesper Aaberg"/>
+                    <TreeViewItem Header="Employee Number">
+                        <TreeViewItem Header="12345"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Work Days">
+                        <TreeViewItem Header="Monday"/>
+                        <TreeViewItem Header="Tuesday"/>
+                        <TreeViewItem Header="Thursday"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header="Entity 2" IsSelected="False">
+                    <TreeViewItem Header="Jesper Aaberg"/>
+                    <TreeViewItem Header="Employee Number">
+                        <TreeViewItem Header="12345"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Work Days">
+                        <TreeViewItem Header="Monday"/>
+                        <TreeViewItem Header="Tuesday"/>
+                        <TreeViewItem Header="Thursday"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header="Entity 3" IsSelected="False">
+                    <TreeViewItem Header="Jesper Aaberg"/>
+                    <TreeViewItem Header="Employee Number">
+                        <TreeViewItem Header="12345"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Work Days">
+                        <TreeViewItem Header="Monday"/>
+                        <TreeViewItem Header="Tuesday"/>
+                        <TreeViewItem Header="Thursday"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+
             </TreeView>
         </StackPanel>
 
