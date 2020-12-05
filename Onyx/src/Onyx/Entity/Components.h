@@ -20,7 +20,6 @@ namespace Onyx {
 
 	struct ONYX_API TransformComponent 
 	{
-		//PUBLIC CONSTRUCTOR
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent& other) = default;
 		TransformComponent(const glm::vec3& position)
@@ -33,7 +32,6 @@ namespace Onyx {
 
 	struct ONYX_API MeshRendererComponent
 	{
-	public:
 		MeshRendererComponent() = default;
 		MeshRendererComponent(const MeshRendererComponent& other) = default;
 		~MeshRendererComponent() = default;

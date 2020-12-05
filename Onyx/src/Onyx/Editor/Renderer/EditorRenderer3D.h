@@ -10,6 +10,24 @@ namespace Onyx {
 	class Model;
 	class Framebuffer;
 
+
+	struct EditorRendererData {
+		glm::mat4 View;
+		glm::mat4 WorldViewProjection;
+
+		Framebuffer* Framebuffer;
+
+		uint32_t ViewportColorAttachment = 0;
+		uint32_t SelectionColorAttachment = 0;
+
+		StaticBatch StaticBatch;
+
+		uint32_t SelectionPixelBuffers[2];
+		uint32_t PboIndex = 0;
+		uint32_t PboNextIndex = 0;
+
+	};
+
 	class EditorRenderer3D {
 	public:
 		static void Init();
@@ -21,12 +39,7 @@ namespace Onyx {
 
 	private:
 
-		static glm::mat4 m_View;
-		static glm::mat4 m_WorldViewProjection;
-		static Framebuffer* m_Framebuffer;
-
-		inline static StaticBatch m_StaticBatch;
-
+		static EditorRendererData s_RendererData;
 
 	};
 }

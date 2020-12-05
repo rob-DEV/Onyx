@@ -14,7 +14,6 @@ namespace Onyx {
 	class Gizmo;
 	class Scene;
 	class Entity;
-	class SceneEditorSelector;
 
 	class ONYX_API SceneEditor {
 	public:
@@ -39,12 +38,9 @@ namespace Onyx {
 		Scene* m_Scene;
 		Entity* m_SelectedEntity;
 
-		SceneEditorSelector* m_SceneSelector;
-
 		Gizmo* m_EditorGizmo;
 
 		friend class EditorCore;
-		friend class SceneEditorSelector;
 
 	};
 

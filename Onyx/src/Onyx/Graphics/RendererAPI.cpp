@@ -26,8 +26,11 @@ namespace Onyx {
 		switch (s_API)
 		{
 			case RendererAPI::API::None: printf("No API selected\n"); assert(false);
+				break;
 			case RendererAPI::API::OpenGL: return new OpenGLRendererAPI();
-			//case RendererAPI::API::Vulkan: return new VulkanRendererAPI();
+				break;
+			default:
+				printf("Unknown Renderer API\n"); assert(false);
 		}
 
 

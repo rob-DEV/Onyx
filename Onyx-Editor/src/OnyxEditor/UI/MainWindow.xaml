@@ -8,8 +8,7 @@
         Title="MainWindow" Height="1050" Width="1920"
         WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="Window_Loaded" Closing="Window_Closing"
         >
-
-
+    
     <Grid x:Name="EditorGrid" Background="#FF333333">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*" />
@@ -19,11 +18,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="18" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="653" />
+            <RowDefinition Height="238.5" />
+            <RowDefinition Height="414.5"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Menu DockPanel.Dock="Top"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+        <Menu  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="_File">
                 <MenuItem Header="_New" Click="MenuItem_New_Click"/>
                 <MenuItem Header="_Open..." Click="MenuItem_Open_Click"/>
@@ -34,16 +34,16 @@
         </Menu>
 
         <!--Embedded window test-->
-        <local:EmbeddedWindow x:Name="EmbededWindow" Grid.Row="2" Grid.Column="1"></local:EmbeddedWindow>
+        <local:EmbeddedWindow x:Name="EmbededWindow" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"></local:EmbeddedWindow>
 
-        <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+        <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="80,0">
             <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Rotate" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Scale" Width="65"/>
 
         </WrapPanel>
 
-        <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+        <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="490,0">
             <Button Style="{DynamicResource Round}" Margin="5" Content="Play" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Stop" Width="65"/>
         </WrapPanel>
@@ -52,7 +52,63 @@
             <Label Foreground="White" Content="Inspector"/>
         </WrapPanel>
 
-        <UniformGrid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" >
+            <TreeView x:Name="SceneHierarchy" Height="500" Background="#FF333333">
+                <TreeViewItem Header="Employee1" IsSelected="False">
+                    <TreeViewItem Header="Jesper Aaberg"/>
+                    <TreeViewItem Header="Employee Number">
+                        <TreeViewItem Header="12345"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Work Days">
+                        <TreeViewItem Header="Monday"/>
+                        <TreeViewItem Header="Tuesday"/>
+                        <TreeViewItem Header="Thursday"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header="Employee1" IsSelected="False">
+                    <TreeViewItem Header="Jesper Aaberg"/>
+                    <TreeViewItem Header="Employee Number">
+                        <TreeViewItem Header="12345"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Work Days">
+                        <TreeViewItem Header="Monday"/>
+                        <TreeViewItem Header="Tuesday"/>
+                        <TreeViewItem Header="Thursday"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+            </TreeView>
+
+            <!--Source="pack://application:,,,/res/images/icons/folder.png"/>-->
+            <TreeView x:Name="AssetBrowser" Height="500" Background="#FF333333">
+                <TreeView.Resources>
+                    <local:AssetTagToIconPathConverter x:Key="CuntCake" />
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <HierarchicalDataTemplate  >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Name="img" 
+                                            Width="20" Height="20"
+                                            Stretch="Fill" 
+                                            Source="{Binding
+                                            RelativeSource={RelativeSource
+                                            Mode=FindAncestor,
+                                            AncestorType={x:Type TreeViewItem}},
+                                            Path=Tag,
+                                            Converter={StaticResource CuntCake}}"/>           
+                                        <TextBlock Text="{Binding}"
+                                         Margin="5,0" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate >
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value ="White"/>
+                    </Style>
+                </TreeView.Resources>
+            </TreeView>
+        </StackPanel>
+
+        <UniformGrid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <DockPanel>
                     <Label Foreground="White" Content="Entity ID:"/>
@@ -66,7 +122,7 @@
                     <ItemsControl>
                         <ItemsControl.ItemContainerStyle>
                             <Style>
-                                <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
+                                <Setter Property="FrameworkElement.Margin" Value="0,0,0,0"/>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemsPanel>

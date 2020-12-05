@@ -29,6 +29,8 @@
 
 #include "EditorInput.h"
 
+#include "Onyx/Core/Core.h"
+
 namespace Onyx {
 
 	EditorApplication::EditorApplication()

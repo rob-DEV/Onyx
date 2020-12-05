@@ -58,6 +58,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\viewporttest.psd" />
     <None Include="src\OnyxEditor\App.config" />
     <ApplicationDefinition Include="src\OnyxEditor\App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -96,6 +97,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <Resource Include="res\images\icons\file.png" />
+    <Resource Include="res\images\icons\folder_open.png" />
+    <Resource Include="res\images\icons\folder.png" />
+    <Resource Include="res\images\icons\hard_drive.png" />
+    <Content Include="res\views.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
