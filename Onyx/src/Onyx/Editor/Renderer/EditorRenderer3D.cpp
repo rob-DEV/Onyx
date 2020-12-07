@@ -88,6 +88,8 @@ namespace Onyx {
 		meshShader->SetMat4("u_ViewProjection", s_RendererData.WorldViewProjection);
 		meshShader->SetFloat3("u_LightPosition", glm::vec3(1.256f, 8.0f, 0.1f));
 
+		SceneNode* sceneGraphNode = scene->GetSceneGraph();
+		
 		for (auto entity : scene->m_Entities)
 		{
 			if (entity->IsStatic()) {
@@ -98,13 +100,14 @@ namespace Onyx {
 						MeshRendererComponent& mr = entity->GetComponent<MeshRendererComponent>();
 
 						glm::mat4 transform = glm::translate(glm::mat4(1.0f), t.Position)
-							* glm::scale(glm::mat4(1.0f), t.Scale);
+							* glm::scale(glm::mat4(1.0f), glm::vec3(0.01f));
 
 						s_RendererData.StaticBatch.Submit(entity->GetID(), mr.Meshes, transform);
 					}
 				}
 			}
 		}
+	
 	}
 
 	void EditorRenderer3D::EndScene()

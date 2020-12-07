@@ -56,6 +56,7 @@ namespace Onyx {
 		bool m_Static = false;
 
 		friend class SceneEditor;
+		friend class SceneSerializer;
 	};
 
 }

@@ -82,12 +82,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\OnyxEditor\UI\OnyxMenuHeader.cs" />
-    <Compile Include="src\OnyxEditor\UI\Viewport\EmbeddedWindow.xaml.cs" />
-    <Page Include="src\OnyxEditor\UI\Viewport\EmbeddedWindow.xaml">
+    <Compile Include="src\OnyxEditor\UI\EmbeddedWindow.xaml.cs" />
+    <Page Include="src\OnyxEditor\UI\EmbeddedWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <None Include="src\OnyxEditor\UI\Viewport\viewport_splash.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Onyx-CLR\Onyx-CLR.vcxproj">

@@ -8,6 +8,7 @@
 
 #include <Onyx/Entity/Entity.h>
 #include <Onyx/Entity/Registry.h>
+#include "SceneNode.h"
 
 namespace Onyx {
 
@@ -35,16 +36,22 @@ namespace Onyx {
 		Scene(const SceneData& sceneData);
 		~Scene();
 
-		Entity* CreateEntity();
+		SceneNode* GetSceneGraph() const { return m_SceneGraph; };
+		
+
+		SceneNode* CreateEntity();
+		SceneNode* CreateEntity(SceneNode* parent);
+
 		void OnUpdate(Timestep timestep);
 
 	private:
 		SceneData m_SceneData;
+		Skybox* m_SkyBox;
 
 		Registry m_EntityRegistry;
 		std::vector<Entity*> m_Entities;
-
-		Skybox* m_SkyBox;
+		
+		SceneNode* m_SceneGraph;
 
 		friend class Entity;
 		friend class SceneEditor;

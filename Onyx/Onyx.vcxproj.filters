@@ -960,6 +960,7 @@
     <ClInclude Include="src\Onyx\Editor\Renderer\EditorRenderer3D.h" />
     <ClInclude Include="src\Onyx\Core\Memory.h" />
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
+    <ClInclude Include="src\Onyx\Scene\SceneNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1095,5 +1096,6 @@
     <ClCompile Include="src\Onyx\Editor\Renderer\EditorRenderer3D.cpp" />
     <ClCompile Include="src\Onyx\Core\Memory.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
+    <ClCompile Include="src\Onyx\Scene\SceneNode.cpp" />
   </ItemGroup>
 </Project>

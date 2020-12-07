@@ -8,5 +8,17 @@
                 <Z>0.0</Z>
             </Position>
         </TransformComponent>
+		<ModelComponent>
+			<ModelName>SponzaMainMesh</ModelName>
+			<ModelPath>res/models/Sponza/sponza.obj</ModelPath>
+			<IsStatic>1</IsStatic>
+			<TransformComponent>
+				<Position>
+					<X>0.0</X>
+					<Y>0.0</Y>
+					<Z>0.0</Z>
+				</Position>
+			</TransformComponent>
+		</ModelComponent>
     </ONYX-ENTITY>
 </ONYX-SCENE>

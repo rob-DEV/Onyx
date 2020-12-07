@@ -17,7 +17,8 @@ namespace Onyx {
 
 	Scene::Scene() :
 		m_SceneData(SceneData("Untitled", "UNSAVED", Hasher::GenerateUniqueID())),
-		m_SkyBox(new Skybox())
+		m_SkyBox(new Skybox()),
+		m_SceneGraph(new SceneNode())
 	{
 
 	}
@@ -31,7 +32,8 @@ namespace Onyx {
 		"res/textures/skybox/Down.png",
 		"res/textures/skybox/Front.png",
 		"res/textures/skybox/Back.png"
-	}))
+		})),
+		m_SceneGraph(new SceneNode())
 	{
 
 	}
@@ -47,11 +49,19 @@ namespace Onyx {
 
 	}
 
-	Entity* Scene::CreateEntity() {
+	SceneNode* Scene::CreateEntity()
+	{
 
 		Entity* e = new Entity(m_EntityRegistry.Create(), this);
 		m_Entities.push_back(e);
-		return e;
+		return m_SceneGraph->AddChild(new SceneNode(e), m_SceneGraph);
+	}
+
+	SceneNode* Scene::CreateEntity(SceneNode* parent)
+	{
+		Entity* e = new Entity(m_EntityRegistry.Create(), this);
+		m_Entities.push_back(e);
+		return parent->AddChild(new SceneNode(e), m_SceneGraph);
 	}
 
 	void Scene::OnUpdate(Timestep timestep)

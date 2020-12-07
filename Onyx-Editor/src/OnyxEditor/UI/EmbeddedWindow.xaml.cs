@@ -22,9 +22,6 @@ namespace OnyxEditor
         public EmbeddedWindow()
         {
             InitializeComponent();
-            this.SizeChanged += new SizeChangedEventHandler(OnSizeChanged);
-            this.SizeChanged += new SizeChangedEventHandler(OnResize);
-
         }
 
         ~EmbeddedWindow()
@@ -32,10 +29,15 @@ namespace OnyxEditor
             this.Dispose();
         }
 
-        public void SetWindowAndUpdate(IntPtr ptr, Point position)
+        public void Initialize(IntPtr ptr, Point position)
         {
             this.position = position;
+
             nativeWindowHandle = ptr;
+
+            this.SizeChanged += new SizeChangedEventHandler(OnSizeChanged);
+            this.SizeChanged += new SizeChangedEventHandler(OnResize);
+
             // Put it into this form
             var helper = new WindowInteropHelper(Window.GetWindow(this.AppContainer));
             SetParent(nativeWindowHandle, helper.Handle);
@@ -55,10 +57,7 @@ namespace OnyxEditor
 
         protected void OnResize(object s, SizeChangedEventArgs e)
         {
-            if (this.nativeWindowHandle != IntPtr.Zero)
-            {
-                MoveWindow(nativeWindowHandle, (int)position.X, (int)position.Y, (int)this.ActualWidth, (int)this.ActualHeight, true);
-            }
+            MoveWindow(nativeWindowHandle, (int)position.X, (int)position.Y, (int)this.ActualWidth, (int)this.ActualHeight, true);
         }
 
         public void Dispose()

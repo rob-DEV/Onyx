@@ -55,23 +55,6 @@ namespace Onyx {
 		
 		m_Scene = SceneSerializer::DeSerialize(filePath);
 
-
-		
-		Model* cube = ModelLoader::Load("Scene_Name_Placeholder", "res/models/Sponza/sponza.obj");
-
-		for (Entity* e : m_Scene->m_Entities) {
-
-			TransformComponent& t = e->GetComponent<TransformComponent>();
-			t.Scale = glm::vec3(0.01f);
-
-			MeshRendererComponent a = MeshRendererComponent(cube->GetMeshes());
-
-			//Static mesh testing, static batch if Entity is marked as static
-			e->m_Static = true;
-
-			e->AddComponent<MeshRendererComponent>(a);
-		}
-
 		if (m_Scene == nullptr) {
 			ONYX_ERROR("SceneEditor ERROR: Scene was nullptr");
 		}

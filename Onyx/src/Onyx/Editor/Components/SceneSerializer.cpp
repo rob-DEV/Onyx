@@ -6,6 +6,9 @@
 #include <sstream>
 #include <string>
 
+
+#include <Onyx/Graphics/ModelLoader.h>
+
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
 #endif
@@ -61,10 +64,6 @@ namespace Onyx {
 
 			}
 
-			if (e->HasComponent<MeshRendererComponent>()) {
-				
-			}
-
 			pRoot->InsertEndChild(pEntityElement);
 		}
 
@@ -103,7 +102,8 @@ namespace Onyx {
 		
 		while (pEntityElement != nullptr) {
 
-			Entity* entity = scene->CreateEntity();
+			SceneNode* entity = scene->CreateEntity();
+
 
 			XMLElement* pEntityComponentElement = pEntityElement->FirstChildElement();
 
@@ -113,7 +113,7 @@ namespace Onyx {
 				if (_stricmp(pEntityComponentElement->Value(), "TagComponent") == 0) {
 					
 					TagComponent t = TagComponent(pEntityComponentElement->GetText());
-					entity->AddComponent<TagComponent>(t);
+					entity->GetEntity()->AddComponent<TagComponent>(t);
 					
 				}
 				else if (_stricmp(pEntityComponentElement->Value(), "TransformComponent") == 0) {
@@ -126,7 +126,41 @@ namespace Onyx {
 					pTransformPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
 					pTransformPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
 
-					entity->AddComponent<TransformComponent>(t);
+					entity->GetEntity()->AddComponent<TransformComponent>(t);
+
+				}
+				else if (_stricmp(pEntityComponentElement->Value(), "ModelComponent") == 0) {
+
+					//Preparing for multiple meshes per entity
+					SceneNode* modelEntity = scene->CreateEntity(entity);
+
+					MeshRendererComponent m = MeshRendererComponent();
+
+					XMLElement* pMeshName= pEntityComponentElement->FirstChildElement("ModelName");
+					XMLElement* pMeshPath = pEntityComponentElement->FirstChildElement("ModelPath");
+					XMLElement* pIsStatic = pEntityComponentElement->FirstChildElement("IsStatic");
+
+					const char* meshName = pMeshName->GetText();
+					const char* meshFilePath = pMeshPath->GetText();
+					bool meshStatic = false;
+					pIsStatic->QueryBoolText(&meshStatic);
+
+					Model* model = ModelLoader::Load(meshName, meshFilePath);
+					m.Meshes = model->GetMeshes();
+
+					modelEntity->GetEntity()->AddComponent<MeshRendererComponent>(m);
+					modelEntity->GetEntity()->m_Static = meshStatic;
+
+					TransformComponent t = TransformComponent();
+					
+					//TODO: Refactor duplicated code
+					XMLElement* pTransformComponentElement = pEntityComponentElement->FirstChildElement("TransformComponent");
+					XMLElement* pPositionElement = pTransformComponentElement->FirstChildElement("Position");
+					pPositionElement->FirstChildElement("X")->QueryFloatText(&t.Position.x);
+					pPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
+					pPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
+
+					modelEntity->GetEntity()->AddComponent<TransformComponent>(t);
 
 				}
 				pEntityComponentElement = pEntityComponentElement->NextSiblingElement();

@@ -80,13 +80,11 @@ namespace OnyxEditor
             while(EngineCore.NativeEngineWindowPtr == IntPtr.Zero) { }
 
             IntPtr ptr = EngineCore.NativeEngineWindowPtr;
-            if (ptr.ToInt32() != 0)
-            {
-                Point windowAnchorPosition = EmbededWindow.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
 
-                EmbededWindow.SetWindowAndUpdate(ptr, windowAnchorPosition);
-            }
+            Point windowAnchorPosition = EmbededWindow.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
 
+            EmbededWindow.Initialize(ptr, windowAnchorPosition);
+            
             BuildAssetBrowser();
         }
 
