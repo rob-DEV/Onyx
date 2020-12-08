@@ -26,6 +26,10 @@ namespace Onyx {
 		uint32_t PboIndex = 0;
 		uint32_t PboNextIndex = 0;
 
+		VertexArray* ScreenQuadVAO;
+		VertexBuffer* ScreenQuadVBO;
+		Shader* ScreenShader;
+
 	};
 
 	class EditorRenderer3D {

@@ -276,5 +276,46 @@ namespace OnyxEditor
             EmbededWindow.Dispose();
         }
 
+        private void IterateSceneGraph(SceneNodeCLR node, TreeViewItem position)
+        {
+            TreeViewItem insertedItem = null;
+
+            //Add Scene Node (The global scene node)
+            if (position == null)
+            {
+                TreeViewItem sceneNode = new TreeViewItem();
+                sceneNode.Header = node.Name;
+                int sceneNodeIndex = SceneHierarchy.Items.Add(sceneNode);
+
+                insertedItem = (TreeViewItem)SceneHierarchy.Items[sceneNodeIndex];
+            }
+            else
+            {
+                TreeViewItem subItem = new TreeViewItem();
+                subItem.Header = node.Name;
+                int index = position.Items.Add(subItem);
+
+                insertedItem = (TreeViewItem)position.Items[index];
+            }
+
+            foreach (SceneNodeCLR subNode in node.Nodes)
+            {
+                IterateSceneGraph(subNode, insertedItem);
+            }
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            SceneHierarchy.Items.Clear();
+
+            SceneNodeCLR d = EngineCore.Instance.SceneEditorInstance.GetSceneGraphCLRTest();
+
+            IterateSceneGraph(d, null);
+
+
+
+        }
     }
 }

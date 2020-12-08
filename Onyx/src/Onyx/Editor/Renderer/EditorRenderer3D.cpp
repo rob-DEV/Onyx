@@ -28,7 +28,7 @@ namespace Onyx {
 	{
 		ShaderCache::Add("SkyboxEditor", Shader::Create("res/shaders/SkyboxEditor.glsl"));
 		ShaderCache::Add("3DEditor", Shader::Create("res/shaders/3DEditor.glsl"));
-		ShaderCache::Add("RenderTexture", Shader::Create("res/shaders/RenderTexture.glsl"));
+		ShaderCache::Add("ScreenQuadShader", Shader::Create("res/shaders/RenderTexture.glsl"));
 
 		s_RendererData.StaticBatch.SetBufferLayout({
 			{ ShaderDataType::Float3, "a_Position" },
@@ -53,6 +53,29 @@ namespace Onyx {
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, s_RendererData.SelectionPixelBuffers[1]);
 		glBufferData(GL_PIXEL_PACK_BUFFER, 1 * 1 * 4, 0, GL_STREAM_READ);
 		glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+
+		//Initialize Screen quad for drawing after frame is rendered to Framebuffer
+		s_RendererData.ScreenQuadVAO = VertexArray::Create();
+		s_RendererData.ScreenQuadVBO = VertexBuffer::Create();
+
+		static const GLfloat vertexBufferData[] = {
+			-1.0f, -1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
+			-1.0f,  1.0f, 0.0f,
+			-1.0f,  1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
+			1.0f,  1.0f, 0.0f,
+		};
+
+		s_RendererData.ScreenQuadVBO->SetData((void*)vertexBufferData, sizeof(vertexBufferData));
+
+		s_RendererData.ScreenQuadVBO->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" }
+		});
+
+		s_RendererData.ScreenQuadVAO->AddVertexBuffer(s_RendererData.ScreenQuadVBO);
+
+		s_RendererData.ScreenShader = ShaderCache::Get("ScreenQuadShader");
 
 	}
 
@@ -88,8 +111,6 @@ namespace Onyx {
 		meshShader->SetMat4("u_ViewProjection", s_RendererData.WorldViewProjection);
 		meshShader->SetFloat3("u_LightPosition", glm::vec3(1.256f, 8.0f, 0.1f));
 
-		SceneNode* sceneGraphNode = scene->GetSceneGraph();
-		
 		for (auto entity : scene->m_Entities)
 		{
 			if (entity->IsStatic()) {
@@ -157,48 +178,16 @@ namespace Onyx {
 		//All rendered to framebuffer
 		//get framebuffer texture 
 		//render to viewport
-		GLuint quad_VertexArrayID;
-		glGenVertexArrays(1, &quad_VertexArrayID);
-		glBindVertexArray(quad_VertexArrayID);
+		s_RendererData.ScreenQuadVAO->Bind();
+		s_RendererData.ScreenQuadVBO->Bind();
 
-		static const GLfloat g_quad_vertex_buffer_data[] = {
-			-1.0f, -1.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
-			1.0f,  1.0f, 0.0f,
-		};
-
-		GLuint quad_vertexbuffer;
-		glGenBuffers(1, &quad_vertexbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(g_quad_vertex_buffer_data), g_quad_vertex_buffer_data, GL_STATIC_DRAW);
-
-		Shader* renderTextureShader = ShaderCache::Get("RenderTexture");
-		renderTextureShader->Bind();
+		s_RendererData.ScreenShader->Bind();
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, s_RendererData.Framebuffer->GetColorAttachmentRendererID(selectedColorAttachment));
-		renderTextureShader->SetInt("u_RenderedTexture", 0);
+		s_RendererData.ScreenShader->SetInt("u_RenderedTexture", 0);
 
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, quad_vertexbuffer);
-		glVertexAttribPointer(
-			0,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			0,
-			(void*)0
-		);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6); // 2*3 indices starting at 0 -> 2 triangles
-
-		glDisableVertexAttribArray(0);
-
-		glDeleteBuffers(1, &quad_vertexbuffer);
-
+		RenderCommand::DrawArrays(6);
 
 	}
 

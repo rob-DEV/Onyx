@@ -19,14 +19,16 @@ namespace Onyx {
 		}
 
 		Entity* GetEntity() const { return m_Entity; };
+		const std::string_view GetName() const { return m_Name; };
+		void SetName(const std::string& name) {  m_Name = name; };
+
 		const std::vector<SceneNode*>& GetChildren() const { return m_ChildNodes; };
 		const SceneNode* GetParent() const { return m_ParentNode; };
 
-		SceneNode* AddChild(SceneNode* node, SceneNode* parent) { m_ChildNodes.push_back(node); m_ParentNode = parent; return node; };
+		SceneNode* AddChild(SceneNode* node) { m_ChildNodes.push_back(node); return node; };
 
 	private:
-		//TODO : See if this is necessary
-		//std::string m_Name;
+		std::string m_Name = "NAME_PLACEHOLDER";
 
 		//Scene Graph 1st node has no parent
 		SceneNode* m_ParentNode = nullptr;

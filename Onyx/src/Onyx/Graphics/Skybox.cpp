@@ -65,6 +65,7 @@ namespace Onyx {
 		m_SkyboxVBO->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" }
 		});
+
 		m_SkyboxVAO->AddVertexBuffer(m_SkyboxVBO);
 
 		m_SkyboxVBO->Bind();
@@ -88,7 +89,7 @@ namespace Onyx {
 		m_SkyboxVAO->Bind();
 		m_SkyboxTexture->Bind();
 
-		RenderCommand::DrawArrays(m_SkyboxVAO, 36);
+		RenderCommand::DrawArrays(36);
 	}
 
 

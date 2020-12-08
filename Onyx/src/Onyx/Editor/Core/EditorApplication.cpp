@@ -31,6 +31,8 @@
 
 #include "Onyx/Core/Core.h"
 
+#include <Onyx/Math/Random.h>
+
 namespace Onyx {
 
 	EditorApplication::EditorApplication()
@@ -66,6 +68,7 @@ namespace Onyx {
 
 		m_SceneEditor = new SceneEditor();
 		m_EditorTimestep = Timestep((float)glfwGetTime());
+
 	}
 
 	EditorApplication::~EditorApplication()

@@ -37,7 +37,7 @@
         <local:EmbeddedWindow x:Name="EmbededWindow" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"></local:EmbeddedWindow>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="80,0">
-            <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>
+            <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65" Click="Button_Click"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Rotate" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Scale" Width="65"/>
 
@@ -59,39 +59,8 @@
                         <Setter Property="Foreground" Value ="White"/>
                     </Style>
                 </TreeView.Resources>
-                <TreeViewItem Header="Entity 1" IsSelected="False">
-                    <TreeViewItem Header="Jesper Aaberg"/>
-                    <TreeViewItem Header="Employee Number">
-                        <TreeViewItem Header="12345"/>
-                    </TreeViewItem>
-                    <TreeViewItem Header="Work Days">
-                        <TreeViewItem Header="Monday"/>
-                        <TreeViewItem Header="Tuesday"/>
-                        <TreeViewItem Header="Thursday"/>
-                    </TreeViewItem>
-                </TreeViewItem>
-                <TreeViewItem Header="Entity 2" IsSelected="False">
-                    <TreeViewItem Header="Jesper Aaberg"/>
-                    <TreeViewItem Header="Employee Number">
-                        <TreeViewItem Header="12345"/>
-                    </TreeViewItem>
-                    <TreeViewItem Header="Work Days">
-                        <TreeViewItem Header="Monday"/>
-                        <TreeViewItem Header="Tuesday"/>
-                        <TreeViewItem Header="Thursday"/>
-                    </TreeViewItem>
-                </TreeViewItem>
-                <TreeViewItem Header="Entity 3" IsSelected="False">
-                    <TreeViewItem Header="Jesper Aaberg"/>
-                    <TreeViewItem Header="Employee Number">
-                        <TreeViewItem Header="12345"/>
-                    </TreeViewItem>
-                    <TreeViewItem Header="Work Days">
-                        <TreeViewItem Header="Monday"/>
-                        <TreeViewItem Header="Tuesday"/>
-                        <TreeViewItem Header="Thursday"/>
-                    </TreeViewItem>
-                </TreeViewItem>
+              
+                
                 
             </TreeView>
 
@@ -126,7 +95,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="4" Grid.Column="1">
-            <TreeView x:Name="SceneHierarcmhy" Background="#FF333333">
+            <TreeView x:Name="FileView" Background="#FF333333">
                 <TreeView.Resources>
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="Foreground" Value ="White"/>
@@ -172,8 +141,12 @@
         <UniformGrid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Grid.RowSpan="2">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <DockPanel>
-                    <Label Foreground="White" Content="Entity ID:"/>
+                    <Label Foreground="White" Content="Internal Entity ID:"/>
                     <TextBox VerticalContentAlignment="Center" Text="0" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label Foreground="White" Content="Entity GUID:"/>
+                    <TextBox VerticalContentAlignment="Center" Text="99fTDLA3cUVS" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
                 </DockPanel>
                 <DockPanel>
                     <Label Foreground="White" Content="Name:    "/>

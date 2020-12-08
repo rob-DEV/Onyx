@@ -51,17 +51,16 @@ namespace Onyx {
 
 	SceneNode* Scene::CreateEntity()
 	{
-
 		Entity* e = new Entity(m_EntityRegistry.Create(), this);
 		m_Entities.push_back(e);
-		return m_SceneGraph->AddChild(new SceneNode(e), m_SceneGraph);
+		return m_SceneGraph->AddChild(new SceneNode(e));
 	}
 
 	SceneNode* Scene::CreateEntity(SceneNode* parent)
 	{
 		Entity* e = new Entity(m_EntityRegistry.Create(), this);
 		m_Entities.push_back(e);
-		return parent->AddChild(new SceneNode(e), m_SceneGraph);
+		return parent->AddChild(new SceneNode(e));
 	}
 
 	void Scene::OnUpdate(Timestep timestep)

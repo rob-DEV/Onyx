@@ -1,6 +1,6 @@
 <ONYX-SCENE UniqueIdentifier="6426398844532" Name="Sponza">
     <ONYX-ENTITY>
-        <TagComponent>BaseSceneModel</TagComponent>
+        <TagComponent>Sponza Castle 1</TagComponent>
         <TransformComponent>
             <Position>
                 <X>0.0</X>

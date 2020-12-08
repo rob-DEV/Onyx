@@ -954,13 +954,14 @@
     <ClInclude Include="src\Onyx\Resources\MaterialCache.h" />
     <ClInclude Include="src\Onyx\Resources\TextureCache.h" />
     <ClInclude Include="src\Onyx\Runtime\RuntimeApplication.h" />
-    <ClInclude Include="src\Onyx\Resources\Hasher.h" />
     <ClInclude Include="src\Onyx\Renderer\CommonMaterialBuffer.h" />
     <ClInclude Include="src\Onyx\Renderer\StaticBatch.h" />
     <ClInclude Include="src\Onyx\Editor\Renderer\EditorRenderer3D.h" />
     <ClInclude Include="src\Onyx\Core\Memory.h" />
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Scene\SceneNode.h" />
+    <ClInclude Include="src\Onyx\Math\Random.h" />
+    <ClInclude Include="src\Onyx\Resources\Hasher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1097,5 +1098,6 @@
     <ClCompile Include="src\Onyx\Core\Memory.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Scene\SceneNode.cpp" />
+    <ClCompile Include="src\Onyx\Math\Random.cpp" />
   </ItemGroup>
 </Project>

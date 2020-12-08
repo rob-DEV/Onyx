@@ -1,6 +1,6 @@
 <ONYX-SCENE UniqueIdentifier="6426398844532" Name="Sponza">
     <ONYX-ENTITY>
-        <TagComponent>BaseSceneModel</TagComponent>
+        <TagComponent>Sponza Castle 1</TagComponent>
         <TransformComponent>
             <Position>
                 <X>0.0</X>
@@ -21,9 +21,8 @@
 			</TransformComponent>
 		</ModelComponent>
     </ONYX-ENTITY>
-	
 	<ONYX-ENTITY>
-        <TagComponent>BaseSceneModel</TagComponent>
+        <TagComponent>Sponza Castle 2</TagComponent>
         <TransformComponent>
             <Position>
                 <X>10.0</X>
@@ -44,5 +43,26 @@
 			</TransformComponent>
 		</ModelComponent>
     </ONYX-ENTITY>
-	
+	<ONYX-ENTITY>
+        <TagComponent>Sponza Castle 3</TagComponent>
+        <TransformComponent>
+            <Position>
+                <X>10.0</X>
+                <Y>10.0</Y>
+                <Z>10.0</Z>
+            </Position>
+        </TransformComponent>
+		<ModelComponent>
+			<ModelName>SponzaMainMesh</ModelName>
+			<ModelPath>res/models/Sponza/sponza.obj</ModelPath>
+			<IsStatic>1</IsStatic>
+			<TransformComponent>
+				<Position>
+					<X>50.0</X>
+					<Y>0.0</Y>
+					<Z>50.0</Z>
+				</Position>
+			</TransformComponent>
+		</ModelComponent>
+    </ONYX-ENTITY>
 </ONYX-SCENE>

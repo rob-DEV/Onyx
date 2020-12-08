@@ -26,6 +26,7 @@ namespace Onyx {
 		SceneData OpenScene(const char* filePath);
 		bool SaveScene(const char* filePath);
 
+		Scene* GetScene() const { return m_Scene; };
 		std::vector<Entity*> GetAllEntitiesTest();
 		void SetSelectedEntity(uint32_t id);
 

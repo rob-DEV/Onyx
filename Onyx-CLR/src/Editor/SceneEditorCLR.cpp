@@ -65,4 +65,42 @@ namespace OnyxCLR {
 		return eList;
 	}
 
+
+	static List<SceneNodeCLR^>^ IterateNode(Onyx::SceneNode* sceneNode)
+	{
+		List<SceneNodeCLR^>^ result = gcnew List<SceneNodeCLR^>();
+		SceneNodeCLR^ node = gcnew SceneNodeCLR();
+		node->Name = gcnew String(sceneNode->GetName().data());
+		result->Add(node);
+
+		//Recursively parse child nodes
+		for (int i =0; i < sceneNode->GetChildren().size(); ++i)
+		{
+			result[0]->Nodes->AddRange(IterateNode(sceneNode->GetChildren()[i]));
+		}
+
+		return result;
+	}
+
+	SceneNodeCLR^ SceneEditorCLR::GetSceneGraphCLRTest()
+	{
+		Onyx::SceneNode* nativeSceneNode = m_NativeSceneEditor->GetScene()->GetSceneGraph();
+		SceneNodeCLR^ result = gcnew SceneNodeCLR();
+
+		result->Name = "SCENE_GRAPH_NODE";
+
+		//Skip the actually scene entity as the return list acts as it
+		//TODO
+		for (auto var : nativeSceneNode->GetChildren())
+		{
+			result->Nodes->AddRange(IterateNode(var));
+		}
+
+
+
+		return result;
+
+		
+	}
+
 }

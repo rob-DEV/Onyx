@@ -114,6 +114,7 @@ namespace Onyx {
 					
 					TagComponent t = TagComponent(pEntityComponentElement->GetText());
 					entity->GetEntity()->AddComponent<TagComponent>(t);
+					entity->SetName(t.Tag);
 					
 				}
 				else if (_stricmp(pEntityComponentElement->Value(), "TransformComponent") == 0) {
@@ -148,6 +149,7 @@ namespace Onyx {
 					Model* model = ModelLoader::Load(meshName, meshFilePath);
 					m.Meshes = model->GetMeshes();
 
+					modelEntity->SetName(meshName);
 					modelEntity->GetEntity()->AddComponent<MeshRendererComponent>(m);
 					modelEntity->GetEntity()->m_Static = meshStatic;
 

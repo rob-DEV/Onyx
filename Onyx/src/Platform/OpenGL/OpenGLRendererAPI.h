@@ -12,7 +12,7 @@ namespace Onyx {
 		void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 		void SetClearColor(const glm::vec4& color);
 		void Clear();
-		void DrawArrays(VertexArray* vertexArray, uint32_t count);
+		void DrawArrays(uint32_t count);
 		void DrawIndexed(VertexArray* vertexArray);
 		void DrawIndexed(VertexArray* vertexArray, uint32_t indexCount);
 
