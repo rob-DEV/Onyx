@@ -37,10 +37,9 @@
         <local:EmbeddedWindow x:Name="EmbededWindow" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"></local:EmbeddedWindow>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="80,0">
-            <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65" Click="Button_Click"/>
+            <Button Style="{DynamicResource Round}" Margin="5" Content="Transform" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Rotate" Width="65"/>
             <Button Style="{DynamicResource Round}" Margin="5" Content="Scale" Width="65"/>
-
         </WrapPanel>
 
         <WrapPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="490,0">
@@ -52,46 +51,9 @@
             <Label Foreground="White" Content="Inspector"/>
         </WrapPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="3">
-            <TreeView x:Name="SceneHierarchy" Height="500" Background="#FF333333">
-                <TreeView.Resources>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="Foreground" Value ="White"/>
-                    </Style>
-                </TreeView.Resources>
-              
-                
-                
-            </TreeView>
-
-            <!--Source="pack://application:,,,/res/images/icons/folder.png"/>-->
-            <TreeView x:Name="AssetBrowser" Height="500" Background="#FF333333">
-                <TreeView.Resources>
-                    <local:AssetTagToIconPathConverter x:Key="AssetTagToIconPathConvertor" />
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="HeaderTemplate">
-                            <Setter.Value>
-                                <HierarchicalDataTemplate  >
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Name="img" 
-                                            Width="20" Height="20"
-                                            Stretch="Fill" 
-                                            Source="{Binding
-                                            RelativeSource={RelativeSource
-                                            Mode=FindAncestor,
-                                            AncestorType={x:Type TreeViewItem}},
-                                            Path=Tag,
-                                            Converter={StaticResource AssetTagToIconPathConvertor}}"/>           
-                                        <TextBlock Text="{Binding}"
-                                         Margin="5,0" />
-                                    </StackPanel>
-                                </HierarchicalDataTemplate >
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value ="White"/>
-                    </Style>
-                </TreeView.Resources>
-            </TreeView>
+        <StackPanel x:Name="LeftSidePanel" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3">
+            <local:SceneGraph x:Name="SceneGraph"></local:SceneGraph>
+            <local:FileBrowser x:Name="FileBrowser"></local:FileBrowser>
         </StackPanel>
 
         <StackPanel Grid.Row="4" Grid.Column="1">
@@ -138,83 +100,8 @@
             </TreeView>
         </StackPanel>
 
-        <UniformGrid Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Grid.RowSpan="2">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <DockPanel>
-                    <Label Foreground="White" Content="Internal Entity ID:"/>
-                    <TextBox VerticalContentAlignment="Center" Text="0" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
-                </DockPanel>
-                <DockPanel>
-                    <Label Foreground="White" Content="Entity GUID:"/>
-                    <TextBox VerticalContentAlignment="Center" Text="99fTDLA3cUVS" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
-                </DockPanel>
-                <DockPanel>
-                    <Label Foreground="White" Content="Name:    "/>
-                    <TextBox VerticalContentAlignment="Center" Text="Base Scene"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                </DockPanel>
-                <DockPanel>
-                    <ItemsControl>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="FrameworkElement.Margin" Value="0,0,0,0"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.Items>
-                            <Label Foreground="White" Content="Transform:"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        </ItemsControl.Items>
-                    </ItemsControl>
-                </DockPanel>
-                <DockPanel>
-                    <ItemsControl>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.Items>
-                            <Label Foreground="White" Content="Rotation:"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        </ItemsControl.Items>
-                    </ItemsControl>
-                </DockPanel>
-                <DockPanel>
-                    <ItemsControl>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.Items>
-                            <Label Foreground="White" Content="Scale"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        </ItemsControl.Items>
-                    </ItemsControl>
-                </DockPanel>
-                <Label Foreground="White" Content="Components" Padding="5,25,0,0"/>
-            </StackPanel>
-
+        <UniformGrid x:Name="RightSidePanel" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Grid.RowSpan="2">
+            <local:Inspector x:Name="Inspector"></local:Inspector>
         </UniformGrid>
 
     </Grid>

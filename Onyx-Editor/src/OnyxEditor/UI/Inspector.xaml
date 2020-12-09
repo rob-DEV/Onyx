@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="OnyxEditor.Inspector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OnyxEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <DockPanel>
+                <Label Foreground="White" Content="Internal Entity ID:"/>
+                <TextBox VerticalContentAlignment="Center" Text="0" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Foreground="White" Content="Entity GUID:"/>
+                <TextBox x:Name="SelectedEntityGuid" VerticalContentAlignment="Center" Text="99fTDLA3cUVS" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Foreground="White" Content="Name:    "/>
+                <TextBox VerticalContentAlignment="Center" Text="Base Scene"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+            </DockPanel>
+            <DockPanel>
+                <ItemsControl>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Margin" Value="0,0,0,0"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Items>
+                        <Label Foreground="White" Content="Transform:"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                    </ItemsControl.Items>
+                </ItemsControl>
+            </DockPanel>
+            <DockPanel>
+                <ItemsControl>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Items>
+                        <Label Foreground="White" Content="Rotation:"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                    </ItemsControl.Items>
+                </ItemsControl>
+            </DockPanel>
+            <DockPanel>
+                <ItemsControl>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Margin" Value="0,1,0,0"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Items>
+                        <Label Foreground="White" Content="Scale"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                    </ItemsControl.Items>
+                </ItemsControl>
+            </DockPanel>
+            <Label Foreground="White" Content="Components" Padding="5,25,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

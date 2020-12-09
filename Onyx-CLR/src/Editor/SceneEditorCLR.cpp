@@ -70,7 +70,8 @@ namespace OnyxCLR {
 	{
 		List<SceneNodeCLR^>^ result = gcnew List<SceneNodeCLR^>();
 		SceneNodeCLR^ node = gcnew SceneNodeCLR();
-		node->Name = gcnew String(sceneNode->GetName().data());
+		node->Name = gcnew String(sceneNode->GetSceneNodeName().data());
+		node->UUID = gcnew String(sceneNode->GetSceneNodeUuid().data());
 		result->Add(node);
 
 		//Recursively parse child nodes

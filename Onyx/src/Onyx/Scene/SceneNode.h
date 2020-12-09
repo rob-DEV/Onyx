@@ -4,31 +4,39 @@
 #include <Onyx/Core/Core.h>
 #include <Onyx/Entity/Entity.h>
 
+#include <Onyx/Resources/UUID.h>
+
 namespace Onyx {
 	class SceneNode
 	{
 	public:
 
-		SceneNode() {
+		SceneNode() :
+			m_SceneNodeUuid(UUID::Generate(8)) {
 			m_ChildNodes.reserve(10);
 		}
 		SceneNode(Entity* entity) :
-			m_Entity(entity)
+			m_Entity(entity),
+			m_SceneNodeUuid(UUID::Generate(8))
 		{
 			m_ChildNodes.reserve(10);
 		}
 
-		Entity* GetEntity() const { return m_Entity; };
-		const std::string_view GetName() const { return m_Name; };
-		void SetName(const std::string& name) {  m_Name = name; };
+		const std::string_view GetSceneNodeName() const { return m_SceneNodeName; };
+		const std::string_view GetSceneNodeUuid() const { return m_SceneNodeUuid; };
 
-		const std::vector<SceneNode*>& GetChildren() const { return m_ChildNodes; };
 		const SceneNode* GetParent() const { return m_ParentNode; };
+		const std::vector<SceneNode*>& GetChildren() const { return m_ChildNodes; };
+
+		void SetName(const std::string& name) {  m_SceneNodeName = name; };
 
 		SceneNode* AddChild(SceneNode* node) { m_ChildNodes.push_back(node); return node; };
+		
+		Entity* GetEntity() const { return m_Entity; };
 
 	private:
-		std::string m_Name = "NAME_PLACEHOLDER";
+		std::string m_SceneNodeName = "NAME_PLACEHOLDER";
+		std::string m_SceneNodeUuid = "00000000";
 
 		//Scene Graph 1st node has no parent
 		SceneNode* m_ParentNode = nullptr;

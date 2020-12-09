@@ -108,6 +108,8 @@ namespace OnyxEditor
                         if (window.GetType() == typeof(MainWindow))
                         {
                             window.Title = OnyxMenuHeader.GetHeaderText();
+                            //update scene graph
+                            ((MainWindow)window).SceneGraph.UpdateSceneGraph();
                         }
                     }
                 });

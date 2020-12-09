@@ -110,6 +110,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Onyx\Math\Random.h" />
+    <ClInclude Include="src\Onyx\Resources\UUID.h" />
     <ClInclude Include="src\Onyx\Scene\SceneNode.h" />
     <ClInclude Include="src\Onyx\Editor\Components\SceneEditorSelector.h" />
     <ClInclude Include="src\Onyx\Core\Memory.h" />
@@ -415,6 +416,7 @@ IF EXIST ..\bin\Release-x86_64\Onyx\Onyx.dll\ (xcopy /Q /E /Y /I ..\bin\Release-
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Math\Random.cpp" />
+    <ClCompile Include="src\Onyx\Resources\UUID.cpp" />
     <ClCompile Include="src\Onyx\Scene\SceneNode.cpp" />
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Core\Memory.cpp" />

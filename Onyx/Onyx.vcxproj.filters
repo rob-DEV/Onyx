@@ -962,6 +962,7 @@
     <ClInclude Include="src\Onyx\Scene\SceneNode.h" />
     <ClInclude Include="src\Onyx\Math\Random.h" />
     <ClInclude Include="src\Onyx\Resources\Hasher.h" />
+    <ClInclude Include="src\Onyx\Resources\UUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Onyx\Audio\Sound.cpp">
@@ -1099,5 +1100,6 @@
     <ClCompile Include="src\Onyx\Editor\Components\SceneEditorSelector.cpp" />
     <ClCompile Include="src\Onyx\Scene\SceneNode.cpp" />
     <ClCompile Include="src\Onyx\Math\Random.cpp" />
+    <ClCompile Include="src\Onyx\Resources\UUID.cpp" />
   </ItemGroup>
 </Project>

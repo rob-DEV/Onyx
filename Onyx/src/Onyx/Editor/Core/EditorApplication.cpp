@@ -31,7 +31,7 @@
 
 #include "Onyx/Core/Core.h"
 
-#include <Onyx/Math/Random.h>
+#include <Onyx/Resources/UUID.h>
 
 namespace Onyx {
 
@@ -68,6 +68,14 @@ namespace Onyx {
 
 		m_SceneEditor = new SceneEditor();
 		m_EditorTimestep = Timestep((float)glfwGetTime());
+
+
+		for (int i = 0; i < 1000; ++i) {
+
+			printf("UUID Test: %s\n", UUID::Generate(8).c_str());
+
+		}
+
 
 	}
 

@@ -58,6 +58,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\OnyxEditor\Events\SceneGraphEvents.cs" />
+    <Compile Include="src\OnyxEditor\UI\FileBrowser.xaml.cs">
+      <DependentUpon>FileBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\OnyxEditor\UI\Inspector.xaml.cs">
+      <DependentUpon>Inspector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\OnyxEditor\UI\SceneGraph.xaml.cs">
+      <DependentUpon>SceneGraph.xaml</DependentUpon>
+    </Compile>
     <None Include="res\viewporttest.psd" />
     <None Include="src\OnyxEditor\App.config" />
     <ApplicationDefinition Include="src\OnyxEditor\App.xaml">
@@ -73,6 +83,14 @@
     <Compile Include="src\OnyxEditor\Engine\Input\Keycodes.cs" />
     <Compile Include="src\OnyxEditor\Engine\Input\MouseCodes.cs" />
     <Compile Include="src\OnyxEditor\Engine\SceneEditor.cs" />
+    <Page Include="src\OnyxEditor\UI\FileBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\OnyxEditor\UI\Inspector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\OnyxEditor\UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,6 +104,10 @@
     <Page Include="src\OnyxEditor\UI\EmbeddedWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="src\OnyxEditor\UI\SceneGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
