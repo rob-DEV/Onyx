@@ -25,7 +25,6 @@ namespace Onyx {
 	public:
 		static Texture2D* Create(uint32_t width, uint32_t height);
 		static Texture2D* Create(std::string_view path);
-		inline static int count = 0;
 	};
 
 	class ONYX_API Cubemap {

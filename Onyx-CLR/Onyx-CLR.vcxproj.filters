@@ -12,12 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Bitmap\BitmapDirect.h">
-      <Filter>Bitmap</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Vector.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Onyx-CLR.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Entity\Entity.h" />
@@ -28,12 +22,10 @@
     </ClInclude>
     <ClInclude Include="src\Editor\SceneCLR.h" />
     <ClInclude Include="src\Editor\SceneNodeCLR.h" />
+    <ClInclude Include="src\Engine\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
-    <ClCompile Include="src\Bitmap\BitmapDirect.cpp">
-      <Filter>Bitmap</Filter>
-    </ClCompile>
     <ClCompile Include="src\Onyx-CLR.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
@@ -43,5 +35,6 @@
     </ClCompile>
     <ClCompile Include="src\Editor\SceneCLR.cpp" />
     <ClCompile Include="src\Editor\SceneNodeCLR.cpp" />
+    <ClCompile Include="src\Entity\Components.cpp" />
   </ItemGroup>
 </Project>

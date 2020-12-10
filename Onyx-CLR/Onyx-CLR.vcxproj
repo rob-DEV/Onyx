@@ -106,7 +106,6 @@ IF EXIST ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll\ (xcopy /Q /E /Y /I ..\bin\
     <ClInclude Include="src\Editor\SceneNodeCLR.h" />
     <ClInclude Include="src\Editor\SceneCLR.h" />
     <ClInclude Include="src\Editor\SceneEditorCLR.h" />
-    <ClInclude Include="src\Bitmap\BitmapDirect.h" />
     <ClInclude Include="src\Editor\EditorApplicationCLR.h" />
     <ClInclude Include="src\Engine\Vector.h" />
     <ClInclude Include="src\Entity\Components.h" />
@@ -119,8 +118,8 @@ IF EXIST ..\bin\Release-x86_64\Onyx-CLR\Onyx-CLR.dll\ (xcopy /Q /E /Y /I ..\bin\
     <ClCompile Include="src\Editor\SceneCLR.cpp" />
     <ClCompile Include="src\Editor\SceneEditorCLR.cpp" />
     <ClCompile Include="src\AssemblyInfo.cpp" />
-    <ClCompile Include="src\Bitmap\BitmapDirect.cpp" />
     <ClCompile Include="src\Editor\EditorApplicationCLR.cpp" />
+    <ClCompile Include="src\Entity\Components.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Onyx-CLR.cpp" />
     <ClCompile Include="src\pch.cpp" />

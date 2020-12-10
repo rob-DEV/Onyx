@@ -2,11 +2,21 @@
     <ONYX-ENTITY>
         <TagComponent>Sponza Castle 1</TagComponent>
         <TransformComponent>
-            <Position>
-                <X>0.0</X>
-                <Y>0.0</Y>
-                <Z>0.0</Z>
-            </Position>
+			<Position>
+				<X>0.0</X>
+				<Y>0.0</Y>
+				<Z>0.0</Z>
+			</Position>
+			<Rotation>
+				<X>0.0</X>
+				<Y>0.0</Y>
+				<Z>0.0</Z>
+			</Rotation>
+			<Scale>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>1.0</Z>
+			</Scale>
         </TransformComponent>
 		<ModelComponent>
 			<ModelName>SponzaMainMesh</ModelName>
@@ -18,17 +28,37 @@
 					<Y>0.0</Y>
 					<Z>0.0</Z>
 				</Position>
+				<Rotation>
+					<X>0.0</X>
+					<Y>0.0</Y>
+					<Z>0.0</Z>
+				</Rotation>
+				<Scale>
+					<X>0.0125</X>
+					<Y>0.0125</Y>
+					<Z>0.0125</Z>
+				</Scale>
 			</TransformComponent>
 		</ModelComponent>
     </ONYX-ENTITY>
 	<ONYX-ENTITY>
-        <TagComponent>Sponza Castle 2</TagComponent>
+        <TagComponent>Sponza Castle 1</TagComponent>
         <TransformComponent>
-            <Position>
-                <X>10.0</X>
-                <Y>10.0</Y>
-                <Z>10.0</Z>
-            </Position>
+			<Position>
+				<X>50.0</X>
+				<Y>0.0</Y>
+				<Z>0.0</Z>
+			</Position>
+			<Rotation>
+				<X>0.0</X>
+				<Y>0.0</Y>
+				<Z>0.0</Z>
+			</Rotation>
+			<Scale>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>1.0</Z>
+			</Scale>
         </TransformComponent>
 		<ModelComponent>
 			<ModelName>SponzaMainMesh</ModelName>
@@ -40,28 +70,16 @@
 					<Y>0.0</Y>
 					<Z>0.0</Z>
 				</Position>
-			</TransformComponent>
-		</ModelComponent>
-    </ONYX-ENTITY>
-	<ONYX-ENTITY>
-        <TagComponent>Sponza Castle 3</TagComponent>
-        <TransformComponent>
-            <Position>
-                <X>10.0</X>
-                <Y>10.0</Y>
-                <Z>10.0</Z>
-            </Position>
-        </TransformComponent>
-		<ModelComponent>
-			<ModelName>SponzaMainMesh</ModelName>
-			<ModelPath>res/models/Sponza/sponza.obj</ModelPath>
-			<IsStatic>1</IsStatic>
-			<TransformComponent>
-				<Position>
-					<X>50.0</X>
+				<Rotation>
+					<X>0.0</X>
 					<Y>0.0</Y>
-					<Z>50.0</Z>
-				</Position>
+					<Z>0.0</Z>
+				</Rotation>
+				<Scale>
+					<X>0.0125</X>
+					<Y>0.0125</Y>
+					<Z>0.0125</Z>
+				</Scale>
 			</TransformComponent>
 		</ModelComponent>
     </ONYX-ENTITY>

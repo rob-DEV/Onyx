@@ -7,6 +7,7 @@
 
 #include "SceneCLR.h"
 #include "SceneNodeCLR.h"
+#include "../Entity\Components.h"
 
 using namespace System::Collections::Generic;
 
@@ -23,8 +24,11 @@ namespace OnyxCLR {
 		SceneCLR^ OpenScene(System::String^ filePath);
 		bool SaveScene(System::String^ filePath);
 
-		List<OnyxCLR::Entity^>^ GetAllEntitiesTest();
 		SceneNodeCLR^ GetSceneGraphCLRTest();
+		uint32_t GetEntityFromSceneNode(System::String^ sceneNodeGuid);
+
+		List<Component^>^ GetEntityComponents(System::String^ sceneNodeGuid);
+
 
 	private:
 		Onyx::SceneEditor* m_NativeSceneEditor;

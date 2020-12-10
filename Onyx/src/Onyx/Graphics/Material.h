@@ -19,14 +19,15 @@ namespace Onyx {
 
 	enum class TextureParameterType {
 		DIFFUSE = 0,
-		SPECULAR,
-		NORMAL
+		NORMAL,
+		SPECULAR
 	};
 
 	struct MaterialTextures {
 		Texture2D* Diffuse;
 		Texture2D* Specular;
 		Texture2D* Normal;
+		Texture2D* NormalUp = nullptr;
 	};
 
 	struct MaterialColors {
@@ -47,12 +48,14 @@ namespace Onyx {
 		void Bind();
 
 		void AddTexture(TextureParameterType type, std::string_view path);
-		void SetColor(ColorParameterType type, const glm::vec4& color);
-		void SetTilingFactor(float tilingFactor) { m_TilingFactor = tilingFactor; };
-		std::string_view GetName() const { return m_Name; };
+		
 		void SetName(std::string_view name) { m_Name = name; };
+		std::string_view GetName() const { return m_Name; };
 
+		void SetColor(ColorParameterType type, const glm::vec4& color);
+		const glm::vec4& GetColor(ColorParameterType type);
 
+		void SetTilingFactor(float tilingFactor) { m_TilingFactor = tilingFactor; };
 	private:
 		std::string m_Name;
 		Shader* m_Shader;

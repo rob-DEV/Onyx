@@ -141,13 +141,11 @@ namespace Onyx {
 		//Material test
 		if (true /*REFACTOR TO LOAD MATERIAL*/) {
 			if (mesh->mMaterialIndex >= 0) {
-
 				const auto* mat = scene->mMaterials[mesh->mMaterialIndex];
+				aiString name;
+				mat->Get(AI_MATKEY_NAME, name);
 
 				if (mat->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-					aiString name;
-					mat->Get(AI_MATKEY_NAME, name);
-					
 					//Check if material already exists in the cache
 					if (MaterialCache::Get().Exists(name.C_Str())) {
 						materialResult = MaterialCache::Get().GetMaterial(name.C_Str());
@@ -155,21 +153,41 @@ namespace Onyx {
 					else {
 						//Not already loaded, load and cache
 						aiString diffusePath;
-						mat->GetTexture(aiTextureType_AMBIENT, 0, &diffusePath);
+						mat->GetTexture(aiTextureType_DIFFUSE, 0, &diffusePath);
 
-						std::string fullPath = std::string("res/models/Sponza/") + std::string(diffusePath.C_Str());
+						aiString normalPath;
+						mat->GetTexture(aiTextureType_DISPLACEMENT, 0, &normalPath);
+						//Ensure diffuse path is not empty
+						if (diffusePath.length > 0) {
+							std::string fullDiffPath = std::string("res/models/Sponza/") + std::string(diffusePath.C_Str());
+							material.AddTexture(TextureParameterType::DIFFUSE, fullDiffPath);
+						}
 
-						material.AddTexture(TextureParameterType::DIFFUSE, fullPath);
-						material.AddTexture(TextureParameterType::SPECULAR, fullPath);
+						//Some diffuse textures may not have associated normals
+						if (normalPath.length > 0) {
+							std::string fullNormalPath = std::string("res/models/Sponza/") + std::string(normalPath.C_Str());
+							material.AddTexture(TextureParameterType::NORMAL, fullNormalPath);
+						}
+
+						
+
+
 						material.SetName(name.C_Str());
 						//Add to MaterialCache
-						materialResult = MaterialCache::Get().CacheMaterial(name.C_Str(), material);
 
 					}
 				}
 				else {
 					std::cout << "No texture image being imported " << std::endl;
 				}
+
+				//Colors
+				aiColor4D diffuse;
+				if (aiReturn::aiReturn_SUCCESS == aiGetMaterialColor(mat, AI_MATKEY_COLOR_DIFFUSE, &diffuse)) {
+					material.SetColor(ColorParameterType::DIFFUSE, glm::vec4(diffuse.r, diffuse.g, diffuse.b, diffuse.a));
+				}
+
+				materialResult = MaterialCache::Get().CacheMaterial(name.C_Str(), material);
 			}
 		}
 

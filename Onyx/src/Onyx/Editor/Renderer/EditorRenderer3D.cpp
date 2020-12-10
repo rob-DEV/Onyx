@@ -14,11 +14,11 @@
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtx/string_cast.hpp>
-
 #include <Onyx/Graphics/RenderCommand.h>
 
 #include <Onyx/Core/Input.h>
+#include <Onyx/Editor/Components/SceneEditorSelector.h>
+
 
 namespace Onyx {
 
@@ -99,6 +99,7 @@ namespace Onyx {
 	{
 		//Bind Framebuffer
 		s_RendererData.Framebuffer->Bind();
+		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
 		RenderCommand::Clear();
 
  		Shader* skyboxShader = ShaderCache::Get("SkyboxEditor");
@@ -120,8 +121,13 @@ namespace Onyx {
 						TransformComponent& t = entity->GetComponent<TransformComponent>();
 						MeshRendererComponent& mr = entity->GetComponent<MeshRendererComponent>();
 
+						glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), t.Rotation.x, { 1, 0, 0 })
+							* glm::rotate(glm::mat4(1.0f), t.Rotation.y, { 0, 1, 0 })
+							* glm::rotate(glm::mat4(1.0f), t.Rotation.z, { 0, 0, 1 });
+
 						glm::mat4 transform = glm::translate(glm::mat4(1.0f), t.Position)
-							* glm::scale(glm::mat4(1.0f), glm::vec3(0.01f));
+							* rotation
+							* glm::scale(glm::mat4(1.0f), glm::vec3(t.Scale));
 
 						s_RendererData.StaticBatch.Submit(entity->GetID(), mr.Meshes, transform);
 					}
@@ -151,7 +157,7 @@ namespace Onyx {
 		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
 			glm::vec2 mousePos = Input::GetMousePosition();
 
-			uint32_t selectedPixel = 0xFFFFFFFF;
+			uint32_t selectedPixel = 0x00FFFFFF;
 
 			//switch to selection buffer
 			glReadBuffer(GL_COLOR_ATTACHMENT1);
@@ -165,9 +171,11 @@ namespace Onyx {
 			GLubyte* selectionBufferPtr = (GLubyte*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
 
 				uint32_t* p = (uint32_t*)selectionBufferPtr;
-				selectedPixel = (uint32_t)(p[0]);
+				selectedPixel = (uint32_t)(p[0]) & selectedPixel;
 			
 			printf("0x%8x\n", selectedPixel);
+
+			SceneEditorSelector::SetSelectedEntityId(selectedPixel);
 
 			glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
 		}
@@ -178,16 +186,16 @@ namespace Onyx {
 		//All rendered to framebuffer
 		//get framebuffer texture 
 		//render to viewport
-		s_RendererData.ScreenQuadVAO->Bind();
-		s_RendererData.ScreenQuadVBO->Bind();
-
-		s_RendererData.ScreenShader->Bind();
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, s_RendererData.Framebuffer->GetColorAttachmentRendererID(selectedColorAttachment));
-		s_RendererData.ScreenShader->SetInt("u_RenderedTexture", 0);
-
-		RenderCommand::DrawArrays(6);
+// 		s_RendererData.ScreenQuadVAO->Bind();
+// 		s_RendererData.ScreenQuadVBO->Bind();
+// 
+// 		s_RendererData.ScreenShader->Bind();
+// 
+// 		glActiveTexture(GL_TEXTURE0);
+// 		glBindTexture(GL_TEXTURE_2D, s_RendererData.Framebuffer->GetColorAttachmentRendererID(selectedColorAttachment));
+// 		s_RendererData.ScreenShader->SetInt("u_RenderedTexture", 0);
+// 
+// 		RenderCommand::DrawArrays(6);
 
 	}
 

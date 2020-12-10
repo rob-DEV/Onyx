@@ -3,7 +3,7 @@
 
 #include <Onyx/Camera/Camera.h>
 #include <Onyx/Renderer/StaticBatch.h>
-
+#include <Onyx/Graphics/Framebuffer.h>
 namespace Onyx {
 	
 	class Scene;
@@ -40,6 +40,9 @@ namespace Onyx {
 		static void BeginScene(const Camera& camera);
 		static void DrawScene(const Scene* scene);
 		static void EndScene();
+
+
+		static Framebuffer* GetFramebuffer() { return s_RendererData.Framebuffer; }
 
 	private:
 

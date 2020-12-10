@@ -28,7 +28,8 @@ namespace Onyx {
 
 		Scene* GetScene() const { return m_Scene; };
 		std::vector<Entity*> GetAllEntitiesTest();
-		void SetSelectedEntity(uint32_t id);
+
+		Entity* GetSelectedEntity();
 
 	private:
 		void InvalidateScene();

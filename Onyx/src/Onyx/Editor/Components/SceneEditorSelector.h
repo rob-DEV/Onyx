@@ -1,15 +1,22 @@
-#ifndef _ONYX_EDITOR_SCENE_H_
-#define _ONYX_EDITOR_SCENE_H_
+#ifndef _ONYX_EDITOR_SCENE_ENTITY_SELECTOR_H_
+#define _ONYX_EDITOR_SCENE_ENTITY_SELECTOR_H_
 
 
 namespace Onyx {
 
+
 	class SceneEditorSelector
 	{
 	public:
-		inline static uint32_t GetSelectedEntity() { return s_SelectedEntity; };
+		static uint32_t GetSelectedEntityId() {
+			return s_SelectedEntity;
+		}
+
+		static void SetSelectedEntityId(uint32_t entityID) {
+			s_SelectedEntity = entityID;
+		}
 	private:
-		static uint32_t s_SelectedEntity;
+		inline static uint32_t s_SelectedEntity = 0x00FFFFFF;
 	};
 
 }

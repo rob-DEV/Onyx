@@ -1,25 +1,52 @@
 #pragma once
 
-//POD for passing to engine
-public ref class Vector2
-{
-	Vector2(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
+namespace OnyxCLR {
 
-	float x, y;
-};
+	public ref class Vector2 {
+	public:
+		float X;
+		float Y;
 
-public ref class Vector3
-{
-	Vector3(float x, float y, float z) {
-		this->x = x;
-		this->y = y;
-		this->z = z;
-	}
+		Vector2(float x, float y)
+		{
+			this->X = x;
+			this->Y = y;
+		}
 
-	float x, y, z;
-};
+	};
 
+
+	public ref class Vector3 {
+	public:
+		float X;
+		float Y;
+		float Z;
+
+		Vector3(float x, float y, float z)
+		{
+			this->X = x;
+			this->Y = y;
+			this->Z = z;
+		}
+
+	};
+
+
+	public ref class Vector4 {
+	public:
+		float X;
+		float Y;
+		float Z;
+		float W;
+
+		Vector4(float x, float y, float z, float w)
+		{
+			this->X = x;
+			this->Y = y;
+			this->Z = z;
+			this->W = w;
+		}
+	};
+
+
+}

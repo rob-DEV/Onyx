@@ -64,11 +64,6 @@ namespace OnyxEditor
             sceneCommand.Executed = false;
         }
 
-        public List<OnyxCLR.Entity> GetAllEntities()
-        { 
-            return instance.SceneEditorInstance.GetAllEntitiesTest();
-        }
-
         internal void Update()
         {
             bool updateUI = false;

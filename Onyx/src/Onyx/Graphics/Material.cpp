@@ -2,6 +2,7 @@
 #include "Material.h"
 #include "Shader.h"
 
+#include <Onyx/Core/Input.h>
 #include <Onyx/Resources/Hasher.h>
 #include <Onyx/Core/Application.h>
 #include <Onyx/Resources/TextureCache.h>
@@ -55,12 +56,32 @@ namespace Onyx {
 
 		//Bind texture samplers
 		uint32_t diffuse = 0;
-		uint32_t spec = 1;
-		uint32_t normal = 2;
+		uint32_t normal = 1;
+		uint32_t spec = 2;
 
 		m_Textures.Diffuse->Bind(diffuse);
+		
+		static bool normals = true;
+		
+		//Toggle normal map
+		if (Input::IsKeyPressed(ONYX_KEY_N))
+			normals = (normals + 1) % 2;
 
+
+		if(normals)
+			m_Textures.Normal->Bind(normal);
+		else
+			m_Textures.NormalUp->Bind(normal);
+
+		
+		//Set textures
 		m_Shader->SetInt("u_Material.diffuseTex", diffuse);
+		m_Shader->SetInt("u_Material.normalTex", normal);
+
+		//Set colors
+		m_Shader->SetFloat4("u_Material.ambient", m_Colors.Ambient);
+		m_Shader->SetFloat4("u_Material.diffuse", m_Colors.Diffuse);
+		m_Shader->SetFloat4("u_Material.specular", m_Colors.Specular);
 
 		//Set tiling factor
 		m_Shader->SetFloat("u_Material.tilingFactor", m_TilingFactor);
@@ -85,11 +106,11 @@ namespace Onyx {
 		case TextureParameterType::DIFFUSE:
 			m_Textures.Diffuse = texture;
 			break;
-		case TextureParameterType::SPECULAR:
-			m_Textures.Specular = texture;
-			break;
 		case TextureParameterType::NORMAL:
 			m_Textures.Normal = texture;
+			break;
+		case TextureParameterType::SPECULAR:
+			m_Textures.Specular = texture;
 			break;
 		default:
 			printf("ERROR: Invalid MaterialParameterType!\n");
@@ -110,6 +131,26 @@ namespace Onyx {
 			break;
 		case ColorParameterType::SPECULAR:
 			m_Colors.Specular = color;
+			break;
+		default:
+			printf("ERROR: Invalid MaterialTextureType!\n");
+			assert(false);
+			break;
+		}
+	}
+
+	const glm::vec4& Material::GetColor(ColorParameterType type)
+	{
+		switch (type)
+		{
+		case ColorParameterType::AMBIENT:
+			return m_Colors.Ambient;
+			break;
+		case ColorParameterType::DIFFUSE:
+			return m_Colors.Diffuse;
+			break;
+		case ColorParameterType::SPECULAR:
+			return m_Colors.Specular;
 			break;
 		default:
 			printf("ERROR: Invalid MaterialTextureType!\n");
@@ -143,5 +184,12 @@ namespace Onyx {
 
 		m_TilingFactor = 1.0;
 
+		//Up normal map
+		if (TextureCache::Get().Exists("res/textures/default/normal_up.png")) {
+			m_Textures.NormalUp = (Texture2D*)TextureCache::Get().GetTexture("res/textures/default/normal_up.png");
+		}
+		else {
+			m_Textures.NormalUp = (Texture2D*)TextureCache::Get().CacheTexture("res/textures/default/normal_up.png");
+		}
 	}
 }

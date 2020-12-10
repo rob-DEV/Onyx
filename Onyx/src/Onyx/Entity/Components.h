@@ -28,7 +28,7 @@ namespace Onyx {
 			: Position(position) {}
 
 		glm::vec3 Position = glm::vec3(0.0f);
-		glm::quat Rotation = glm::quat();
+		glm::vec3 Rotation = glm::vec3(0.0f);
 		glm::vec3 Scale = glm::vec3(1.0f);
 
 	};
@@ -44,8 +44,17 @@ namespace Onyx {
 
 	};
 
+	struct ONYX_API ScriptComponent
+	{
+		ScriptComponent() = default;
+		~ScriptComponent() = default;
+		ScriptComponent(const ScriptComponent& other) = default;
+
+
+
+	};
+
 
 }
-
 
 #endif

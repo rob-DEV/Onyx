@@ -9,16 +9,16 @@
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <DockPanel>
-                <Label Foreground="White" Content="Internal Entity ID:"/>
-                <TextBox VerticalContentAlignment="Center" Text="0" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
+                <Label Foreground="White" Content="Internal Entity ID: "/>
+                <TextBox x:Name="InternalEntityID" VerticalContentAlignment="Center" Text="0" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
             </DockPanel>
             <DockPanel>
-                <Label Foreground="White" Content="Entity GUID:"/>
-                <TextBox x:Name="SelectedEntityGuid" VerticalContentAlignment="Center" Text="99fTDLA3cUVS" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
+                <Label Foreground="White" Content="Scenenode GUID:"/>
+                <TextBox x:Name="SelectedEntityGuid" VerticalContentAlignment="Center" Text="NO SCENENODE SELECTED" TextWrapping="NoWrap" AcceptsReturn="False" IsReadOnly="True"/>
             </DockPanel>
             <DockPanel>
-                <Label Foreground="White" Content="Name:    "/>
-                <TextBox VerticalContentAlignment="Center" Text="Base Scene"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                <Label Foreground="White" Content="Tag:                      "/>
+                <TextBox x:Name="TagIdentifier" VerticalContentAlignment="Center" Text="Base Scene"  TextWrapping="NoWrap" AcceptsReturn="False"/>
             </DockPanel>
             <DockPanel>
                 <ItemsControl>
@@ -34,9 +34,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.Items>
                         <Label Foreground="White" Content="Transform:"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="TransformX" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="TransformY" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="TransformZ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
                     </ItemsControl.Items>
                 </ItemsControl>
             </DockPanel>
@@ -54,9 +54,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.Items>
                         <Label Foreground="White" Content="Rotation:"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="RotationX" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="RotationY" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="RotationZ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
                     </ItemsControl.Items>
                 </ItemsControl>
             </DockPanel>
@@ -74,9 +74,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.Items>
                         <Label Foreground="White" Content="Scale"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="ScaleX" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="ScaleY" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
+                        <TextBox x:Name="ScaleZ" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="0.0"  TextWrapping="NoWrap" AcceptsReturn="False"/>
                     </ItemsControl.Items>
                 </ItemsControl>
             </DockPanel>

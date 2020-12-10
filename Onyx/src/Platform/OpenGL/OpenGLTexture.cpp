@@ -3,6 +3,8 @@
 
 #include <stb_image.h>
 
+#undef max
+
 namespace Onyx {
 
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height) 
@@ -49,15 +51,34 @@ namespace Onyx {
 		//TODO: check format is supported
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		int mipmapLevels = (int)floor(log2(std::max(m_Width, m_Height)));
+		//int mipmapLevels = 1;
+
+		glTextureStorage2D(m_RendererID, mipmapLevels, internalFormat, m_Width, m_Height);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, mipmapLevels == 1 ? GL_LINEAR : GL_LINEAR_MIPMAP_LINEAR);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+		
+		if (mipmapLevels > 1)
+			glGenerateTextureMipmap(m_RendererID);
+
+		float mem = 0;
+
+		if (mipmapLevels == 1)
+			mem = (float)(m_Width * m_Height * channels) / 1048576.0f;
+		else
+			mem = (float)(m_Width * m_Height * channels * 1.33f) / 1048576.0f;
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 		stbi_image_free(data);
 	}
@@ -136,7 +157,7 @@ namespace Onyx {
 
 	void OpenGLCubemap::Bind(uint32_t slot /*= 0*/) const
 	{
-
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID);
 	}
 
 }

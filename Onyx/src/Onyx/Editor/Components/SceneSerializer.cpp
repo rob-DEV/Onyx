@@ -121,11 +121,20 @@ namespace Onyx {
 
 					TransformComponent t = TransformComponent();
 					
-					//Position
 					XMLElement* pTransformPositionElement = pEntityComponentElement->FirstChildElement("Position");
 					pTransformPositionElement->FirstChildElement("X")->QueryFloatText(&t.Position.x);
 					pTransformPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
 					pTransformPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
+
+					XMLElement* pTransformRotationElement = pEntityComponentElement->FirstChildElement("Rotation");
+					pTransformRotationElement->FirstChildElement("X")->QueryFloatText(&t.Rotation.x);
+					pTransformRotationElement->FirstChildElement("Y")->QueryFloatText(&t.Rotation.y);
+					pTransformRotationElement->FirstChildElement("Z")->QueryFloatText(&t.Rotation.z);
+
+					XMLElement* pTransformScaleElement = pEntityComponentElement->FirstChildElement("Scale");
+					pTransformScaleElement->FirstChildElement("X")->QueryFloatText(&t.Scale.x);
+					pTransformScaleElement->FirstChildElement("Y")->QueryFloatText(&t.Scale.y);
+					pTransformScaleElement->FirstChildElement("Z")->QueryFloatText(&t.Scale.z);
 
 					entity->GetEntity()->AddComponent<TransformComponent>(t);
 
@@ -157,10 +166,21 @@ namespace Onyx {
 					
 					//TODO: Refactor duplicated code
 					XMLElement* pTransformComponentElement = pEntityComponentElement->FirstChildElement("TransformComponent");
-					XMLElement* pPositionElement = pTransformComponentElement->FirstChildElement("Position");
-					pPositionElement->FirstChildElement("X")->QueryFloatText(&t.Position.x);
-					pPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
-					pPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
+					
+					XMLElement* pTransformPositionElement = pTransformComponentElement->FirstChildElement("Position");
+					pTransformPositionElement->FirstChildElement("X")->QueryFloatText(&t.Position.x);
+					pTransformPositionElement->FirstChildElement("Y")->QueryFloatText(&t.Position.y);
+					pTransformPositionElement->FirstChildElement("Z")->QueryFloatText(&t.Position.z);
+
+					XMLElement* pTransformRotationElement = pTransformComponentElement->FirstChildElement("Rotation");
+					pTransformRotationElement->FirstChildElement("X")->QueryFloatText(&t.Rotation.x);
+					pTransformRotationElement->FirstChildElement("Y")->QueryFloatText(&t.Rotation.y);
+					pTransformRotationElement->FirstChildElement("Z")->QueryFloatText(&t.Rotation.z);
+
+					XMLElement* pTransformScaleElement = pTransformComponentElement->FirstChildElement("Scale");
+					pTransformScaleElement->FirstChildElement("X")->QueryFloatText(&t.Scale.x);
+					pTransformScaleElement->FirstChildElement("Y")->QueryFloatText(&t.Scale.y);
+					pTransformScaleElement->FirstChildElement("Z")->QueryFloatText(&t.Scale.z);
 
 					modelEntity->GetEntity()->AddComponent<TransformComponent>(t);
 

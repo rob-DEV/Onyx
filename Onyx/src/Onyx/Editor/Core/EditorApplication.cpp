@@ -69,14 +69,6 @@ namespace Onyx {
 		m_SceneEditor = new SceneEditor();
 		m_EditorTimestep = Timestep((float)glfwGetTime());
 
-
-		for (int i = 0; i < 1000; ++i) {
-
-			printf("UUID Test: %s\n", UUID::Generate(8).c_str());
-
-		}
-
-
 	}
 
 	EditorApplication::~EditorApplication()

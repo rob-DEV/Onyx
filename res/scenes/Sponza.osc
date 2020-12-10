@@ -2,11 +2,21 @@
     <ONYX-ENTITY>
         <TagComponent>Sponza Castle 1</TagComponent>
         <TransformComponent>
-            <Position>
-                <X>0.0</X>
-                <Y>0.0</Y>
-                <Z>0.0</Z>
-            </Position>
+			<Position>
+				<X>0.0</X>
+				<Y>0.0</Y>
+				<Z>0.0</Z>
+			</Position>
+			<Rotation>
+				<X>0.0</X>
+				<Y>0.0</Y>
+				<Z>0.0</Z>
+			</Rotation>
+			<Scale>
+				<X>1.0</X>
+				<Y>1.0</Y>
+				<Z>1.0</Z>
+			</Scale>
         </TransformComponent>
 		<ModelComponent>
 			<ModelName>SponzaMainMesh</ModelName>
@@ -18,6 +28,16 @@
 					<Y>0.0</Y>
 					<Z>0.0</Z>
 				</Position>
+				<Rotation>
+					<X>0.0</X>
+					<Y>0.0</Y>
+					<Z>0.0</Z>
+				</Rotation>
+				<Scale>
+					<X>0.0125</X>
+					<Y>0.0125</Y>
+					<Z>0.0125</Z>
+				</Scale>
 			</TransformComponent>
 		</ModelComponent>
     </ONYX-ENTITY>
