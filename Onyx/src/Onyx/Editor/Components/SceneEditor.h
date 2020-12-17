@@ -40,8 +40,6 @@ namespace Onyx {
 		Scene* m_Scene;
 		Entity* m_SelectedEntity;
 
-		Gizmo* m_EditorGizmo;
-
 		friend class EditorCore;
 
 	};

@@ -2,6 +2,7 @@
 #define _ONYX_EDITOR_GIZMO_H_
 
 #include <Onyx/Core/Core.h>
+#include <Onyx/Core/TimeStep.h>
 
 #include <Onyx/Camera/Camera.h>
 #include <Onyx/Graphics/Model.h>
@@ -18,9 +19,20 @@ namespace Onyx {
 		SCALE
 	};
 
+	enum class AXIS {
+		NONE,
+		X,
+		Y,
+		Z
+	};
+
 	struct GizmoData {
 		GizmoState State;
 		glm::mat4 GizmoTransformMatrix = glm::mat4(1.0f);
+
+		AXIS Axis = AXIS::NONE;
+
+
 	};
 
 	struct GizmoModelData {
@@ -49,11 +61,26 @@ namespace Onyx {
 
 		uint32_t IndexCount = 0;
 		uint32_t VertexCount = 0;
+
+		//Gizmo selection buffers
+		uint32_t SelectionPixelBuffers[2];
+		uint32_t PboIndex = 0;
+		uint32_t PboNextIndex = 0;
+
 	};
 
 	struct GizmoVertex {
 		glm::vec3 Position;
 		glm::vec4 Color;
+	};
+
+
+	struct RGBA
+	{
+		uint8_t R = 0;
+		uint8_t G = 0;
+		uint8_t B = 0;
+		uint8_t A = 0;
 	};
 
 	class ONYX_API Gizmo {
@@ -62,7 +89,7 @@ namespace Onyx {
 		static void Init();
 		static void SetState(GizmoState state);
 		static GizmoState GetState();
-		static void Manipulate(const Camera& camera, const glm::mat4& modelTransform);
+		static void Manipulate(Timestep ts, const Camera& camera, glm::mat4& modelTransform);
 
 		static Framebuffer* GetFramebuffer() { return s_RendererData.Framebuffer; }
 

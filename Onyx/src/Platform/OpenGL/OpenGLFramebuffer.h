@@ -15,9 +15,12 @@ namespace Onyx {
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
+		virtual void BiltToScreen() const override;
+		virtual void ResolveToFramebuffer(Framebuffer* framebuffer, uint32_t attachmentIndex) const override;
+
 		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 
-		virtual uint32_t GetColorAttachmentRendererID(uint32_t colorAttachment) const override;
+		virtual uint32_t GetColorAttachmentRendererID(uint32_t attachmentIndex) const override;
 
 	private:
 		static const uint32_t MAX_ATTACHMENT_COUNT = 32;

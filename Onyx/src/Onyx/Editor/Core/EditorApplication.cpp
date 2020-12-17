@@ -21,7 +21,9 @@
 //Sound
 #include <Onyx/Audio/Sound.h>
 
+#include <Onyx/Renderer/ScreenRenderer.h>
 #include <Onyx/Editor/Renderer/EditorRenderer3D.h>
+
 #include <Onyx/Graphics/ModelLoader.h>
 #include <Platform/Windows/WindowsWindow.h>
 
@@ -48,11 +50,6 @@ namespace Onyx {
 		printf("Initializing Onyx Editor\n");
 		m_Window = new WindowsWindow(WindowProperties("Onyx Graphics Context", 1130, 636, true));
 
-
-		//Redirect Standard Input from Windows GLFW to C# Editor
-		//m_EditorToEngineInput = new EditorInput();
-		//Input::RedirectInput(m_EditorToEngineInput);
-
 		//Renderer API
 		RenderCommand::Init();
 		RenderCommand::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
@@ -64,9 +61,9 @@ namespace Onyx {
 
 		//Renderers
 		Renderer2D::Init();
+		ScreenRenderer::Init();
 		EditorRenderer3D::Init();
 
-		m_SceneEditor = new SceneEditor();
 		m_EditorTimestep = Timestep((float)glfwGetTime());
 
 	}

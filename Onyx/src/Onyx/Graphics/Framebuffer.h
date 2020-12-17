@@ -30,6 +30,10 @@ namespace Onyx {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 	
+		virtual void BiltToScreen() const = 0;
+		virtual void ResolveToFramebuffer(Framebuffer* framebuffer, uint32_t attachmentIndex) const = 0;
+
+
 		virtual const FramebufferSpecification& GetSpecification() const = 0;
 
 		virtual uint32_t GetColorAttachmentRendererID(uint32_t colorAttachment) const = 0;

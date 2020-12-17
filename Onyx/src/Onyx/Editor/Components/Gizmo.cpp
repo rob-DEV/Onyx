@@ -4,9 +4,12 @@
 #include <Onyx/Graphics/ModelLoader.h>
 #include <Onyx/Graphics/RenderCommand.h>
 
+#include <Onyx/Core/Input.h>
+
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
+
 
 namespace Onyx {
 
@@ -22,11 +25,11 @@ namespace Onyx {
 		s_GizmoModelData.Scale = ModelLoader::Load("ScaleModel", "res/models/transform/Scale.obj");
 
 		s_GizmoModelData.Active = s_GizmoModelData.Transform;
+		SetState(GizmoState::TRANSFORM);
 
 		//Renderer
 		FramebufferSpecification fbSpec(1130, 636, 2, true);
-		fbSpec.MultiSample = true;
-		fbSpec.Samples = 4;
+		fbSpec.MultiSample = false;
 
 		s_RendererData.Framebuffer = Framebuffer::Create(fbSpec);
 
@@ -50,6 +53,14 @@ namespace Onyx {
 		s_RendererData.IndexCount = 0;
 
 		ShaderCache::Add("GizmoShader", Shader::Create("res/shaders/GizmoShader.glsl"));
+
+		glGenBuffers(2, s_RendererData.SelectionPixelBuffers);
+		glBindBuffer(GL_PIXEL_PACK_BUFFER, s_RendererData.SelectionPixelBuffers[0]);
+		glBufferData(GL_PIXEL_PACK_BUFFER, 1 * 1 * 4, 0, GL_STREAM_READ);
+		glBindBuffer(GL_PIXEL_PACK_BUFFER, s_RendererData.SelectionPixelBuffers[1]);
+		glBufferData(GL_PIXEL_PACK_BUFFER, 1 * 1 * 4, 0, GL_STREAM_READ);
+		glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+
 	}
 
 	void Gizmo::SetState(GizmoState state)
@@ -69,7 +80,11 @@ namespace Onyx {
 		return s_GizmoData.State;
 	}
 
-	void Gizmo::Manipulate(const Camera& camera, const glm::mat4& modelTransform)
+
+	static glm::vec2 mousePosition = glm::vec2(0.0f);
+	static bool red = false;
+
+	void Gizmo::Manipulate(Timestep ts, const Camera& camera, glm::mat4& modelTransform)
 	{
 		//Render
 		s_RendererData.ViewProjectionMatrix = camera.GetViewProjectionMatrix();
@@ -93,8 +108,98 @@ namespace Onyx {
 		Render();
 
 		//Gizmo logic
+		s_RendererData.Framebuffer->Bind();
+		
+		glm::vec2 mousePos = Input::GetMousePosition();
+		
+		if (Input::IsMouseButtonPressed(ONYX_MOUSE_BUTTON_1)) {
+
+			if (s_GizmoData.Axis == AXIS::NONE) {
+				//switch to selection buffer
+				glReadBuffer(GL_COLOR_ATTACHMENT1);
+				glBindBuffer(GL_PIXEL_PACK_BUFFER, s_RendererData.SelectionPixelBuffers[s_RendererData.PboIndex]);
+
+				uint32_t x = (uint32_t)mousePos.x;
+				uint32_t y = (uint32_t)(650.0f -mousePos.y);
+				glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+				glBindBuffer(GL_PIXEL_PACK_BUFFER, s_RendererData.SelectionPixelBuffers[s_RendererData.PboNextIndex]);
+				uint32_t* selectionBufferPtr = (uint32_t*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
+
+				//Copy to a more manageable structure 
+				RGBA rgba;
+				memcpy(&rgba, selectionBufferPtr, 4);
+
+				glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
+			
+				printf("GIZMO RGBA COLOR 0x%1x, 0x%1x, 0x%1x, 0x%1x\n", rgba.R, rgba.G, rgba.B, rgba.A);
+
+				//only set if no axis is bound
+				if (rgba.R) {
+					s_GizmoData.Axis = AXIS::X;
+				}
+				else if (rgba.G) {
+					s_GizmoData.Axis = AXIS::Y;
+				}
+				else if (rgba.B) {
+					s_GizmoData.Axis = AXIS::Z;
+				}
+
+			}
+		}
+		else {
+			s_GizmoData.Axis = AXIS::NONE;
+		}
 
 
+		glm::vec2 mousePos1 = Input::GetMousePosition();
+		float diffX = (mousePos1.x - mousePosition.x) * (mousePos1.x * 0.0001) * ts.GetMilliseconds();
+		float diffY = (mousePos1.y - mousePosition.y)  * (mousePos1.y * 0.0001) * ts.GetMilliseconds();
+
+		if (s_GizmoData.State == GizmoState::TRANSFORM) {
+			switch (s_GizmoData.Axis) {
+			case AXIS::X:
+				modelTransform = glm::translate(modelTransform, glm::vec3(-diffX * 0.1f, 0, 0));
+				break;
+			case AXIS::Y:
+				modelTransform = glm::translate(modelTransform, glm::vec3(0, -diffY * 0.1f, 0));
+				break;
+			case AXIS::Z:
+				modelTransform = glm::translate(modelTransform, glm::vec3(0, 0, diffX * 0.1f));
+				break;
+			}
+		}
+		else if(s_GizmoData.State == GizmoState::ROTATE) {
+			switch (s_GizmoData.Axis) {
+			case AXIS::X:
+				modelTransform = glm::rotate(modelTransform, diffX * 0.01f, glm::vec3(1.0f,0.0f,0.0f));
+				break;
+			case AXIS::Y:
+				modelTransform = glm::rotate(modelTransform, -diffX * 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
+				break;
+			case AXIS::Z:
+				modelTransform = glm::rotate(modelTransform, diffX * 0.01f, glm::vec3(0.0f, 0.0f, 1.0f));
+				break;
+			}
+		}
+		else if (s_GizmoData.State == GizmoState::SCALE) {
+			switch (s_GizmoData.Axis) {
+			case AXIS::X:
+				modelTransform = glm::scale(modelTransform, glm::vec3(1.0f + (-diffX * 0.01f), 1, 1));
+				break;
+			case AXIS::Y:
+				modelTransform = glm::scale(modelTransform, glm::vec3(1, 1.0f + (-diffX * 0.01f), 1));
+				break;
+			case AXIS::Z:
+				modelTransform = glm::scale(modelTransform, glm::vec3(1, 1, 1.0f + (-diffX * 0.01f)));
+				break;
+			}
+		}
+
+
+		mousePosition = mousePos1;
+		
+		s_RendererData.Framebuffer->Unbind();
 	}
 
 	void Gizmo::Render()
@@ -105,7 +210,7 @@ namespace Onyx {
 		s_RendererData.MeshVertexBufferWritePtr = s_RendererData.MeshVertexBufferBase;
 
 		s_RendererData.Framebuffer->Bind();
-		RenderCommand::SetClearColor({ 1.0, 1.0, 1.0, 1.0 });
+		RenderCommand::SetClearColor({ 0.0, 0.0, 0.0, 0.0 });
 		RenderCommand::Clear();
 
 		//Render Gizmo
